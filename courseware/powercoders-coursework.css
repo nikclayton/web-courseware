@@ -1,0 +1,64 @@
+/* Left align slide content, instead of centered. */
+.reveal p {
+  text-align: left;
+}
+
+/* No all-caps titles */
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  text-transform: none;
+}
+
+/** Auto line numbering */
+pre.src {
+  counter-reset: line;
+  background-color: #3f3f3f;
+  margin: 4em auto;
+  padding: 0.5em;
+  border-radius: .25em;
+}
+
+/* Hide the line numbers embedded in the file */
+span.linenr {
+  display: none;
+}
+
+.reveal pre code {
+  display: inline;
+  font-size: 150%;
+  line-height: 1.2;
+}
+
+.reveal pre.src code {
+  counter-increment: line;
+}
+
+.reveal pre.src code:before {
+  content: counter(line);
+  border-right: 1px solid #ddd;
+  padding: 0 0.5em;
+  margin-right: 0.5em;
+  width: 2em;
+  display: inline-block;
+  text-align: right;
+}
+
+/** Styles for left and right columns. */
+div.leftcol {
+  float: left;
+  width: 50%;
+}
+
+div.rightcol {
+  float: right;
+  width: 50%;
+}
+
+/** Hide TODO / DONE entries from headings. */
+span.done, span.todo {
+  display: none;
+}

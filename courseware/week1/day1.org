@@ -1,0 +1,613 @@
+#+Title: Powercoders Basel Coursework, Day 1
+#+INCLUDE: "../include/settings.org"
+
+#+BEGIN_NOTES
+
+This is a special week -- no guest trainers so that I can get them up to
+speed and spend more time with them to see who struggles, get a better feel
+for the class, etc.
+
+#+BEGIN_SRC python
+python -m http.server 8080
+#+END_SRC
+
+#+END_NOTES
+
+* Welcome
+
+- Course agreement and expectations
+- Asking questions is absolutely fine
+- "All teaching is the process of lying, and then replacing the lies
+  with successively better approximations of the truth."
+- Tell me if I need to speak more slowly
+
+* Logistics
+
+- Wifi
+- Bathrooms
+- Schedule and breaks
+- Communications (Slack etc)
+
+#+BEGIN_NOTES
+
+... speaker notes go here ...
+   
+#+END_NOTES
+
+* Common mistakes
+
+- Not enough / too much space
+- Using the wrong quotes, ' vs "
+- Using the wrong case
+- Mis-spellings
+- Number 1 vs. letter l
+
+#+BEGIN_NOTES
+Progamming is a precision activity. Sometimes using an upper
+case letter instead of a lower case letter can cause something
+to not work.
+
+Or having the wrong amount of spaces.
+
+Or spelling things wrong. Or using the wrong quotes.
+
+When I was hosting the interviews, the #1 problem I saw people
+make was not following the examples / instructions precisely.
+
+This is a skill that you will need to learn.
+#+END_NOTES
+
+* TODO Goals for this week
+
+- Get everyone on the same page
+- Introductions to:
+  - HTML
+  - Cascading Stylesheets (CSS)
+  - Version control
+
+* Files and directories
+
+- Information is stored in files.
+- Files have names and extensions
+- Extensions are a convention that indicate the file's contents
+  - Windows can try and be too clever, and hide them. Find the option to turn this off, as otherwise it will get very confusing.
+
+
+#+BEGIN_NOTES
+Everything you do as a web developer is going to involve working with files,
+so it's important that you have a good mental model of how they work.
+
+A file is a collection of information. That information might be the text of
+a web page, or the data that makes up an image, or an audio file, or the data
+that make up anything else.
+
+Each file has a filename. We say that the filename is made up of three parts,
+which are:
+
+- The basename
+- A full-stop character. We tend to call this 'dot'.
+- Generally 1-4 characters after the dot, called the 'extension'
+
+Conventionally, the extension is used to describe the type of data that is in
+the file. For example:
+
+- .txt  -- text files
+- .html -- HTML files (more on these later)
+- .png  -- Portable Network Graphics (a type of image)
+- .css  -- Cascading Style Sheet (also more later)
+- .js   -- Javascript (much more, later)
+
+However, this is just a convention, and it's possible for a file's extension
+to *not* match its actual contents. This can cause problems, so we'll look
+at that later.
+
+#+END_NOTES
+
+** Show extensions on Windows
+
+ - TODO(nik): Find image that shows how to do this
+
+ #+BEGIN_NOTES
+ For those of you with Windows computers we need to make a small change.
+
+ Trying to be helpful, Windows has a default configuration option that means
+ it won't show you a file's extension. This is incredibly unhelpful when
+ you're a frontend developer, so we need to turn that off now.
+
+ TODO(nik): Instructions.
+ #+END_NOTES
+
+** Directories
+
+ - Files are stored in directories (folders)
+ - Like boxes. You can put a file in a box.
+ - You can also put a box in a box.
+ - This gives us a "nested" structure
+
+ #+BEGIN_NOTES
+ Files are placed in collections -- the modern name for these
+ collections is a "folder". However, the earlier name was
+ "directory". That name is in the name of lots of commands that we'll
+ use, and is still very widespread, so that's the name we'll use.
+
+ You can think of a directory as being like a box that you can put
+ files in to. You can also put a directory inside another directory --
+ like putting a box inside a box.
+
+ When we do this we say that one directory is *nested* inside the
+ other.
+
+ If you imagine that you're inside one of these boxes-as-directories,
+ and climb out of it, you'll find yourself in another directory. If you
+ keep doing this you'll eventually find that you can't climb out any
+ more -- you've reached the *root* directory.
+
+ The root directory has a special name, '/', or 'slash' (or forward
+ slash).
+ #+END_NOTES
+
+** Paths
+
+ - Each file is in exactly one directory
+ - "path" is the route to the file through all the directories it is in,
+   starting from the root.
+ - /.../..../... TODO(nik): Use a plausible full path here
+
+ #+BEGIN_NOTES
+ A file can only ever be in one directory at a time.
+
+ This means that we can uniquely identify a file by starting at the
+ root directory and then listing all the directories that we have to go
+ through to get to file.
+
+ We separate these directory names with a '/' slash character too.
+ #+END_NOTES
+
+** The directory tree (family tree)
+
+ TODO: Image of a family tree (use a zoomed out version of mine)
+
+ #+BEGIN_NOTES
+ Another way of thinking about this directory structure is as what
+ computer scientists call a "tree".
+
+ This is a bit like a family tree. There are special English terms for
+ people in the tree, including
+
+ - parent
+ - grandparent
+ - sibling (like a brother or sister)
+
+ #+END_NOTES
+
+** The directory tree
+
+ TODO: Image of a directory tree. Arrows or other highlights for:
+
+ - Root directory
+ - A file
+ - It's parent directory
+ - Sibling directories, etc
+
+ #+BEGIN_NOTES
+ This is a bit like that family tree, although it's been turned upside
+ down.
+
+ At the top of the tree is the root directory.
+
+ Below that we have various child directories.
+
+ And here we can see the file, with its filename.
+
+ We say these this (indicate slide) is the parent directory for this
+ directory. Which means that this, this, and this are all child directories
+ of it.
+
+ And these directories (indicate slide) are siblings of each other.
+
+ Computer scientists love trees. You'll be seeing stuff like this a lot.
+ #+END_NOTES
+
+** Familiar directory trees
+
+ TODO: Screenshots of directory trees in Windows Explorer, OS X Finder,
+ etc, to show that this isn't an alien concept for them.
+
+ #+BEGIN_NOTES
+ You're probably more familiar with the directory trees when it's
+ presented like this, but all the same features are there.
+ #+END_NOTES
+
+ [d3 tree code: https://bl.ocks.org/mbostock/999346]
+
+* Break / or recap slide that shows the terms
+
+* Introduction to the web
+
+- Web page
+- Web browser
+- Web server
+
+#+BEGIN_NOTES
+At its heart, a web page is a file that contains text and special codes
+to specify how the text should be displayed.
+
+This file is read by a web browser; like Chrome, or Firefox, or Safari.
+The browser uses the information in the text and the special codes to
+generate the final page that you can interact with.
+
+A web server is special software that the browser talks to in order to
+download a web page. We'll cover that in more detail a lot later.
+#+END_NOTES
+
+** Web pages are just text
+
+- Open https://www.powercoders.org/
+- Right-click on the page
+- Choose "View source" from the menu that appeara
+
+#+BEGIN_NOTES
+This is text for the Powercoders home page. There's a lot here that at
+least some of you will never have seen before. But even then you can
+start to make out some structure to the content.
+#+END_NOTES
+
+** Create a scratch directory
+
+- Go to your home directory
+- Create a directory called =poco=
+- Create a directory inside =poco= called =scratch=
+
+#+BEGIN_NOTES
+The =scratch= directory is where we are going to store HTML and other
+files that are temporary, and you can use for experimentation. Later on
+we'll create other directories for longer lived projects.
+#+END_NOTES
+
+** Open a text editor
+
+- Windows: Notepad
+- OS X: TODO(nik): Fill this in
+
+** Copy the following exactly
+
+#+BEGIN_EXAMPLE
+<p>This is an HTML paragraph.</p>
+
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+
+** Save it
+
+- Use "Save As"
+- Find the =poco/scratch= directory you created
+- Save it as =index.html=
+
+** Load it in to your browser
+
+- TODO(nik): Demo
+
+** Compare the result
+
+- TODO(nik): Show screenshot
+
+* What have we just done?
+ 
+- HTML (HyperText Markup Language
+- 1 element, =p=
+- Start tag, content, end tag
+
+#+BEGIN_SRC html
+<p>This is an HTML paragraph.</p>
+#+END_SRC
+
+#+BEGIN_NOTES
+You've just created and loaded an HTML file.
+
+HTML is *not* a programming language, it's a markup language, and we
+use it to define the structure of the web page.
+
+
+An HTML file consists of one or more elements, which you use to *mark
+up* different parts of the page to make it appear or behave in a
+particular way.  The type of element used determines whether it's a
+paragraph, or an image, or a link, or anything else that HTML
+supports.
+
+An element has three main parts.
+
+It begins with the *start tag*. This is the name of the element
+surrounded by *angle brackets*. This says where the element starts.
+
+It ends with the *end tag*. This is like the start tag, except that
+the name of the element is preceded by a *forward slash*.
+
+In between the start tag and the end tag is the element's
+*content*. In this example that's the text of the element.
+
+Together, the start tag, content, and end tag make up the element.
+
+Based on [[https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started][MDN: Introduction to HTML]] by [[https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started$about][Mozilla Contributors]] which is
+licensed under [[https://creativecommons.org/licenses/by-sa/2.5/][CC-BY-SA 2.5]].
+
+#+END_NOTES
+
+** Nesting elements
+
+#+BEGIN_SRC html
+<p>This is an <em>HTML paragraph</em>.</p>
+#+END_SRC
+
+- =em= element is *nested* inside the =p= element
+
+#+BEGIN_NOTES
+Elements can be placed inside other elements. We say that they *nest*
+inside each other.
+
+For example, we can use the =em= element to make some text in the
+paragraph be emphasised.
+
+Try that -- make the change, save, and reload the file.
+#+END_NOTES
+
+** Elements can not overlap
+
+#+BEGIN_EXAMPLE
+<p>This is a <em>bad example.</p><em>
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+Elements *must* *not* overlap. You can not close an element unless all
+the elements that it contains are closed first.
+
+If you get this wrong the browser will try and guess what you meant.
+Sometimes you get lucky and everything looks OK, and sometimes you get
+very strange results.
+#+END_NOTES
+
+** Block-level and inline elements
+
+#+BEGIN_SRC html
+<p><em>One</em> <em>two</em> <em>three</em></p>
+
+<p>four</p> <p>five</p> <p>six</p>
+#+END_SRC
+
+#+BEGIN_NOTES
+Broadly, we can put HTML elements in to two groups.
+
+The first are called *block-level* elements. They form a new block on
+the page -- there will be a blank line before and after each block
+level elements.
+
+These tend to represent large-scale structure on the page, so things
+like
+
+- headings
+- paragraphs
+- lists
+- menus
+
+and so on.
+
+The second are called *inline elements*. These are always contained
+inside a block-level element and normally only surround a small part
+of the content.
+
+Examples include:
+
+- emphasis
+- links
+
+Try this example, save, and reload. But before you do that, try and
+imagine what you think the result will be, and see if you get it
+right.
+
+#+END_NOTES
+
+** A more complicated example
+
+#+BEGIN_SRC html -n
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My test page</title>
+  </head>
+
+  <body>
+    <h1>This is a heading</h1>
+
+    <p>This is a single paragraph.</p>
+  </body>
+</html>
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's a more complicated example that introduces some new elements
+and best practices.
+
+The first thing to notice is the indentation. HTML does not require
+you to do this -- the browser will ignore it. However, as you can see
+it makes the nested structure of the document very easy to see, to so
+it is very good practice to get in to.
+
+From now on, you should make sure that all of the HTML that you write
+has correct indentation. I do that be indenting by two spaces for
+each new block level element.
+
+Lets look at this line by line.
+
+The first line specifies the *document type*. This looks a little bit
+like an element, but it isn't. Back when HTML was first being
+developed the idea was that there might be lots of different document
+types, and this line would tell the browser what type it was and what
+rules to follow. That never really worked out, so now you just need to
+include this one.
+
+Note that the second character is an exclamation mark.
+
+The second line is the opening tag for the =html= element. This element
+should contain all the content on the page. You will also hear this
+called the root element.
+
+The =html= element should contain two child elements. The next line
+introduces the first of these, =head=. This element is used to contain
+various bits of additional information -- we call it *metadata* about
+the page.
+
+Here, the =head= contains a =title= element, with some text content.
+
+Can anyone tell me where you would normally see the title appear in the
+browser?
+
+[wait for answer]
+
+Places you'll see the contents of the =title= used include:
+
+- In the tab for the page in the browser
+- The default name for the page's bookmark
+- In a search engine result page
+
+Moving down the page, we close the =head= element, and open a new
+=body= element. The =body= should contain *all* the content that you
+want to show to the user, whether that's text, images, videos, or
+whatever else.
+
+#+END_NOTES
+
+** Adding images
+
+#+BEGIN_SRC html
+<img src="name-of-file.png" alt="Image of ...">
+#+END_SRC
+
+#+BEGIN_NOTES
+TODO(nik): Download and prepare an image for them to use.
+
+To add an image to a page we use the =img= element. This introduces
+two new concepts.
+
+The first is the idea of an *empty element*. Remember earlier when I
+said that all elements have a start tag, content, and an end tag.
+
+And remembe even earlier when I said that teaching is all about lying
+to students? This is one of those times.
+
+Some elements are what we call empty elements. They have no content,
+and no end tag. So to write them you just use the start tag. And =img=
+is one of those elements.
+
+The second concept is *attributes*. As well as the content, an element
+might have one or more attributes that you can set. Each attribute on
+element has a name and a value.
+
+These are written as the name of the attribute, then an equals sign,
+and then the value, enclosed in quotes.
+
+*Important*: These should be together -- no spaces on either side of
+equals sign.
+
+Two of the attributes the =img= element supports are =src= and =alt=.
+
+Use =src= to specify the filename of the image to load.
+
+Use =alt= to specify some text that should be displayed or used if the
+image can not be loaded or is not useful to the user. For example,
+it's possible for blind or partially sighted people to get *screen
+readers* that read the contents of the page to them. In this case
+the contents of the =alt= attribute is read to the user.
+
+TODO(nik): Update with instructions on where they can get the image from.
+
+Go ahead and add an image to your page now.
+
+[wait]
+
+Question: Is =img= a block-level element or an inline element? Try
+it, and tell me.
+
+#+END_NOTES
+
+** But why?
+
+#+BEGIN_SRC html
+<!-- This does *not* work -->
+
+<img>
+  <src>name-of-file.png</src>
+  <alt>Image of ...</alt>
+</img>
+#+END_SRC
+
+#+BEGIN_NOTES
+You might be wondering why images are empty elements with attributes?
+Couldn't they be a nested element, with other elements to specify the
+image file and the alternative content?
+
+That's a great question. The answer is that, generally, element content
+represents something that the user will immediately see on the page, while
+attributes are used to specify how that content should be displayed, or
+other information that would normally be hidden.
+
+This is not a hard and fast rule. When HTML was first being developed
+rules like this didn't really exist, and so the language is not completely
+consistent about how these things are treated. It's just something you
+have to get used to.
+
+
+By the way, that weird element at the top with an exclamation mark and
+the minus signs. That's what a comment looks like in HTML. We'll talk
+more about that later.
+#+END_NOTES
+
+** Different elements support different attributes
+
+#+BEGIN_SRC html
+<!-- This does *not* work -->
+
+<p src="name-of-file.png">...</p>
+#+END_SRC
+
+#+BEGIN_NOTES
+The HTML specification says which attributes are allowed for each
+element, you can't just write an attribute on an element and hope it
+will work.
+
+So this example here does not work.
+
+#+END_NOTES
+
+
+** MDN and exercises
+
+- Mozilla Developer Network (MDN)
+- https://developer.mozilla.org/en-US/docs/Web/HTML/Element
+- Search for "mdn html elements"
+
+#+BEGIN_NOTES
+Mozilla is the organization responsible for, amongst other things,
+the Firefox web browser, and the provide a very comprehensive set of
+reference documents and tutorials online.
+
+As a programmer you'll need to get used to reading and understanding
+technical documentation, so for the rest of the afternoon you'll be
+using the MDN documentation to learn about more HTML elements and add
+them to your scratch page.
+#+END_NOTES
+
+
+* Exercises
+
+- Add more headings, =h1=, =h2=, etc
+- Add more paragraphs, =p=
+- Add an ordered list, =ol=
+- Add an unordered list, =ul=
+- Add images
+- Div
+- Span
+- Mark up the recipe
+- Start a notes / cheatsheet document
+- Start a portfolio

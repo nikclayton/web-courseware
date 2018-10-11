@@ -1,0 +1,537 @@
+#+Title: Powercoders Basel Coursework, Day 2
+#+INCLUDE: "../include/settings.org"
+
+* Brief recap of previous day
+
+- HTML files
+- Elements
+  - Block-level and inline
+  - Empty elements
+- Attributes
+- Nesting and structure
+
+* Today's topics
+
+- The command line
+- Version control
+
+#+BEGIN_NOTES
+By the end of today everyone will:
+
+- Have done some practice with the command line
+- Had a basic introduction to version control
+
+#+END_NOTES
+
+* Terminology review
+
+- "Machine" = the physical computer and hardware (disks, keyboard, etc)
+- Runs an "Operating System", which manages access to everything
+- You interact with the OS through the shell
+- You use the shell to tell the operating system which programs
+  to run, it runs them
+- The shell is just another program
+- Two types of shell
+  - Graphical
+  - Command line
+
+#+BEGIN_NOTES
+We're starting with a quick recap of some core terminology, to make sure
+that everyone's on the same page.
+
+At the bottom of the stack is the machine. In this classroom that's your
+laptops, but it could also be a desktop computer, or a computer in a data
+somewhere.
+
+For the machine to be useful it must have an operating system. This is a
+special computer program that runs first, coordinates all the other
+programs that might run.
+
+If you have a PC laptop you're probably using Windows (or perhaps Linux)
+as your operating system. If you use a Mac then your operating system is
+called OS X.
+
+To work with the operating system it runs another program called the
+'shell'. Today most operating systems provide a graphical shell with
+windows, a mouse pointer, and so on. That didn't used to be the case,
+the shell used to be a text based program.
+
+Later today we'll be looking at that in more detail, as it's important
+that you become comfortable with a text-based shell.
+
+You use the shell to give commands to the operating system, telling it
+to start other programs, move or copy files, rename them, and so on.
+
+And you also use the shell to start other programs, like a web browser,
+spreadsheet, editor, and so on.
+ #+END_NOTES
+
+
+* The command line
+
+- Also called the:
+   - shell
+   - terminal
+   - command window
+   - command prompt
+   - command line interface (CLI)
+- On Windows, ... "cmd"
+- On OS X, ... "terminal"
+
+#+BEGIN_NOTES
+Earlier I mentioned that you'll be doing a lot of work from the
+command line, so lets make sure that everyone is comfortable with
+it.
+
+The first thing to do is actually start a text shell. To do that,
+on Windows press the Windows key, and type "cmd" and press RETURN.
+
+On OS X, type ... <SPACE>, and type "terminal" and press RETURN.
+#+END_NOTES
+
+* Shell screenshots
+
+TODO: Screenshots
+
+#+BEGIN_NOTES
+Here are some screenshots of what you should expect to see. The
+exact text will vary, but it should be something like this.
+
+Has everyone done this and can see a window that looks like the
+correct screenshot?
+#+END_NOTES
+
+
+* Anatomy of the command line
+
+TODO: Shell tutorial image that shows the constituent parts.
+
+[[https://softcover.s3.amazonaws.com/636/learn_enough_command_line/images/figures/anatomy.png]]
+
+
+#+BEGIN_NOTES
+What you're looking at is called the "shell prompt". The prompt
+is showing you some information, and the shell is waiting for you
+to tell it what to do by typing in a command.
+
+Confusingly, Windows and OS X shells sometimes use the same names for
+the same command, and sometimes they use different ones. I'll cover
+the differences as we go.
+
+Does everyone know whether they are using a Windows laptop or an OS X
+laptop?
+
+TODO(nik): See, link to https://www.learnenough.com/command-line-tutorial 
+#+END_NOTES
+
+* Which directory am I in?
+
+- Windows: =cd=
+- OS X: =pwd=
+
+#+BEGIN_NOTES
+In a text shell it's very important to remember which directory you
+are in.
+
+Many of the commands that you will run will operate on the files in
+the current directory, and if you can run a command in the wrong
+directory by mistake it can cause a big problem -- imagine if you
+tried to delete all the files but where in the wrong directory.
+
+Another name for the directory you are in is the "working directory".
+
+If you can't remember which directory you are in you can always run
+(on Windows) the =cd= command, and on OS X the =pwd= command.
+
+As you might have guessed, on OS X =pwd= stands for "Print Working
+Directory".
+
+[Demo]
+
+Try that now.
+
+Did that work for everyone?
+#+END_NOTES
+
+* What files and directories are in this directory?
+
+- Windows: =dir=
+- OS X: =ls=
+
+#+BEGIN_NOTES
+Once you know where you are you can start looking around to see what's
+there. We call this "listing the directory".
+
+On Windows use the =dir= command to list the directory.
+
+On OS X use the =ls= command.
+
+#+END_NOTES
+
+** =dir= / =ls= output
+
+TODO: Show the output, talk through it
+
+* Changing directories
+
+- To go in to a directory
+  - Windows: =cd /dir/=
+  - OS X: =cd /dir/=
+- To go up one directory
+  - Windows: =cd ..=
+  - OS X: =cd ..=
+
+#+BEGIN_NOTES
+Finally we have a command that Windows and OS X have in common.
+
+To change in to a directory use the =cd= command.
+
+Unlike the other commands we've seen this one takes an *argument* -
+that is, you have to type something after the name of the command
+in order for it to work properly.
+
+In both cases the argument is the name of the directory you want
+to change in to.
+
+Experiment using the =cd=, =ls=, and =pwd= commands to move around
+the filesystem.
+#+END_NOTES
+
+* Creating (making) directories
+
+- Windows: =mkdir /dir/=
+- OS X: =mkdir /dir/=
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+
+* Deleting directories
+
+- Windows: =rmdir /dir/=
+- OS X: =rmdir /dir/=
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+
+* Shell demo
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+* Safe and unsafe characters
+
+- Safe
+  - a-z, 0-9, -, _, .
+
+- Unsafe
+  - Everything else
+  - Especially ', ", (, ), [, ], and SPACE
+
+#+BEGIN_NOTES
+TODO(nik): Talk about files / directories with spaces, and having
+to quote them with double quotes. Talk about other problematic
+characters
+#+END_NOTES
+* What can go wrong?
+
+- Mis-spell a command: =aaaaaaaa= ('a' x 8)
+- =cd= in to a directory that does not exist
+- =cd ...=
+- =cd .=
+- =cd /filename/=
+- =mkdir doesnotexist=
+- =rmdir aaaaaaaa=
+
+#+BEGIN_NOTES
+Sometimes things go wrong. You mis-spell a command, or get the name
+of a file or a directory wrong.
+
+
+#+END_NOTES
+
+* Recap: The command line:
+
+- How to start it
+- 
+
+* Shell cheatsheet
+
+| Action                   | Windows     | OS X        |
+|--------------------------+-------------+-------------|
+| Print working directory  | cd          | pwd         |
+| List directory contents  | dir         | ls          |
+| Change to a subdirectory | cd /dir/    | cd /dir/    |
+| Go up a directory        | cd ..       | cd ..       |
+| Create a directory       | mkdir /dir/ | mkdir /dir/ |
+| Delete a directory       | rmdir /dir/ | rmdir /dir/ |
+
+
+* Break
+* Version control: Why
+- You're going to be working on a long project
+- You might make mistakes
+- You might want to experiment
+- How do we do that safely?
+
+* Version control: By copies
+- This is one way, but it doesn't really scale.
+- [Show files with various iterations of "final" in them]
+
+* Version Control Systems (VCS): Common features
+- Let us take a collection of files and save their current contents
+- Saving is called "committing" the changes
+  - When we commit the changes we can provide a message that explains why
+- Then we can make changes to the files and:
+  - See what's changed (diff)
+  - Easily undo the changes (or some of them)
+  - Or commit these as new versions of the files
+- Over time this builds up a timeline of changes to the files
+  - Graphic
+
+* This is incredibly useful when:
+- Working on complex projects
+- Working with lots of people
+
+* VCS: Git
+- There are many different version control systems
+- We're going to use one called Git
+- Because it's:
+  - Very popular in industry and open source
+  - Has lots of powerful features
+  - Lots of people write about it
+  - Has concepts shared by other tools
+- Important: "Easy to learn" is not one of its features
+- Sorry!
+
+* =git config=
+
+#+BEGIN_SRC shell
+% git config --global user.email nik@ngo.org.uk
+% git config --global user.name "Nik Clayton"
+#+END_SRC
+
+
+* Git fundamentals
+
+- Three locations: Working directory, stage, repository
+- Git commands copy files between these locations
+
+#+BEGIN_NOTES
+TODO(nik): Talk about the three areas. The [[https://marklodato.github.io/visual-git-guide/index-en.html][Visual Git Reference]] has
+some interesting ideas, need to clear license with the author first.
+#+END_NOTES
+
+* =git init=
+
+- We have to tell Git where the "root" of the repository is
+- Everything below this directory can be managed by Git
+- It's possible to have multiple repositories on the computer
+- But don't put a repository inside another
+
+* =git init= exercise
+
+- Open the terminal
+- Navigate to the directory containing =scratch.html=
+- Make sure you're in the correct directory with =pwd=
+- Run =git init=
+#+BEGIN_SRC sh
+% git init
+#+END_SRC
+
+
+* =git status= exercise
+- What's the state of the repository?
+- We'll be using this frequently
+
+#+BEGIN_SRC sh
+% git status
+#+END_SRC
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+
+* =git status= output
+
+#+BEGIN_EXAMPLE -n
+On branch master
+
+No commits yet
+
+Untracked fils:
+  (use "git add <file>..." to include in what will be committed)
+
+        scratch.html
+
+nothing added to commit but untracked files present (use "git add" to track)
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+Line 1 tells us which Git branch we're working on. We haven't talked
+about branches yet, that's a more advanced topic.
+
+Each change that we save to the repository is called a *commit*. We
+haven't made any, so it tells us there are no commits.
+
+The rest of the output tells is that there are files present that Git
+doesn't know about. This is true. We've created the repository but
+haven't told Git to pay attention to any files yet. We'll fix that
+in the next step.
+
+#+END_NOTES
+* =git add= exercise
+
+- =git add= tells Git to start paying attention to a file
+- This does *not* commit the file to the repository
+
+#+BEGIN_SRC shell
+% git add index.html
+% git status
+#+END_SRC
+
+* =git status= after =git add=
+
+#+BEGIN_EXAMPLE -n
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+        new file:   scratch.html
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+Lines 1 through 3 are the same as last time. The rest is different.
+
+Now Git is telling us that there are changes to be committed to
+the repository. These changes *have not* yet been committed, we
+still need to do that, which is the next step.
+
+#+END_NOTES
+
+** =git commit= exercise
+
+- Takes all the added changes, bundles them up, saves them
+- You provide a description, called the *commit message*
+
+#+BEGIN_SRC sh
+% git commit -m "Save first version of file."
+[master (root-commit) d1ee782] Save first version of file.
+ 1 file changed, 10 insertions(+)
+ create mode 100644 index.html
+#+END_SRC
+
+#+BEGIN_NOTES
+
+Commit message's first line should always be a stand-alone sentence.
+#+END_NOTES
+
+* =git status= again
+
+- Run =git status= again
+- What do you see?
+
+* "git log"
+- Shows you what's changed
+
+#+BEGIN_SRC sh -n
+% git log
+commit d1ee782c5be32e219edfc4e8e8bc80f3ddc892b5 (HEAD -> master)
+Author: Nik Clayton &lt;nik@ngo.org.uk>
+Date:   Mon Oct 1 14:06:36 2018 +0200
+
+    Save first version of file.
+
+#+END_SRC
+
+* Your personal cheetsheet
+
+- Create a new directory in the =poco= directory, called =cheatsheet=.
+- Create files =shell.html=, =git.html=
+- In each file, put notes about what you've learned 
+- Tip: use =pre= element for command lines
+  - Look up =pre= on MDN
+
+#+BEGIN_NOTES
+As we go through the rest of the course you can keep these up to date.
+
+#+END_NOTES
+
+* Create an index page for the cheat sheet
+
+- Now that we have multiple files we can link between them
+- For that we use the =a= element
+
+#+BEGIN_EXAMPLE
+<a href="name-of-file.html">text of link</a>
+#+END_EXAMPLE
+
+- Create =index.html=, and add links to =shell.html= and =git.html=
+
+#+BEGIN_NOTES
+=a= element has content and an attribute.
+
+The =href= (Hypertext reference) attribute is the name of the file that
+the link will go to.
+
+The content is the text that will appear as the link
+#+END_NOTES
+
+** Example =index.html=
+
+#+BEGIN_SRC html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cheatsheets</title>
+  </head>
+
+  <body>
+    <ul>
+      <li><a href="git.html">What I know about Git</a></li>
+      <li><a href="termina.html">What I know about the shell</a></li>
+    </ul>
+  </body>
+</html>
+#+END_SRC
+
+** Commit all three files as a single commit
+
+#+BEGIN_SRC sh
+% git status
+% git init
+% git add index.html
+% git add git.html shell.html
+% git status
+% git commit -m "Start my cheatsheet"
+#+END_SRC
+
+#+BEGIN_NOTES
+TODO(nik):
+- Demos =git status= outside of a Git repo
+- Demos adding multiple files at once.
+
+
+#+END_NOTES
+
+* Glossed over sub-commands, flags, arguments
+
+- Go back to =git commit -m ...= example
+
+#+BEGIN_NOTES
+TODO(nik): Explain more about the typical structure of a command
+
+#+END_NOTES
+
+* Day 2, 2018-11-27 Tue - afternoon
+
+** Exercises
+
+- Extend portfolio / notes pages with things learned. Create different
+  commits for each
+- Consider making the portfolio different pages
+

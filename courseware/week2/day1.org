@@ -1,0 +1,1320 @@
+#+Title: Powercoders Basel Coursework, Week 2, Day 1
+#+INCLUDE: "../include/settings.org"
+
+#+BEGIN_NOTES
+
+High level
+
+- IDE
+- DOM
+
+- JS console
+  - Demo 'document'
+  - Demo '.getElementById()'
+  - Demo '.innerHTML'
+  - Show assignment
+
+- Javascript intro
+- CSS Selectors
+- DOM manipulation with JS
+
+- JS events
+
+- Modifying innerHTML
+
+- Adding and removing classes
+  - Text that when clicked changes styles
+#+END_NOTES
+
+* TODO Recap of last week
+
+- Files, directories, the shell
+- Creating HTML files
+- HTML structure, elements, attributes, nesting
+- Reading MDN
+- Version control with Git
+- Cascading Stylesheets (CSS)
+
+* TODO Break
+* TODO Programming is...
+
+- 
+
+#+BEGIN_NOTES
+When we're programming we're giving the computer a set of
+instructions to carry out.
+
+The computer will, faithfully, carry out those instructions.
+It doesn't care if they're wrong, or make no sense, or use the
+wrong values. It will just carry out the instructions.
+
+As a programmer, our job is to take a problem, break it down
+in to a set of instructions that the computer can understand,
+and then write those instructions.
+#+END_NOTES
+
+* TODO Code example
+
+#+BEGIN_EXAMPLE
+Row 1 (RS): Sl1 K 12 (13, 15, 16, 17), ssk, k1 turn (there will be a gap
+after the k1). 1 st dec.
+Row 2 (WS): Sl1, p5, p2tog, p1 turn (there will be a gap after the
+p1). 1 st dec.
+Row 3: Sl1, k to 1 st before the gap, ssk (1 st from each side of the
+gap), k1 turn. 1 st dec.
+Row 4: Sl1, p to 1 st before the gap p2tog (1 st from each side of
+the gap), p1, turn. 1 st dec.
+Repeat rows 3-4 until all sts have been worked.
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+Here's something that could be a computer program.
+
+Can anyone tell me what it actually is?
+#+END_NOTES
+
+* TODO Socks picture
+
+#+CAPTION: https://www.knitpicks.com/patterns/Do_The_Twist_Socks__D55946220.html
+[[file:c:/Users/Nik%20Clayton/Documents/Powercoders/Course%20material/socks.jpg]]
+
+#+BEGIN_NOTES
+Knitting is *absolutely* programming.
+
+- It's got a complicated syntax that not many people know
+- You have to be able to visualise what the pattern does in your head
+- It has the idea of repeating steps, and decision making
+
+Does anybody here knit?
+#+END_NOTES
+
+* TODO Javascript: Adding interactivity to web pages
+
+#+BEGIN_NOTES
+Right, lets do some programming.
+
+Programming is the art of taking a problem, breaking it down in to
+small steps, and writing code that implements those steps.
+
+If you don't know how to write the code for that step, break the
+step down in to smaller steps until you do. And if you still don't,
+learn how to do that step.
+#+END_NOTES
+
+* TODO JS Problem 1: Changing the colour of a paragraph
+
+- Show a paragraph of text on a web page
+- Show a list with two items underneath it
+  - One says "Make it green"
+  - One says "Make it bold"
+- Clicking on them should make the first paragraph green, or bold
+
+#+BEGIN_NOTES
+Here's our problem.
+
+[Run through the problem]
+#+END_NOTES
+
+* TODO JS Problem 1: Demo
+
+- Demo
+
+#+BEGIN_NOTES
+And here's what the solution will look like to the user.
+#+END_NOTES
+
+* TODO JS Problem 1: Decompose the problem
+
+#+BEGIN_NOTES
+What do we already know how to do?
+
+- Create the web page
+- Add the paragraphs
+- Style text using CSS
+
+So I look at this problem and I think -- if I can figure out which
+list item the user clicked on, I could change the CSS style of the
+main paragraph to either the style for green, or the style for
+bold. When the style changes the paragraph will change appearance.
+#+END_NOTES
+
+* TODO JS Problem 1: Check the solution should work
+
+- Live demo
+
+#+BEGIN_NOTES
+An easy way to check and see if this solution should work is to
+use the browser inspector to modify the paragraph's style to use
+the appropriate CSS class.
+
+If the look of the paragraph changes then we have a pretty good
+idea that this will work.
+
+[Demo this]
+#+END_NOTES
+
+* TODO JS Problem 1: What don't we know how to do?
+
+- React to the user clicking on a list item
+- Change the CSS class of an element
+
+#+BEGIN_NOTES
+I need to:
+
+- Figure out if the user clicked on a paragraph
+- Change the CSS class associated with the paragraph
+
+This is a big part of the learning process -- you decide what you
+don't know, and then go off and learn the missing pieces so that
+you can do what you set out to do.
+#+END_NOTES
+
+* TODO JS: Problem 1: Chicken / egg, cheating
+
+#+BEGIN_NOTES
+Ordinarily you'd have enough experience to be able to start figuring
+out what sort of documentation you can read to learn how to do this.
+
+In this case, we're going to cheat, because not all of you have the
+right amount of experience, and I'm going to help you get to the point
+where you'll be able to do all of this yourself.
+
+That's what I'm here for.
+#+END_NOTES
+
+* TODO JS: Problem 1: We're going to...
+
+- Write a function...
+- ... that finds the paragraph element...
+- ... and changes its class
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+
+* TODO JS: Chrome Console
+
+- Chrome Developer Tools includes a REPL
+  - Read, Evaluate, Print, Loop
+  - Called the "Console"
+- We can type in Javascript in the console (read)
+- It evaluates it (evaluate)
+- It displays the result (print)
+- And then it goes back so we can type some more (loop)
+- This is great for very quick experiments
+
+#+BEGIN_NOTES
+We've used the Chrome Dev. Tools already, but they have a lot more
+functionality than we've looked at so far.
+
+One of these is a Javascript REPL, called "console". In the console
+you can type bits of Javascript code and it will read what you've
+typed, run the code (we call that "evaluating it"), print the
+results, and then loop back and let you enter more code.
+
+To get to it, open the Developer Tools, and then click the "Console"
+tab at the top.
+#+END_NOTES
+
+* TODO Javascript expressions
+
+#+BEGIN_SRC javascript
+1 + 1;
+#+END_SRC
+
+#+BEGIN_NOTES
+We're going to write a little bit of Javascript in the console. Type
+the example, and make sure you end it with a semi-colon, then press
+RETURN.
+#+END_NOTES
+
+* TODO Expression results
+
+#+BEGIN_SRC javascript -n
+> 1 + 1;
+< 2
+>
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's what you should see. Your Javascript expression on line 1 has
+been read, evaluated, and the result has been printed on line 2.
+
+Then the prompt has been displayed, waiting for you to type something
+else.
+#+END_NOTES
+
+* TODO More expressions
+
+#+BEGIN_SRC javascript
+2 * 2;
+6 / 2;
+'hello' + 'world';
+alert('hello, world');
+#+END_SRC
+
+- Always end the line with a semi-colon, ;
+- Round braces (parentheses)
+- Single quotes (don't mix them)
+- All lower case
+
+#+BEGIN_NOTES
+Let's write a little bit of Javascript in the console, just to
+play around.
+
+Copy this, and press RETURN. What do you see?
+#+END_NOTES
+
+* TODO What happened?
+
+#+BEGIN_SRC javascript -n
+> 2 * 2;
+< 4
+> 6 / 2;
+< 3
+> "hello" + "world";
+< "helloworld"
+> alert("hello, world");
+< undefined
+#+END_SRC
+
+#+BEGIN_NOTES
+What actually happened here?
+
+Looking at line 1 first.
+
+The right-bracket (greater than sign) is the REPL's prompt. This is
+similar to the prompt in the shell -- it shows you where you can type.
+
+Immediately after that is the Javascript code that you wrote. This is
+expression. In Javascript we use the *asterisk* character to indicate
+*multiplication*. This is also called the *star*.
+
+The expression has been evaluated, and the result is 4, shown on line 2.
+
+Line 3 is another expression. This uses the *forward slash* to divide 6
+by 2, and the result, on line 4, is 3.
+
+Line 5 is where things start to get a little bit weird. We're using the
+plus sign, but we're not adding numbers together. What's going on here?
+
+As we saw in the first example, Javascript uses the plus sign to add
+two numbers together. However, when anything on the left or the right
+hand side of the plus is a string of characters, it glues them together
+instead.
+
+This is called *concatenation*.
+
+Notice how Javascript *does not* add a space between the two words, it
+just sticks them right together.
+
+Look at the result as well -- see how it's contained inside double quotes.
+This is its way of showing you that the value returned is also a string of
+characters. Compare that with the results from further up, which are just
+numbers, without quotes.
+
+This should tell you something interesting -- numbers and strings are
+different things in Javascript.
+
+And that last one -- what we're doing here is called *calling a function*.
+We know it's a function because of the round braces, or *parentheses*.
+#+END_NOTES
+
+* TODO Functions
+
+#+BEGIN_SRC javascript
+alert("hello, world");
+#+END_SRC
+
+#+BEGIN_NOTES
+A function is a way of taking a chunk of code and giving it a name so
+that we can re-use it, and call it from other places. Javascript provides
+a lot of functions, and you can write your own. We'll be doing that later.
+
+We say that this function takes one argument. The argument is the string
+of characters that should be used as the message in the alert.
+
+When you pressed ENTER you should have seen a dialog box pop up with
+the message.  After you closed the dialog box the REPL finishes and shows
+you the line =undefined=.
+
+Notice how this is *not* in quotes. This means it's not a string.
+
+=undefined= here is a special value that Javascript has. In this case
+it means that the =alert= function did not return a specific value,
+so =undefined= was returned.
+
+I know this is weird, and it's a lot to take in. We'll be doing more
+exercises to strengthen this knowledge.
+
+#+END_NOTES
+
+* TODO Inspecting the DOM
+
+- Document Object Model (DOM)
+
+#+BEGIN_NOTES
+So what else can we do with Javascript?
+
+One of the most important things is inspect the Document Object Model,
+or DOM.
+
+The what?
+#+END_NOTES
+
+* TODO Let's map out where we are
+
+- Problem: Click, change paragraph style
+  - Javascript console
+  - Expressions
+  - Functions
+  - DOM <-- we are here
+
+#+BEGIN_NOTES
+Remember our original problem -- we want to be able to click on one of
+list items to change the style of a paragraph.
+
+In order to do that we're having to learn a lot of new things, bit by bit.
+Here's what we've covered so far, and there's more to come. I'll come back
+to this periodically to make sure you don't get lost.
+#+END_NOTES
+
+* TODO The DOM tree
+
+- An HTML page is a tree of elements
+- The DOM allows us to inspect and change the tree
+
+#+BEGIN_NOTES
+When we looked at files and directories last week, we noticed that they
+formed a tree of things.
+
+Does everyone remember that?
+#+END_NOTES
+
+** TODO Tree refresher
+
+ - Tree is a hierarchy of *nodes*
+ - Each node has exactly one *parent*
+   - These are the *children* of the parent
+ - Nodes with the same parent are *siblings*
+
+** TODO Tree image
+
+ TODO(nik): Draw tree image
+
+ #+BEGIN_NOTES
+ Let's look at that graphically again.
+ #+END_NOTES
+
+** TODO File and directories as trees
+
+ TODO(nik): Draw tree image
+
+ #+BEGIN_NOTES
+ And here's the filesystem as a tree.
+ #+END_NOTES
+
+* TODO HTML as a tree
+
+#+BEGIN_SRC html
+<html>
+  <head>
+    <title>My first page</title>
+  </head>
+  <body>
+    <h1>My first heading</h1>
+    <p>My first paragraph</p>
+  </body>
+</html>
+#+END_SRC
+
+#+BEGIN_NOTES
+So lets look at how we can think as HTML as a tree.
+
+Here's a simple HTML document, with a few elements that are
+nested in side one another.
+
+To think of this as a tree, we take the =html= element and make
+that the root node.
+#+END_NOTES
+
+** TODO =html= as root node
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html
+<html>
+  <head>
+    <title>My first page</title>
+  </head>
+  <body>
+    <h1>My first heading</h1>
+    <p>My first paragraph</p>
+  </body>
+</html>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+| html |
+TODO(nik): Graph
+#+REVEAL_HTML: </div>
+
+** TODO =head= and =body= are child nodes
+
+#+REVEAL_HTML: <div class="column" style="float:left; width:50%">
+#+BEGIN_SRC html
+<html>
+  <head>
+    <title>My first page</title>
+  </head>
+  <body>
+    <h1>My first heading</h1>
+    <p>My first paragraph</p>
+  </body>
+</html>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width:50%">
+| html |
+TODO(nik): Graph
+#+REVEAL_HTML: </div>
+
+** TODO =title=, =h1=, and =p= are also child nodes
+
+#+REVEAL_HTML: <div class="column" style="float:left; width:50%">
+#+BEGIN_SRC html
+<html>
+  <head>
+    <title>My first page</title>
+  </head>
+  <body>
+    <h1>My first heading</h1>
+    <p>My first paragraph</p>
+  </body>
+</html>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width:50%">
+| html |
+TODO(nik): Graph
+#+REVEAL_HTML: </div>
+
+** TODO And the content is also nodes
+
+TODO(nik): Graph
+
+#+BEGIN_NOTES
+This is a really, *really* important thing to understand.
+
+There is *no* difference between thinking about your HTML page as a
+collection of text ordered top-to-bottom in a file, and thinking
+about as a collection of nodes organised in a tree.
+
+The information, and the structure, is identical.
+
+It's just the representation that's different.
+
+It turns out that people are really good at dealing with information
+laid out the way we have it in the file.
+
+Computers are really good at dealing with information in trees.
+
+You will need to develop the ability to mentally *flip* between
+thinking about the HTML as it is in the file, and thinking about
+the HTML as a tree.
+#+END_NOTES
+
+** TODO Live DOM Viewer
+
+- https://software.hixie.ch/utilities/js/live-dom-viewer/
+
+** TODO Exercise: Draw the tree for a sample page
+
+#+BEGIN_SRC html
+<html>
+  <head>
+    <title>A test page</title>
+  </head>
+  <body>
+    <h1>This a test page</h1>
+    <p>It has some content in a paragraph.</p>
+    <img src="foo.png" alt="">
+    <p>It has another para with <em>emphasised</em> text.</p>
+    <ul>
+      <li>And a list...</li>
+      <li>... of items.</li>
+    </ul>
+  </body>
+<html>
+#+END_SRC
+
+#+BEGIN_NOTES
+We're going to test how well you understand this, because as I say,
+it's really important. If you don't get this then a lot of the stuff
+that's coming up isn't going to make any sense at all.
+
+Here's an example page.
+
+What I want you to do is take a sheet of paper and a pen and draw the
+tree for this page. Each element is a node.
+
+When you're done let me know. I'll collect them up and we'll check them.
+Some of you will have made mistakes.
+
+*That is absolutely fine.*
+
+We're all going to learn from those mistakes.
+
+OK?
+#+END_NOTES
+
+** TODO Exercise: Draw the tree for your page
+
+#+BEGIN_NOTES
+You've all got webpages that you've been building, so I want you
+to take one of those pages -- and please choose one that's more 
+complex than this example -- and draw the tree for that page.
+#+END_NOTES
+
+* TODO Changing the DOM
+
+#+BEGIN_SRC html
+<h1 id="myheading">My First Heading</h1>
+
+...
+
+<script>
+  document.getElementById("myheading").innerHTML = "Hello, PowerCoders!";
+</script>
+#+END_SRC
+
+#+BEGIN_NOTES
+The document object model is this tree of elements. Javascript provides
+mechanisms to access this tree of elements, and navigate your way around
+it.
+
+Crucially, it *also* provides ways to change the DOM tree.
+
+Who remembers this snippet from the test that we gave all the
+applicants?
+
+[Check]
+
+Who knows *exactly* what this does?
+
+[Check]
+
+For those that don't, we're going to spend some time breaking this down
+so that you understand it.
+
+You've all seen =h1= before, and you know what the =id= attribute does.
+
+[Check]
+
+The stuff inside =script= is new.
+
+For now, all you need to know is that the =script= element allows you
+to write Javascript in a webpage, and that this line in the middle here
+is some Javascript code.
+
+This code *changes the contents of the DOM tree*. And because it changes
+the tree, the web page immediately changes.
+
+This line has three important parts to it, and we're going to break
+them down.
+#+END_NOTES
+
+** TODO =document=
+
+#+BEGIN_SRC javascript
+document;
+#+END_SRC
+
+- Javascript *global* *variable*
+- Contains the DOM tree
+- Represented as an =HTMLDocument= *object*
+
+#+BEGIN_NOTES
+=document= is the name of a Javascript *global* *variable*. We're going to
+talk much more about those later.
+
+This variable contains the DOM *object*, which gives you access to the
+DOM. Another way of saying this is that the variable's *type* is
+*HTMLDocument*.
+
+Try typing =document;= in to the Javascript console.
+
+What do you see?
+
+[Demo]
+
+The console is trying to be helpful -- it's giving you a clickable
+representation of the DOM, and if you move the mouse over different parts
+of it you'll see it light up.
+
+For now, it's enough to know that objects have *properties* and *behaviours*
+that we can access by using =.= character.
+
+Another word for *behaviours* that we'll use here is *method*, which is
+the proper term for this.
+
+#+END_NOTES
+
+** TODO =document.getElementById()=
+
+#+BEGIN_SRC javascript
+document.getElementById("myheading");
+#+END_SRC
+
+- Returns an =Element= object
+- =Element= objects have their own *properties* and *methods*
+
+#+BEGIN_NOTES
+Here we are using one of those *methods* that the DOM provides.
+
+The =getElementById()= method searches the DOM for the element that has
+the ID provided as a *parameter* to the method.
+
+Notice how this looks very similar to the =alert()= function call from
+earlier. Functions and methods are very similar.
+
+The method returns an =Element= object. Everyone try this in the console.
+
+[Demo]
+
+Notice how there are no double quotes around the result. This is how we
+know it's not a string, but something different.
+#+END_NOTES
+
+** TODO What if you mis-spell the ID?
+
+#+BEGIN_EXAMPLE javascript
+> document.getElementById("x");
+< null
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+Try this, and make sure you seem the same result.
+
+What does =null= mean here?
+
+You've already seen =undefined=. =undefined= means that a thing has a
+name, but hasn't been given any value yet.
+
+=null= is a special value that we use to mean "This thing does not have
+a value, and that's deliberate". In this case, =getElementById()= returns
+the special =null= value to indicate that it couldn't find an element
+with that ID.
+
+#+END_NOTES
+
+** TODO Types we've seen so far
+
+- Numbers
+- Strings
+- undefined
+- HTMLDocument (the DOM)
+- An Element
+- null
+
+#+BEGIN_NOTES
+So far we've seen a few different Javascript types, so lets pause for
+a moment and go through them.
+
+- Numbers are the things you and I recognise as numbers in everyday life.
+- Strings are collections of one or more characters.
+- =undefined= is the special "Does not have a value yet" type
+- =HTMLDocument= is the type of the DOM object
+- =Element= is the type returned by =getElementById()=
+- =null= is the special "does not exist" type.
+
+TODO(nik): Slide at some later point to indicate that =null= is not
+actually a type.
+#+END_NOTES
+
+** TODO Storing an element in a variable
+
+#+BEGIN_SRC javascript
+let el = document.getElementById("myheading");
+#+END_SRC
+
+- Save the result in a variable
+- The =let= *keyword* *declares* a variable
+- =el= is the name of the variable
+- === means *becomes*
+
+#+BEGIN_NOTES
+Lets save the result of calling =document.getElementById()= into a
+variable so that we can use it later.
+
+You've already seen that =document= is an example of a variable. This
+is automatically provided for you by Javascript, but you can also create
+your own variables.
+
+To do that, use the =let= *keyword* followed by the name of the variable
+you want to create.
+
+This line says create a variable called =el=, and set it to whatever
+value =document.getElementById()= returns.
+#+END_NOTES
+
+** TODO Variable names
+
+#+BEGIN_SRC javascript
+let el;               // All lower case
+let heading_element;  // snake-case
+let HeadingElement;   // UpperCamelCase
+let headingElement;   // lowerCamelCase
+#+END_SRC
+
+- Any letters, lower case a-z or upper case A-Z
+- The underscore _
+
+#+BEGIN_NOTES
+There is *nothing* special about calling the variable =el=. It's a somewhat
+common convention in Javascript, but you can call it almost anything you want,
+with a few restrictions.
+
+Broadly, variable names can contain a mix of lower or upper case letters
+and numbers. You can also use the underscore character.
+
+If you want to have a variable name that contains more than one word there
+are multiple ways to represent that, all with different names. We have:
+
+- snake case, with an underscore
+- capitalising the first letter of each word, called Camel Case, because
+  the upper case letters look like camel humps.
+- CamelCase, but where the first letter is lower case
+
+Javascript doesn't care what you use.
+#+END_NOTES
+
+** TODO Follow your team's style guide
+
+- Good programmers are consistent
+  - Except when they're not...
+- Style guide describes conventions
+- We use the [[https://google.github.io/styleguide/jsguide.html][Google Javascript style guide]]
+  - Which says to use =lowerCamelCase= for variable names
+
+#+BEGIN_NOTES
+Although Javascript doesn't care, people do.
+
+It is very common for a team to adopt a *style guide* that describes
+the decisions the team has made about how things like naming variables
+should be addressed.
+
+For this course I'm using the Google Javascript style guide, and that
+says that variable names that are two more words should be in
+=lowerCamelCase=. So that's what we're going to do from now on.
+#+END_NOTES
+
+** TODO Using variables
+
+#+BEGIN_SRC javascript -n
+> let el = document.getElementById("myheading");
+< undefined
+> el;
+<    <h1 id="myheading">Hello, Powercoders</h1>
+> document.getElementById("myheading");
+<    <h1 id="myheading">Hello, Powercoders</h1>
+#+END_SRC
+
+#+BEGIN_NOTES
+Anywhere you use the variable's name you're actually referring to whatever
+value is inside the variable.
+
+In this example we create the variable on line 1, and use it -- by writing
+its name -- on line 3.
+
+The result is line 4 -- remember, this is *not* a string, because it's
+not surrounded by double quotes.
+
+On line 5 we just call =getElementById()= directly, and we get the same
+result.
+
+Do you see how we have saved the result of calling =getElementById()= in
+the variable?
+#+END_NOTES
+
+** TODO Element properties
+
+#+BEGIN_SRC javascript
+el.id;           // "myheading"
+el.localName;    // "h1"
+el.clientWidth;  // 883
+el.innerHTML;    // "Hello, Powercoders"
+#+END_SRC
+
+#+BEGIN_NOTES
+Each HTML element in the DOM has properties that you can inspect, by writing
+the variable name, a dot, and then the property name.
+
+From now on in these examples I'm going to write a comment after the line that
+shows what you should see.
+
+Here are some example properties that elements have.
+
+- =id= is the element's ID, if it has one
+- =localName= is the name of the element
+- =clientWidth= is how wide the element is
+- =innerHTML= is the HTML text inside this element
+#+END_NOTES
+
+** TODO Changing element properties
+
+#+BEGIN_SRC javascript
+el.id = "newid";
+el.localname = "newname";
+el.clientWidth = 400;
+el.innerHTML = "New Heading";
+#+END_SRC
+
+#+BEGIN_NOTES
+You can change the value of these properties. That works for some of them,
+like =id= and =innerHTML=.
+
+It doesn't work for others, because they are fixed based on the document. You
+can't change the =h1= name for example, or try and change the width of the
+element like this.
+
+Make all of these changes, and let me know when that's done.
+#+END_NOTES
+
+** TODO Property changes are reflected on the page
+
+[Demo]
+
+#+BEGIN_NOTES
+If you go back to the "Elements" tab in the developer tools after
+making those changes you'll see that they're reflected there too.
+
+This is because this section always mirrors the current state of
+the DOM.
+#+END_NOTES
+
+** TODO JS: Problem 1: We're going to...
+
+1. Write a function...
+2. ... that finds the paragraph element...
+3. ... and changes its class
+
+#+BEGIN_NOTES
+Remember this? It's the actual problem that we're trying to
+solve.
+
+We still don't know how to write a function. We're going to
+come to that later.
+
+We do now know how to find the paragraph element. We're going
+to have to give it an ID, and then we can use that to call
+=getElementById()= to fetch the element from the DOM.
+
+We haven't yet talked about how we might change the class
+that's assigend to the element.
+
+This is where you have to start thinking like a programmer.
+
+We know that we can use the =innerHTML= property to change the HTML
+inside the element.
+
+If we can change the HTML inside the element then it's very likely
+that there are other element properties that we can use to change
+the class.
+
+We don't know what they are, but we can make a reasonable guess
+that they must exist.
+
+But to find out if we're right we're going to have to look at
+some documentation.
+#+END_NOTES
+
+** TODO Exercise: MDN Element Properties (10 minutes)
+
+- Search for =MDN Element Properties=
+- Can you find anything that shows how to change classes?
+
+#+BEGIN_NOTES
+So what I want you to do now is go to Google and search for
+=MDN element properties=.
+
+The "MDN" is to ensure that pages from the Mozilla Developer
+Network come up first. And "element properties" are the things
+we're interested in.
+
+You've got 10 minutes to see what documentation you find, read
+through it, and see if you find anything that looks like it will
+help.
+
+It's OK if you don't get a complete answer at this point, I just
+want you to get used to searching for information and reading
+the results.
+
+[Pause here, let them do it]
+#+END_NOTES
+
+** TODO =classList= and =className=
+
+- [[https://developer.mozilla.org/en-US/docs/Web/API/Element][MDN Element]]
+- =classList=
+  - [[https://developer.mozilla.org/en-US/docs/Web/API/Element/classList][MDN classList]]
+- =className=
+  - [[https://developer.mozilla.org/en-US/docs/Web/API/Element/className][MDN className]]
+
+#+BEGIN_NOTES
+Hopefully you found one or both of the =classList= and =className=
+properties.
+
+These are linked to from the MDN Element page, so lets take a quick
+look at that page now.
+
+TODO: Talk about the structure of the page
+- Properties and methods on the right
+- Description at the top
+  - HTMLElement and SVGElement are distinct, that's interesting
+- Early on we see =classList= and =className= properties
+- Searching the page for =class= doesn't turn up much else of interest
+  - Except =getElementsByClassName()=, that might be handy in the future
+
+Let's look at the =classList= page.
+
+- It's readonly
+- Also mentions =className=
+- What's a =DOMTokenList= ?
+- These methods look interesting, especially =add=, =remove=, =replace=
+- Look, there's example code
+
+And =className=
+
+- Read and write
+- Simpler interface
+- Also example code
+#+END_NOTES
+
+** TODO =className=
+
+#+BEGIN_SRC javascript
+  el.className;  			// What does this print?
+#+END_SRC
+
+#+BEGIN_NOTES
+TODO(nik): Talk about why this prints the empty string,
+and not =null= or =undefined=.
+#+END_NOTES
+
+*** Setting =className=
+
+- We have two classes we want to use
+  - bold
+  - green
+
+#+BEGIN_SRC javascript -n
+el.className = "bold";
+el.className;
+// Check element tab!
+el.className = "green";
+el.className;
+// Check element tab!
+#+END_SRC
+
+#+BEGIN_NOTES
+TODO(nik): Have them do this.
+
+Ask them why the style doesn't change.
+#+END_NOTES
+
+** TODO JS: Problem 1: We're going to...
+
+1. Write a function...
+  - ?
+2. ... that finds the paragraph element...
+  - =document.getElementById("...");=
+3. ... and changes its class
+  - Change the =className= property
+
+#+BEGIN_NOTES
+Here's our problem again, and I've filled in the information
+we've learned so far.
+
+
+#+END_NOTES
+
+** TODO Method and property chaining
+
+TODO(nik): Fill out
+
+** TODO =classList= in the REPL
+
+TODO(nik): Maybe move this later, it's more advanced.
+
+- Reload =getelementbyid.html=
+- Open the console
+
+#+BEGIN_SRC javascript
+let el = document.getElementById("myheading");
+let cl = el.classList;
+#+END_SRC
+
+#+BEGIN_NOTES
+Let's experiment with =classList=. We can do this directly in the
+REPL, and then inspect the output in the *Elements* tab.
+
+Get back to a known state by closing the tab (if you haven't
+already), reloading the page, opening the console, and typing
+the following.
+
+Line 1 we've done before -- we create a variable called =el=
+and set its value to the element that has the ID =myheading=.
+
+Line 2 is new, but very similar -- we create a variable called
+=cl= and sets its value to the =classList= property.
+#+END_NOTES
+
+*** Adding a class with =add()=
+
+#+BEGIN_QUOTE
+=element.classList= itself is read-only, although you can modify
+it using the =add()= and =remove()= methods.
+#+END_QUOTE
+
+**** Adding a class with =add()= 2/4
+
+#+BEGIN_QUOTE
+*add(String[, String [,...]])*
+  Add specified class values.If these classes already exist in
+  attribute of the element, then they are ignored.
+#+END_QUOTE
+
+**** Adding a class with =add()= 3/4
+
+#+BEGIN_QUOTE
+#+BEGIN_SRC javascript -n
+div.classList.add("anotherClass");
+#+END_SRC
+#+END_QUOTE
+
+**** Adding a class with =add()= 4/4
+
+#+BEGIN_SRC javascript
+cl.add("myclass");
+#+END_SRC
+
+#+BEGIN_NOTES
+Finally, lets actually use Javascript to add a class to the
+element that we've found.
+
+=cl= is our variable that contains the class list, and we've
+seen from the documentatin that we can call the =add()= method
+to add a new class.
+
+So lets do that. Type this in to the console, then go and
+look at the element view and verify that the new class shows
+up on the element.
+
+[Demo]
+#+END_NOTES
+
+*** Replacing a class with =replace()=
+
+#+BEGIN_QUOTE
+*replace(oldClass, newClass)*
+  Replaces an existing class with a new class
+#+END_QUOTE
+
+#+BEGIN_NOTES
+Did you happen to notice this in the documentation?
+
+There is another method called =replace()=. If you use it
+it takes two arguments, and replaces the existing class on
+the element with a new class.
+#+END_NOTES
+
+**** Replacing a class with =replace()=
+
+#+BEGIN_SRC javascript
+cl.replace("myclass", "newClass");
+#+END_SRC
+
+#+BEGIN_NOTES
+We can try this in the REPL too.
+
+Before you type and run this, I want you to think about what
+you expect the result to be.
+
+Then run it.
+
+Then go and check that the result is what you expected.
+
+[Wait and demo]
+#+END_NOTES
+
+
+* TODO Deeper look at variables
+
+TODO(nik): Find the right place to put this.
+
+
+* TODO Programming as communiction to other people
+
+* TODO IDEs
+** TODO Some web development problems
+
+- TODO(nik): Move this later, since they don't use WebStorm immediately
+- Too many files
+- Easy to make mistakes
+- "tightly coupled" content
+
+#+BEGIN_NOTES
+I want to talk about some of the problems you may already have
+encountered that makes this stuff difficult.
+
+As you're probably beginning to realise, there are a lot of files
+needed for web development. Each page is its own file, and then there
+are the CSS files as well.
+
+And we're going to be introducing more files later in the course.
+Pretty soon it becomes difficult to keep track of them all.
+
+The syntax of the files can be complicated -- keeping track of which
+HTML element needs to be closed, or forgetting to close a double
+quote, or mis-spelling a CSS property name can all cause issues that
+can be difficult to track down.
+
+And the information in these files is what we call "tightly coupled".
+This means that when you, for example, change the class name in a CSS
+file you have to change it everywhere it's used in the HTML files as
+well. If you miss just one instance your web page is going to look
+strange, and might be broken.
+
+If you imagine a site with 100s of pages you can see how this would
+very quickly become difficult to work with.
+#+END_NOTES
+
+** TODO Integrated Development Environments (IDE)
+
+- Like a word processor, but for programmers
+
+#+BEGIN_NOTES
+[Check: Has everyone here used a word processor before?]
+
+Forget about web development for a moment, and think abour writing
+documents.
+
+They have their own set of problems -- am I using the fonts and
+headings consistently? Do the footnotes have the correct numbers?  Is
+the table of contents correct? That sort of thing.
+
+To solve those problems for writing documents we invented word
+processors, which provide features to take care of all of that for
+you, so you can focus on writing the text of the document.
+
+We did similar things for programming -- we invented special tools
+specifically to try and make programming easier, and to help us when
+we write code so that it's more difficult to make mistakes.
+
+We call these programs *Integrated Development Environments*, or
+*IDEs*.
+
+There are lots of different IDEs available, with different
+functionality. At the simpler end are programs like Notepad++ on
+Windows, which helps show you the HTML structure and uses colours to
+help you distinguish between HTML elements, content, and attributes.
+
+At the other end are more complicated IDEs like Visual Studio and
+*Web Storm*. These are very powerful, but are more complicated to
+learn.
+
+However, once you get used to the features they can make web
+development a lot easier, and speed up a lot of things.
+
+#+END_NOTES
+
+** TODO WebStorm: Installation
+
+- Live exercise
+
+#+BEGIN_NOTES
+Going to be using an IDE called WebStorm.
+
+TODO(nik): Installation
+#+END_NOTES
+
+** TODO WebStorm: Initial setup
+
+- Live exercise
+
+#+BEGIN_NOTES
+TODO(nik): Cover
+
+- Opening the first time
+- Setting project options
+  - 2 spaces not 4
+  - Indentation for all block level elements
+- Disable Language Injection feature (not necessary yet)
+- Mark modified tabs with asterisks
+#+END_NOTES
+
+** TODO WebStorm: Opening a project
+
+- Live exercise
+
+#+BEGIN_NOTES
+TODO(nik): Complete
+#+END_NOTES
+
+** TODO WebStorm: Initial tour
+
+- Live exercise
+
+#+BEGIN_NOTES
+- Initial window layout (files, directories on left, contents on right)
+- Tool windows, showing and hiding
+- [MAYBE] View > Enter Distraction Free mode
+- Editor help
+  - HTML
+    - Syntax colouring
+    - Highlighting start and end tags
+    - Automatic indentation
+    - Reformatting code to match style (Code > Reformat code)
+    - Collapsible sections (left hand margin, "code folding")
+    - Syntax / validity checking (check mark at the top right)
+    - Open file in a browser
+    - Current 'path' through the document structure (bottom of the screen)
+    - "Structure" tool window
+    - TODOs
+    - Autocompletion
+    - Auto-closing tags
+  - CSS
+    - Common features
+      - Syntax highlighting
+      - Code reformatting
+      - Validity checking
+      - Current
+   
+- Creating new files
+  - File > New, choose the type
+  - Right-click on directory / file, choose the type
+
+
+#+END_NOTES
+** TODO WebStorm: Troubleshooting
+
+- Live exercise
+
+#+BEGIN_NOTES
+- Delete a quote from a CSS class
+- Delete closing bracket from opening tag
+- Delete opening bracket from closing tag
+
+#+END_NOTES
+
+
+* TODO The language and the environments
+
+#+BEGIN_NOTES
+Slide to talk about the difference between Javascript the language,
+and Javascript the browser environment. Up until this point we
+haven't been making the distinction.
+#+END_NOTES

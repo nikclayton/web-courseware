@@ -1,0 +1,46 @@
+#+Title: Powercoders Basel Course work, Day 4, CSS
+#+INCLUDE: "../include/settings.org"
+
+* Longer recap
+
+- Files and directories
+- HTML
+  - Elements, attributes, structure
+- The command line
+- Version control with Git
+- Your cheatsheets
+
+* DONE Introducing styling to the web
+- Why?
+
+* TODO Introducing Cascading Style Sheets
+- Want to control what different parts of the page look like
+- "This element should look like this"
+
+* TODO A sprinkling of CSS
+- External file immediately
+  - Teach good practice from the beginning
+  - Makes it easier to manage
+  - Avoids mixing different syntaxes in the same file
+- Create the empty file (CLI, use touch)
+- Link to it. Reload page, show that nothing has changed.
+
+Commit the empty file and changed HTML file.
+
+* TODO Styling all elements of a particular type
+- CSS syntax - selector, then styles
+
+* TODO Styling just one element using id
+- Introduce the id attribute
+- Give selector example
+
+* TODO Styling all elements of particular class
+- Introduce the class attribute
+
+* TODO CSS colors
+
+* TODO CSS fonts
+
+* Quiz #1
+
+* TODO Exercises and Practice

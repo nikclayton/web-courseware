@@ -1,0 +1,47 @@
+#+Title: Powercoders Basel Coursework, Day 5
+#+INCLUDE: "../include/settings.org"
+
+#+BEGIN_NOTES
+Experiment with no practice time in the morning, give the material,
+they have the slides to use it in the afternoon.
+#+END_NOTES
+
+* TODO Box model
+- Margins
+- Padding
+
+* TODO Inheritance / cascading (single file not multiple)
+
+
+* TODO Debugging CSS
+- Introduce the browser's inspector
+- Show box model in UI
+- Show temporarily overriding CSS, toggling options
+
+#+BEGIN_NOTES
+Have them try -- use the inspector to try changing the CSS, and if
+they like the effect then copy it in to their .css file.
+#+END_NOTES
+* TODO CSS float
+- Block vs. inline elements
+
+
+* TODO CSS media queries
+- Problem -- not everyone has the same screen size
+- Want to say "If screen is x big do this, otherwise do that"
+
+* Exercises
+
+- Make your portfolios work on mobile screens too. And maybe when
+  printed.
+
+* TODO CSS Flex
+
+- Probably push to week 2
+
+* TODO Bootstrap
+
+- Probably push to week 2
+
+Introduce Bootstrap here? Have they seen enough to understand the problem it solves?
+
