@@ -1038,8 +1038,421 @@ Ask them why the style doesn't change.
 Here's our problem again, and I've filled in the information
 we've learned so far.
 
-
+It's time to learn how to write Javascript functions.
 #+END_NOTES
+
+* Introduction to functions
+
+- Functions provide *encapsulation*
+- A function is a:
+  - Collection of Javascript statements
+  - With a name
+  - And optional parameters
+  - That you can *call* from other code
+- =alert("Some message");=
+
+#+BEGIN_NOTES
+One of the things we do when we're programming is try and manage
+complexity, and one of the ways that we do that is by hiding things
+behind names.
+
+We call this *encapsulation*.
+
+A function lets us take some functionality in our code, give it a
+dedicated name, and then *call* the function from other parts of
+the code.
+
+We say that functions take *parameters* which can control what it
+does.
+
+You've already used one function, =alert()=. And you've used object
+methods, like =getElementById()=, which are very similar.
+#+END_NOTES
+
+** Declaring / defining a function
+
+#+BEGIN_SRC javascript
+function greet() {
+  return "hello";
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+When we write a function we say that we are *defining* it. You'll
+also hear people talking about *declaring* a function. They mean
+the same thing.
+
+A function definition, like this example here, consists of:
+
+- The *keyword* =function=
+- The name of the function, in this case =greet=
+- A list of any function parameters, surrouned by parentheses. In this
+  example there are no parameters
+- The Javascript statements that define the function, surrounded by
+  curly brackets. We call this the function *body*
+
+Notice how there are *not* semicolons after the opening and closing
+curly brackets. This is one of the exceptions to the rule that each
+Javascript line should end with a semicolon.
+
+Functions can *return* a value to the code that calls it by using the
+special =return= keyword.
+
+Type this in to the REPL, and let me know when you've done that.
+#+END_NOTES
+
+** Calling functions
+
+#+BEGIN_SRC javascript
+> greet();
+< "hello"
+#+END_SRC
+
+#+BEGIN_NOTES
+To *call* a function you write its name, followed by any parameters it
+takes, surrounded by parentheses.
+
+If the function doesn't take any parameters (like this one) you must
+still include the parentheses. As normal, we end with a semicolon.
+
+What you've just seen here is the *flow of control* changing. Ordinarily
+the REPL runs things as you type them, one after the other.
+
+In this case you've caused the flow to change, and code that you
+wrote *earlier* has been called.
+
+Remember this, it's going to come up a lot.
+#+END_NOTES
+
+** Functions with parameters
+
+#+BEGIN_SRC javascript
+  function double(num) {
+    return num * 2;
+  }
+#+END_SRC
+
+#+BEGIN_SRC javascript
+> double(10);
+< 20
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's an example of a function that does take a parameter. As before we
+have the =function= keyword followed by the function name. In parentheses
+is the name of the parameter, which I've called =num=.
+
+Inside the function body you can treat the parameter as though it was a
+variable. In this case we take the value, multiply it by 2, and return
+it back to the caller.
+
+Try this, and make sure you see the same result.
+#+END_NOTES
+
+** Exercise: A function that changes the class
+
+#+BEGIN_SRC javascript
+setClassGreen();   // <-- goal
+#+END_SRC
+
+#+BEGIN_SRC javascript
+function setClassGreen() {
+  // You write the function body
+
+  // 1. Get the element in to a variable.
+
+  // 2. Change the element's className property
+  //    to "green".
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+We now know everything we need to write a function that changes the class
+of the paragraph in our page.
+
+Here, I've provided the outline of a function that will set the element's
+class name to "green".
+
+I want you to use the information that we learned earlier, and complete
+the function in the REPL.
+#+END_NOTES
+
+** Solution: A function that changes the class
+
+#+BEGIN_SRC javascript
+function setClassGreen() {
+  let el = document.getElementById("mypara");
+  el.className = "green";
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+Did everyone do OK with this?
+
+What problems did you have? Let's talk through them with the class.
+#+END_NOTES
+
+** Exercise: Take the class name as a parameter
+
+#+BEGIN_SRC javascript
+setClass("green");    // <-- goal
+#+END_SRC
+
+#+BEGIN_SRC javascript
+function setClass(/* ... */) {
+  // You write the function body.
+
+  // Add a named parameter for the class name.
+
+  // Use the nameed parameter as the new class name.
+}
+#+END_SRC
+
+** Solution: Take the class name as a parameter
+
+#+BEGIN_SRC javascript
+function setClass(className) {
+  let el = document.getElementById("mypara");
+  el.className = className;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+Did everyone do OK this with?
+
+What problems did you have? Let's talk through them with the class.
+#+END_NOTES
+
+* TODO JS: Problem 1: We're going to...
+
+1. Write a function...
+  - Done
+2. ... that finds the paragraph element...
+  - =document.getElementById("...");=
+3. ... and changes its class
+  - Change the =className= property
+4. Call the function when the listitem is clicked
+  - ?
+
+#+BEGIN_NOTES
+Back to the problem again, and we've made a lot of progress, and
+almost solved it.
+
+The last thing we need to figure out is how do we call our functions
+when the user clicks on one of those listitems?
+#+END_NOTES
+
+* DOM Events
+
+- General term for "An interesting thing has happened"
+- Let's you say
+  - When this thing happens...
+  - ... call my function =foo()=
+
+#+BEGIN_NOTES
+So far when you've been writing code you've also been the person that's
+causing the code to be called.
+
+For example, those =setClass...= functions are called by you typing the
+function name in to the REPL and pressing RETURN.
+
+It happens when *you* want it to.
+
+DOM events provided a way for you to say "Call this function when this
+event happens".
+
+In this way you're no longer in control of exactly when your code is
+called. Or even the order in which it is called. This is that *flow
+of control* thing that I mentioned earlier coming up again.
+#+END_NOTES
+
+** Sample events - [[https://developer.mozilla.org/en-US/docs/Web/Events][MDN DOM Events]]
+
+#+REVEAL_HTML: <div class="leftcol">
+- =click=
+- =mouseover=
+- =load=
+- =online=
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="leftcol">
+- =keyup=
+- =drop=
+- =scroll=
+- =resize=
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Searching for =MDN DOM Events= will show you the MDN page with details
+of all the events that can be triggered. I've put some examples here
+just to give you some idea of what's possible.
+
+=click= fires when ever the user clicks on something.
+
+=mouseover= fires when the user moves the mouse over an element.
+
+=load= fires when the webpage has completely finished loading.
+
+=online= fires when the browser goes online. For example, if your
+computer was disconnected from the network, and then you turn WiFi on
+and it reconnects.
+
+=keyup= fires when the user releases a key if they've been typing
+something.
+
+=drop= fires if the user has dragged something on to the page, and
+then released the mouse button, "dropping" it on to the page.
+
+=scroll= fires whenever the user scrolls the page.
+
+=resize= fires whenever the browser window is resized.
+
+We want to change the class associated with the paragraph whenver the
+user clicks, so we want to use the =click= event.
+#+END_NOTES
+
+** Event terminology
+
+- An event is *triggered* or *fires*
+- A function called for an event *handles the event*
+- These functions are called *event handlers*
+
+** Listening for click events with attributes
+
+- The =onclick= attribute lets you specify the event handler
+
+#+BEGIN_SRC javascript
+function handleClick(event) {
+  // Do something
+}
+#+END_SRC
+
+#+BEGIN_SRC html
+<p onclick="return handleClick(event);">Some text</p>
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's our Javascript function that is going to handle the event.
+
+All event handlers take at least one parammeter, and the first
+parameter is *always* an object that contains more details about
+the event, and depends on the type of event that fired.
+
+This is a completely normal function declaration -- it's got a
+name, the =event= parameter, and the function body. There is
+nothing special about this function at all. In particular,
+the function name *does not* need to be =handle...=, or contain
+the word =click=, or anything like that. It's just a useful
+convention to follow.
+
+To tell the browser that this event handler should be called when
+the user clicks on the element we use the element's =onclick=
+attribute.
+
+We haven't seen this yet, but it's just like the other HTML
+attributes we saw last week -- a name, an equals sign, and then
+the attribute value in double quotes.
+
+The only difference is that the attribute's value is some more
+Javascript code.
+
+This is a bit weird -- we're mixing HTML and Javascript together.
+#+END_NOTES
+
+** To respond to clicks
+
+- Write a function that will be called when the event fires
+- Call the function from the element's =onclick= attribute
+
+** Including Javascript in the HTML
+
+#+BEGIN_SRC html
+  <html>
+    ...
+    <body>
+      ...
+    </body>
+    <script>
+      // Javascript code goes here
+    </script>
+  </html>
+#+END_SRC
+
+#+BEGIN_NOTES
+So far all of your Javascript code has been entered in to the REPL.
+It's time to change that.
+
+To add Javascript code to an HTML page we're going to use the =script=
+element.
+
+The contents of this element should be Javascript code, just as you
+entered it in to the REPL.
+
+At the moment the right place to put the =script= element is
+immediately after the =body=. So between the closing =</body>= tag
+and the closing =</html>= tag.
+
+This is also weird -- we're really mixing and matching HTML and
+Javascript code now. I know this can be a bit confusing, and we're
+going to change it later to make it easier, but for now we have to
+do it this way.
+#+END_NOTES
+
+** Exercise: Putting it all together
+
+1. Edit the HTML and add a =script= element.
+2. Write three Javascript functions to change the paragraph's class
+3. Add =onclick= attributes to the three =li= elements to call
+   those functions.
+
+** Solution: Putting it all together (HTML)
+
+#+BEGIN_SRC html
+...
+<body>
+  <p id="mypara">...</p>
+
+  <ul>
+    <li class="green"
+        onclick="return setClassGreen(event);">Make it green</li>
+    <li class="bold">
+        onclick="return setClassBold(event);">Make it bold</li>
+    <li onclick="return classClass(event);">Make it normal</li>
+  </ul>
+</body>
+<script>
+  ...
+</script>
+#+END_SRC
+
+** Solution: Putting it all together (Javascript)
+
+#+BEGIN_SRC javascript
+<script>
+  function setClassGreen(event) {
+    let el = document.getElementById("mypara");
+    el.className = "green";
+  }
+
+  function setClassBold(event) {
+    let el = document.getElementById("mypara");
+    el.className = "bold";
+  }
+
+  function clearClass(event) {
+    let el = document.getElementById("mypara");
+    el.className = "";
+  }
+</script>
+#+END_SRC
+
+** Listening for click events with properties
+
+* Exercises
+
+** Use one function, with a parameter
+
+
 
 ** TODO Method and property chaining
 
