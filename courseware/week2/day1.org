@@ -2571,9 +2571,14 @@ that the root node.
 #+REVEAL_HTML: <div class="rightcol">
 #+BEGIN_SRC dot :file html-tree1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
 digraph G {
+  node [shape="hexagon"];
   html
 }
 #+END_SRC
+
+#+RESULTS:
+[[file:html-tree1.svg]]
+
 #+REVEAL_HTML: </div>
 
 ** TODO =head= and =body= are child nodes
@@ -2595,6 +2600,7 @@ digraph G {
 #+REVEAL_HTML: <div class="column" style="float:right; width:50%">
 #+BEGIN_SRC dot :file html-tree2.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
 digraph G {
+  node [shape="hexagon"];
   html -> head
   html -> body
 }
@@ -2624,6 +2630,7 @@ digraph G {
 #+REVEAL_HTML: <div class="rightcol">
 #+BEGIN_SRC dot :file html-tree3.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
 digraph G {
+  node [shape="hexagon"];
   html -> head;
   html -> body;
   head -> title;
@@ -2641,7 +2648,7 @@ digraph G {
 
 #+BEGIN_SRC dot :file html-tree4.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
   digraph G {
-    //node [shape="none"];
+    node [shape="hexagon"];
     html -> head;
     html -> body;
     head -> title;
@@ -2728,7 +2735,7 @@ OK?
 
 #+BEGIN_SRC dot :file tree-sample.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
   digraph G {
-    //node [shape="none"];
+    node [shape="hexagon"];
 
     html -> head;
     head -> title;
@@ -2808,6 +2815,7 @@ complex than this example -- and draw the tree for that page.
 #+REVEAL_HTML: <div class="rightcol">
 #+BEGIN_SRC dot :file dom-add-para-1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
 digraph G {
+  node [shape="hexagon"];
   body -> h1;
   h1 -> h1_content;
   h1_content [label="#t: First heading" shape="none"];
@@ -2833,6 +2841,7 @@ How do we go about adding a new paragraph to this page?
 
 #+BEGIN_SRC dot :file dom-add-para-2.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
 digraph G {
+  node [shape="hexagon"];
   body -> h1;
   h1 -> h1_content;
   h1_content [label="#t: First heading" shape="none"];
@@ -2861,6 +2870,7 @@ You can see it here at the top right of the graph.
 
 #+BEGIN_SRC dot :file dom-add-para-3.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
 digraph G {
+  node [shape="hexagon"];
   body -> h1;
   h1 -> h1_content;
   h1_content [label="#t: First heading" shape="none"];
@@ -2896,6 +2906,7 @@ say that we are *appending* it to the list of child nodes of the =body=.
 
 #+BEGIN_SRC dot :file dom-add-para-4.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
 digraph G {
+  node [shape="hexagon"];
   body -> h1;
   h1 -> h1_content;
   h1_content [label="#t: First heading" shape="none"];

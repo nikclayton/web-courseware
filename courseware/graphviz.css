@@ -2,7 +2,7 @@
   fill: none;			/* Transparent background */
 }
 
-.node ellipse {
+.node ellipse, .node polygon {
   stroke: rgb(63, 63, 63);
   fill: #3f3f3f;
 }
