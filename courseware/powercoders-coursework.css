@@ -102,3 +102,8 @@ li code {
   padding: 0 .25em !important;
   border-radius: .25em;
 }
+
+/** Centre SVG diagrams. */
+div.figure p {
+  text-align: center;
+}

@@ -1,0 +1,23 @@
+.graph polygon {
+  fill: none;			/* Transparent background */
+}
+
+.node ellipse {
+  stroke: rgb(63, 63, 63);
+  fill: #3f3f3f;
+}
+
+.edge path {
+  stroke: #eee8d5;
+}
+
+.edge polygon {
+  fill: #eee8d5;
+  stroke: #eee8d5;
+}
+
+
+text {
+  font-family: sans-serif;
+  fill: #9ee0e3;
+}

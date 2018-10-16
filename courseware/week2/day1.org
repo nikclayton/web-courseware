@@ -356,205 +356,6 @@ Here's what we've covered so far, and there's more to come. I'll come back
 to this periodically to make sure you don't get lost.
 #+END_NOTES
 
-* TODO The DOM tree
-
-- An HTML page is a tree of elements
-- The DOM allows us to inspect and change the tree
-
-#+BEGIN_NOTES
-When we looked at files and directories last week, we noticed that they
-formed a tree of things.
-
-Does everyone remember that?
-#+END_NOTES
-
-** TODO Tree refresher
-
- - Tree is a hierarchy of *nodes*
- - Each node has exactly one *parent*
-   - These are the *children* of the parent
- - Nodes with the same parent are *siblings*
-
-** TODO Tree image
-
- TODO(nik): Draw tree image
-
- #+BEGIN_NOTES
- Let's look at that graphically again.
- #+END_NOTES
-
-** TODO File and directories as trees
-
- TODO(nik): Draw tree image
-
- #+BEGIN_NOTES
- And here's the filesystem as a tree.
- #+END_NOTES
-
-* TODO HTML as a tree
-
-#+BEGIN_SRC html
-<html>
-  <head>
-    <title>My first page</title>
-  </head>
-  <body>
-    <h1>My first heading</h1>
-    <p>My first paragraph</p>
-  </body>
-</html>
-#+END_SRC
-
-#+BEGIN_NOTES
-So lets look at how we can think as HTML as a tree.
-
-Here's a simple HTML document, with a few elements that are
-nested in side one another.
-
-To think of this as a tree, we take the =html= element and make
-that the root node.
-#+END_NOTES
-
-** TODO =html= as root node
-
-#+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC html
-<html>
-  <head>
-    <title>My first page</title>
-  </head>
-  <body>
-    <h1>My first heading</h1>
-    <p>My first paragraph</p>
-  </body>
-</html>
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-| html |
-TODO(nik): Graph
-#+REVEAL_HTML: </div>
-
-** TODO =head= and =body= are child nodes
-
-#+REVEAL_HTML: <div class="column" style="float:left; width:50%">
-#+BEGIN_SRC html
-<html>
-  <head>
-    <title>My first page</title>
-  </head>
-  <body>
-    <h1>My first heading</h1>
-    <p>My first paragraph</p>
-  </body>
-</html>
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="column" style="float:right; width:50%">
-| html |
-TODO(nik): Graph
-#+REVEAL_HTML: </div>
-
-** TODO =title=, =h1=, and =p= are also child nodes
-
-#+REVEAL_HTML: <div class="column" style="float:left; width:50%">
-#+BEGIN_SRC html
-<html>
-  <head>
-    <title>My first page</title>
-  </head>
-  <body>
-    <h1>My first heading</h1>
-    <p>My first paragraph</p>
-  </body>
-</html>
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="column" style="float:right; width:50%">
-| html |
-TODO(nik): Graph
-#+REVEAL_HTML: </div>
-
-** TODO And the content is also nodes
-
-TODO(nik): Graph
-
-#+BEGIN_NOTES
-This is a really, *really* important thing to understand.
-
-There is *no* difference between thinking about your HTML page as a
-collection of text ordered top-to-bottom in a file, and thinking
-about as a collection of nodes organised in a tree.
-
-The information, and the structure, is identical.
-
-It's just the representation that's different.
-
-It turns out that people are really good at dealing with information
-laid out the way we have it in the file.
-
-Computers are really good at dealing with information in trees.
-
-You will need to develop the ability to mentally *flip* between
-thinking about the HTML as it is in the file, and thinking about
-the HTML as a tree.
-#+END_NOTES
-
-** TODO Live DOM Viewer
-
-- https://software.hixie.ch/utilities/js/live-dom-viewer/
-
-** TODO Exercise: Draw the tree for a sample page
-
-#+BEGIN_SRC html
-<html>
-  <head>
-    <title>A test page</title>
-  </head>
-  <body>
-    <h1>This a test page</h1>
-    <p>It has some content in a paragraph.</p>
-    <img src="foo.png" alt="">
-    <p>It has another para with <em>emphasised</em> text.</p>
-    <ul>
-      <li>And a list...</li>
-      <li>... of items.</li>
-    </ul>
-  </body>
-<html>
-#+END_SRC
-
-#+BEGIN_NOTES
-We're going to test how well you understand this, because as I say,
-it's really important. If you don't get this then a lot of the stuff
-that's coming up isn't going to make any sense at all.
-
-Here's an example page.
-
-What I want you to do is take a sheet of paper and a pen and draw the
-tree for this page. Each element is a node.
-
-When you're done let me know. I'll collect them up and we'll check them.
-Some of you will have made mistakes.
-
-*That is absolutely fine.*
-
-We're all going to learn from those mistakes.
-
-OK?
-#+END_NOTES
-
-** TODO Exercise: Draw the tree for your page
-
-#+BEGIN_NOTES
-You've all got webpages that you've been building, so I want you
-to take one of those pages -- and please choose one that's more 
-complex than this example -- and draw the tree for that page.
-#+END_NOTES
-
 * TODO Changing the DOM
 
 #+BEGIN_SRC html
@@ -1018,7 +819,7 @@ we've learned so far.
 It's time to learn how to write Javascript functions.
 #+END_NOTES
 
-* Introduction to functions
+* TODO Introduction to functions
 
 - Functions provide *encapsulation*
 - A function is a:
@@ -1169,37 +970,6 @@ Did everyone do OK with this?
 What problems did you have? Let's talk through them with the class.
 #+END_NOTES
 
-** Exercise: Take the class name as a parameter
-
-#+BEGIN_SRC javascript
-setClass("green");    // <-- goal
-#+END_SRC
-
-#+BEGIN_SRC javascript
-function setClass(/* ... */) {
-  // You write the function body.
-
-  // Add a named parameter for the class name.
-
-  // Use the nameed parameter as the new class name.
-}
-#+END_SRC
-
-** Solution: Take the class name as a parameter
-
-#+BEGIN_SRC javascript
-function setClass(className) {
-  let el = document.getElementById("mypara");
-  el.className = className;
-}
-#+END_SRC
-
-#+BEGIN_NOTES
-Did everyone do OK this with?
-
-What problems did you have? Let's talk through them with the class.
-#+END_NOTES
-
 * TODO JS: Problem 1: We're going to...
 
 1. Write a function...
@@ -1219,7 +989,7 @@ The last thing we need to figure out is how do we call our functions
 when the user clicks on one of those listitems?
 #+END_NOTES
 
-* DOM Events
+* TODO DOM Events
 
 - General term for "An interesting thing has happened"
 - Let's you say
@@ -1291,27 +1061,27 @@ user clicks, so we want to use the =click= event.
 ** Event terminology
 
 - An event is *triggered* or *fires*
-- A function called for an event *handles the event*
-- These functions are called *event handlers*
+- A function called for an event *listens for, and handles the event*
+- These functions are called *event listeners* (or *event handlers*)
 
 ** Listening for click events with attributes
 
-- The =onclick= attribute lets you specify the event handler
+- The =onclick= attribute lets you specify the event listen
 
 #+BEGIN_SRC javascript
-function handleClick(event) {
+function listenForClick(event) {
   // Do something
 }
 #+END_SRC
 
 #+BEGIN_SRC html
-<p onclick="return handleClick(event);">Some text</p>
+<p onclick="return listenForClick(event);">Some text</p>
 #+END_SRC
 
 #+BEGIN_NOTES
-Here's our Javascript function that is going to handle the event.
+Here's our Javascript function that is going to listen for the event.
 
-All event handlers take at least one parammeter, and the first
+All event listeners take at least one parammeter, and the first
 parameter is *always* an object that contains more details about
 the event, and depends on the type of event that fired.
 
@@ -1322,7 +1092,7 @@ the function name *does not* need to be =handle...=, or contain
 the word =click=, or anything like that. It's just a useful
 convention to follow.
 
-To tell the browser that this event handler should be called when
+To tell the browser that this event listener should be called when
 the user clicks on the element we use the element's =onclick=
 attribute.
 
@@ -1348,10 +1118,10 @@ This is a bit weird -- we're mixing HTML and Javascript together.
     ...
     <body>
       ...
+      <script>
+        // Javascript code goes here
+      </script>
     </body>
-    <script>
-      // Javascript code goes here
-    </script>
   </html>
 #+END_SRC
 
@@ -1366,8 +1136,8 @@ The contents of this element should be Javascript code, just as you
 entered it in to the REPL.
 
 At the moment the right place to put the =script= element is
-immediately after the =body=. So between the closing =</body>= tag
-and the closing =</html>= tag.
+immediately before the =body= finishes. So just before the closing
+=</body>= tag.
 
 This is also weird -- we're really mixing and matching HTML and
 Javascript code now. I know this can be a bit confusing, and we're
@@ -1390,16 +1160,14 @@ do it this way.
   <p id="mypara">...</p>
 
   <ul>
-    <li class="green"
-        onclick="return setClassGreen(event);">Make it green</li>
-    <li class="bold">
-        onclick="return setClassBold(event);">Make it bold</li>
-    <li onclick="return classClass(event);">Make it normal</li>
+    <li onclick="return setClassGreen(event);" class="green">Make it green</li>
+    <li onclick="return setClassBold(event);" class="bold">Make it bold</li>
+    <li onclick="return setClass(event);">Make it normal</li>
   </ul>
+  <script>
+    ...
+  </script>
 </body>
-<script>
-  ...
-</script>
 #+END_SRC
 
 ** Solution: Putting it all together (Javascript)
@@ -1423,130 +1191,22 @@ do it this way.
 </script>
 #+END_SRC
 
-** Listening for click events with properties
+** =onmousemove=
 
-* Exercises
+#+BEGIN_NOTES
+=click= is one of the events that can fire, but we've seen that there are
+many others.
+
+One of them is called =on
+#+END_NOTES
+
+
+
+* TODO Exercises
 
 ** Use one function, with a parameter
 
 
-
-** TODO Method and property chaining
-
-TODO(nik): Fill out
-
-** TODO =classList= in the REPL
-
-TODO(nik): Maybe move this later, it's more advanced.
-
-- Reload =getelementbyid.html=
-- Open the console
-
-#+BEGIN_SRC javascript
-let el = document.getElementById("myheading");
-let cl = el.classList;
-#+END_SRC
-
-#+BEGIN_NOTES
-Let's experiment with =classList=. We can do this directly in the
-REPL, and then inspect the output in the *Elements* tab.
-
-Get back to a known state by closing the tab (if you haven't
-already), reloading the page, opening the console, and typing
-the following.
-
-Line 1 we've done before -- we create a variable called =el=
-and set its value to the element that has the ID =myheading=.
-
-Line 2 is new, but very similar -- we create a variable called
-=cl= and sets its value to the =classList= property.
-#+END_NOTES
-
-*** Adding a class with =add()=
-
-#+BEGIN_QUOTE
-=element.classList= itself is read-only, although you can modify
-it using the =add()= and =remove()= methods.
-#+END_QUOTE
-
-**** Adding a class with =add()= 2/4
-
-#+BEGIN_QUOTE
-*add(String[, String [,...]])*
-  Add specified class values.If these classes already exist in
-  attribute of the element, then they are ignored.
-#+END_QUOTE
-
-**** Adding a class with =add()= 3/4
-
-#+BEGIN_QUOTE
-#+BEGIN_SRC javascript -n
-div.classList.add("anotherClass");
-#+END_SRC
-#+END_QUOTE
-
-**** Adding a class with =add()= 4/4
-
-#+BEGIN_SRC javascript
-cl.add("myclass");
-#+END_SRC
-
-#+BEGIN_NOTES
-Finally, lets actually use Javascript to add a class to the
-element that we've found.
-
-=cl= is our variable that contains the class list, and we've
-seen from the documentatin that we can call the =add()= method
-to add a new class.
-
-So lets do that. Type this in to the console, then go and
-look at the element view and verify that the new class shows
-up on the element.
-
-[Demo]
-#+END_NOTES
-
-*** Replacing a class with =replace()=
-
-#+BEGIN_QUOTE
-*replace(oldClass, newClass)*
-  Replaces an existing class with a new class
-#+END_QUOTE
-
-#+BEGIN_NOTES
-Did you happen to notice this in the documentation?
-
-There is another method called =replace()=. If you use it
-it takes two arguments, and replaces the existing class on
-the element with a new class.
-#+END_NOTES
-
-**** Replacing a class with =replace()=
-
-#+BEGIN_SRC javascript
-cl.replace("myclass", "newClass");
-#+END_SRC
-
-#+BEGIN_NOTES
-We can try this in the REPL too.
-
-Before you type and run this, I want you to think about what
-you expect the result to be.
-
-Then run it.
-
-Then go and check that the result is what you expected.
-
-[Wait and demo]
-#+END_NOTES
-
-
-* TODO Deeper look at variables
-
-TODO(nik): Find the right place to put this.
-
-
-* TODO Programming as communiction to other people
 
 * TODO IDEs
 ** TODO Some web development problems
@@ -1682,7 +1342,7 @@ TODO(nik): Complete
       - Code reformatting
       - Validity checking
       - Current
-   
+
 - Creating new files
   - File > New, choose the type
   - Right-click on directory / file, choose the type
@@ -1700,8 +1360,1846 @@ TODO(nik): Complete
 
 #+END_NOTES
 
+** TODO WebStorm: Debugging
 
-* TODO The language and the environments
+- Breakpoints
+- Starting the debugger
+- Stepping through code
+- Inspecting variables
+- Flow of control
+- Ending debug session
+
+#+BEGIN_NOTES
+Topics to hit are in the slide
+#+END_NOTES
+
+
+* TODO Refactoring
+
+- Rare to design a program correctly on first go
+- Requirements can change
+- Knowledge can change
+- Rewriting code to improve it is *refactoring*
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+
+* TODO What's wrong with our code?
+
+ - Inline Javascript
+ - Repeated code
+ - Event binding with =onclick=
+
+#+BEGIN_NOTES
+There's a few things I don't like with our code at the moment.
+
+First, the Javascript is inline -- this means it's in the same file
+as the HTML.
+
+This isn't a big problem with something as small as this, but it's
+still confusing -- we're mixing and matching two completely different
+languages in one file.
+
+Best practice is to -- where possible -- split Javascript out in to
+its own files. That way all the Javascript code is in one place, and
+the HTML is separate.
+
+We've already done this with the CSS, and for exactly the same reason.
+
+Second, if you look at the three functions they are very similar. They only
+thing that changes is the string they use for the CSS class.
+
+When you have a few functions that do very similar things you should
+consider if they can be replaced with one function that takes a parameter
+that controls its behaviour.
+
+This is *not* always the right thing to do. It's a value judgement, and
+sometimes having several similar-but-different functions is the right
+thing to do. In this case, I'm happy with the idea that we can convert
+these three functions in to one function.
+
+Finally, we bind our event listener to the event using the =onclick=
+attribute. This is OK, but there is another way to do it, which I want
+to show you. For code as simple as this it's really not necessary, but
+it is a good way to show the technique.
+
+#+END_NOTES
+
+* TODO Refactoring: Inline Javascript
+
+- Place the Javascript in a separate file
+
+#+BEGIN_SRC html
+<head>
+  ...
+  <script src="..."></script>
+  ...
+</head>
+#+END_SRC
+
+#+BEGIN_NOTES
+To refacor the inline Javascript we have to put the contents in a
+separate file, and then use the =script= element in the HTML =head=
+to load the file.
+#+END_NOTES
+
+** TODO External CSS in the =head=
+
+#+BEGIN_SRC html
+<head>
+  ...
+  <link rel="stylesheet" href="style.css" type="text/css">
+  ...
+</head>
+#+END_SRC
+
+#+BEGIN_NOTES
+This is very similar to what you've already done with CSS.
+#+END_NOTES
+
+** TODO Refactoring inline Javascript, smaller steps
+
+1. Create an empty file, =setClass.js=, and check.
+2. Create the =script= element, and check.
+3. Move the Javascript code to =setClass.js=, and check.
+4. Commit the change.
+
+#+BEGIN_NOTES
+Earlier I said that we take the current Javascript, put it in a
+new file, and then add a =script= element to reference the new
+file.
+
+We're actually going to take more steps to do this.
+
+This is because we want to be safe. Refactoring can sometimes be
+difficult, and you want to make sure that you don't accidentally
+break code that's already working.
+
+So the trick is to break the change down in to small, independent
+steps that should each be safe. At each stage you test the change
+and make sure that things still work.
+
+If they don't work then it's very easy to go back and undo the
+last small change you made, or review it to see what went wrong.
+#+END_NOTES
+
+** TODO Create =setClass.js=, and check
+
+- File > New > JavaScript File
+- Call it =setClass.js=
+
+** TODO Create the =script= element, and check
+
+#+BEGIN_SRC html
+<head>
+  ...
+  <script src="setClass.js"></script>
+  ...
+</head>
+#+END_SRC
+
+** TODO Move the Javascript code to =setClass.js=, and check
+
+#+CAPTION: setClass.js
+#+BEGIN_SRC javascript
+function setClassGreen(event) {
+  let el = document.getElementById("mypara");
+  el.className = "green";
+}
+
+function setClassBold(event) {
+  let el = document.getElementById("mypara");
+  el.className = "bold"
+}
+
+function clearClass(event) {
+  let el = document.getElementById("mypara");
+  el.className = "";
+}
+#+END_SRC
+
+** TODO Delete the old =script= elements
+
+#+BEGIN_SRC html
+  <html>
+    <head>
+      <title>change_para_class</title>
+      <link rel="stylesheet" href="style.css" type="text/css">
+      <script src="setClass.js"></script>
+    </head>
+    <body>
+      <p id="mypara">This is a paragraph of text that can change style. Use the options
+	below to change how this looks.</p>
+
+      <ul>
+	<li class="green" onclick="return setClassGreen(event);">Make it green</li>
+	<li class="bold" onclick="return setClassBold(event);">Make it bold</li>
+	<li onclick="return clearClass(event);">Make it normal</li>
+      </ul>
+    </body>
+  </html>
+#+END_SRC
+** TODO Recap
+
+- Created a new file
+- Referenced it with =<script src=...> =
+- Moved the code over
+- Deleted code from the old location
+- Checked at each step
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+* TODO Refactoring: Repeated code
+
+#+CAPTION: setClass.js
+#+BEGIN_SRC javascript
+function setClassGreen(event) {
+  let el = document.getElementById("mypara");
+  el.className = "green";
+}
+
+function setClassBold(event) {
+  let el = document.getElementById("mypara");
+  el.className = "bold"
+}
+
+function clearClass(event) {
+  let el = document.getElementById("mypara");
+  el.className = "";
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+If we look at this code we see that these three functions are
+almost identical. The only thing that changes is the name of
+the class.
+#+END_NOTES
+
+** Exercise: Take the class name as a parameter
+
+ #+BEGIN_SRC javascript
+ setClass(event, "green");    // <-- goal
+ #+END_SRC
+
+ #+BEGIN_SRC javascript
+ function setClass(event, /* ... */) {
+   // You write the function body.
+
+   // Add a named parameter for the class name.
+
+   // Use the nameed parameter as the new class name.
+ }
+ #+END_SRC
+
+#+BEGIN_NOTES
+So we could replace these three with one function that will take
+two parameters.
+
+That's what I'd like you to do.  Write a new function, called
+=setClass=. The first parameter is the event, the second is a string
+that will be the name of the class to use.
+
+Do *not* replace the existing functions.
+
+Write the function in the =setClass.js= file.
+
+Here's the outline of function, you need to fill in the missing
+pieces.
+#+END_NOTES
+
+** Solution: Take the class name as a parameter
+
+#+BEGIN_SRC javascript
+function setClass(event, className) {
+  let el = document.getElementById("mypara");
+  el.className = className;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+Did everyone do OK with this?
+
+What problems did you have? Let's talk through them with the class.
+
+When you've done this there still shouldn't be any change to how the
+page works. You've written the new function, but you haven't used it
+anywhere yet.
+#+END_NOTES
+
+** Replace one function call with a call to =setClass=
+
+#+BEGIN_SRC html
+...
+<body>
+  <p id="mypara">...</p>
+
+  <ul>
+    <li onclick="return setClass(event, 'green');" class="green">Make it green</li>
+    <li onclick="return setClassBold(event);" class="bold">Make it bold</li>
+    <li onclick="return clearClass(event);">Make it normal</li>
+  </ul>
+</body>
+#+END_SRC
+
+#+BEGIN_NOTES
+To use the function we replace the code in the =onclick= attribute that calls
+=setClassGreen= with code that calls the new =setClass= function.
+
+There's one wrinkle here -- notice how we've had to use single quotes around
+the string "green" in the attribute. This is because the attribute already
+uses double quotes for the whole value. We can't put a double-quoted string
+inside another double-quoted string.
+
+Fortunately we can use single quotes here.
+
+Go ahead and make this change to your code, and reload the page.
+
+If you've done everything correctly so far then everything should still work.
+
+Double check that.
+#+END_NOTES
+
+** TODO Exercise: Replace all function calls
+
+** TODO Solution: Replace all function calls
+
+#+BEGIN_SRC html
+...
+<body>
+  <p id="mypara">...</p>
+
+  <ul>
+    <li onclick="return setClass(event, 'green');" class="green">Make it green</li>
+    <li onclick="return setClass(event, 'bold');" class="bold">Make it bold</li>
+    <li onclick="return setClass(event, '');">Make it normal</li>
+  </ul>
+</body>
+#+END_SRC
+
+#+BEGIN_NOTES
+Check it still works.
+#+END_NOTES
+
+** TODO Delete the obsolete functions
+
+#+BEGIN_SRC javascript
+function setClass(event, className) {
+  let el = document.getElementById("mypara");
+  el.className = className;
+}
+#+END_SRC
+#+CAPTION: setClass.js
+
+#+BEGIN_NOTES
+Now that you've verified that the new code works correctly you can delete the
+obsolete functions. When you're done =setClass.js= should only contain one
+function, and it should look like this.
+
+Verify, and then commit your changes.
+#+END_NOTES
+
+** TODO Recap
+
+- Identified duplicated code
+- Wrote a generic function with an extra parameter
+- Verified new function worked
+- Replaced calls to old function with calls to new function
+- Deleted old code
+- 14 lines -> 4 lines
+
+#+BEGIN_NOTES
+Fewew lines of code means fewer bugs.
+#+END_NOTES
+
+
+* TODO Refactoring: Event binding with =onclick=
+
+#+BEGIN_SRC html
+... onlick="return nameOfFunction(event)" ...
+#+END_SRC
+
+- This is how we've been binding listeners to events
+- Javascript code in an HTML attribute
+- Introduces a dependency between HTML and Javascript
+
+#+BEGIN_NOTES
+So far this is how we've been binding our event listeners to particular
+events.
+
+This works.
+
+But it does introduce a few problems.
+
+The first is that we're mixing languages -- this is HTML, but the value
+of the attribute should be Javascript code. That's just weird.
+
+More importantly, our HTML needs to know the name of the functions to
+call.  This introduces a *dependency* between the HTML and the
+Javascript.
+
+If we ever change the name of the Javascript functions we'll need to
+change the HTML as well.
+
+In fact, we just had to do that as part of the refactoring. Remember
+we had to change all of the =onclick= attribute values when we
+refactored and decided to use a new function.
+
+In an example as small as this one this dependency is easy to manage.
+But as projects get bigger the increasing numbers of dependencies can
+make it much more difficult to think about the program -- there are
+more things that you need to keep in your head.
+
+So we're going to change this.
+#+END_NOTES
+
+** Adding an Event Listener (using =onclick=)
+
+#+BEGIN_SRC javascript
+function listenForClick(event) {
+  // Do something
+}
+#+END_SRC
+
+#+BEGIN_SRC html
+<p onclick="return listenForClick(event);">Some text</p>
+#+END_SRC
+
+#+BEGIN_NOTES
+Just as a reminder, this is what we've been doing so far.
+#+END_NOTES
+
+** Adding an Event Listener (using =addEventListener()=)
+
+#+BEGIN_SRC html
+<p id="mypara">Some text</p>
+#+END_SRC
+
+#+BEGIN_SRC javascript
+function listenForClick(event) {
+  // Do something
+}
+
+let el = document.getElementById("mypara");
+el.addEventListener('click', listenForClick);
+#+END_SRC
+
+#+BEGIN_NOTES
+This is the new way. We've made a number of changes here.
+
+1. We've removed the =onclick= attribute from the =p= element. We
+   don't need it any more.
+
+   This means our HTML element no longer contains any Javascript
+   code either.
+
+2. We've added an =id= attribute to the =p= element. This is because
+   we're going to need to find it in the DOM using Javascript.
+
+3. Our event listener code stays the same.
+
+4. We find the =p= element using our old friend, =getElementById()=.
+
+5. Once we've found it, we use its =addEventListener= method to say
+   which event to listen for, and which event listener to call.
+
+There's something subtle going on here that I want to draw your
+attention to.
+
+It's this usage of =listenForClick= here, without any parentheses.
+#+END_NOTES
+
+** Calling vs. using a function
+
+- =functionName= followed by =()= means "Call the function"
+- =functionName= on its own means "Use the function"
+- This is going to come up a lot
+
+#+BEGIN_SRC javascript
+el.addEventListener('click', listenForClick);
+#+END_SRC
+
+#+BEGIN_NOTES
+In this case we're not *calling* the =listenForClick= function in
+=addEventListener= because there are no parenthese after its name.
+
+Instead, we're telling =addEventListener= "When the click event,
+call the =listenForClick= function".
+#+END_NOTES
+
+** Solution...?
+
+#+BEGIN_SRC html
+<p id="mypara">...</p>
+
+<ul>
+  <li id="li-green" class="green">Make it green</li>
+  <li id="li-bold" class="bold" onclick="return setClass(event, 'bold');">Make it bold</li>
+  <li id="li-normal" onclick="return setClass(event, '');">Make it normal</li>
+</ul>
+#+END_SRC
+
+#+BEGIN_SRC javascript
+let liGreen = document.getElementById("li-green");
+liGreen.addEventListener("click", setClass);
+#+END_SRC
+
+#+BEGIN_NOTES
+So here's the beginning of a solution.
+
+We've added =id= attributes to the three =li= elements so we can
+refer back to them in the code.
+
+On the first one we've removed the =onclick= attribute.
+
+And in the Javascript code we've added two lines, the first finds the
+=li= element, and the second adds a =click= event listener, using our
+=setClass= function.
+
+That looks OK, right?
+
+[Wait]
+
+It's not. Can anyone see the bug?
+
+[Wait]
+
+The problem is on this last line, where we use =setClass=.
+
+When =setClass= is called it will be passed one parameter, the event.
+
+But we changed that so it needs two parameters, where the second one is
+the text of the new class.
+
+Are we going to have to go back to having three different functions?
+
+We could, but there's another way.
+#+END_NOTES
+
+** Values in Javascript
+
+- =4=
+- ="hello"=
+- =undefined=
+
+#+BEGIN_NOTES
+We're familiar with the idea of values in Javascript. These are things
+like numbers, or a string, or the special value =undefined=.
+#+END_NOTES
+
+** Assigning values to variables
+
+#+BEGIN_SRC javascript
+let x = 4;
+let y = "hello";
+let z = undefined;
+#+END_SRC
+
+#+BEGIN_NOTES
+And we can create variables, and assign values to them.
+#+END_NOTES
+
+** Using variables
+
+#+BEGIN_SRC javascript
+x;    // 4
+y;    // "hello"
+z;    // undefined
+#+END_SRC
+
+#+BEGIN_NOTES
+And when we use the variable, we get back the value that was put in.
+#+END_NOTES
+
+** Function names are also values
+
+#+BEGIN_SRC javascript
+function greet() {
+  return "hello";
+}
+
+let f = greet;  // Notice: no "()" at the end
+
+f;              // What does this print?
+
+f();            // What does this do?
+#+END_SRC
+
+#+BEGIN_NOTES
+Function names are also values.
+
+This is incredibly powerful. It means we can assign them to variables.
+
+If we use the variable in the normal way and look at the value... well,
+try it, and let me know what you see.
+
+And if you take the variable-that-contains-a-function, and put
+parentheses after the name then the function inside the variable is
+called.
+#+END_NOTES
+
+** Anonymous functions
+
+#+BEGIN_SRC javascript
+let p = function() {
+  "hello, Powercoders!";
+};
+
+p;     // What does this print?
+
+p();   // What does this do?
+#+END_SRC
+
+#+BEGIN_NOTES
+We can take this a step further, and assign a function to a variable
+without having to give the function a name first.
+
+We call these *anonymous functions*, and they come up all the time in
+Javascript.
+
+We still have the =function= *keyword*, and the parentheses. And the
+body of the function is still in curly brackets. The only thing missing
+is the function name.
+
+Notice, also, that we need to end this with a semi-colon, because it's
+the =let= expression.
+#+END_NOTES
+
+** Back to our problem
+
+#+BEGIN_SRC javascript
+let liGreen = document.getElementById("li-green");
+liGreen.addEventListener("click", setClass); // Does not work
+#+END_SRC
+
+- Create an anonymous function
+- ... that calls =setClass=
+- ... with the correct second parameter
+
+** Solution, almost
+
+#+BEGIN_SRC javascript
+let liGreen = document.getElementById("li-green");
+liGreen.addEventListener("click", setClass); // Does not work
+#+END_SRC
+
+#+BEGIN_SRC javascript
+let liGreen = document.getElementById("li-green");
+liGreen.addEventListener("click", function(event) {
+  setClass(event, "green");
+});
+#+END_SRC
+
+- Create an anonymous function
+- ... that calls =setClass=
+- ... with the correct second parameter
+
+#+BEGIN_NOTES
+Try this, and reload the page in the browser, and then click the
+green listitem.
+
+What happens?
+
+[Wait for answers -- they should all say it doesn't work]
+
+OK. So when this happens -- you've written some Javascript, you think
+it should work, but it doesn't, what do you do?
+
+[Wait]
+
+Check in the console! Every time. I still have to remind myself to do
+this. If there are any errors in your Javascript they will show up in
+the console.
+
+#+END_NOTES
+
+** Expected error
+
+#+BEGIN_EXAMPLE
+Uncaught TypeError: Cannot read property 'addEventListener' of null
+  at ...
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+If things worked you should see this error in the console. What's
+it telling us?
+#+END_NOTES
+
+** Error explanation
+
+#+BEGIN_EXAMPLE
+Uncaught TypeError: Cannot read property 'addEventListener' of null
+  at ...
+#+END_EXAMPLE
+
+- =at ...= is the file and line with the problem
+- =Cannot read property <x> of <y>= means you tried to do
+  - =y.x()=
+  - Expecting =y= to be a valid value, but =of null= means =y= was
+    unexpectedly =null=
+
+#+BEGIN_SRC javascript
+let liGreen = document.getElementById('li-green');
+liGreen.addEventListener("click", ...);  // <-- liGreen is null, why?
+#+END_SRC
+
+** Why is =liGreen= null
+
+- [[https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById][MDN getElementById]]
+- Pay attention to the "Return value" section
+
+#+BEGIN_NOTES
+Search for this page, and read the documentation. You'll see a section
+in the document called "Return value". What does that say?
+#+END_NOTES
+
+** =getElementById()= return value
+
+#+BEGIN_QUOTE
+Return Value
+
+A =Element= object describing the DOM element object matching the
+specified ID, *or =null= if no matching element was found in the document.*
+#+END_QUOTE
+
+#+BEGIN_NOTES
+Possible cause -- we've mis-spelled the name of the ID in the call to
+=getElementById()=
+
+Double check -- have we done that?
+
+[Get them to check]
+
+OK -- so our ID values are definitely the same, and the element definitely
+exists in the document, so why can't =getElementById= find it?
+#+END_NOTES
+
+** Why is the element not in the document?
+
+1. Browser loads HTML page
+2. Reads it line by line
+3. Gets to =script= element
+  - Stops reading HTML
+  - Loads script
+  - Executes script
+4. Goes back to processing HTML
+
+#+BEGIN_NOTES
+Our problem is caused by the order in which the browser does things when
+it loads a page.
+
+[Run through the order in the slide]
+
+Can anyone see the problem?
+
+[Wait]
+#+END_NOTES
+
+** WHy is the element not in the document?
+
+#+REVEAL_HTML: <div class="leftcol">
+1. Browser loads HTML page
+2. Reads it line by line
+3. Gets to the =script= element
+  - Stops reading HTML
+  - Loads script
+  - Executes script
+4. Goes back to processing HTML
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html
+<html>
+  <head>
+    ...
+    <script src="..."></script>
+#+END_SRC
+
+#+BEGIN_SRC javascript
+...
+let el = document.getElementById("li-green");
+  // el is null
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+The problem is that, at step 3, when the browser loads and runs or
+Javascript code, the browser hasn't seen the =li= elements with the IDs.
+They're later on in the HTML.
+
+So when our Javascript runs the =li= elements don't exist.
+
+So =getElementById= returns =null=, and we get this error
+
+How do we fix this?
+
+Any ideas?
+#+END_NOTES
+
+** The =DOMContentLoaded= event
+
+- =DOMContentLoaded= fires when the browser has loaded and parsed
+  the HTML
+- Other content, like stylesheets and images, might not be loaded yet
+
+#+BEGIN_NOTES
+The solution is the =DOMContentLoaded= event.
+
+So far the events that we've been looking at, like =click=, or
+=mouseover=, all fire because the user did something, like click
+the page, or move the mouse.
+
+There are other events that fire when interesting things happen that the
+user did not do, and this is one of them.
+
+=DOMContentLoaded= fires when the browser has finished loading and
+parsing the HTML.
+
+#+END_NOTES
+
+** The =DOMContentLoaded= event
+
+1. Browser loads HTML page
+2. Reads it line by line
+3. Gets to =script= element
+  - Stops reading HTML
+  - Loads script
+  - Executes script
+4. Processes the rest of the HTML
+5. Fires =DOMContentLoaded= event
+
+#+BEGIN_NOTES
+Looking back to the timeline of things that happen when the page loads,
+I've added =DOMContentLoaded= here at the bottom.
+#+END_NOTES
+
+** Listening for =DOMContentLoaded=
+
+#+BEGIN_SRC javascript
+document.addEventListener("DOMContentLoaded", function(event) {
+  // Do something when the DOM content has loaded
+});
+#+END_SRC
+
+#+BEGIN_NOTES
+Because this is an event like any other, we can listen for it in exactly
+the same way. And we can provide an anonymous function that will run
+when the DOM content is ready.
+
+Inside this function it's safe to do anything that requires the DOM to
+be complete, including adding other event listeners.
+#+END_NOTES
+
+** Exercise: Add the listener
+
+#+BEGIN_SRC javascript
+document.addEventListener("DOMContentLoaded", function(event) {
+  // Do something when the DOM content has loaded
+});
+#+END_SRC
+
+- Add this listener to your code
+- Move the code that finds =li-green= and sets the click event
+  listener inside this anonymous function.
+
+#+BEGIN_NOTES
+You do that now -- add a listener for the =DOMContentLoaded event,
+and move the code that finds the =li-green= element and sets its
+click handler inside this anonymous function.
+#+END_NOTES
+
+** Solution
+
+#+BEGIN_SRC javascript
+document.addEventListener("DOMContentLoaded", function(event) {
+  let liGreen = document.getElementById("li-green");
+  liGreen.addEventListener("click", function(event) {
+    setClass(event, "green");
+  });
+});
+#+END_SRC
+
+#+BEGIN_NOTES
+So here's the almost complete code -- this handles a click on just
+one of the elements.
+#+END_NOTES
+
+** TODO Exercise: Add the other listeners
+
+#+BEGIN_SRC javascript
+document.addEventListener("DOMContentLoaded", function(event) {
+  let liGreen = document.getElementById("li-green");
+  liGreen.addEventListener("click", function(event) {
+    setClass(event, "green");
+  });
+
+  // Add the code for the li-bold and li-normal listeners here
+});
+#+END_SRC
+
+- Don't forget to remove the =onclick= attributes from the HTML
+
+** TODO Solution: Add the other listeners
+
+#+BEGIN_SRC javascript
+document.addEventListener("DOMContentLoaded", function(event) {
+  let liGreen = document.getElementById("li-green");
+  liGreen.addEventListener("click", function(event) {
+    setClass(event, "green");
+  });
+
+  let liBold = document.getElementById("li-bold");
+  liBold.addEventListener("click", function(event) {
+    setClass(event, "bold");
+  });
+
+  let liNormal = document.getElementById("li-normal");
+  liNormal.addEventListener("click", function(event) {
+    setClass(event, "");
+  });
+});
+#+END_SRC
+
+* Refactoring: Cleaning up =setClass()=
+
+#+BEGIN_SRC javascript
+function setClass(event, className) {
+  let el = document.getElementById("mypara");
+  el.className = className;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's our code for =setClass= again. Can anyone suggest any way that
+it could be simplified?
+
+[Wait]
+#+END_NOTES
+
+** Removing the =event= parameter
+
+#+BEGIN_SRC javascript
+// Original code
+function setClass(event, className) {
+  let el = document.getElementById("mypara");
+  el.className = className;
+}
+#+END_SRC
+
+#+BEGIN_SRC javascript
+// No event parameter
+function setClass(className) {
+  let el = document.getElementById("mypara");
+  el.className = className;
+}
+#+END_SRC
+
+#+BEGIN_SRC javascript
+  // No event argument
+  let liGreen = document.getElementById("li-green");
+  liGreen.addEventListener("click", function(event) {
+    setClass("green");
+  });
+#+END_SRC
+
+#+BEGIN_NOTES
+When we first wrote =setClass= it was an event listener.
+
+This meant that its first parameter was always =event=, which contained
+extra information about the event that fired.
+
+With our refactoring it's no longer an event listener -- we have new
+event listeners that call it.
+
+Because of this the =event= parameter is no longer needed. We don't use
+it anywhere in the *function body*, so we can remove it from the function.
+
+Of course, we also need to change it everywhere we call it to no longer
+pass in the parameter.
+
+This is excellent practice to follow. If you don't do this then future
+programmers might look at your code and scratch their heads wondering
+why this unused paramater is being passed in to the function.
+
+Make this change, check that everything still works, and then commit
+the change.
+#+END_NOTES
+
+** Method and property chaining
+
+#+BEGIN_SRC javascript
+function setClass(className) {
+  let el = document.getElementById("mypara");
+  el.className = className;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+We can simplify this code even more using a technique called *method
+chaining*.
+
+Looking at this code, we create a variable, assign the return value of
+=document.getElementById= to it, and then change the =className=
+property of the elemnent.
+
+Normally we use variables to make our code cleaner. Carefully choosing the
+names of our variables can make the code easier to understand and communicate
+what we intend to the next programmer to come along.
+
+In this case though that's not really the case. We only use the =el= variable
+once.
+
+So instead of putting the return value from =getElementById= in its own
+variable we can use the result directly.
+#+END_NOTES
+
+** Method and property chaining
+
+#+BEGIN_SRC javascript
+// Original code
+function setClass(className) {
+  let el = document.getElementById("mypara");
+  el.className = className;
+}
+#+END_SRC
+
+#+BEGIN_SRC javascript
+// With method chaining
+function setClass(className) {
+  document.getElementById("mypara").className = className;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+I realise that's not the easiest thing to understand, so here's what it
+looks like.
+
+At the top is our original function, and at the bottom is the function
+re-written to use method and property chaining.
+
+This kind of chaining is incredibly common in Javascript.
+
+Is this clear to everyone?
+
+[Wait]
+
+Make this change and commit.
+#+END_NOTES
+
+* TODO Refactoring: Reflection
+
+#+REVEAL_HTML: <div class="leftcol">
+- External Javascript
+  - Keeps files smaller
+  - Avoids mixing languages in a file
+- Replaced similar functions with a single function
+- Removed =onclick= attributes, =addEventListener=
+- =DOMContentReady= listener
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Other simplifications
+  - Removed a parameter
+  - Method / property chaining removed a variable
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+That's the refactoring complete at this point, so lets take a look back
+at exactly what we did so you can appreciate what you've learned.
+
+We moved the inline Javascript out in to its own file. This made the HTML
+file a lot smaller, and meant that we weren't mixing different languages in
+one file -- making things simpler and less likely to get mixed up.
+
+We saw how we had three functions that were very similar, and replaced them
+with one function -- =setClass= -- that took a parameter that it used to
+make the change.
+
+And we removed the =onclick= attributes entirely, replacing them with calls
+to =addEventListener= to install our own event listeners. Doing this we
+discovered how there are timing issues that affect how the browser loads
+Javascript and HTML, and we fixed the problem by listening for the
+=DOMContentReady= event.
+
+With all of that done we discovered a couple of other simplifications
+that allowed us to remove an unused paremter, and employed property
+chaining to remove a variable and simplify the code.
+
+And we did this very iteratively -- it wasn't all in one go. At each step
+we checked that the code still worked, so when we discovered that it
+didn't (with the event listeners) it was easy to know exactly which
+change was causing the problem.
+#+END_NOTES
+
+* TODO The DOM tree
+
+- An HTML page is a tree of elements
+- The DOM allows us to inspect and change the tree
+
+#+BEGIN_NOTES
+When we looked at files and directories last week, we noticed that they
+formed a tree of things.
+
+Does everyone remember that?
+#+END_NOTES
+
+* TODO Tree refresher
+
+#+REVEAL_HTML: <div class="leftcol">
+- Tree is a hierarchy of *nodes*
+- Each node has exactly one *parent*
+  - Except the top, or *root* node
+- Nodes with the same parent are *siblings*
+- Node anywhere under another node is a *descendant node*
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file tree.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  A -> B;
+  A -> C;
+  C -> D;
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:tree.svg]]
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Our tree forms a hierarchy of things, called nodes.
+
+Each node in the tree has a parent node, except for the node at the top
+of the tree, which we call the *root* node.
+
+In this diagram on the right, A is the root node. It has two *children*, B and C.
+
+We say that B and C are *siblings*, because they share the same *parent node*.
+
+D is a child of C. It is also a descendant of A.
+#+END_NOTES
+
+** TODO File and directories as trees
+
+#+BEGIN_SRC dot :file tree-filesystem.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  //graph [splines="ortho"];
+  node [shape="folder"];
+
+  home [label="Home"]
+  desktop [label="Desktop"];
+  documents [label="My Documents"];
+  tax [label="Tax"];
+  photos [label="My Photos"];
+  poco [label="Powercoders"];
+  basel [label="Basel"];
+  coursework [label="coursework"]
+  week2 [label="week2"];
+  day1 [label="day1.html" shape="note"];
+
+  img8198 [label="IMG_8198.jpg" shape="note"];
+  img8199 [label="IMG_8199.jpg" shape="note"];
+  img8200 [label="IMG_8200.jpg" shape="note"];
+
+  home -> desktop;
+  home -> documents;
+  documents -> tax;
+  home -> photos;
+  photos -> img8198;
+  photos -> img8199;
+  photos -> img8200;
+  home -> poco;
+  poco -> basel;
+  basel -> coursework;
+  coursework -> week2;
+  week2 -> day1;
+
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:tree-filesystem.svg]]
+
+ #+BEGIN_NOTES
+ And here's the filesystem as a tree.
+ #+END_NOTES
+
+
+
+** TODO HTML as a tree
+
+#+BEGIN_SRC html
+<html>
+  <head>
+    <title>My first page</title>
+  </head>
+  <body>
+    <h1>My first heading</h1>
+    <p>My first paragraph</p>
+  </body>
+</html>
+#+END_SRC
+
+#+BEGIN_NOTES
+So lets look at how we can think as HTML as a tree.
+
+Here's a simple HTML document, with a few elements that are
+nested in side one another.
+
+To think of this as a tree, we take the =html= element and make
+that the root node.
+#+END_NOTES
+
+** TODO =html= as root node
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html
+<html>
+  <head>
+    <title>My first page</title>
+  </head>
+  <body>
+    <h1>My first heading</h1>
+    <p>My first paragraph</p>
+  </body>
+</html>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file html-tree1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  html
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+** TODO =head= and =body= are child nodes
+
+#+REVEAL_HTML: <div class="column" style="float:left; width:50%">
+#+BEGIN_SRC html
+<html>
+  <head>
+    <title>My first page</title>
+  </head>
+  <body>
+    <h1>My first heading</h1>
+    <p>My first paragraph</p>
+  </body>
+</html>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width:50%">
+#+BEGIN_SRC dot :file html-tree2.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  html -> head
+  html -> body
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:html-tree2.svg]]
+
+#+REVEAL_HTML: </div>
+
+** TODO =title=, =h1=, and =p= are also child nodes
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html
+<html>
+  <head>
+    <title>My first page</title>
+  </head>
+  <body>
+    <h1>My first heading</h1>
+    <p>My first paragraph</p>
+  </body>
+</html>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file html-tree3.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  html -> head;
+  html -> body;
+  head -> title;
+  body -> h1;
+  body -> p;
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:html-tree3.svg]]
+
+#+REVEAL_HTML: </div>
+
+** TODO And the content is also nodes
+
+#+BEGIN_SRC dot :file html-tree4.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+  digraph G {
+    //node [shape="none"];
+    html -> head;
+    html -> body;
+    head -> title;
+    title -> title_content
+    title_content  [label="#t: My first page" shape="none"];
+    body -> h1;
+    h1 -> h1_content
+    h1_content [label="#t: My first heading" shape="none"];
+    body -> p;
+    p -> p_content;
+    p_content [label="#t: My first paragraph" shape="none"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:html-tree4.svg]]
+
+#+BEGIN_NOTES
+This is a really, *really* important thing to understand.
+
+There is *no* difference between thinking about your HTML page as a
+collection of text ordered top-to-bottom in a file, and thinking
+about as a collection of nodes organised in a tree.
+
+The information, and the structure, is identical.
+
+It's just the representation that's different.
+
+It turns out that people are really good at dealing with information
+laid out the way we have it in the file.
+
+Computers are really good at dealing with information in trees.
+
+You will need to develop the ability to mentally *flip* between
+thinking about the HTML as it is in the file, and thinking about
+the HTML as a tree.
+#+END_NOTES
+
+** TODO Live DOM Viewer
+
+- https://software.hixie.ch/utilities/js/live-dom-viewer/
+
+** TODO Exercise: Draw the tree for a sample page
+
+#+BEGIN_SRC html
+<html>
+  <head>
+    <title>A test page</title>
+  </head>
+  <body>
+    <h1>This is a test page</h1>
+    <p>It has some content in a paragraph.</p>
+    <img src="foo.png" alt="">
+    <p>It has another para with <em>emphasised</em> text.</p>
+    <ul>
+      <li>And a list...</li>
+      <li>... of items.</li>
+    </ul>
+  </body>
+<html>
+#+END_SRC
+
+#+BEGIN_NOTES
+We're going to test how well you understand this, because as I say,
+it's really important. If you don't get this then a lot of the stuff
+that's coming up isn't going to make any sense at all.
+
+Here's an example page.
+
+What I want you to do is take a sheet of paper and a pen and draw the
+tree for this page. Each element is a node.
+
+When you're done let me know. I'll collect them up and we'll check them.
+Some of you will have made mistakes.
+
+*That is absolutely fine.*
+
+We're all going to learn from those mistakes.
+
+OK?
+#+END_NOTES
+
+** Solution: Draw the tree for a sample page
+
+#+BEGIN_SRC dot :file tree-sample.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+  digraph G {
+    //node [shape="none"];
+
+    html -> head;
+    head -> title;
+    title -> title_content;
+    title_content [label="#t: A test page" shape="none"];
+
+    html -> body;
+    body -> h1;
+    h1 -> h1_content;
+    h1_content [label="#t: This is a test page" shape="none"];
+
+    body -> p1;
+    p1 [label="p"];
+    p1 -> p1_content;
+    p1_content [label="#t: It has some content in a paragraph" shape="none"];
+
+    body -> img;
+
+    body -> p2;
+    p2 [label="p"];
+    p2 -> p2_content_1;
+    p2_content_1 [label="#t: It has another para with " shape="none"];
+    p2 -> em;
+    em -> em_content;
+    em_content [label="#t: emphasised" shape="none"];
+    p2 -> p2_content_2;
+    p2_content_2 [label="#t: text." shape="none"];
+
+    body -> ul;
+    ul -> li1;
+    li1 [label="li"];
+    li1 -> li1_content;
+    li1_content [label="#t: And a list..." shape="none"];
+    ul -> li2;
+    li2 [label="li"];
+    li2 -> li2_content;
+    li2_content [label="#t: ... of items." shape="none"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:tree-sample.svg]]
+
+** TODO Exercise: Draw the tree for your page
+
+#+BEGIN_NOTES
+You've all got webpages that you've been building, so I want you
+to take one of those pages -- and please choose one that's more
+complex than this example -- and draw the tree for that page.
+#+END_NOTES
+
+
+
+* TODO Changing the DOM tree with Javascript
+
+- =document= provides a method to create new nodes
+- =Element= provides methods to attach the nodes to the tree
+
+#+BEGIN_NOTES
+
+
+#+END_NOTES
+
+** Adding a new paragraph
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html
+...
+<body>
+  <h1>First heading</h1>
+  <p>First para</p>
+</body>
+...
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file dom-add-para-1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  body -> h1;
+  h1 -> h1_content;
+  h1_content [label="#t: First heading" shape="none"];
+
+  body -> p;
+  p -> p1_content;
+  p1_content [label="#t: First para" shape="none"];
+}
+#+END_SRC
+#+RESULTS:
+[[file:dom-add-para-1.svg]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Suppose we have this partial HTML tree (I've omitted the =html= and =head=
+nodes to make the diagram simpler, but you can pretend that they're still
+there.
+
+How do we go about adding a new paragraph to this page?
+#+END_NOTES
+
+** First, create a new =p= node.
+
+#+BEGIN_SRC dot :file dom-add-para-2.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  body -> h1;
+  h1 -> h1_content;
+  h1_content [label="#t: First heading" shape="none"];
+
+  body -> p;
+  p -> p1_content;
+  p1_content [label="#t: First para" shape="none"];
+
+  p2 [label="p"];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:dom-add-para-2.svg]]
+
+#+BEGIN_NOTES
+First we have to create a completely new node.
+
+When we do this the node isn't attached to anything else. It's just floating
+off, as if it was in space.
+
+You can see it here at the top right of the graph.
+#+END_NOTES
+
+** Then, give it some content
+
+#+BEGIN_SRC dot :file dom-add-para-3.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  body -> h1;
+  h1 -> h1_content;
+  h1_content [label="#t: First heading" shape="none"];
+
+  body -> p;
+  p -> p1_content;
+  p1_content [label="#t: First para" shape="none"];
+
+  p2 [label="p"];
+  p2 -> p2_content;
+  p2_content [label="#t: Second para" shape="none"];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:dom-add-para-3.svg]]
+
+#+BEGIN_NOTES
+Now our shiny new node exists we can give it some content. Because this is a
+=p= node we can attach a text content node to it.
+
+Now we have to attach it to =body= node. Until we do this our new paragraph
+won't appear in the DOM.
+
+The body already has two elements associated with it. In order, left to right
+they are the =h1= and the =p=.
+
+When we say that we want to add our new node to the end of this list we
+say that we are *appending* it to the list of child nodes of the =body=.
+#+END_NOTES
+
+** Append it to the body
+
+#+BEGIN_SRC dot :file dom-add-para-4.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  body -> h1;
+  h1 -> h1_content;
+  h1_content [label="#t: First heading" shape="none"];
+
+  body -> p;
+  p -> p1_content;
+  p1_content [label="#t: First para" shape="none"];
+
+  body -> p2;
+  p2 [label="p"];
+  p2 -> p2_content;
+  p2_content [label="#t: Second para" shape="none"];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:dom-add-para-4.svg]]
+
+#+BEGIN_NOTES
+And after appending the node to the =body='s list of children we end up with
+a tree that looks like this.
+#+END_NOTES
+
+** The equivalent HTML
+#+REVEAL_HTML: <div class="leftcol">
+[[file:dom-add-para-4.svg]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html
+<body>
+  <h1>First heading</h1>
+  <p>First para</p>
+  <p>Second para</p>
+</body>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+And if we -- in our heads -- convert this tree back to the HTML text
+representation that we're familar with then we get this result.
+#+END_NOTES
+
+** HTML
+
+#+INCLUDE: "dom-append.html" src html
+
+#+BEGIN_NOTES
+Here's the HTML we're going to use.
+#+END_NOTES
+
+** The steps
+
+1. Create a =p= node
+2. Give it content
+3. Find the =body= element
+4. Append the new node to the list of the =body='s children
+
+** Create a =p= node
+
+#+BEGIN_SRC javascript
+let elP = document.createElement("p");
+#+END_SRC
+
+#+BEGIN_NOTES
+We've already seen the =document= variable, but we haven't used the
+=createElement= method that it provides yet.
+
+This method takes one parameter -- the tag name of the element to
+create. Since we want to create a new paragraph we pass the string =p=
+as the single parameter here.
+#+END_NOTES
+
+** Give it content
+
+#+BEGIN_SRC javascript
+let content = document.createTextNode("Second para");
+elP.appendChild(content)
+#+END_SRC
+
+#+BEGIN_NOTES
+With our paragraph created we can go and give it some content. The text
+in the paragraph is not an element, it's a text node.
+
+Again, the =document= variable has a method that we can use to do this,
+called =createTextNode=. The single argument here is the text that should
+be used as the content for the node.
+
+To add the text node as a child of the =p= element node we use the new
+=appendChild= method. This has to be called as a method on the element
+we want to add it to, which is why we use =p= element here (saved in the
+=elP= variable.
+#+END_NOTES
+
+** Find the =body= element
+
+#+BEGIN_SRC javascript
+let elBody = document.getElementById("body");
+#+END_SRC
+
+#+BEGIN_NOTES
+We're going to add our new =p= element to the body, and in order to do
+that we have to find it.
+
+This is the =getElementById= method that we've already been using a lot.
+There's nothing special about this.
+#+END_NOTES
+
+** Append the new node to the list of =body='s children
+
+#+BEGIN_SRC javascript
+elBody.appendChild(elP);
+#+END_SRC
+
+* Race conditions (async)                                          :noexport:
+
+#+BEGIN_NOTES
+Content is only relevant after =async= on =script= is introduced.
+
+#+END_NOTES
+** TODO There's an ordering problem / race condition
+
+- Browser loads HTML page
+- Starts reading it line by line
+- Gets to the =script=
+  - Loads the Javascript
+  - Starts running it
+- Reads the =body=
+
+#+BEGIN_NOTES
+There's a problem here that we may or may not see, depending
+on how lucky we are.
+
+It's do with how the browser loads the page.
+
+Very roughly, the browser loads the HTML page in one go, and
+then starts reading it line by line in order to figure out
+what to do.
+
+It will reach the =script= element in the HTML =head=, and will
+go off and start loading the Javascript.
+
+At the same time it continues processing the rest of the HTML.
+
+Now, one of two things will happen.
+#+END_NOTES
+
+** Possible futures
+
+#+REVEAL_HTML: <div class="leftcol">
+- Browser reads all the HTML
+  - Creates the =li= elements
+- Browser runs the Javascript
+  - =getElementById(...)= works
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Browser runs the Javascript
+  - =getElementById(...)= fails!
+- Browser reads all the HTML
+  - Creates the =li= elements
+#+REVEAL_HTML: </div>
+
+#+BEGIN_SRC javascript
+let liGreen = document.getElementById("li-green");
+#+END_SRC
+
+#+BEGIN_NOTES
+If the left hand side happens then everything is OK.
+
+If the right hand side happens then we have a problem.
+
+This is because the Javascript will be run *before* the browser has
+create the =li= element with the =li-green= ID.
+
+And if that happens, the call to =getElementById= will fail (and
+return null), because the =li= element doesn't exist yet.
+
+We call this a *race condition* -- we say that there is a race between
+the browser finishing the HTML or finishing the Javascript. Depending
+on which one wins the race either things work or they don't.
+
+These sorts of problems can be very difficult to track down.
+
+In order to fix this we need some way to make sure that our code
+that accesses the DOM only runs when the browser has finished loading
+the HTML page.
+
+#+END_NOTES
+
+* TODO Deeper look at variables                                    :noexport:
+
+TODO(nik): Find the right place to put this.
+
+
+* TODO Programming as communiction to other people                 :noexport:
+
+* TODO =classList= in the REPL                                     :noexport:
+
+TODO(nik): Maybe move this later, it's more advanced.
+
+- Reload =getelementbyid.html=
+- Open the console
+
+#+BEGIN_SRC javascript
+let el = document.getElementById("myheading");
+let cl = el.classList;
+#+END_SRC
+
+#+BEGIN_NOTES
+Let's experiment with =classList=. We can do this directly in the
+REPL, and then inspect the output in the *Elements* tab.
+
+Get back to a known state by closing the tab (if you haven't
+already), reloading the page, opening the console, and typing
+the following.
+
+Line 1 we've done before -- we create a variable called =el=
+and set its value to the element that has the ID =myheading=.
+
+Line 2 is new, but very similar -- we create a variable called
+=cl= and sets its value to the =classList= property.
+#+END_NOTES
+
+*** Adding a class with =add()=
+
+#+BEGIN_QUOTE
+=element.classList= itself is read-only, although you can modify
+it using the =add()= and =remove()= methods.
+#+END_QUOTE
+
+**** Adding a class with =add()= 2/4
+
+#+BEGIN_QUOTE
+*add(String[, String [,...]])*
+  Add specified class values.If these classes already exist in
+  attribute of the element, then they are ignored.
+#+END_QUOTE
+
+**** Adding a class with =add()= 3/4
+
+#+BEGIN_QUOTE
+#+BEGIN_SRC javascript -n
+div.classList.add("anotherClass");
+#+END_SRC
+#+END_QUOTE
+
+**** Adding a class with =add()= 4/4
+
+#+BEGIN_SRC javascript
+cl.add("myclass");
+#+END_SRC
+
+#+BEGIN_NOTES
+Finally, lets actually use Javascript to add a class to the
+element that we've found.
+
+=cl= is our variable that contains the class list, and we've
+seen from the documentatin that we can call the =add()= method
+to add a new class.
+
+So lets do that. Type this in to the console, then go and
+look at the element view and verify that the new class shows
+up on the element.
+
+[Demo]
+#+END_NOTES
+
+*** Replacing a class with =replace()=
+
+#+BEGIN_QUOTE
+*replace(oldClass, newClass)*
+  Replaces an existing class with a new class
+#+END_QUOTE
+
+#+BEGIN_NOTES
+Did you happen to notice this in the documentation?
+
+There is another method called =replace()=. If you use it
+it takes two arguments, and replaces the existing class on
+the element with a new class.
+#+END_NOTES
+
+**** Replacing a class with =replace()=
+
+#+BEGIN_SRC javascript
+cl.replace("myclass", "newClass");
+#+END_SRC
+
+#+BEGIN_NOTES
+We can try this in the REPL too.
+
+Before you type and run this, I want you to think about what
+you expect the result to be.
+
+Then run it.
+
+Then go and check that the result is what you expected.
+
+[Wait and demo]
+#+END_NOTES
+
+
+* TODO The language and the environments                           :noexport:
 
 #+BEGIN_NOTES
 Slide to talk about the difference between Javascript the language,
