@@ -10,10 +10,12 @@
 - Version control with Git
 - Cascading Stylesheets (CSS)
 
-* TODO Break
 * TODO Programming is...
 
-- 
+- Taking a problem...
+- ... breaking it down into smaller pieces
+- ... creating instructions for those smaller pieces
+- ... and putting it all together
 
 #+BEGIN_NOTES
 When we're programming we're giving the computer a set of
