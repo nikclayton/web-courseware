@@ -2971,6 +2971,8 @@ Here's the HTML we're going to use.
 let elP = document.createElement("p");
 #+END_SRC
 
+[[file:dom-add-para-2.svg]]
+
 #+BEGIN_NOTES
 We've already seen the =document= variable, but we haven't used the
 =createElement= method that it provides yet.
@@ -2978,6 +2980,9 @@ We've already seen the =document= variable, but we haven't used the
 This method takes one parameter -- the tag name of the element to
 create. Since we want to create a new paragraph we pass the string =p=
 as the single parameter here.
+
+We save the result in a variable, as we're going to need it in a
+moment.
 #+END_NOTES
 
 ** Give it content
@@ -2986,6 +2991,8 @@ as the single parameter here.
 let content = document.createTextNode("Second para");
 elP.appendChild(content)
 #+END_SRC
+
+[[file:dom-add-para-3.svg]]
 
 #+BEGIN_NOTES
 With our paragraph created we can go and give it some content. The text
@@ -3007,6 +3014,8 @@ we want to add it to, which is why we use =p= element here (saved in the
 let elBody = document.getElementById("body");
 #+END_SRC
 
+[[file:dom-add-para-3.svg]]
+
 #+BEGIN_NOTES
 We're going to add our new =p= element to the body, and in order to do
 that we have to find it.
@@ -3020,6 +3029,8 @@ There's nothing special about this.
 #+BEGIN_SRC javascript
 elBody.appendChild(elP);
 #+END_SRC
+
+[[file:dom-add-para-4.svg]]
 
 * Race conditions (async)                                          :noexport:
 
