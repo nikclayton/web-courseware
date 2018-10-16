@@ -95,3 +95,10 @@ span.done, span.todo {
 .src-sh:after {
   content: "Shell";
 }
+
+/** Code blocks in list items get a grey background. */
+li code {
+  background-color: #3f3f3f;
+  padding: 0 .25em !important;
+  border-radius: .25em;
+}
