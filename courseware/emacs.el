@@ -52,3 +52,8 @@ digraph G {
 	     '("right" "#+REVEAL_HTML: <div class=\"rightcol\">
 ?
 #+REVEAL_HTML: </div>"))
+
+;; Open .html files (e.g., from hitting C-' on a #+INCLUDE block) in
+;; Emacs instead of the default (which opens them in a browser).
+(add-to-list 'org-file-apps
+	     '("\\.x?html?\\'" . emacs))
