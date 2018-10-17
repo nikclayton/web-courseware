@@ -5,6 +5,7 @@
 (setq org-support-shift-select t)
 
 (setq css-indent-offset 2)
+(setq graphviz-dot-indent-width 2)
 
 ;; Graphviz support
 (use-package graphviz-dot-mode
