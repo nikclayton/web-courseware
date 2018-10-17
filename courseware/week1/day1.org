@@ -34,6 +34,30 @@ python -m http.server 8080
    
 #+END_NOTES
 
+* Find the keys
+
+#+REVEAL_HTML: <div class="leftcol">
+- ="= (double quote)
+- ='= (single quote)
+- =<= (less than, left angle)
+- =>= (greater than, right angle)
+- =!= (exclamation, bang)
+- =-= (minus, dash)
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- =#= (hash)
+- ={= (left curly)
+- =}= (right curly)
+- =/= (forward slash)
+- =_= (underscore)
+- =;= (semi-colon)
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+
 * Common mistakes
 
 - Not enough / too much space
