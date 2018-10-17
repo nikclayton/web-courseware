@@ -354,6 +354,17 @@ In between the start tag and the end tag is the element's
 
 Together, the start tag, content, and end tag make up the element.
 
+For the rest of this course examples are generally going to be shown
+like this. On the left hand side are line numbers, which you do not
+need to type in.
+
+In the main area is the actual text.
+
+And there's a little badge off to the right to make it clear which
+language we're using.
+
+--
+
 Based on [[https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started][MDN: Introduction to HTML]] by [[https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started$about][Mozilla Contributors]] which is
 licensed under [[https://creativecommons.org/licenses/by-sa/2.5/][CC-BY-SA 2.5]].
 
