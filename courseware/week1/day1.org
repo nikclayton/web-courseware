@@ -61,10 +61,10 @@ python -m http.server 8080
 * Common mistakes
 
 - Not enough / too much space
-- Using the wrong quotes, ' vs "
+- Using the wrong quotes, ='= vs ="=
 - Using the wrong case
 - Mis-spellings
-- Number 1 vs. letter l
+- Number =1= vs. lowercase letter =l=
 
 #+BEGIN_NOTES
 Progamming is a precision activity. Sometimes using an upper
@@ -625,13 +625,18 @@ them to your scratch page.
 
 * Exercises
 
+#+REVEAL_HTML: <div class="leftcol">
 - Add more headings, =h1=, =h2=, etc
 - Add more paragraphs, =p=
 - Add an ordered list, =ol=
 - Add an unordered list, =ul=
 - Add images
-- Div
-- Span
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- =div=
+- =span=
 - Mark up the recipe
 - Start a notes / cheatsheet document
 - Start a portfolio
+#+REVEAL_HTML: </div>
