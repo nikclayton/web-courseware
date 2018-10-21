@@ -227,10 +227,9 @@ else.
 2 * 2;
 6 / 2;
 'hello' + 'world';
-alert('hello, world');
 #+END_SRC
 
-- Always end the line with a semi-colon, ;
+- Always end the line with a semi-colon, =;=
 - Round braces (parentheses)
 - Single quotes (don't mix them)
 - All lower case
@@ -251,8 +250,6 @@ Copy this, and press RETURN. What do you see?
 < 3
 > "hello" + "world";
 < "helloworld"
-> alert("hello, world");
-< undefined
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -292,9 +289,89 @@ numbers, without quotes.
 
 This should tell you something interesting -- numbers and strings are
 different things in Javascript.
+#+END_NOTES
 
-And that last one -- what we're doing here is called *calling a function*.
-We know it's a function because of the round braces, or *parentheses*.
+* TODO Variables
+
+- Variables allow us to give names to values
+
+#+BEGIN_SRC javascript
+  let x;           // Declare a variable called 'x'
+  x = 4;           // Set x's value to 4
+  x;               // Evaluate the expression 'x'
+  let y = x + 2;   // <-- What does this do?
+  y;               // <-- What does this show?
+  x = 5;           // Change x's value to 5
+  let z = x * y;   // <-- What does this do?
+  z;               // <-- What does this show?
+  y;               // <-- What does this show?
+#+END_SRC
+
+#+BEGIN_NOTES
+A variable is a way of taking the *value* of an expression and
+giving it a *name* that we can use later.
+
+You can think of it as being a bit like a box. You can put something
+in the box -- the value -- and get it out again later. And you can
+write something on the box -- the name -- to tell you what the thing
+inside the box is.
+
+Before we use a variable we should declare it. We do this using the
+=let= keyword.
+
+This first line tells Javascript "I am creating a new variable,
+and it will be called =x=".
+
+Once you have a variable you can give it a value -- put something in
+the box. To do that we use the single equals sign, as we have here.
+
+You can read this as "x becomes 4" or "x is assigned the value 4", or
+"4 is put in the box labelled x".
+
+We can use variable names in expressions. The simplest expression with
+a variable is one that contains just the variable name, as we have done
+on line 3 here.
+
+On lines 1 and 2 we declared a variable and gave it a value using two
+lines.
+
+We can combine this in one, as you can see on line 4. Here we create
+a new variable called y, and give it the value of the expression =x + 2=.
+
+What is y's value going to be?
+
+[Wait] -- answer is 6.
+
+The values in variables can change. Think of it like taking something
+out of the box and replacing it with something else.
+
+That's what we do on line 6 -- we change x's value to 5.
+
+On line 7 we create a third variable called =z=, and set its value to
+=x * y=.
+
+What will line 8 print?
+
+[Wait] -- answer is 30.
+
+On line 4 we set y's value to the value of x + 2. On line 6 we changed
+x's value.
+
+When we print y's value on line 9, what do you think will be shown?
+
+[Wait] -- answer is 30
+
+Everyone who said 30, that's right. For everyone else -- in an expression
+a variable's value is evaluated once, and whatever value it had at the time
+is used.
+
+When we change =x= on line 6, =y= has already been assigned it's value based
+on the value of =x= at the time. Changing =x= on line 6 has no effect on the
+value from line 4.
+
+Another way of thinking about that -- on line 4, y's value is not =x + 2=.
+y's value is 6. The fact that =x= was involved in calculating that value
+is *not* saved in the variable.
 #+END_NOTES
 
 * TODO Functions
@@ -304,6 +381,9 @@ alert("hello, world");
 #+END_SRC
 
 #+BEGIN_NOTES
+What we're doing here is called *calling a function*.  We know it's a
+function because of the round braces, or *parentheses*.
+
 A function is a way of taking a chunk of code and giving it a name so
 that we can re-use it, and call it from other places. Javascript provides
 a lot of functions, and you can write your own. We'll be doing that later.
@@ -344,6 +424,7 @@ The what?
 - Problem: Click, change paragraph style
   - Javascript console
   - Expressions
+  - Variables
   - Functions
   - DOM <-- we are here
 
@@ -415,12 +496,18 @@ document;
 - Represented as an =HTMLDocument= *object*
 
 #+BEGIN_NOTES
-=document= is the name of a Javascript *global* *variable*. We're going to
-talk much more about those later.
+=document= is the name of a Javascript *global* *variable*.
 
-This variable contains the DOM *object*, which gives you access to the
-DOM. Another way of saying this is that the variable's *type* is
-*HTMLDocument*.
+Earlier, when we first introduced variables, we saw how you create them
+with the =let= keyword.
+
+There are some variables that already exist in Javascript. =document= is one
+of those variables. You don't need to declare it, it's already there,
+waitinf for you to use it.
+
+The =document= variable contains the DOM *object*, which gives you
+access to the DOM. Another way of saying this is that the variable's
+*type* is *HTMLDocument*.
 
 Try typing =document;= in to the Javascript console.
 
@@ -527,15 +614,7 @@ let el = document.getElementById("myheading");
 Lets save the result of calling =document.getElementById()= into a
 variable so that we can use it later.
 
-You've already seen that =document= is an example of a variable. This
-is automatically provided for you by Javascript, but you can also create
-your own variables.
-
-To do that, use the =let= *keyword* followed by the name of the variable
-you want to create.
-
-This line says create a variable called =el=, and set it to whatever
-value =document.getElementById()= returns.
+This is just like the variables that we declared earlier.
 #+END_NOTES
 
 ** TODO Variable names
@@ -601,8 +680,8 @@ says that variable names that are two more words should be in
 #+END_SRC
 
 #+BEGIN_NOTES
-Anywhere you use the variable's name you're actually referring to whatever
-value is inside the variable.
+As we saw earlier, anywhere you use the variable's name you're
+actually referring to whatever value is inside the variable.
 
 In this example we create the variable on line 1, and use it -- by writing
 its name -- on line 3.
@@ -774,7 +853,7 @@ And =className=
 ** TODO =className=
 
 #+BEGIN_SRC javascript
-  el.className;  			// What does this print?
+  el.className;	// What does this print?
 #+END_SRC
 
 #+BEGIN_NOTES
