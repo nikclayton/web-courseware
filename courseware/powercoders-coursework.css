@@ -14,7 +14,7 @@
 }
 
 /** Auto line numbering */
-pre.src {
+pre.src, pre.example {
   counter-reset: line;
   background-color: #3f3f3f;
   margin: 2em auto;
