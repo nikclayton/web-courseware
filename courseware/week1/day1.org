@@ -1,5 +1,6 @@
 #+Title: Powercoders Basel Coursework, Day 1
 #+INCLUDE: "../include/settings.org"
+#+PROPERTY: header-args:html-chrome :flags --window-size=320,240 --force-device-scale-factor=2 :cache yes
 
 #+BEGIN_NOTES
 
@@ -385,7 +386,6 @@ we'll create other directories for longer lived projects.
 
 #+BEGIN_EXAMPLE
 <p>This is an HTML paragraph.</p>
-
 #+END_EXAMPLE
 
 #+BEGIN_NOTES
@@ -410,16 +410,26 @@ we'll create other directories for longer lived projects.
 
 ** Compare the result
 
-- TODO(nik): Show screenshot
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: first-html
+#+BEGIN_SRC html-chrome
+  <p>This is an HTML paragraph.</p>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: first-html
+[[file:first-html.png]]
+#+REVEAL_HTML: </div>
 
 * What have we just done?
- 
-- HTML (HyperText Markup Language
+
+- HTML (HyperText Markup Language)
 - 1 element, =p=
 - Start tag, content, end tag
 
-#+BEGIN_SRC html
-<p>This is an HTML paragraph.</p>
+#+BEGIN_SRC html :noweb yes
+<<first-html>>
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -427,7 +437,6 @@ You've just created and loaded an HTML file.
 
 HTML is *not* a programming language, it's a markup language, and we
 use it to define the structure of the web page.
-
 
 An HTML file consists of one or more elements, which you use to *mark
 up* different parts of the page to make it appear or behave in a
@@ -468,13 +477,40 @@ licensed under [[https://creativecommons.org/licenses/by-sa/2.5/][CC-BY-SA 2.5]]
 
 #+END_NOTES
 
-** Nesting elements
+** TODO Nesting elements
 
+#+NAME: nesting-elements
 #+BEGIN_SRC html
-<p>This is an <em>HTML paragraph</em>.</p>
+<p>This is an <em>HTML</em> paragraph.</p>
 #+END_SRC
 
 - =em= element is *nested* inside the =p= element
+- =em= means "emphasis", often shown as italics, as here
+
+#+BEGIN_NOTES
+Elements can be placed inside other elements. We say that they *nest*
+inside each other.
+
+For example, we can use the =em= element to make some text in the
+paragraph be emphasised.
+
+Try that -- make the change to the file in Atom, save it, and reload
+the page in Chrome.
+#+END_NOTES
+** Nesting elements
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: nesting-elements-results
+#+BEGIN_SRC html-chrome :noweb yes
+<<nesting-elements>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: nesting-elements-results
+[[file:nesting-elements-results.png]]
+
+#+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 Elements can be placed inside other elements. We say that they *nest*
@@ -530,8 +566,10 @@ the page, allowing you to see your changes.
 
 ** Block-level and inline elements
 
+#+NAME: block-level-and-inline-elements
 #+BEGIN_SRC html
-<p><em>One</em> <em>two</em> <em>three</em></p>
+<p><em>One</em> <em>two</em>
+  <em>three</em></p>
 
 <p>four</p> <p>five</p> <p>six</p>
 #+END_SRC
@@ -565,11 +603,30 @@ Examples include:
 Try this example, save, and reload. But before you do that, try and
 imagine what you think the result will be, and see if you get it
 right.
-
 #+END_NOTES
+
+*** Results
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: block-level-and-inline-elements-results
+#+BEGIN_SRC html-chrome :noweb yes
+<<block-level-and-inline-elements>>
+#+END_SRC
+
+- Is this what you expected?
+- Notice how the break between line 1 and 2 doesn't appear on the web
+  page
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: block-level-and-inline-elements-results
+[[file:block-level-and-inline-elements-results.png]]
+#+REVEAL_HTML: </div>
+
 
 ** A more complicated example
 
+#+NAME: a-more-complicated-example
 #+BEGIN_SRC html -n
 <!DOCTYPE html>
 <html>
@@ -636,36 +693,203 @@ Moving down the page, we close the =head= element, and open a new
 want to show to the user, whether that's text, images, videos, or
 whatever else.
 
+We start the body with an =h1= element. This is a *Level 1 heading*,
+and we talk more about those later.
+
+Then we have a =p= element, exactly as we have already seen.
+
+Finaly, we need to close the open =body= and =html= elements.
+It's important to do those in the right order.
+
+Now replace the contents of your =scratch/index.html= page with this,
+save, and reload.
+
+[Wait]
+
 #+END_NOTES
 
+** Results
+
+#+BEGIN_SRC html-chrome :noweb yes :exports results
+<<a-more-complicated-example>>
+#+END_SRC
+
+#+RESULTS:
+[[file:results.png]]
+
+** Exercise: Break it
+
+1. Mis-spell =<h1>= as =<h>=
+2. Mis-spell =</h1>= as =</h>=
+3. Delete the =</p>=
+4. Delete the blank spaces before the =<p>=
+
+#+BEGIN_NOTES
+It's common to occasionally make errors when typing in HTML, so I want
+you to see what the effect of some of those errors is so that you can
+recognise them in the future.
+
+For each of the four exercises here make the change, save, and reload
+the file. Write down what seems to be different, and then undo the
+change so the file is correct, before moving on the next change.
+
+Let me know when you've all done this.
+
+[Wait]
+#+END_NOTES
+
+** Solution: Break it
+
+#+REVEAL_HTML: <div class="leftcol">
+1. Mis-spell =<h1>= as =<h>=
+
+#+NAME: break-it-1
+#+BEGIN_SRC html-chrome
+<h>This is a heading</h1>
+
+<p>This is a single paragraph</p>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: break-it-1
+[[file:break-it-1.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Because =h= is not a valid HTML element the browser didn't know what
+to do with the text. So it plays it safe, and displays it like
+regular text.
+
+By the way, in these and future examples I'm going to leave out
+the =html=, =head=, and =body= elements to make space on the slides.
+You have to assume that they're there.
+#+END_NOTES
+
+** Solution: Break it
+
+#+REVEAL_HTML: <div class="leftcol">
+2. Mis-spell =</h1>= as =</h>=
+
+#+NAME: break-it-2
+#+BEGIN_SRC html-chrome
+<h1>This is a heading</h>
+
+<p>This is a single paragraph</p>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: break-it-2
+[[file:break-it-2.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This time the closing tag is wrong, and doesn't close the opening
+tag. The browser decided that the =h1= element stays open, and places
+the =p= element *inside* the heading.
+
+This is why the paragraph text looks the same as the heading.
+#+END_NOTES
+
+** Solution: Break it
+
+#+REVEAL_HTML: <div class="leftcol">
+3. Delete the =</p>=
+
+#+NAME: break-it-3
+#+BEGIN_SRC html-chrome
+<h1>This is a heading</h1>
+
+<p>This is a single paragraph
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: break-it-3
+[[file:break-it-3.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+In this case it doesn't look any different. We got lucky because
+of where the breakage is. The browser knows that there can be
+no more content after the closing =</body>= tag, so it acts as
+though any tags that are still open at that point are closed.
+
+Although the results look the same this is still bad HTML.
+#+END_NOTES
+
+** Solution: Break it
+
+#+REVEAL_HTML: <div class="leftcol">
+4. Delete the blank spaces before the =<p>=
+
+#+NAME: break-it-4
+#+BEGIN_SRC html-chrome
+<html>
+  <body>
+    <h1>This is a heading</h1>
+
+<p>This is a single paragraph</p>
+  </body>
+</html>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: break-it-4
+[[file:break-it-4.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Again, it doesn't look any different. This because this is not
+bad HTML.
+
+Browsers completely ignore any whitespace *outside* HTML elements.
+We saw this earlier too with the *block* vs. *inline* display example.
+#+END_NOTES
+
+** Adding checks to Atom
+
+- =File= > =Settings=
+- =+ Install=
+- Search for =htmlhint= (by =tcarlsen=)
+- Click =Install=
+- In =Settings=, click =Validate On Change=
+
+#+BEGIN_NOTES
+We can install a helper in to Atom to spot these sorts of mistakes
+for us, and warn them when they happen. This makes writing HTML,
+and other languages, much more pleasant -- we let the computers do
+the tedious work for us.
+
+To do so,
+
+[Demo]
+#+END_NOTES
 ** Adding images
 
 #+BEGIN_SRC html
-<img src="name-of-file.png" alt="Image of ...">
+<img src="name-of-file" alt="Image of ...">
 #+END_SRC
 
 #+BEGIN_NOTES
-TODO(nik): Download and prepare an image for them to use.
+To add an image to a page we use the =img= element.
 
-To add an image to a page we use the =img= element. This introduces
-two new concepts.
-
-The first is the idea of an *empty element*. Remember earlier when I
-said that all elements have a start tag, content, and an end tag.
-
-And remembe even earlier when I said that teaching is all about lying
+Remember earlier when I said that teaching is all about lying
 to students? This is one of those times.
+
+Earlier I said that all elements have a start tag, content, and an end
+tag.
 
 Some elements are what we call empty elements. They have no content,
 and no end tag. So to write them you just use the start tag. And =img=
 is one of those elements.
 
-The second concept is *attributes*. As well as the content, an element
-might have one or more attributes that you can set. Each attribute on
-element has a name and a value.
+The =img= element also has *attributes*.
 
-These are written as the name of the attribute, then an equals sign,
-and then the value, enclosed in quotes.
+These are written inside the start tag as the name of the attribute,
+then an equals sign, and then the value, enclosed in quotes.
 
 *Important*: These should be together -- no spaces on either side of
 equals sign.
@@ -679,19 +903,150 @@ image can not be loaded or is not useful to the user. For example,
 it's possible for blind or partially sighted people to get *screen
 readers* that read the contents of the page to them. In this case
 the contents of the =alt= attribute is read to the user.
+#+END_NOTES
 
-TODO(nik): Update with instructions on where they can get the image from.
+*** Download an image
 
-Go ahead and add an image to your page now.
+1. Go to https://powercoders.org
+2. Right-click the Powercoders logo at the top of the page
+3. Choose =Save image as= in the menu
+4. Save to your =scratch= directory
+  - Should be called =powercoders-logo-CMYK.svg=
 
-[wait]
+*** Update your scratch file
 
+#+NAME: example-with-image
+#+BEGIN_SRC html -n
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My test page</title>
+  </head>
+
+  <body>
+    <h1>This is a heading</h1>
+
+    <p>This is a single paragraph.</p>
+
+    <p><img src="powercoders-logo-CMYK.svg" alt="Powercoders"></p>
+  </body>
+</html>
+#+END_SRC
+
+#+BEGIN_NOTES
+Add the =img= element below the =p= element, exactly as shown here.
+
+Save, and reload the page in the browser.
+#+END_NOTES
+
+*** An image on the page
+
+#+BEGIN_SRC html-chrome :noweb yes :exports results :flags --window-size=640x240 --force-device-scale-factor=2
+<<example-with-image>>
+#+END_SRC
+
+#+RESULTS:
+[[file:an-image-on-the-page.png]]
+
+#+BEGIN_NOTES
 Question: Is =img= a block-level element or an inline element? Try
 it, and tell me.
 
+[Wait for them to say]
+
+=img= is an inline element -- it must be wrapped (or nested) inside
+a block level element.
 #+END_NOTES
 
-** But why?
+*** Exercise: Break it
+
+1. Mis-spell =src= as =source=
+2. Leave off a double-quote ="=
+3. Mis-spell the filename
+
+#+BEGIN_NOTES
+Here are more things for you to try and do to break the page. I want
+you to try each one of these things, and see what happens.
+
+For each one, break it, note what happens, then fix it and make sure
+the page displays OK after you fix it. Then move on to the next one.
+
+[Wait]
+
+[Discussion of the problems]
+
+1. Atom didn't tell you there was a mistake. This is because Atom is
+lenient, and assumes there might be some attributes that it doesn't
+know about.
+
+The lesson here is -- just because Atom says it's OK doesn't mean
+it necessarily is. You still need to check.
+
+2. The missing quote depends on which one is missing. If it's one
+of the ones from the =src= attribute then the file will not be found.
+
+If it's one of the ones from the =alt= attribute then the page should
+still look like you expect, but the =alt= attribute value will not
+work properly.
+
+3. If you mis-spell the filename then the image won't be found.
+#+END_NOTES
+
+*** Types of images
+
+- PNG (Portable Network Graphics), =.png=
+  - Raster format
+  - Lossless compression
+  - Best for images with text, line-art, flat colours
+- JPEG (Joint Photographic Expert Group), =.jpeg=, =.jpg=
+  - Raster format
+  - Lossy compression
+  - Good for photos
+- SVG (Scalable Vector Graphics), =.svg=
+  - Vector format
+  - Supports interactivity and animation
+
+#+BEGIN_NOTES
+There are typically three image formats that you will encounter on the
+web.
+
+PNG and JPEG images are both examples of raster, or bitmap images.
+The files contain information that describes, for each pixel of
+the image, what colour and transparency the pixel has.
+
+Both formats are *compressed*, meaning that an image takes up a lot
+less space to transmit than the underlying raw image data is.
+
+They do this compression in different ways. PNG uses *lossless*
+compression. This means that if you take an image, convert it to
+PNG, and then display it again you get exactly the same pixel colours
+and transparency as the original image.
+
+This makes it useful for drawings, images with lots of flat colours,
+and so on.
+
+JPEG uses *lossy* compression. Once you have converted an image to
+JPEG some of the image data has been discarded. This makes the
+file significantly smaller. JPEG is designed so that the data that
+is thrown away normally doesn't affect the image in ways that we
+can perceive, but this works best with images that are photos or
+contain a lot of other detail. For other types of images this can
+result in visible *artifacts*.
+
+Unlike the other two, SVG describes the image, with information
+like "Draw a line from *here* to *there*, or place a circle here,
+make it red, and the outline blue.
+
+Because of this SVG images can be made larger without becoming
+blurry. They also support interactivity (such as being able to
+react to clicking on different parts of the image) and animation.
+
+SVG is best used for logos, technical drawings, and the like.
+
+The Powercoders logo file that we downloaded was an SVG image.
+#+END_NOTES
+
+** Element content and attribute content
 
 #+BEGIN_SRC html
 <!-- This does *not* work -->
@@ -717,13 +1072,12 @@ rules like this didn't really exist, and so the language is not completely
 consistent about how these things are treated. It's just something you
 have to get used to.
 
-
 By the way, that weird element at the top with an exclamation mark and
 the minus signs. That's what a comment looks like in HTML. We'll talk
 more about that later.
 #+END_NOTES
 
-** Different elements support different attributes
+** Different elements have different attributes
 
 #+BEGIN_SRC html
 <!-- This does *not* work -->
@@ -738,9 +1092,108 @@ will work.
 
 So this example here does not work.
 
+We'll be seeing many more attributes as we go through the course.
 #+END_NOTES
 
+** TODO Heading levels
 
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: html-headings
+#+BEGIN_SRC html-chrome :flags --window-size=300,300 --force-device-scale-factor=2
+  <h1>Level 1 heading</h1>
+
+  <h2>Level 2 heading</h2>
+
+  <h3>Level 3 heading</h3>
+
+  <h4>Level 4 heading</h4>
+
+  <h5>Level 5 heading</h5>
+
+  <h6>Level 6 heading</h6>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: html-headings
+[[file:html-headings.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+You may have guessed that the =h1= element was just one of many
+different heading elemnts.
+
+If so, you're right. There are six of them. =h1= is the largest,
+to =h6= which is the smallest.
+#+END_NOTES
+
+** TODO Unordered lists
+
+#+NAME: html-ul
+#+BEGIN_SRC html
+  <p>The unordered list uses bullet points.</p>
+
+  <ul>
+    <li>This is a list item.</li>
+
+    <li>So is this.
+      <ul>
+	<li>Lists can be nested inside each other.</li>
+
+	<li>And have more list items.</li>
+      </ul>
+    </li>
+  </ul>
+#+END_SRC
+
+** TODO Unordered lists
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: html-ul-results
+#+BEGIN_SRC html-chrome :noweb yes
+<<html-ul>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: html-ul-results
+[[file:html-ul-results.png]]
+#+REVEAL_HTML: </div>
+
+** TODO Ordered lists
+
+#+NAME: html-ol
+#+BEGIN_SRC html
+  <p>The ordered list uses numbers.</p>
+
+  <ol>
+    <li>This is a list item.</li>
+
+    <li>So is this.
+      <ol>
+	<li>Lists can be nested inside each other.</li>
+
+	<li>And have more list items.</li>
+      </ol>
+    </li>
+  </ol>
+#+END_SRC
+
+** TODO Ordered lists
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: html-ol-results
+#+BEGIN_SRC html-chrome :noweb yes
+<<html-ol>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: html-ol-results
+[[file:html-ol-results.png]]
+#+REVEAL_HTML: </div>
+
+#+RESULTS:
 ** MDN and exercises
 
 - Mozilla Developer Network (MDN)
