@@ -365,6 +365,7 @@ start to make out some structure to the content.
 
 - Go to your home directory
 - Create a directory called =poco=
+- Change in to the =poco= directory
 - Create a directory inside =poco= called =scratch=
 
 #+BEGIN_NOTES
@@ -373,10 +374,12 @@ files that are temporary, and you can use for experimentation. Later on
 we'll create other directories for longer lived projects.
 #+END_NOTES
 
-** Open a text editor
+** Create a file in Atom
 
-- Windows: Notepad
-- OS X: TODO(nik): Fill this in
+- Start Atom, if necessary
+- =File= > =Open Folder...=
+- Navigate to, and select, the =scratch= folder
+- =File= > =New File=
 
 ** Copy the following exactly
 
@@ -386,18 +389,24 @@ we'll create other directories for longer lived projects.
 #+END_EXAMPLE
 
 #+BEGIN_NOTES
+[Walk through example, highlighting]
+
+- Angle brackets
+- Forward slash
+- Where the spaces are
 
 #+END_NOTES
 
 ** Save it
 
-- Use "Save As"
-- Find the =poco/scratch= directory you created
+- =File= > =Save=
 - Save it as =index.html=
 
 ** Load it in to your browser
 
-- TODO(nik): Demo
+| Windows      | Mac       |
+|--------------+-----------|
+| =Ctrl= + =o= | =⌘= + =o= |
 
 ** Compare the result
 
@@ -441,7 +450,11 @@ Together, the start tag, content, and end tag make up the element.
 
 For the rest of this course examples are generally going to be shown
 like this. On the left hand side are line numbers, which you do not
-need to type in.
+need to type in, they are so I can talk about particular lines on
+the slide.
+
+*Important*: The line numbers might not be the same as the ones you
+see in Atom.
 
 In the main area is the actual text.
 
@@ -486,6 +499,33 @@ the elements that it contains are closed first.
 If you get this wrong the browser will try and guess what you meant.
 Sometimes you get lucky and everything looks OK, and sometimes you get
 very strange results.
+#+END_NOTES
+
+
+** Keyboard shortcuts
+
+| Action         | Windows       | Mac         |
+|----------------+---------------+-------------|
+| Atom, save     | =Ctrl= + =s=  | =⌘= + =s=   |
+| Switch apps    | =Alt= + =Tab= | =⌘= + =Tab= |
+| Chrome, reload | =Ctrl= + =r=  | =⌘= + =r=   |
+
+#+BEGIN_NOTES
+It's a good idea to get used to some keyboard shortcuts. This will
+speed up your working so you don't need to take your hands from
+the keyboard to the mouse and back again so frequently.
+
+To save a file in Atom use =Ctrl= or =Command= and =s=.
+
+Chrome will not automatically reload the file when it changes, so
+you need to switch to it.
+
+Pressing =Alt= or =Command= and =Tab= once will switch to the window
+you last used. So if you went from Chrome to Atom, pressing this will
+take you back to Chrome, and vice-versa.
+
+Once you're back in Chrome, =Ctrl= or =Command= and =r= will reload
+the page, allowing you to see your changes.
 #+END_NOTES
 
 ** Block-level and inline elements
