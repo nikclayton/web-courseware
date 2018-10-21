@@ -7,6 +7,14 @@
 (setq css-indent-offset 2)
 (setq graphviz-dot-indent-width 2)
 
+
+;; Render HTML to PNG using Chrome
+(use-package ob-html-chrome
+  :ensure t
+  :config
+  (setq org-babel-html-chrome-chrome-executable
+	"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"))
+
 ;; Graphviz support
 (use-package graphviz-dot-mode
   :ensure t)
@@ -24,7 +32,7 @@
 
 ;; org-babel: No need to confirm execution of dot
 (defun my/org-confirm-babel-evaluate (lang body)
-  (not (string= lang "dot")))
+  (not (member lang '("dot" "html-chrome"))))
 (setq org-confirm-babel-evaluate 'my/org-confirm-babel-evaluate)
 
 ;; Easy snippets to make code insertion easier
