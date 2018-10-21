@@ -13,12 +13,19 @@ python -m http.server 8080
 
 #+END_NOTES
 
+* Introductions
+
+* Ice breaker
 * Welcome
 
 - Course agreement and expectations
 - Asking questions is absolutely fine
-- "All teaching is the process of lying, and then replacing the lies
-  with successively better approximations of the truth."
+
+#+BEGIN_QUOTE
+"All teaching is the process of lying, and then replacing the lies
+ with successively better approximations of the truth."
+#+END_QUOTE
+
 - Tell me if I need to speak more slowly
 
 * Logistics
@@ -26,7 +33,9 @@ python -m http.server 8080
 - Wifi
 - Bathrooms
 - Schedule and breaks
-- Communications (Slack etc)
+  - 9am - midday: Teaching, w/ 3 x 10 minute breaks
+  - midday - 1.30pm: Lunch
+  - 1.30pm - 5pm: Teaching, w/ 3 x 10 minute breaks
 
 #+BEGIN_NOTES
 
@@ -34,29 +43,81 @@ python -m http.server 8080
    
 #+END_NOTES
 
-* Find the keys
+* Tech setup
+
+- Laptops have all necessary software installed
+- Slack accounts created
+
+** Slack
+
+- *Our main communication tool*
+- Like WhatsApp, but multiple channels around =#topics=
+  - =#bsl= - The channel for everyone involved in this class
+    - Announcements from teachers, coaches, mentors
+    - Questions from you
+    - Success stories, achievements, news
+  - =#ch-resources=
+    - Interesting articles, job offers, courses
+  - =#ch-random=
+    - Everything else
+  - =@[username]=: Personal messages
+
+** Rules for Slack
 
 #+REVEAL_HTML: <div class="leftcol">
-- ="= (double quote)
-- ='= (single quote)
-- =<= (less than, left angle)
-- =>= (greater than, right angle)
-- =!= (exclamation, bang)
-- =-= (minus, dash)
+- Use the appropriate channel
+  - If you're not sure, =#ch-random=
+- Use =@[username]= in a message in a channel notifies them
+- Use =@channel= in message notifies everyone in the channel
+  - Only use these if you *really* need everyone to see it
+- Use threads
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-- =#= (hash)
-- ={= (left curly)
-- =}= (right curly)
-- =/= (forward slash)
-- =_= (underscore)
-- =;= (semi-colon)
+[[file:slack-thread.png]]
 #+REVEAL_HTML: </div>
 
+** Installing software
+
+- Slack (Apps: [[https://slack.com/downloads/windows][Windows]] | [[https://slack.com/downloads/osx][Mac]] | [[https://play.google.com/store/apps/details?id=com.Slack&hl=en][Android]] | [[https://itunes.apple.com/us/app/slack/id803453959?mt=12][iOS]])
+- Web Browser: [[https://www.google.com/chrome/][Google Chrome]]
+- Programmer's Editor: [[https://atom.io/][Atom]]
+- Version Control: Git (Windows | Mac)
+- IDE: WebStorm
+
+** Atom
+
 #+BEGIN_NOTES
+Download
+
+Windows install:
+File > Settings
 
 #+END_NOTES
+
+** Find the keys
+
+ #+REVEAL_HTML: <div class="leftcol">
+ - ="= (double quote)
+ - ='= (single quote)
+ - =<= (less than, left angle)
+ - =>= (greater than, right angle)
+ - =!= (exclamation, bang)
+ - =-= (minus, dash)
+ #+REVEAL_HTML: </div>
+
+ #+REVEAL_HTML: <div class="rightcol">
+ - =#= (hash)
+ - ={= (left curly)
+ - =}= (right curly)
+ - =/= (forward slash)
+ - =_= (underscore)
+ - =;= (semi-colon)
+ #+REVEAL_HTML: </div>
+
+ #+BEGIN_NOTES
+
+ #+END_NOTES
 
 * Common mistakes
 
@@ -89,13 +150,27 @@ This is a skill that you will need to learn.
   - Cascading Stylesheets (CSS)
   - Version control
 
+* Taking notes
+
+#+BEGIN_NOTES
+Before we dive in to the course material, you're going to want to
+take notes.
+
+So get ready to do that now. If you're going to be using pen and
+paper have them ready.
+
+If you're going to be typing notes in to a file on your computer
+get that ready now.
+
+If you need me to wait because you're taking a note on something
+that is *absolutely fine*. Just let me know, OK.
+#+END_NOTES
+
 * Files and directories
 
 - Information is stored in files.
 - Files have names and extensions
 - Extensions are a convention that indicate the file's contents
-  - Windows can try and be too clever, and hide them. Find the option to turn this off, as otherwise it will get very confusing.
-
 
 #+BEGIN_NOTES
 Everything you do as a web developer is going to involve working with files,
@@ -129,16 +204,26 @@ at that later.
 
 ** Show extensions on Windows
 
- - TODO(nik): Find image that shows how to do this
+#+REVEAL_HTML: <div class="leftcol">
+- \faWin + =extension= -> "Show or hide file extensions"
+- Find "Hide extensions for known file types"
+- Make sure it is *not* selected
+#+REVEAL_HTML: </div>
 
- #+BEGIN_NOTES
- For those of you with Windows computers we need to make a small change.
+[[file:windows-hide-extensions.png]]
 
- Trying to be helpful, Windows has a default configuration option that means
- it won't show you a file's extension. This is incredibly unhelpful when
- you're a frontend developer, so we need to turn that off now.
+#+BEGIN_NOTES
+For those of you with Windows computers we need to make a small change.
 
- TODO(nik): Instructions.
+Trying to be helpful, Windows has a default configuration option that means
+it won't show you a file's extension. This is incredibly unhelpful when
+you're a frontend developer, so we need to turn that off now.
+
+If you're using Windows 10 try these instructions.
+
+Anyone not using Windows 10, let me know.
+
+[Wait]
  #+END_NOTES
 
 ** Directories
@@ -234,17 +319,17 @@ at that later.
 
 ** Familiar directory trees
 
- TODO: Screenshots of directory trees in Windows Explorer, OS X Finder,
- etc, to show that this isn't an alien concept for them.
+TODO: Screenshots of directory trees in Windows Explorer, OS X Finder,
+etc, to show that this isn't an alien concept for them.
 
- #+BEGIN_NOTES
- You're probably more familiar with the directory trees when it's
- presented like this, but all the same features are there.
- #+END_NOTES
+#+BEGIN_NOTES
+You're probably more familiar with the directory trees when it's
+presented like this, but all the same features are there.
+#+END_NOTES
 
- [d3 tree code: https://bl.ocks.org/mbostock/999346]
+[d3 tree code: https://bl.ocks.org/mbostock/999346]
 
-* Break / or recap slide that shows the terms
+
 
 * Introduction to the web
 
