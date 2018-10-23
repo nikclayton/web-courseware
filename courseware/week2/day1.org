@@ -78,13 +78,15 @@ step down in to smaller steps until you do. And if you still don't,
 learn how to do that step.
 #+END_NOTES
 
-* TODO JS Problem 1: Changing the colour of a paragraph
+* TODO JS Problem 1: Changing the style of a paragraph
 
 - Show a paragraph of text on a web page
-- Show a list with two items underneath it
-  - One says "Make it green"
-  - One says "Make it bold"
-- Clicking on them should make the first paragraph green, or bold
+- Show a list with three items underneath it
+  - One says "Make it a warning"
+  - One says "Make it a tip"
+  - One says "Make it normal"
+- Clicking on them should change the paragraph style
+- Show examples below the list
 
 #+BEGIN_NOTES
 Here's our problem.
@@ -92,15 +94,29 @@ Here's our problem.
 [Run through the problem]
 #+END_NOTES
 
-* TODO JS Problem 1: Demo
+* JS Problem 1: Initial CSS setup
 
-- Demo
+#+INCLUDE: "change_para_class/index-1.html" src html
+
+* JS Problem 1: Initial CSS setup
+
+#+INCLUDE: "change_para_class/style.css" src css
+
+* TODO JS Problem 1: Goal
+
+[[file:change_para_class/solution-1.html][The solution]]
 
 #+BEGIN_NOTES
 And here's what the solution will look like to the user.
 #+END_NOTES
 
 * TODO JS Problem 1: Decompose the problem
+
+- We know:
+  - How to create a page, with paragraphs and styles
+- We don't know:
+  - What did the user click on?
+  - How do I change the style?
 
 #+BEGIN_NOTES
 What do we already know how to do?
@@ -111,15 +127,15 @@ What do we already know how to do?
 
 So I look at this problem and I think -- if I can figure out which
 list item the user clicked on, I could change the CSS style of the
-main paragraph to either the style for green, or the style for
-bold. When the style changes the paragraph will change appearance.
+main paragraph to either the style for a warning or a style for a
+tip. When the style changes the paragraph will change appearance.
 #+END_NOTES
 
 * TODO JS Problem 1: Check the solution should work
 
-- Live demo
-
 #+BEGIN_NOTES
+TODO(nik): Has the inspector been introduced by this point?
+
 An easy way to check and see if this solution should work is to
 use the browser inspector to modify the paragraph's style to use
 the appropriate CSS class.
@@ -127,28 +143,24 @@ the appropriate CSS class.
 If the look of the paragraph changes then we have a pretty good
 idea that this will work.
 
-[Demo this]
+[Demo this with [[file:change_para_class/index-1.html][index-1.html]]]
 #+END_NOTES
 
 * TODO JS Problem 1: What don't we know how to do?
 
 - React to the user clicking on a list item
-- Change the CSS class of an element
+- Change the class of an element
 
 #+BEGIN_NOTES
 I need to:
 
 - Figure out if the user clicked on a paragraph
-- Change the CSS class associated with the paragraph
+- Change the class associated with the paragraph
 
 This is a big part of the learning process -- you decide what you
 don't know, and then go off and learn the missing pieces so that
 you can do what you set out to do.
-#+END_NOTES
 
-* TODO JS: Problem 1: Chicken / egg, cheating
-
-#+BEGIN_NOTES
 Ordinarily you'd have enough experience to be able to start figuring
 out what sort of documentation you can read to learn how to do this.
 
@@ -159,14 +171,10 @@ where you'll be able to do all of this yourself.
 That's what I'm here for.
 #+END_NOTES
 
-* TODO JS: Problem 1: We're going to...
-
-- Write a function...
-- ... that finds the paragraph element...
-- ... and changes its class
+* TODO It's time for Javascript!
 
 #+BEGIN_NOTES
-
+Lets get on and do some programming!
 #+END_NOTES
 
 * TODO JS: Chrome Console
@@ -214,8 +222,12 @@ RETURN.
 #+END_SRC
 
 #+BEGIN_NOTES
-Here's what you should see. Your Javascript expression on line 1 has
-been read, evaluated, and the result has been printed on line 2.
+Here's what you should see.
+
+We call the =1 + 1= an *expression*.
+
+Your Javascript expression on line 1 has been read, evaluated, and the
+result has been printed on line 2.
 
 Then the prompt has been displayed, waiting for you to type something
 else.
@@ -230,15 +242,23 @@ else.
 #+END_SRC
 
 - Always end the line with a semi-colon, =;=
-- Round braces (parentheses)
-- Single quotes (don't mix them)
-- All lower case
+- Single quotes, ='=, not ="=
 
 #+BEGIN_NOTES
 Let's write a little bit of Javascript in the console, just to
 play around.
 
-Copy this, and press RETURN. What do you see?
+Each line here is a different Javascript expression. Type them
+out, and press RETURN at the end of each line.
+
+Make sure you end each line with a semi-colon. It's not always
+necessary, but the rules for when you don't need to are complex
+so for the moment you need to get in to the habit of always
+doing so.
+
+Use single-quotes around the words, not double quotes, and
+be careful not to mix them up -- starting with a single quote
+and ending with a double quote for example.
 #+END_NOTES
 
 * TODO What happened?
@@ -248,7 +268,7 @@ Copy this, and press RETURN. What do you see?
 < 4
 > 6 / 2;
 < 3
-> "hello" + "world";
+> 'hello' + 'world';
 < "helloworld"
 #+END_SRC
 
@@ -377,7 +397,7 @@ is *not* saved in the variable.
 * TODO Functions
 
 #+BEGIN_SRC javascript
-alert("hello, world");
+alert('hello, world');
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -445,7 +465,7 @@ to this periodically to make sure you don't get lost.
 ...
 
 <script>
-  document.getElementById("myheading").innerHTML = "Hello, PowerCoders!";
+  document.getElementById('myheading').innerHTML = "Hello, PowerCoders!";
 </script>
 #+END_SRC
 
@@ -530,7 +550,7 @@ the proper term for this.
 ** TODO =document.getElementById()=
 
 #+BEGIN_SRC javascript
-document.getElementById("myheading");
+document.getElementById('myheading');
 #+END_SRC
 
 - Returns an =Element= object
@@ -556,7 +576,7 @@ know it's not a string, but something different.
 ** TODO What if you mis-spell the ID?
 
 #+BEGIN_EXAMPLE javascript
-> document.getElementById("x");
+> document.getElementById('x');
 < null
 #+END_EXAMPLE
 
@@ -602,7 +622,7 @@ actually a type.
 ** TODO Storing an element in a variable
 
 #+BEGIN_SRC javascript
-let el = document.getElementById("myheading");
+let el = document.getElementById('myheading');
 #+END_SRC
 
 - Save the result in a variable
@@ -671,11 +691,11 @@ says that variable names that are two more words should be in
 ** TODO Using variables
 
 #+BEGIN_SRC javascript -n
-> let el = document.getElementById("myheading");
+> let el = document.getElementById('myheading');
 < undefined
 > el;
 <    <h1 id="myheading">Hello, Powercoders</h1>
-> document.getElementById("myheading");
+> document.getElementById('myheading');
 <    <h1 id="myheading">Hello, Powercoders</h1>
 #+END_SRC
 
@@ -864,14 +884,14 @@ and not =null= or =undefined=.
 *** Setting =className=
 
 - We have two classes we want to use
-  - bold
-  - green
+  - =warning=
+  - =tip=
 
 #+BEGIN_SRC javascript -n
-el.className = "bold";
+el.className = 'warning';
 el.className;
 // Check element tab!
-el.className = "green";
+el.className = 'tip';
 el.className;
 // Check element tab!
 #+END_SRC
@@ -887,7 +907,7 @@ Ask them why the style doesn't change.
 1. Write a function...
   - ?
 2. ... that finds the paragraph element...
-  - =document.getElementById("...");=
+  - =document.getElementById('...');=
 3. ... and changes its class
   - Change the =className= property
 
@@ -906,7 +926,7 @@ It's time to learn how to write Javascript functions.
   - With a name
   - And optional parameters
   - That you can *call* from other code
-- =alert("Some message");=
+- =alert('Some message');=
 
 #+BEGIN_NOTES
 One of the things we do when we're programming is try and manage
@@ -930,7 +950,7 @@ methods, like =getElementById()=, which are very similar.
 
 #+BEGIN_SRC javascript
 function greet() {
-  return "hello";
+  return 'hello';
 }
 #+END_SRC
 
@@ -1009,17 +1029,17 @@ Try this, and make sure you see the same result.
 ** Exercise: A function that changes the class
 
 #+BEGIN_SRC javascript
-setClassGreen();   // <-- goal
+setClassTip();   // <-- goal
 #+END_SRC
 
 #+BEGIN_SRC javascript
-function setClassGreen() {
+function setClassTip() {
   // You write the function body
 
   // 1. Get the element in to a variable.
 
   // 2. Change the element's className property
-  //    to "green".
+  //    to 'tip'.
 }
 #+END_SRC
 
@@ -1028,7 +1048,7 @@ We now know everything we need to write a function that changes the class
 of the paragraph in our page.
 
 Here, I've provided the outline of a function that will set the element's
-class name to "green".
+class name to 'tip'.
 
 I want you to use the information that we learned earlier, and complete
 the function in the REPL.
@@ -1037,9 +1057,9 @@ the function in the REPL.
 ** Solution: A function that changes the class
 
 #+BEGIN_SRC javascript
-function setClassGreen() {
-  let el = document.getElementById("mypara");
-  el.className = "green";
+function setClassTip() {
+  let el = document.getElementById('mypara');
+  el.className = 'tip';
 }
 #+END_SRC
 
@@ -1047,6 +1067,8 @@ function setClassGreen() {
 Did everyone do OK with this?
 
 What problems did you have? Let's talk through them with the class.
+
+[Wait]
 #+END_NOTES
 
 * TODO JS: Problem 1: We're going to...
@@ -1054,7 +1076,7 @@ What problems did you have? Let's talk through them with the class.
 1. Write a function...
   - Done
 2. ... that finds the paragraph element...
-  - =document.getElementById("...");=
+  - =document.getElementById('...');=
 3. ... and changes its class
   - Change the =className= property
 4. Call the function when the listitem is clicked
@@ -1233,44 +1255,14 @@ do it this way.
 
 ** Solution: Putting it all together (HTML)
 
-#+BEGIN_SRC html
-...
-<body>
-  <p id="mypara">...</p>
 
-  <ul>
-    <li onclick="return setClassGreen(event);" class="green">Make it green</li>
-    <li onclick="return setClassBold(event);" class="bold">Make it bold</li>
-    <li onclick="return setClass(event);">Make it normal</li>
-  </ul>
-  <script>
-    ...
-  </script>
-</body>
-#+END_SRC
+#+INCLUDE: "change_para_class/solution-1.html" :lines "11-16" src html
 
 ** Solution: Putting it all together (Javascript)
 
-#+BEGIN_SRC javascript
-<script>
-  function setClassGreen(event) {
-    let el = document.getElementById("mypara");
-    el.className = "green";
-  }
+#+INCLUDE: "change_para_class/solution-1.html" :lines "21-37" src javascript
 
-  function setClassBold(event) {
-    let el = document.getElementById("mypara");
-    el.className = "bold";
-  }
-
-  function clearClass(event) {
-    let el = document.getElementById("mypara");
-    el.className = "";
-  }
-</script>
-#+END_SRC
-
-** =onmousemove=
+** TODO =onmousemove=
 
 #+BEGIN_NOTES
 =click= is one of the events that can fire, but we've seen that there are
@@ -1279,18 +1271,11 @@ many others.
 One of them is called =on
 #+END_NOTES
 
-
-
-* TODO Exercises
-
-** Use one function, with a parameter
-
-
-
 * TODO IDEs
 ** TODO Some web development problems
 
-- TODO(nik): Move this later, since they don't use WebStorm immediately
+TODO(nik): Move this later, since they don't use WebStorm immediately
+
 - Too many files
 - Easy to make mistakes
 - "tightly coupled" content
@@ -1326,6 +1311,8 @@ very quickly become difficult to work with.
 - Like a word processor, but for programmers
 
 #+BEGIN_NOTES
+TODO(nik): Move some of this material to when Atom is introduced
+
 [Check: Has everyone here used a word processor before?]
 
 Forget about web development for a moment, and think abour writing
@@ -1350,6 +1337,11 @@ There are lots of different IDEs available, with different
 functionality. At the simpler end are programs like Notepad++ on
 Windows, which helps show you the HTML structure and uses colours to
 help you distinguish between HTML elements, content, and attributes.
+
+Atom, which we've been using so far, has a few more features to
+help out -- for example, the HTML linter that we've been using to
+catch simple mistakes. This is somewhere in the middle of the
+spectrum.
 
 At the other end are more complicated IDEs like Visual Studio and
 *Web Storm*. These are very powerful, but are more complicated to
@@ -1518,7 +1510,7 @@ it is a good way to show the technique.
 #+END_SRC
 
 #+BEGIN_NOTES
-To refacor the inline Javascript we have to put the contents in a
+To refactor the inline Javascript we have to put the contents in a
 separate file, and then use the =script= element in the HTML =head=
 to load the file.
 #+END_NOTES
@@ -1580,45 +1572,12 @@ last small change you made, or review it to see what went wrong.
 
 ** TODO Move the Javascript code to =setClass.js=, and check
 
-#+CAPTION: setClass.js
-#+BEGIN_SRC javascript
-function setClassGreen(event) {
-  let el = document.getElementById("mypara");
-  el.className = "green";
-}
-
-function setClassBold(event) {
-  let el = document.getElementById("mypara");
-  el.className = "bold"
-}
-
-function clearClass(event) {
-  let el = document.getElementById("mypara");
-  el.className = "";
-}
-#+END_SRC
+#+INCLUDE: "change_para_class/set-class-1.js" src javascript
 
 ** TODO Delete the old =script= elements
 
-#+BEGIN_SRC html
-  <html>
-    <head>
-      <title>change_para_class</title>
-      <link rel="stylesheet" href="style.css" type="text/css">
-      <script src="setClass.js"></script>
-    </head>
-    <body>
-      <p id="mypara">This is a paragraph of text that can change style. Use the options
-	below to change how this looks.</p>
+#+INCLUDE: "change_para_class/refactor-1.html" src html
 
-      <ul>
-	<li class="green" onclick="return setClassGreen(event);">Make it green</li>
-	<li class="bold" onclick="return setClassBold(event);">Make it bold</li>
-	<li onclick="return clearClass(event);">Make it normal</li>
-      </ul>
-    </body>
-  </html>
-#+END_SRC
 ** TODO Recap
 
 - Created a new file
@@ -1632,28 +1591,12 @@ function clearClass(event) {
 #+END_NOTES
 * TODO Refactoring: Repeated code
 
-#+CAPTION: setClass.js
-#+BEGIN_SRC javascript
-function setClassGreen(event) {
-  let el = document.getElementById("mypara");
-  el.className = "green";
-}
-
-function setClassBold(event) {
-  let el = document.getElementById("mypara");
-  el.className = "bold"
-}
-
-function clearClass(event) {
-  let el = document.getElementById("mypara");
-  el.className = "";
-}
-#+END_SRC
+#+INCLUDE: "change_para_class/set-class-1.js" src javascript
 
 #+BEGIN_NOTES
 If we look at this code we see that these three functions are
 almost identical. The only thing that changes is the name of
-the class.
+the class that we set.
 #+END_NOTES
 
 ** Exercise: Take the class name as a parameter
@@ -1668,7 +1611,7 @@ the class.
 
    // Add a named parameter for the class name.
 
-   // Use the nameed parameter as the new class name.
+   // Use the named parameter as the new class name.
  }
  #+END_SRC
 
@@ -1690,12 +1633,7 @@ pieces.
 
 ** Solution: Take the class name as a parameter
 
-#+BEGIN_SRC javascript
-function setClass(event, className) {
-  let el = document.getElementById("mypara");
-  el.className = className;
-}
-#+END_SRC
+#+INCLUDE: "change_para_class/set-class-2-1.js" :lines "16-20" src javascript
 
 #+BEGIN_NOTES
 Did everyone do OK with this?
@@ -1709,29 +1647,11 @@ anywhere yet.
 
 ** Replace one function call with a call to =setClass=
 
-#+BEGIN_SRC html
-...
-<body>
-  <p id="mypara">...</p>
-
-  <ul>
-    <li onclick="return setClass(event, 'green');" class="green">Make it green</li>
-    <li onclick="return setClassBold(event);" class="bold">Make it bold</li>
-    <li onclick="return clearClass(event);">Make it normal</li>
-  </ul>
-</body>
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-2-1.html" :lines "12-17" src html
 
 #+BEGIN_NOTES
 To use the function we replace the code in the =onclick= attribute that calls
-=setClassGreen= with code that calls the new =setClass= function.
-
-There's one wrinkle here -- notice how we've had to use single quotes around
-the string "green" in the attribute. This is because the attribute already
-uses double quotes for the whole value. We can't put a double-quoted string
-inside another double-quoted string.
-
-Fortunately we can use single quotes here.
+=setClassWarning= with code that calls the new =setClass= function.
 
 Go ahead and make this change to your code, and reload the page.
 
@@ -1744,18 +1664,7 @@ Double check that.
 
 ** TODO Solution: Replace all function calls
 
-#+BEGIN_SRC html
-...
-<body>
-  <p id="mypara">...</p>
-
-  <ul>
-    <li onclick="return setClass(event, 'green');" class="green">Make it green</li>
-    <li onclick="return setClass(event, 'bold');" class="bold">Make it bold</li>
-    <li onclick="return setClass(event, '');">Make it normal</li>
-  </ul>
-</body>
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-2-2.html" :lines "12-17" src html
 
 #+BEGIN_NOTES
 Check it still works.
@@ -1763,13 +1672,7 @@ Check it still works.
 
 ** TODO Delete the obsolete functions
 
-#+BEGIN_SRC javascript
-function setClass(event, className) {
-  let el = document.getElementById("mypara");
-  el.className = className;
-}
-#+END_SRC
-#+CAPTION: setClass.js
+#+INCLUDE: "change_para_class/set-class-2-2.js" src javascript
 
 #+BEGIN_NOTES
 Now that you've verified that the new code works correctly you can delete the
@@ -1796,7 +1699,7 @@ Fewew lines of code means fewer bugs.
 * TODO Refactoring: Event binding with =onclick=
 
 #+BEGIN_SRC html
-... onlick="return nameOfFunction(event)" ...
+... onlick="nameOfFunction(event)" ...
 #+END_SRC
 
 - This is how we've been binding listeners to events
@@ -1813,10 +1716,52 @@ But it does introduce a few problems.
 
 The first is that we're mixing languages -- this is HTML, but the value
 of the attribute should be Javascript code. That's just weird.
+#+END_NOTES
 
+** HTML and Javascript dependency
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC dot :file dependency-1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  graph [nodesep=2, scale=2];
+  html [label="HTML"];
+  javascript [label="Javascript"];
+
+  html -> javascript [xlabel="HTML knows Javascript\nfunction names"];
+
+  javascript -> html [taillabel="        Javascript knows\nHTML IDs"];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:dependency-1.svg]]
+
+#+REVEAL_HTML: </div>
+
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file dependency-2.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  graph [nodesep=2];
+  html [label="HTML"];
+  javascript [label="Javascript"];
+
+  html -> javascript [style="invis"];
+  javascript -> html [taillabel="        Javascript knows\nHTML IDs"];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:dependency-2.svg]]
+
+#+REVEAL_HTML: </div>
+#+BEGIN_NOTES
 More importantly, our HTML needs to know the name of the functions to
 call.  This introduces a *dependency* between the HTML and the
 Javascript.
+
+This the diagram here on the left -- both the HTML and the Javascript
+need to know abouteach other.
 
 If we ever change the name of the Javascript functions we'll need to
 change the HTML as well.
@@ -1824,6 +1769,10 @@ change the HTML as well.
 In fact, we just had to do that as part of the refactoring. Remember
 we had to change all of the =onclick= attribute values when we
 refactored and decided to use a new function.
+
+What's better, as much as possible, is if the HTML doesn't know
+about the Javascript. This way we only have on dependency to think
+about, as in the diagram on the right.
 
 In an example as small as this one this dependency is easy to manage.
 But as projects get bigger the increasing numbers of dependencies can
@@ -1833,7 +1782,11 @@ more things that you need to keep in your head.
 So we're going to change this.
 #+END_NOTES
 
-** Adding an Event Listener (using =onclick=)
+** Adding an Event Listener using =onclick=
+
+#+BEGIN_SRC html
+<p onclick="listenForClick(event);">Some text</p>
+#+END_SRC
 
 #+BEGIN_SRC javascript
 function listenForClick(event) {
@@ -1841,15 +1794,11 @@ function listenForClick(event) {
 }
 #+END_SRC
 
-#+BEGIN_SRC html
-<p onclick="return listenForClick(event);">Some text</p>
-#+END_SRC
-
 #+BEGIN_NOTES
 Just as a reminder, this is what we've been doing so far.
 #+END_NOTES
 
-** Adding an Event Listener (using =addEventListener()=)
+** Adding an Event Listener using =addEventListener()=
 
 #+BEGIN_SRC html
 <p id="mypara">Some text</p>
@@ -1876,17 +1825,18 @@ This is the new way. We've made a number of changes here.
 2. We've added an =id= attribute to the =p= element. This is because
    we're going to need to find it in the DOM using Javascript.
 
-3. Our event listener code stays the same.
+3. Our event listener code (the =listenForClick= function) stays the
+   same.
 
 4. We find the =p= element using our old friend, =getElementById()=.
 
 5. Once we've found it, we use its =addEventListener= method to say
    which event to listen for, and which event listener to call.
 
-There's something subtle going on here that I want to draw your
-attention to.
+There's something subtle going on here that I want to draw
+your attention to.
 
-It's this usage of =listenForClick= here, without any parentheses.
+It's this usage of =listenForClick= on line 6, without any parentheses.
 #+END_NOTES
 
 ** Calling vs. using a function
@@ -1909,20 +1859,9 @@ call the =listenForClick= function".
 
 ** Solution...?
 
-#+BEGIN_SRC html
-<p id="mypara">...</p>
+#+INCLUDE: "change_para_class/refactor-3.html" :lines "12-17" src html
 
-<ul>
-  <li id="li-green" class="green">Make it green</li>
-  <li id="li-bold" class="bold" onclick="return setClass(event, 'bold');">Make it bold</li>
-  <li id="li-normal" onclick="return setClass(event, '');">Make it normal</li>
-</ul>
-#+END_SRC
-
-#+BEGIN_SRC javascript
-let liGreen = document.getElementById("li-green");
-liGreen.addEventListener("click", setClass);
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-3-1.js" src javascript
 
 #+BEGIN_NOTES
 So here's the beginning of a solution.
@@ -1954,6 +1893,9 @@ the text of the new class.
 Are we going to have to go back to having three different functions?
 
 We could, but there's another way.
+
+And for that we need to make a detour and talk a bit more about
+Javascript *values*.
 #+END_NOTES
 
 ** Values in Javascript
@@ -1995,7 +1937,7 @@ And when we use the variable, we get back the value that was put in.
 
 #+BEGIN_SRC javascript
 function greet() {
-  return "hello";
+  return 'hello';
 }
 
 let f = greet;  // Notice: no "()" at the end
@@ -2016,6 +1958,9 @@ try it, and let me know what you see.
 And if you take the variable-that-contains-a-function, and put
 parentheses after the name then the function inside the variable is
 called.
+
+[Wait]
+
 #+END_NOTES
 
 ** Anonymous functions
@@ -2047,10 +1992,7 @@ the =let= expression.
 
 ** Back to our problem
 
-#+BEGIN_SRC javascript
-let liGreen = document.getElementById("li-green");
-liGreen.addEventListener("click", setClass); // Does not work
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-3-1.js" :lines "6-8" src javascript
 
 - Create an anonymous function
 - ... that calls =setClass=
@@ -2058,17 +2000,9 @@ liGreen.addEventListener("click", setClass); // Does not work
 
 ** Solution, almost
 
-#+BEGIN_SRC javascript
-let liGreen = document.getElementById("li-green");
-liGreen.addEventListener("click", setClass); // Does not work
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-3-1.js" :lines "6-8" src javascript
 
-#+BEGIN_SRC javascript
-let liGreen = document.getElementById("li-green");
-liGreen.addEventListener("click", function(event) {
-  setClass(event, "green");
-});
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-3-2.js" :lines "6-10" src javascript
 
 - Create an anonymous function
 - ... that calls =setClass=
@@ -2118,12 +2052,9 @@ Uncaught TypeError: Cannot read property 'addEventListener' of null
   - Expecting =y= to be a valid value, but =of null= means =y= was
     unexpectedly =null=
 
-#+BEGIN_SRC javascript
-let liGreen = document.getElementById('li-green');
-liGreen.addEventListener("click", ...);  // <-- liGreen is null, why?
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-3-2.js" :lines "6-10" src javascript
 
-** Why is =liGreen= null
+** Why is =makeWarning= null
 
 - [[https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById][MDN getElementById]]
 - Pay attention to the "Return value" section
@@ -2175,7 +2106,7 @@ Can anyone see the problem?
 [Wait]
 #+END_NOTES
 
-** WHy is the element not in the document?
+** Why is the element not in the document?
 
 #+REVEAL_HTML: <div class="leftcol">
 1. Browser loads HTML page
@@ -2197,8 +2128,8 @@ Can anyone see the problem?
 
 #+BEGIN_SRC javascript
 ...
-let el = document.getElementById("li-green");
-  // el is null
+let makeWarning = document.getElementById("make-warning");
+  // makeWarning is null
 #+END_SRC
 #+REVEAL_HTML: </div>
 
@@ -2279,25 +2210,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 #+END_SRC
 
 - Add this listener to your code
-- Move the code that finds =li-green= and sets the click event
+- Move the code that finds =make-warning= and sets the click event
   listener inside this anonymous function.
 
 #+BEGIN_NOTES
 You do that now -- add a listener for the =DOMContentLoaded event,
-and move the code that finds the =li-green= element and sets its
+and move the code that finds the =make-warning= element and sets its
 click handler inside this anonymous function.
 #+END_NOTES
 
 ** Solution
 
-#+BEGIN_SRC javascript
-document.addEventListener("DOMContentLoaded", function(event) {
-  let liGreen = document.getElementById("li-green");
-  liGreen.addEventListener("click", function(event) {
-    setClass(event, "green");
-  });
-});
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-3-3.js" src javascript
 
 #+BEGIN_NOTES
 So here's the almost complete code -- this handles a click on just
@@ -2306,48 +2230,17 @@ one of the elements.
 
 ** TODO Exercise: Add the other listeners
 
-#+BEGIN_SRC javascript
-document.addEventListener("DOMContentLoaded", function(event) {
-  let liGreen = document.getElementById("li-green");
-  liGreen.addEventListener("click", function(event) {
-    setClass(event, "green");
-  });
-
-  // Add the code for the li-bold and li-normal listeners here
-});
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-3-3.js" src javascript
 
 - Don't forget to remove the =onclick= attributes from the HTML
 
 ** TODO Solution: Add the other listeners
 
-#+BEGIN_SRC javascript
-document.addEventListener("DOMContentLoaded", function(event) {
-  let liGreen = document.getElementById("li-green");
-  liGreen.addEventListener("click", function(event) {
-    setClass(event, "green");
-  });
-
-  let liBold = document.getElementById("li-bold");
-  liBold.addEventListener("click", function(event) {
-    setClass(event, "bold");
-  });
-
-  let liNormal = document.getElementById("li-normal");
-  liNormal.addEventListener("click", function(event) {
-    setClass(event, "");
-  });
-});
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-3-4.js" src javascript
 
 * Refactoring: Cleaning up =setClass()=
 
-#+BEGIN_SRC javascript
-function setClass(event, className) {
-  let el = document.getElementById("mypara");
-  el.className = className;
-}
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-3-4.js" :lines "1-5" src javascript
 
 #+BEGIN_NOTES
 Here's our code for =setClass= again. Can anyone suggest any way that
@@ -2358,32 +2251,14 @@ it could be simplified?
 
 ** Removing the =event= parameter
 
-#+BEGIN_SRC javascript
-// Original code
-function setClass(event, className) {
-  let el = document.getElementById("mypara");
-  el.className = className;
-}
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-3-4.js" :lines "1-5" src javascript
 
-#+BEGIN_SRC javascript
-// No event parameter
-function setClass(className) {
-  let el = document.getElementById("mypara");
-  el.className = className;
-}
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-4-1.js" :lines "1-5" src javascript
 
-#+BEGIN_SRC javascript
-  // No event argument
-  let liGreen = document.getElementById("li-green");
-  liGreen.addEventListener("click", function(event) {
-    setClass("green");
-  });
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-4-1.js" :lines "7-11" src javascript
 
 #+BEGIN_NOTES
-When we first wrote =setClass= it was an event listener.
+When we first wrote =setClass= (first box) it was an event listener.
 
 This meant that its first parameter was always =event=, which contained
 extra information about the event that fired.
@@ -2407,12 +2282,7 @@ the change.
 
 ** Method and property chaining
 
-#+BEGIN_SRC javascript
-function setClass(className) {
-  let el = document.getElementById("mypara");
-  el.className = className;
-}
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-4-1.js" :lines "1-5" src javascript
 
 #+BEGIN_NOTES
 We can simplify this code even more using a technique called *method
@@ -2435,20 +2305,9 @@ variable we can use the result directly.
 
 ** Method and property chaining
 
-#+BEGIN_SRC javascript
-// Original code
-function setClass(className) {
-  let el = document.getElementById("mypara");
-  el.className = className;
-}
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-4-1.js" :lines "1-5" src javascript
 
-#+BEGIN_SRC javascript
-// With method chaining
-function setClass(className) {
-  document.getElementById("mypara").className = className;
-}
-#+END_SRC
+#+INCLUDE: "change_para_class/refactor-4-2.js" :lines "1-4" src javascript
 
 #+BEGIN_NOTES
 I realise that's not the easiest thing to understand, so here's what it
@@ -2458,6 +2317,22 @@ At the top is our original function, and at the bottom is the function
 re-written to use method and property chaining.
 
 This kind of chaining is incredibly common in Javascript.
+
+Is this clear to everyone?
+
+[Wait]
+
+Make this change and commit.
+#+END_NOTES
+
+** Method and property chaining
+
+#+INCLUDE: "change_para_class/refactor-4-2.js" :lines "5-18" src javascript
+
+#+BEGIN_NOTES
+And we can do the same thing when we're adding the event listeners.
+The variables we create there aren't used either, we can remove
+them and use chaining to make the code smaller.
 
 Is this clear to everyone?
 
@@ -2503,13 +2378,15 @@ Javascript and HTML, and we fixed the problem by listening for the
 
 With all of that done we discovered a couple of other simplifications
 that allowed us to remove an unused paremter, and employed property
-chaining to remove a variable and simplify the code.
+chaining to remove variables and simplify the code.
 
 And we did this very iteratively -- it wasn't all in one go. At each step
 we checked that the code still worked, so when we discovered that it
 didn't (with the event listeners) it was easy to know exactly which
 change was causing the problem.
 #+END_NOTES
+
+* BREAK
 
 * TODO The DOM tree
 
@@ -2521,6 +2398,10 @@ When we looked at files and directories last week, we noticed that they
 formed a tree of things.
 
 Does everyone remember that?
+
+[Wait]
+
+HTML pages are also trees.
 #+END_NOTES
 
 * TODO Tree refresher
@@ -3047,7 +2928,7 @@ Here's the HTML we're going to use.
 ** Create a =p= node
 
 #+BEGIN_SRC javascript
-let elP = document.createElement("p");
+let elP = document.createElement('p');
 #+END_SRC
 
 [[file:dom-add-para-2.svg]]
@@ -3067,7 +2948,7 @@ moment.
 ** Give it content
 
 #+BEGIN_SRC javascript
-let content = document.createTextNode("Second para");
+let content = document.createTextNode('Second para');
 elP.appendChild(content)
 #+END_SRC
 
@@ -3090,7 +2971,7 @@ we want to add it to, which is why we use =p= element here (saved in the
 ** Find the =body= element
 
 #+BEGIN_SRC javascript
-let elBody = document.getElementById("body");
+let elBody = document.getElementById('body');
 #+END_SRC
 
 [[file:dom-add-para-3.svg]]
@@ -3161,7 +3042,7 @@ Now, one of two things will happen.
 #+REVEAL_HTML: </div>
 
 #+BEGIN_SRC javascript
-let liGreen = document.getElementById("li-green");
+let liGreen = document.getElementById('li-green');
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -3202,7 +3083,7 @@ TODO(nik): Maybe move this later, it's more advanced.
 - Open the console
 
 #+BEGIN_SRC javascript
-let el = document.getElementById("myheading");
+let el = document.getElementById('myheading');
 let cl = el.classList;
 #+END_SRC
 
@@ -3240,14 +3121,14 @@ it using the =add()= and =remove()= methods.
 
 #+BEGIN_QUOTE
 #+BEGIN_SRC javascript -n
-div.classList.add("anotherClass");
+div.classList.add('anotherClass');
 #+END_SRC
 #+END_QUOTE
 
 **** Adding a class with =add()= 4/4
 
 #+BEGIN_SRC javascript
-cl.add("myclass");
+cl.add('myclass');
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -3283,7 +3164,7 @@ the element with a new class.
 **** Replacing a class with =replace()=
 
 #+BEGIN_SRC javascript
-cl.replace("myclass", "newClass");
+cl.replace('myclass', 'newClass');
 #+END_SRC
 
 #+BEGIN_NOTES

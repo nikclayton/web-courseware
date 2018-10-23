@@ -1,0 +1,16 @@
+.warning, .tip {
+  padding: .5em;
+  border-radius: .25em;
+  border-color: rgba(0, 0, 0, .25);
+  color: white;
+}
+
+.warning { background: red; }
+
+.warning::before { content: "WARNING: "; }
+
+.tip { background: green; }
+
+.tip::before { content: "TIP: "; }
+
+.warning::before, .tip::before { font-weight: bold; }
