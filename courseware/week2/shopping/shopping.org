@@ -1,0 +1,549 @@
+#+Title: Powercoders Basel Coursework, DOM Shopping List Exercise
+#+INCLUDE: "../../include/settings.org"
+
+* Building a shopping list
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+
+* Features
+
+- Box to enter an item
+- Button to add the item to a list
+- Each list item has a button to delete the item
+
+* Goal
+
+#+BEGIN_NOTES
+[Show the demo]
+#+END_NOTES
+
+* What do / don't we know?
+
+#+REVEAL_HTML: <div class="leftcol">
+- We know
+  - Paragraphs, lists
+  - Listening for clicks
+  - Adding DOM nodes
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Here's the things we've already covered. From that little demo,
+who can tell me things we're going to need to learn?
+#+END_NOTES
+
+* What do / don't we know?
+
+#+REVEAL_HTML: <div class="leftcol">
+- We know
+  - Paragraphs, lists
+  - Listening for clicks
+  - Adding DOM nodes
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- We don't know
+  - Input boxes
+  - Buttons
+  - Removing DOM nodes
+#+REVEAL_HTML: </div>
+
+* Set up
+
+- Create a =shopping= directory
+- Create empty files:
+  - =index.html=
+  - =style.css=
+  - =shopping.js=
+
+* Set up HTML
+
+#+INCLUDE: "shopping-1.html" src html
+
+- =style.css= and =shopping.js= remain empty
+
+#+BEGIN_NOTES
+Put this text in your HTML file, and make sure it works.
+
+There's nothing special about this -- it's just a skeleton file
+that contains all the normal structure for an HTML page.
+
+Commit these files so you've got something to start from.
+#+END_NOTES
+
+* Input boxes
+
+- MDN documentation: [[[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text][mdn html input type=text]]]
+- Questions:
+  - What element name and attributes should we use?
+  - What property contains the typed in value?
+  - How do you set a placeholder value?
+  - What is the =label= element used for?
+
+#+BEGIN_NOTES
+We're going to start by focusing on the UI things that we don't know.
+
+To do that, I want you to look at the Mozilla Developer Network
+pages for =html input= element. Specifically, the one where the
+=type= attribute is set to =text=.
+
+Have a read through that page and keep these questions in mind as
+you're reading, as I'll be asking questions in about 10 minutes...
+
+[Wait]
+#+END_NOTES
+
+** Answers
+
+*** What element name should be used?
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: input-example
+#+BEGIN_SRC html-chrome
+<input type="text">
+#+END_SRC
+
+- The =input= element
+- Specialised based on =type= attribute
+  - =text=, =color=, =password=, ...
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: input-example
+[[file:input-example.png]]
+#+REVEAL_HTML: </div>
+
+*** What property contains the typed in value?
+
+#+BEGIN_SRC html
+<input type="text" id="an-input">
+#+END_SRC
+
+#+BEGIN_SRC javascript
+let el = document.getElementById("an-input");
+el.value
+#+END_SRC
+
+*** How do you set a placeholder value?
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: input-placeholder-example
+#+BEGIN_SRC html-chrome
+<input type="text" placeholder="Enter item">
+#+END_SRC
+
+- Use the =placeholder= attribute
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: input-placeholder-example
+[[file:input-placeholder-example.png]]
+#+REVEAL_HTML: </div>
+
+*** What is the =label= element used for?
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: input-label-example
+#+BEGIN_SRC html-chrome
+<label for="item">Enter a new item:</label>
+<input type="text" id="item" placeholder="Enter item">
+#+END_SRC
+
+- Associates a caption with the input
+  - Clicking the label selects the input
+  - Screenreaders and accessibility
+- =label= =for= attribute points to =input= =id= attribute
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: input-label-example
+[[file:input-label-example.png]]
+#+REVEAL_HTML: </div>
+
+
+** Add =label= and =input= elements
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "shopping-2.html" :lines "11-18" src html -n 11
+
+- Edit =shopping.html=
+- Add these elements to the page
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :exports results
+    <div>
+      <label for="item">Enter a new item:</label>
+      <input type="text" id="item" placeholder="Type something to buy">
+    </div>
+#+END_SRC
+
+#+RESULTS:
+[[file:add-label-and-input-elements.png]]
+
+#+REVEAL_HTML: </div>
+
+** Checking that we can read the value
+
+- Type something in the box
+
+#+BEGIN_SRC javascript
+let el = document.getElementById('item');
+el.value
+#+END_SRC
+
+- Do you see what you typed?
+
+** Can we write the value?
+
+#+BEGIN_SRC javascript
+el.value = 'hello';  // <-- What happens?
+#+END_SRC
+
+* Buttons
+
+- MDN documentation: [[[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button][mdn html button]]]
+- Questions:
+   - What element name and attributes should we use?
+   - Can we make buttons look pretty?
+
+#+BEGIN_NOTES
+Now we know how to provide somewhere for the user to enter
+information we need to give them a button that they can click
+which will add the entered item to the shopping list.
+
+Again, I want you to look at the MDN pages for buttons. Do that
+search, and read the page keeping these questions in mind. I'll
+be asking questions again in about 10 minutes...
+
+[Wait]
+#+END_NOTES
+
+** Answers
+
+*** What element name should be used?
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: button-example
+#+BEGIN_SRC html-chrome
+<button>Click me!</button>
+#+END_SRC
+
+- The =button= element
+- At the moment we don't need attributes
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: button-example
+[[file:button-example.png]]
+#+REVEAL_HTML: </div>
+
+*** Can we make the buttons look pretty?
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: button-style-example
+#+BEGIN_SRC html-chrome
+<button
+  style="
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: rgba(220, 0, 0, 1);
+    background-image: linear-gradient(to top left,
+                                      rgba(0, 0, 0, .2),
+                                      rgba(0, 0, 0, .2) 30%,
+                                      rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                inset -2px -2px 3px rgba(0, 0, 0, .6);
+    text-shadow: 1px 1px 1px #000;">Click me!</button>
+#+END_SRC
+
+- =style= attribute is only for demo purposes, do not do this
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: button-style-example
+[[file:button-style-example.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Yes we can. There are lots of opportunities for styling buttons.
+#+END_NOTES
+
+* Responding to button clicks
+
+- Use an event listener, exactly as before
+
+#+BEGIN_SRC javascript
+  document.querySelector('button').addEventListener('click', function(event) {
+      console.log('The button was clicked');
+  });
+#+END_SRC
+
+#+BEGIN_NOTES
+To listen for button clicks we use an event listener exactly as we've
+done in the past.
+
+I know =querySelector= here is new. We're going to talk about that
+in a moment.
+
+For now, make sure that =shopping.html= is loaded, open the console,
+type this, and click the button a few times to make sure it works.
+
+[Wait]
+
+#+END_NOTES
+
+*** =querySelector()=
+
+#+BEGIN_SRC javascript
+  document.querySelector('button').addEventListener('click', function(event) {
+      console.log('The button was clicked');
+  });
+#+END_SRC
+
+- Finds the *first* element that matches the CSS selector string
+- Much more flexible than =getElementById()=
+
+#+BEGIN_NOTES
+So far we've been using =getElementById= to find elements based on their
+=id= attribute.
+
+Here I'm using the =querySelector= method. This method has a single
+parameter which is a string which should look like a CSS selector.
+
+Remember, the selector is the part in a CSS rule that's *before* the
+curly-brackets and all the style rules.
+
+If more than one element matches the selector only the first matching
+element is returned.
+
+#+END_NOTES
+
+*** =querySelector()= examples
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html -n
+<p id="first">...</p>
+
+<h1 class="warning">...</h1>
+
+<p class="warning">...</p>
+
+<ul>
+  <li>First li</li>
+  <li>Second li</li>
+</li>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC javascript -n
+document.querySelector('#first');
+  // <p id="first">
+  // Identical to getElementById('first');
+
+document.querySelector('.warning');
+  // <h1 class="warning">
+
+document.querySelector('p.warning');
+  // <p class="warning">
+
+document.querySelector('ul li:nth-of-type(2)').innerText;
+  // "Second li"
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Here are some examples.
+
+On the left we have some HTML. On the right, some calls to
+=querySelector()=.
+
+In the Javascript, the call in line 1 returns the first =p= element,
+also on line 1 of the HTML. This is because the =p= element has
+an =id= of "first", and remember that the =#= sign is how you specify
+an ID in CSS.
+
+The call on line 5 returns the =h1= element. Although there are two
+elements -- the =h1= and the =p= that have the =warning= class,
+=querySelector= returns the *first* one.
+
+The call on line 8 specifically finds the =p= element because the
+selector is more specific.
+
+And on line 11 this selector finds the second =li= element of the
+first =ul= element. And then retrieve's its =innerText= property.
+#+END_NOTES
+
+** Add a =button= element
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "shopping-3.html" :lines "11-19" src html -n 11
+
+- Edit =shopping.html=
+- Add the =button= element to the page
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :exports results
+    <div>
+      <label for="item">Enter a new item:</label>
+      <input type="text" id="item" placeholder="Type something to buy">
+      <button>Add item</button>
+    </div>
+#+END_SRC
+
+#+RESULTS:
+[[file:add-a-button-element.png]]
+#+REVEAL_HTML: </div>
+
+* Adding list items
+
+#+BEGIN_SRC html
+<ul>
+  <!-- List items go here -->
+</ul>
+#+END_SRC
+
+#+BEGIN_SRC html
+<li><span>Eggs</span> <button>Delete</button></li>
+#+END_SRC
+
+#+BEGIN_NOTES
+TODO:
+
+Have the empty =ul= element.
+
+Need to write a function that can take whatever's in the =input=,
+create a new =li=, create a =span=, set the text of the =span=,
+add a button.
+
+Before we do that, let's make sure that our understanding of what
+the DOM tree for this is going to look like.
+#+END_NOTES
+
+** List item graph
+
+#+BEGIN_SRC html
+<li><span>Eggs</span> <button>Delete</button></li>
+#+END_SRC
+
+#+BEGIN_NOTES
+This is what we're going to add to the =ul= element every time
+the button is clicked.
+
+Go ahead and draw out the tree for these elements.
+
+[Wait]
+#+END_NOTES
+*** Solution: List item graph
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html
+<li><span>Eggs</span> <button>Delete</button></li>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file list-item-graph.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+digraph G {
+  node [shape="hexagon"];
+
+  li -> span
+  li -> button
+
+  span -> span_content;
+  span_content [label="#t: Eggs"];
+  button -> button_content;
+  button_content [label="#t: Delete"];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:.svg]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Did everybody's tree look like this?
+
+[Wait]
+#+END_NOTES
+
+** Exercise: Write a function that creates this tree
+
+#+REVEAL_HTML: <div class="leftcol">
+[[file:list-item-graph.svg]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC javascript
+function createNewListItem(itemName) {
+  // Fill this in
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+** Exercise (hint): Write a function that creates this tree
+
+#+REVEAL_HTML: <div class="leftcol">
+[[file:list-item-graph.svg]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC javascript
+function createNewListItem(itemName) {
+  // Create an li node
+
+  // Create a node
+
+  // Set the span's .innerText property
+
+  // Create a button node
+
+  // Set the button's .innerText property
+
+  // Append the span to the li node
+
+  // Append the button node to the li node
+
+  // Return the li node
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+** Solution: Write a function that creates this tree
+
+#+BEGIN_SRC javascript
+function createNewListItem(itemName) {
+  let listItem = document.createElement('li');
+
+  let listText = document.createElement('span');
+  listText.textContent = itemName;
+
+  let deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+
+  listItem.appendChild(listText);
+  listItem.appendChild(deleteButton);
+
+  return listItem;
+}
+#+END_SRC
+
+* Removing DOM nodes
+
+
+
+
+* Followup work
+
+- Add validity checks so the button is disabled if there's no input
+- MDN Styling input elements
+- Add a fieldset and legend
+- Add a placeholder
