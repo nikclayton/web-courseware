@@ -11,13 +11,70 @@
 - Your cheatsheets
 
 * DONE Introducing styling to the web
-- Why?
 
-* TODO Introducing Cascading Style Sheets
-- Want to control what different parts of the page look like
-- "This element should look like this"
+- HTML says "What it is", not "What it should look like"
+- Mostly...
+- *Cascading Style Sheets* (CSS) say what it should look like
+- "This element..."
+  - "... or these elements..."
+  - "... should look like this"
+- These are CSS *rules*
 
-* TODO A sprinkling of CSS
+* TODO A CSS rule
+
+#+BEGIN_SRC css
+p {
+  color: red;
+  font-weight: bold;
+  margin-left: 2em;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's an example CSS rule.
+
+It starts with a selector, =p=. The selector says which elements the
+rule should apply to. In this case, the selector will apply to all
+the =p= elements on the page.
+
+The selector is followed by a block of *declarations*. The block starts
+and ends with the opening and closing curly brackets.
+
+Inside the block are three declarations. Each declaration is the name
+of a property, a colon, and the value for the property. And then
+finished with a semi-colon.
+
+This CSS rule tells the browser to find all the =p= elements and make
+the text color red, bold, and give them a left margin that is 2 ems
+wide.
+
+An "em" is a special distance -- it's the width of the letter m in
+whichever font and size you are using. So if you have a big font
+2ems is wider than 2ems in smaller font.
+#+END_NOTES
+* TODO A CSS rule
+
+#+BEGIN_SRC css
+selector {
+  property_1: value_1;
+  property_2: value_2;
+  property_3: value_3;
+  ...
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+[A more formal definition of the structure]
+#+END_NOTES
+
+* TODO Adding CSS to the scratch file
+
+- Create =scratch/style.css=
+- Create =scratch/css.html=
+
+#+INCLUDE: "day4/css.html" src html
+
+#+BEGIN_NOTES
 - External file immediately
   - Teach good practice from the beginning
   - Makes it easier to manage
@@ -25,22 +82,412 @@
 - Create the empty file (CLI, use touch)
 - Link to it. Reload page, show that nothing has changed.
 
-Commit the empty file and changed HTML file.
+Commit the two files.
+#+END_NOTES
 
-* TODO Styling all elements of a particular type
-- CSS syntax - selector, then styles
+** TODO Add some HTML content
 
-* TODO Styling just one element using id
-- Introduce the id attribute
-- Give selector example
+#+INCLUDE: "day4/css-2.html" :lines "8-23" src html
 
-* TODO Styling all elements of particular class
-- Introduce the class attribute
+** TODO Add some HTML content
 
-* TODO CSS colors
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day4/css-2.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
 
-* TODO CSS fonts
+#+RESULTS:
+[[file:add-some-html-content.png]]
 
-* Quiz #1
+* CSS Selectors
+** TODO Selecting all elements of a particular type
+
+ #+REVEAL_HTML: <div class="leftcol">
+ #+INCLUDE: "day4/style-3.css" src css
+ #+REVEAL_HTML: </div>
+
+ #+REVEAL_HTML: <div class="rightcol">
+ #+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day4/css-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+ #+END_SRC
+
+ #+RESULTS:
+ [[file:styling-all-elements-of-a-particular-type.png]]
+ #+REVEAL_HTML: </div>
+
+ #+BEGIN_NOTES
+ p selector.
+
+ =color= sets the text colour.
+
+ =background-color= sets the background colour.
+
+ We've given it a left and a right margin.
+ #+END_NOTES
+
+** TODO Selecting one element using =id=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day4/style-4.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day4/css-4.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS:
+ [[file:styling-just-one-element-using-id.png]]
+
+
+ #+BEGIN_NOTES
+ - Introduce the id attribute
+ - Give selector example
+ #+END_NOTES
+
+** TODO Selecting elements based on container
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day4/style-5.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day4/css-5.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS:
+[[file:selecting-elements-based-on-container.png]]
+
+#+BEGIN_NOTES
+Problem - we only wanted the =em= in the =p=, but we got the one
+in the =li= as well.
+
+How do we fix that?
+#+END_NOTES
+
+** TODO Styling elements based on container
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day4/style-6.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day4/css-6.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS:
+[[file:styling-elements-based-on-container.png]]
+
+#+BEGIN_NOTES
+Our selector is now more *specific*, saying that it only matches
+=em= elements that are inside =p= elements
+#+END_NOTES
+
+** TODO Styling all elements of particular class
+ - Introduce the class attribute
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day4/style-7.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day4/css-7.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS:
+[[file:styling-all-elements-of-particular-class.png]]
+
+* TODO The =id= attribute
+
+#+REVEAL_HTML: <div class="leftcol">
+- All elements support the =id= attribute
+- Value is an arbitrary string
+- Value *must* be unique in the HTML
+- Use for things that appear at most once
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html
+<div id="header">...</div>
+
+<div id="main-content">...</div>
+
+<p><span id="author">...</span>
+   <span id="publish-date">...</span>
+   <span id="category">...</span></p>
+#+END_SRC
+#+REVEAL_HTML: </div>
+* TODO The =class= attribute
+
+#+REVEAL_HTML: <div class="leftcol">
+- All elements support the =class= attribute
+- Value is an arbitrary string
+- Value *does not* need to be unique in the HTML
+- Use for things that might appear multiple times
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html
+<p class="warning">...</p>
+
+<pre class="html">...</p>
+
+<pre class="css">...</p>
+
+<img class="screenshot">
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Some example classes.
+#+END_NOTES
+
+*** TODO Where do CSS defaults come from?
+
+- The browser includes a stylesheet
+- It sets the default behaviours that your stylesheet overrides
+- Called the =user agent stylesheet=
+- Different browsers can have different defaults
+
+* TODO CSS colours
+
+** Colour theory, red, green, blue, alpha
+
+- RGBA = Red, Green, Blue, Alpha
+- R, G, B in range [0 - 255]
+  - 0 = none of that colour
+  - 255 = maximum amount of that colour
+- Alpha in range [0.0 - 1.0]
+  - 0.0 = completely transparent, 0% of the colour
+  - 1.0 = completely opaque, 100% of the colour
+  - 0.5 = 50%  of the colour
+  - 0.25 = 25% of the colour, etc
+
+#+BEGIN_NOTES
+Computers generally represent a colour as the combination
+of 4 different values.
+
+The first three values represent the amount of a particular colour
+in each. Those colours are the amount of red, green, and blue in
+the image.
+
+The fourth value is called the *alpha*, or transparency of the
+image, and goes from 0.0 to 1.0.
+
+A value of 1.0 for the alpha means the colour is not transparent at
+all. A value of 0.5 means it's 50% transparent. And 0.25 means it's
+75% transparent.
+
+These values then get mixed together to create the final colour
+that you see on the screen.
+#+END_NOTES
+
+** TODO Colour examples
+
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day4/colour-table.html")) :flags --window-size=1024,800 --force-device-scale-factor=1.0 :exports results
+#+END_SRC
+
+#+RESULTS:
+[[file:colour-examples.png]]
+
+** CSS colour properties
+
+- =color=
+- =background-color=
+- =border-color=
+- =text-decoration-color=
+- ...
+
+#+BEGIN_NOTES
+Generally, the =color= property is used to define the foreground
+colour of an element's content, and the =background-color=
+property defines the background colour.
+
+Depending on the element other CSS colour properties might also
+be available.
+
+For example, if the element supports borders then you can give
+them a color using =border-color=.
+
+For text content that is decorated -- for example, with an underline,
+the colour of the decoration is normally the same as the colour
+of the text. But you can change that using the =text-decoration-color=
+property.
+#+END_NOTES
+
+** How to specify CSS colors
+
+#+BEGIN_NOTES
+Now that we know that, lets take a look at the syntax for specifying
+colours in CSS.
+#+END_NOTES
+
+*** Colour names
+
+#+BEGIN_SRC css
+p {
+  color: black;
+}
+#+END_SRC
+
+#+REVEAL_HTML: <div class="leftcol">
+- =black=
+- =silver=
+- =gray=
+- =white=
+- =maroon=
+- =red=
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- =purple=
+- =fuchsia=
+- =green=
+- =lime=
+- =olive=
+- =yellow=
+
+...
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+You've already seen this in the examples to date. CSS supports
+some predefined colour names that you can use that always mean
+the same thing.
+
+Note that the names are *not* surrounded by quote marks in the CSS.
+
+Using the colour names is OK when you're testing stuff out, but
+they have some limitations, including:
+
+- No support for an alpha value
+- Typo's in the names will result in them being ignored
+
+So it's generally best to use one of the other mechanisms.
+#+END_NOTES
+
+*** rgb(r, g, b)
+
+#+BEGIN_SRC css
+p {
+  color: rgb(185, 61, 244); /* Royal purple */
+}
+#+END_SRC
+
+- =rgb(red_value, green_value, blue_value)=
+
+#+BEGIN_NOTES
+This syntax is very common. You write =rgb()= (with opening and
+closing parentheses) and then you write the red, green, and blue
+numbers inside, separated by commas.
+
+By the way, that slash-star and star-slash is how we include a
+comment in a CSS file.
+#+END_NOTES
+
+*** rgba(r, g, b, a)
+
+#+BEGIN_SRC css
+  p {
+    color: rgba(185, 61, 244, .67); /* Royal purple, 67% opaque */
+  }
+#+END_SRC
+
+- =rgb(red_value, green_value, blue_value, alpha_value)=
+
+#+BEGIN_NOTES
+If you need to specify the alpha value then you use =rgba= instead
+of =rgb=.
+#+END_NOTES
+
+*** With hexadecimal digits
+
+#+BEGIN_SRC css
+p {
+  color: #b93df4; /* Royal purple */
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+This is not the time to learn hexadecimal.
+
+Who here already knows hexadecimal numbers?
+
+[Wait -- if more than one or two]
+
+OK, very briefly, the six digits are the hexadecimal representation
+of the red, green, and blue values. The first two hexadecimal digits
+are the red component, the middle two are the green component, and
+the last two are the blue component.
+
+At the time that we're doing this there is experimental support for
+specifying the alpha value using a similar syntax, but it's not
+widely implemented yet.
+#+END_NOTES
+
+*** Recommendation: Use =rgb()= or =rgba()=
+
+#+BEGIN_NOTES
+My recommendation for you all is to use the =rgb()= or =rgba()=
+syntax when specifying colours, and that's what I'll be doing
+through the rest of the course.
+#+END_NOTES
+
+*** Colour picker for Atom
+
+- =File= > =Settings=
+- =+ Install=
+- Search for =color-picker=
+- Install it
+
+| Windows              | Mac                 |
+|----------------------+---------------------|
+| =Ctrl= + =Alt= + =c= | =⌘= + =Shift= + =c= |
+
+* TODO The browser inspector
+
+- =More tools= > =Developer tools=
+
+#+BEGIN_NOTES
+A tour of the browser inspector.
+
+- How to open it
+  - Menu
+  - Ctrl + Shift + i
+  - Right click, inspect element
+
+The "Elements" sheet (which is the only one we're concerned with at
+the moment).
+
+- The top pane
+  - Dynamic version of the loaded page
+  - Demo:
+    - Hovering highlights the hovered element
+    - Toggling nested elements
+    - Double-click text content to edit it
+    - Double-click element name to change it
+    - Right-click menu
+
+- CSS selector immediately below the pane
+  - Show how it changes as different elements are selected
+  - Show how it shows ID and class for CSS
+
+- Style pane
+  - Toggling styles on and off
+  - Direct editing of the style (property name and value)
+  - Special helpers for certain properties (e.g., colour)
+  - element.style section, for just that element
+  - Links from the property set to the CSS file that defines it
+  - Inheritance (use p and p#footer for this)
+
+- Show how to dock to different sides
+
+Reiterate that any changes made in the inspector are not permanent,
+and will be lost as soon as the page reloads.
+
+- The console (if displayed)
+  - Just show that it's there and that we'll be using it next week
+
+- How to get out of developer tools
+#+END_NOTES
 
 * TODO Exercises and Practice
+
+
+* TODO CSS fonts
