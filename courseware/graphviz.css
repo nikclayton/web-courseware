@@ -16,6 +16,9 @@
   stroke: #eee8d5;
 }
 
+.cluster polygon {
+  stroke: red;
+}
 
 text {
   font-family: sans-serif;
