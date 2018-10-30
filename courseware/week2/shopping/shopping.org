@@ -1,25 +1,26 @@
 #+Title: Powercoders Basel Coursework, DOM Shopping List Exercise
 #+INCLUDE: "../../include/settings.org"
+#+COLUMNS: %35ITEM %TODO %TOPICS %REQUIREMENTS %TAGS
 
-* Building a shopping list
+* TODO Building a shopping list
 
 #+BEGIN_NOTES
 
 #+END_NOTES
 
-* Features
+* TODO Features
 
 - Box to enter an item
 - Button to add the item to a list
 - Each list item has a button to delete the item
 
-* Goal
+* TODO Goal
 
 #+BEGIN_NOTES
 [Show the demo]
 #+END_NOTES
 
-* What do / don't we know?
+* TODO What do / don't we know?
 
 #+REVEAL_HTML: <div class="leftcol">
 - We know
@@ -33,7 +34,7 @@ Here's the things we've already covered. From that little demo,
 who can tell me things we're going to need to learn?
 #+END_NOTES
 
-* What do / don't we know?
+* TODO What do / don't we know?
 
 #+REVEAL_HTML: <div class="leftcol">
 - We know
@@ -49,7 +50,7 @@ who can tell me things we're going to need to learn?
   - Removing DOM nodes
 #+REVEAL_HTML: </div>
 
-* Set up
+* TODO Set up
 
 - Create a =shopping= directory
 - Create empty files:
@@ -57,7 +58,7 @@ who can tell me things we're going to need to learn?
   - =style.css=
   - =shopping.js=
 
-* Set up HTML
+* TODO Set up HTML
 
 #+INCLUDE: "shopping-1.html" src html
 
@@ -72,7 +73,7 @@ that contains all the normal structure for an HTML page.
 Commit these files so you've got something to start from.
 #+END_NOTES
 
-* Input boxes
+* TODO Input boxes
 
 - MDN documentation: [[[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text][mdn html input type=text]]]
 - Questions:
@@ -195,13 +196,27 @@ el.value
 
 - Do you see what you typed?
 
+#+BEGIN_NOTES
+The input widget has a =value= property that contains whatever
+is entered in to the box.
+
+We're going to need this information later.
+#+END_NOTES
 ** Can we write the value?
 
 #+BEGIN_SRC javascript
 el.value = 'hello';  // <-- What happens?
 #+END_SRC
 
-* Buttons
+#+BEGIN_NOTES
+Try this out. What happens?
+
+[Wait]
+
+That's cool -- we can change the value in the box by writing
+to the property.
+#+END_NOTES
+* TODO Buttons
 
 - MDN documentation: [[[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button][mdn html button]]]
 - Questions:
@@ -276,7 +291,7 @@ be asking questions again in about 10 minutes...
 Yes we can. There are lots of opportunities for styling buttons.
 #+END_NOTES
 
-* Responding to button clicks
+* TODO Responding to button clicks
 
 - Use an event listener, exactly as before
 
@@ -404,7 +419,91 @@ first =ul= element. And then retrieve's its =innerText= property.
 [[file:add-a-button-element.png]]
 #+REVEAL_HTML: </div>
 
-* Adding list items
+** Widgets / controls
+   :PROPERTIES:
+   :TOPICS:   widget
+   :END:
+
+#+BEGIN_NOTES
+The general term for things like the input box, buttons, and
+other things that you can add to forms -- like checkboxes, drop-down
+lists, radio buttons, and more -- is a *widget*. The term *control*
+is also used.
+
+So you might hear me talk about the *input widget* or the *input
+control*.
+#+END_NOTES
+** Listen for clicks on the button
+
+- Quick check to make sure things work
+  - Listen for =click= events on the button
+  - Log the value of the input widget
+    - =console.log(value);=
+#+BEGIN_NOTES
+Now that our HTML is starting to take shape we can write some
+code to check that we can listen for clicks and extract the
+value from the input widget.
+
+We can use =console.log= to verify that we've got the value
+correctly before moving on to the next part of the problem.
+#+END_NOTES
+
+*** Reminder: =DOMContentLoaded=
+
+- We add handlers when the =DOMContentLoaded= event has fired
+
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    // Our button listener code goes here.
+  });
+#+END_SRC
+
+*** Exercise: Button click listener
+- Add a =click= listener to the button
+- In the listener:
+  - Retrieve the input widget's value
+  - Log it using =console.log=
+
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    // Our button listener code goes here.
+  });
+#+END_SRC
+
+*** Hint: Button click listener
+
+- Add a =click= listener to the button
+- In the listener:
+  - Retrieve the input widget's value
+  - Log it using =console.log=
+
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      // Find the input widget
+
+      // Use 'console.log() to log its 'value' property
+    });
+  });
+#+END_SRC
+
+*** Solution: Button click listener
+
+- Add a =click= listener to the button
+- In the listener:
+  - Retrieve the input widget's value
+  - Log it using =console.log=
+
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      let inputBox = document.queryElementById('item');
+      console.log(inputBox.value);
+    });
+  });
+#+END_SRC
+
+* TODO Adding list items
 
 #+BEGIN_SRC html
 <ul>
@@ -421,7 +520,7 @@ TODO:
 
 Have the empty =ul= element.
 
-Need to write a function that can take whatever's in the =input=,
+We need to write a function that can take whatever's in the =input=,
 create a new =li=, create a =span=, set the text of the =span=,
 add a button.
 
@@ -466,13 +565,26 @@ digraph G {
 #+END_SRC
 
 #+RESULTS:
-[[file:.svg]]
+[[file:list-item-graph.svg]]
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 Did everybody's tree look like this?
 
 [Wait]
+
+For anyone's that didn't.
+
+We start with the =li= element -- that's the first node.
+
+We see that this has a child element called =span=, so we add
+that to the tree.
+
+Then we see that it has some content, so we add that as well.
+
+Then the =span= ends, and a new =button= element starts. This is
+also a child of the =li= element. And that has some text content
+too, so we add that as its own node.
 #+END_NOTES
 
 ** Exercise: Write a function that creates this tree
@@ -500,7 +612,7 @@ function createNewListItem(itemName) {
 function createNewListItem(itemName) {
   // Create an li node
 
-  // Create a node
+  // Create a span node
 
   // Set the span's .innerText property
 
@@ -519,6 +631,7 @@ function createNewListItem(itemName) {
 
 ** Solution: Write a function that creates this tree
 
+#+NAME: createNewListItemNoDelete
 #+BEGIN_SRC javascript
 function createNewListItem(itemName) {
   let listItem = document.createElement('li');
@@ -536,14 +649,1183 @@ function createNewListItem(itemName) {
 }
 #+END_SRC
 
-* Removing DOM nodes
+#+BEGIN_NOTES
+Here's one possible solution.
+
+There are 5 sections to this code:
+
+1. Creating the =li=
+2. Creating and populating the =span=
+3. Creating and populating the =button=
+4. Appending children to the =li=
+5. Returning the value.
+
+Steps 1, 2, and 3 can happen in any order.
+
+I'm going to show you some variations of this function.
+#+END_NOTES
+
+** Solution: Write a function that creates this tree
+
+#+BEGIN_SRC javascript
+function createNewListItem(itemName) {
+  let listItem = document.createElement('li');
+  let listText = document.createElement('span');
+  let deleteButton = document.createElement('button');
+
+  listText.textContent = itemName;
+  deleteButton.textContent = 'Delete';
+
+  listItem.appendChild(listText);
+  listItem.appendChild(deleteButton);
+
+  return listItem;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+This has exactly the same effect as the previous function. But
+here the nodes are created before being modified. This is absoutely
+fine.
+
+My personal preference is to not do this -- I generally prefer it if a
+variable is declared as close to where it will be used as possible,
+but different people have different opinions about this.
+#+END_NOTES
+
+** Solution: Create and append
+
+#+BEGIN_SRC javascript
+  function createNewListItem(itemName) {
+    let listItem = document.createElement('li');
+
+    let listText = document.createElement('span');
+    listText.textContent = itemName;
+    listItem.appendChild(listText);
+
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    listItem.appendChild(deleteButton);
+
+    return listItem;
+  }
+#+END_SRC
+
+#+BEGIN_NOTES
+This also has the same effect, but we append the nodes to the
+list item as soon as we're done with them.
+
+This is also a perfectly fine way to do things.
+#+END_NOTES
+
+* TODO Adding listitems when the button is clicked
+
+- Reminder: This is our current click listener
+
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      let inputBox = document.queryElementById('item');
+      console.log(inputBox.value);
+    });
+  });
+#+END_SRC
+
+#+BEGIN_NOTES
+This is the click listener that we wrote earlier. Yours might have
+slightly different variable names, but it should work -- when the
+button is clicked it should log whatever is in the input widget.
+#+END_NOTES
+
+** TODO Adding listitems when the button is clicked
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      let inputBox = document.queryElementById('item');
+      console.log(inputBox.value);
+    });
+  });
+#+END_SRC
+
+- =createNewListItem= returns a =li= element node
+- Find the =ul= element, and use =appendChild= to add the =li= node
+
+#+BEGIN_NOTES
+Modify this =click= listener so that it calls =createNewListItem=
+with the input widget's value to create the new =li= element.
+
+Then find the =ul= element and use =appendChild= to add the =li= node.
+
+[Wait for everyone to do this]
+#+END_NOTES
+
+*** TODO Solution: Adding list items when the button is clicked
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      let inputBox = document.queryElementById('item');
+      let li = createNewListItem(inputBox.value);
+      document.querySelector('ul').appendChild(li);
+    });
+  });
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's what one solution looks like.
+
+We call =createNewListItem()=, passing it =inputBox.value=, so it
+receives whatever text the user typed in.
+
+This returns an =li= elemnt, which we save in the =li= variable.
+
+On the next line we find the =ul= element and append our new =li=
+element to the end.
+
+[Questions?]
+#+END_NOTES
+* TODO The =Delete= button
+
+#+BEGIN_SRC javascript :noweb yes -n
+<<createNewListItemNoDelete>>
+#+END_SRC
+
+#+BEGIN_NOTES
+Now that adding items to the list works we need to figure out how
+we're going to delete them.
+
+Deleting a list item is the same thing as deleting (or removing) it
+from the DOM tree.
+
+This is the code that I wrote that creates and returns a new list
+item. We talked about this code a few slides back -- your code
+might look slightly different.
+
+The important bit for the delete button is finding the place in
+the code where the button is created. In my code that's right here.
+
+Go ahead and find that spot in your code.
+
+Because we're going to make a change right there.
+#+END_NOTES
+
+** TODO Exercise: Checking we can detect the click
+
+#+BEGIN_SRC javascript
+function createNewListItem(itemName) {
+  let listItem = document.createElement('li');
+
+  let listText = document.createElement('span');
+  listText.textContent = itemName;
+
+  let deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+
+  // Add a click handler that logs the click here
+  // ...
+
+  listItem.appendChild(listText);
+  listItem.appendChild(deleteButton);
+
+  return listItem;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+As always, let's make sure we can detect the click before we do
+anything more complicated.
+
+We're always trying to make the simplest change that can work, and then
+build upon it.
+
+So, change your =createNewListItem= function and add a click listener
+after the delete button has been created.
+
+This is my code, so I'd put the new code where the comment is. Your
+code might create the elements in a slightly different order, but
+as long as you create the handler after the button is created you'll
+be OK.
+
+[Wait]
+#+END_NOTES
+** TODO Solution: Checking we can detect the click
+#+NAME: createNewListItemLogClick
+#+BEGIN_SRC javascript
+  function createNewListItem(itemName) {
+    let listItem = document.createElement('li');
+
+    let listText = document.createElement('span');
+    listText.textContent = itemName;
+
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+
+    deleteButton.addEventListener('click', function(event) {
+      console.log('Delete button clicked');
+    });
+
+    listItem.appendChild(listText);
+    listItem.appendChild(deleteButton);
+
+    return listItem;
+  }
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's my solution. There's nothing special here that we haven't
+done before.
+
+I add an event listener for the =click= event to the delete
+button, and when it's clicked I used =console.log= to confirm
+that the listener was working.
+#+END_NOTES
+** TODO Removing DOM nodes
+   :PROPERTIES:
+   :REQUIREMENTS: dom
+   :TOPICS:   dom-remove
+   :END:
+
+ - [[[https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove][MDN remove element]]] / [[[https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove][MDN delete element]]]
+
+#+BEGIN_NOTES
+Now that we know we can detect the click run an event listener
+we need to find out how we delete the current list item from
+the tree.
+
+For that we can use the documentation again. Try one of these
+searches in Google, and read the documentation that comes up.
+
+See if you can figure out what one line of code we need to write
+in the click event listener to delete the listitem when the
+button is clicked.
+
+[Wait]
+#+END_NOTES
+** Solution: Removing DOM nodes
+#+BEGIN_SRC javascript
+element.remove();
+#+END_SRC
+
+#+BEGIN_NOTES
+The general way to remove an element from the DOM tree is to
+call its =remove()= method.  If you do this then the element,
+and anything that it contains, will be deleted.
+#+END_NOTES
+
+*** =remove()= and the DOM
+
+#+BEGIN_SRC html
+  <ul>
+    <li><span>Eggs</span> <button>Delete</button></li>
+    <li><span>Milk</span> <button>Delete</button></li>
+    <li><span>Bread</span> <button>Delete</button></li>
+  </ul>
+#+END_SRC
+
+#+BEGIN_NOTES
+Imagine our list has three list items in it, for "Eggs", "Milk",
+and "Bread", like this.
+
+#+END_NOTES
+
+*** =remove()= and the DOM
+
+ #+BEGIN_SRC dot :file list-item-graph2.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+ digraph G {
+   node [shape="hexagon"];
+
+   ul -> {li1, li2, li3};
+   li1 [label="li"];
+   li1 -> span1
+   li1 -> button1
+
+   span1 [label="span"];
+   span1 -> span_content1;
+   span_content1 [label="#t: Eggs"];
+   button1 [label="button"];
+   button1 -> button_content1;
+   button_content1 [label="#t: Delete"];
+
+   li2 [label="li"];
+   li2 -> span2
+   li2 -> button2
+
+   span2 [label="span"];
+   span2 -> span_content2;
+   span_content2 [label="#t: Milk"];
+   button2 [label="button"];
+   button2 -> button_content2;
+   button_content2 [label="#t: Delete"];
+
+   li3 [label="li"];
+   li3 -> span3
+   li3 -> button3
+
+   span3 [label="span"];
+   span3 -> span_content3;
+   span_content3 [label="#t: Bread"];
+   button3 [label="button"];
+   button3 -> button_content3;
+   button_content3 [label="#t: Delete"];
+ }
+ #+END_SRC
+
+ #+RESULTS:
+ [[file:list-item-graph2.svg]]
+
+#+BEGIN_NOTES
+This is what the DOM tree for that looks like.
+
+Does this make sense to everyone so far?
+
+[Wait]
+#+END_NOTES
+
+*** Finding the second list item
+
+#+BEGIN_SRC javascript
+let secondLi = document.querySelector('li:nth-child(2)');
+#+END_SRC
+
+ #+BEGIN_SRC dot :file list-item-graph3.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+ digraph G {
+   node [shape="hexagon"];
+
+   ul -> {li1, li2, li3};
+   li1 [label="li"];
+   li1 -> span1
+   li1 -> button1
+
+   span1 [label="span"];
+   span1 -> span_content1;
+   span_content1 [label="#t: Eggs"];
+   button1 [label="button"];
+   button1 -> button_content1;
+   button_content1 [label="#t: Delete"];
+
+   subgraph cluster_li2 {
+     li2 [label="li"];
+   }
+   li2 -> span2
+   li2 -> button2
+
+   span2 [label="span"];
+   span2 -> span_content2;
+   span_content2 [label="#t: Milk"];
+   button2 [label="button"];
+   button2 -> button_content2;
+   button_content2 [label="#t: Delete"];
+
+   li3 [label="li"];
+   li3 -> span3
+   li3 -> button3
+
+   span3 [label="span"];
+   span3 -> span_content3;
+   span_content3 [label="#t: Bread"];
+   button3 [label="button"];
+   button3 -> button_content3;
+   button_content3 [label="#t: Delete"];
+ }
+ #+END_SRC
+
+ #+RESULTS:
+ [[file:list-item-graph3.svg]]
+
+*** Removing the second list item
+
+#+BEGIN_SRC javascript
+let secondLi = document.querySelector('li:nth-child(2)');
+secondLi.remove();
+#+END_SRC
+
+ #+BEGIN_SRC dot :file list-item-graph4.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+ digraph G {
+   node [shape="hexagon"];
+
+   ul -> li1;
+   ul -> li2 [style=invis];
+   ul -> li3;
+
+   li1 [label="li"];
+   li1 -> span1;
+   li1 -> button1;
+
+   span1 [label="span"];
+   span1 -> span_content1;
+   span_content1 [label="#t: Eggs"];
+   button1 [label="button"];
+   button1 -> button_content1;
+   button_content1 [label="#t: Delete"];
+
+   li2 [label="li" style=invis];
+
+   li2 -> span2 [style=invis];
+   li2 -> button2 [style=invis];
+
+   span2 [label="span" style=invis];
+   span2 -> span_content2 [style=invis];
+   span_content2 [label="#t: Milk" style=invis];
+   button2 [label="button" style=invis];
+   button2 -> button_content2 [style=invis];
+   button_content2 [label="#t: Delete" style=invis];
+
+   li3 [label="li"];
+   li3 -> span3
+   li3 -> button3
+
+   span3 [label="span"];
+   span3 -> span_content3;
+   span_content3 [label="#t: Bread"];
+   button3 [label="button"];
+   button3 -> button_content3;
+   button_content3 [label="#t: Delete"];
+ }
+ #+END_SRC
+
+ #+RESULTS:
+ [[file:list-item-graph4.svg]]
 
 
+*** TODO Exercise: Remove the listitem when the delete button is clicked
+
+#+BEGIN_SRC javascript :noweb yes
+<<createNewListItemLogClick>>
+#+END_SRC
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+*** TODO Solution: Remove the listitem when the delete button is clicked
+#+NAME: createNewListItemDelete
+#+BEGIN_SRC javascript
+  function createNewListItem(itemName) {
+    let listItem = document.createElement('li');
+
+    let listText = document.createElement('span');
+    listText.textContent = itemName;
+
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+
+    deleteButton.addEventListener('click', function(event) {
+      listItem.remove();
+    });
+
+    listItem.appendChild(listText);
+    listItem.appendChild(deleteButton);
+
+    return listItem;
+  }
+#+END_SRC
+
+#+BEGIN_NOTES
+Here we simply call the =remove= method on the =listItem=.
+#+END_NOTES
+* TODO Recap: What have we learned?
+#+REVEAL_HTML: <div class="leftcol">
+- Widgets
+  - =input=
+    - Different types exist, ~type=...~
+    - Retrieving the value
+  - =button=
+    - Reacting to clicks
+  - =label=
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- =document.querySelector('...')=
+  - More flexible way to select elements
+- =element.remove()=
+  - To remove elements from the DOM
+#+REVEAL_HTML: </div>
+* Play
+- Play around with the shopping list
+- Identify things we could change to make it easier for users
+* TODO UX followup work
+- Press =ENTER= to add an item
+- Clear the input widget after adding an item
+- Setting the input focus
+- Prevent empty items from being added
+* Press ENTER to add an item
+- Need to click the button to add the item
+- Natural to press ENTER to add to the list
+- How?
+
+** MDN key events
+** TODO =keyup= event
+
+- Run through the docs, highlight param and event options
+** TODO The =event= parameter
+#+BEGIN_SRC javascript
+document.addEventListener('DOMContentLoaded', function(event) {
+  ...
+});
+#+END_SRC
+
+- All event listeners receive an =event= parameter
+- Contains event-specific additional information
+- For the =keyup= event it includes the key that was released
+
+#+BEGIN_NOTES
+All our event listeners have taken a special =event= parameter
+But we haven't used it yet
+
+Time for that to change. We're going to use the value of the =key=
+property in the =event= argument to decide whether or not to
+add the item to the list
+
+#+END_NOTES
+
+** =keyup= and =event.key=
 
 
-* Followup work
+** Exercise: Listening for =keyup= and inspecting =event.key=
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      // ...
+    });
 
-- Add validity checks so the button is disabled if there's no input
-- MDN Styling input elements
-- Add a fieldset and legend
-- Add a placeholder
+    // Add code here that listen for 'keyup' on the 'input' element
+    // and logs the event.key property.
+  });
+#+END_SRC
+
+#+BEGIN_NOTES
+We can check that our understanding of the documentation is correct
+by writing an event listener that listens for =keyup= events on the
+input widget and logs the results.
+
+Do this, and let me know when it's done, and you know what string
+is used to repesent the ENTER key.
+#+END_NOTES
+
+** Solution: Listening for =keyup= and inspecting =event.key=
+#+NAME: EventKeyLog
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      // ...
+    });
+
+    document.querySelector('input').addEventListener('keyup', function(event) {
+      console.log(event.key);
+    });
+  });
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's a solution -- the new event listener here simply logs the
+=key= property of the =event= argument so we can take a look at it.
+
+What special string is used if the user presses the ENTER key?
+
+[Wait]
+
+Are there strings for any other special keys?
+
+[Wait]
+
+=Control=, =Shift=, =Alt=, =AltGraph=, =CapsLock=
+#+END_NOTES
+
+** How do we use this?
+
+#+BEGIN_NOTES
+Now we know that we can tell if the user pressed the ENTER key in
+the input widget.
+
+At the moment we're just logging the key that was pressed. We need
+to be able to run some code only if the key that was pressed is
+ENTER.
+
+How do we do that?
+#+END_NOTES
+** Making a decision: using =if= statements
+   :PROPERTIES:
+   :REQUIREMENTS: js-control-flow
+   :TOPICS:   js-if
+   :END:
+
+#+BEGIN_SRC javascript
+if (expression) {
+  // Code that only runs if 'expression' is true
+  //
+  // We call this the "body" of the "if" block.
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+The answer to that is an =if= statement.
+
+We haven't seen these yet.
+
+Remember when we first talked about the flow of control. Initially
+control in the program flows down, line by line by line.
+
+Then we introduced functions, which allows the flow to jump to a
+different function, run the code that's in that function, and then
+jump back to carry on where it left off.
+
+=if= statements change the flow so that some code -- the code inside
+the =if= block -- runs only if the expression inside the parentheses
+is true.
+
+Notice how the =if= block uses curly brackets -- just like functions --
+to enclose the code that might run.
+#+END_NOTES
+** True and false values in Javascript?
+
+#+REVEAL_HTML: <div class="leftcol">
+- False values
+  - =false=
+  - =undefined=
+  - =null=
+  - =NaN=
+  - =0= (number zero)
+  - =''= (empty string)
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- True values
+  - Everything else
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Looked a little bit at these earlier in the week.
+
+TODO: Look back to when that was and what was discussed
+
+On the left hand side is every value that Javascript considers to be
+false. If the result of an expression evalutes to false and the
+expression is used in an =if= condition, the body of the =if= will not
+run.
+#+END_NOTES
+** Comparison operators, numbers
+
+#+BEGIN_SRC javascript
+let a = 10;
+let b = 20;
+
+a === b;   // false, === means "is equal to?"
+a !== b;   // true,  !== means "is not equal to?"
+a <   b;   // true,  <   means "is less than?"
+a >   b;   // false, >   means "is greater than?"
+a <=  b;   // true,  <=  means "is less than or equal to?"
+a >=  b;   // false, >=  means "is greater than or equal to?"
+#+END_SRC
+
+#+BEGIN_NOTES
+Javascript supports numerous operators that are used to compare two
+or more values.
+
+Here are the six most common, and what they return.
+
+Try all of these in the console, and make sure you get the same
+result.
+
+[Wait]
+#+END_NOTES
+
+** Comparison operators, strings
+#+BEGIN_SRC javascript
+let c = 'This is a string';
+let d = 'This is also a string';
+
+c === d;   // false, === means "is equal to?"
+c !== d;   // true,  !== means "is not equal to?"
+c <   d;   // true,  <   means "is less than?"
+c >   d;   // false, >   means "is greater than?"
+c <=  d;   // true,  <=  means "is less than or equal to?"
+c >=  d;   // false, >=  means "is greater than or equal to?"
+#+END_SRC
+
+#+BEGIN_NOTES
+You can use these same operators to compare strings. Try these out.
+
+[Wait]
+#+END_NOTES
+** What does =<= and =>= mean for strings?
+
+- First compare by length, shorter string is always less-than
+- Then compare character by character
+
+#+BEGIN_SRC javascript
+// let c = 'This is a string';
+// let d = 'This is also a string';
+
+c < d;   // true
+
+let e = 'Another string example';
+let f = 'Another example string';
+
+e < f;   // false, 'e' comes before 's'
+#+END_SRC
+
+#+BEGIN_NOTES
+There are a few rules to figure out if one string is less than or greater
+to another one.
+
+First, if the strings are not the same length then the shorter string
+is always less than the longer string.
+
+In the example here this is why =c= is less than =d=.
+
+If the strings are the same length then the letters in the string
+are compared one by one.
+
+Here, strings =e= and =f= are different from the first letter of the
+second word. Since the =e= in =example= is before the =s= in =string=,
+string =f= is less then string =e=, and the comparison is false.
+#+END_NOTES
+** Expressions can mix variables and values
+#+BEGIN_SRC javascript
+// let a = 10;
+// let c = 'This is a string';
+
+c === 'This is a string';   // true
+a > 5;                      // true
+a <= 10;                    // true
+
+#+END_SRC
+
+#+BEGIN_NOTES
+Of course expressions can mix variables and values. Here are some
+examples of that.
+
+Try these out too.
+
+[Wait]
+#+END_NOTES
+** Warning: ~==~ and ~!=~
+
+- Do not use ~==~ and ~!=~
+
+#+BEGIN_SRC javascript
+let g = 10;
+let h = '10';
+
+g === h;   // false, comparing numbers and strings
+g ==  h;   // true, Javascript converts h to a number first (DANGER)
+
+g + 1 == h + 1;  // false (DANGER)
+#+END_SRC
+
+#+BEGIN_NOTES
+Javascript has two other equality operators, the double-equals, and the
+bang-equals.
+
+You will probably see them in older code.
+
+You should not use them.
+
+Rememer how values have types -- a number, or a string say.  Triple-equals
+returns true only if the values are the same and the types are the same.
+In this first comparison here it returns false because the types don't
+match.
+
+Single-equals and bang-equals don't do this. If the types don't match it
+tries to convert them. So on this line here the result is true, because
+it convers the string one-zero to the number ten first, and that is
+equal.
+
+This can lead to very strange behaviour. For example, if you have two
+values that are identical according to double-equals, and add 1 to both
+values you think that the results would be the same.
+
+But they're not, because the plus-sign in Javascript does different
+things depending on whether the value is a number or a string.
+
+This can lead to subtle bugs, so always use triple-equals and
+bang-equals-equals.
+#+END_NOTES
+
+** Reminder: =if= statement syntax
+#+BEGIN_SRC javascript
+if (expression) {
+  // Code that only runs if 'expression' is true
+  //
+  // We call this the "body" of the "if" block.
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+So as a quick reminder after all that, this is the structure of an
+=if= statement.
+
+We have the =if= keyword, an expression in parentheses, and then the
+code to run if the expression is true inside curly brackets.
+#+END_NOTES
+
+** Exercise: Only log the key if it's =Enter=
+
+#+BEGIN_SRC javascript :noweb yes
+<<EventKeyLog>>
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's our current logging code.
+
+Change this so that the key is only logged if it's =Enter=
+
+[Wait]
+#+END_NOTES
+
+*** Exercise (hint): Only log the key if it's =Enter=
+
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      // ...
+    });
+
+    document.querySelector('input').addEventListener('keyup', function(event) {
+      if (/* What goes here? */) {
+        console.log(event.key);
+      }
+    });
+  });
+#+END_SRC
+
+** Solution: Only log the key if it's =Enter=
+   :PROPERTIES:
+   :REQUIREMENTS: webstorm
+   :END:
+
+#+NAME: EnterKeyLog
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      // ...
+    });
+
+    document.querySelector('input').addEventListener('keyup', function(event) {
+      if (event.key === 'Enter') {
+        console.log(event.key);
+      }
+    });
+  });
+#+END_SRC
+
+#+BEGIN_NOTES
+If this is working then you should see that the log message only
+appears when you press the Enter key.
+
+[Demo this in WebStorm to show the control flow changing]
+#+END_NOTES
+** Exercise: Adding the item if the ENTER key is released
+   :PROPERTIES:
+   :END:
+#+BEGIN_SRC javascript :noweb yes
+<<EnterKeyLog>>
+#+END_SRC
+
+#+BEGIN_NOTES
+So, back to our code. And the last thing we need to do here is to
+replace the logging code with code that creates the new list item
+and appends it to the list, exactly as the code for clicking the
+button does.
+
+Off you go.
+
+[Wait]
+#+END_NOTES
+** Solution: Adding the item if the ENTER key is released
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      // ...
+    });
+
+    document.querySelector('input').addEventListener('keyup', function(event) {
+      if (event.key === 'Event') {
+        let inputBox = document.getElementById('item');
+        let li = createNewListItem(inputBox.value);
+        document.querySelector('ul').appendChild(li);
+      }
+    });
+  });
+#+END_SRC
+
+#+BEGIN_NOTES
+And here's that final part of the function.
+
+We listen for the keyup event, and check to see if it's the Enter
+key here.
+
+If it is then this block will run, and this is the same code that we
+used to create a new list item and add it to the list.
+#+END_NOTES
+** Recap: What have we learned?
+#+REVEAL_HTML: <div class="leftcol">
+- Events fire for keypresses
+  - =keyup=
+  - =keydown=
+  - =keypress=
+- The =event= parameter
+  - Holds event-specific information
+  - MDN documentation has info
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Decisions with =if=
+  - Expressions, true/false values
+- Don't use ~==~ and ~!=~
+#+REVEAL_HTML: </div>
+** Don't forget to =git commit=
+* Clear the input widget after adding an item
+** Problems
+- The user has to delete the text in the input widget
+- And if they double-click, or press =Enter= twice then the item is added twice
+- Fix this by clearing the =input= widget after appending the list item
+- We've already seen how
+
+** Exercise: Clear the input widget
+
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      // Existing code that adds to the list
+
+      // <-- new code goes here
+    });
+
+    document.querySelector('input').addEventListener('keyup', function(event) {
+      // Existing code that adds to the list
+
+      // <-- new code goes here
+    });
+  });
+#+END_SRC
+
+** Solution: Clear the input widget
+
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      // Existing code that adds to the list
+
+      inputBox.value = '';
+    });
+
+    document.querySelector('input').addEventListener('keyup', function(event) {
+      // Existing code that adds to the list
+
+      inputBox.value = '';
+    });
+  });
+#+END_SRC
+
+** Don't forget to =git commit=
+* Setting the input focus
+  :PROPERTIES:
+  :TOPICS:   focus scope
+  :END:
+** What does focus mean?
+
+- Where do your keystrokes go?
+
+#+BEGIN_NOTES
+On a form with multiple controls, like this (an input widget and a
+button), where do you keystrokes go?
+
+For example, you can press SPACE to click the button. Or you can
+press SPACE to put a space in the input widget. How does the system
+decide what happens when SPACE is pressed?
+
+We say that there is the *focus*. Only one widget at a time has
+the focus. It's where your clicks and keystrokes go.
+#+END_NOTES
+
+** The focus moves with TAB key
+
+#+BEGIN_NOTES
+Click on the input widget.
+
+You should see a blue highlight around it -- the colour might change
+depending on your system.
+
+This highlight means that the input widget has the focus.
+
+Press the TAB key. The focus should have shifted to the button.
+
+[Wait]
+
+Press the TAB key again. Where has the focus gone now?
+
+[Wait]
+#+END_NOTES
+
+** Javascript has methods to set the focus
+
+- [[https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus][MDN element focus]]
+
+#+BEGIN_NOTES
+Javascript provides methods to set the focus to a given element.
+
+Do this search to read up on how to do it.
+#+END_NOTES
+
+** Exercise: Give the input widget the focus after adding an item
+
+- No code hint this time. See how you do!
+
+#+BEGIN_NOTES
+[Wait]
+#+END_NOTES
+** Solution: Clear the input widget
+
+#+BEGIN_SRC javascript
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      // Existing code that adds to the list and clears the box.
+
+      inputBox.focus();
+    });
+
+    document.querySelector('input').addEventListener('keyup', function(event) {
+      // Existing code that adds to the list
+    });
+
+    inputBox.focus();
+  });
+#+END_SRC
+
+#+BEGIN_NOTES
+Did your changes look like this?
+
+[Wait]
+
+We had to add this in two places.
+
+The first is in the event listener for the button click. When the user
+clicks the button the focus moves to the button, so we have to send
+it back to the input widget.
+
+We *don't* have to do it when the user presses ENTER in the input
+widget, because the focus doesn't move at that point -- it stays
+in the widget.
+
+I found that when the page is loaded nothing has the focus. So I've
+explicitly set the focus to the input widget when the DOM content
+had loaded as well.
+
+[Questions? Any problems?]
+#+END_NOTES
+
+** Don't forget to =git commit=
+* Prevent empty items from being added
+- Pressing Enter or clicking the button adds an item
+  - Even if it's the empty string
+** Rules
+- If the input widget is empty
+  - The button should be disabled / clicks ignored
+  - Pressing =Enter= in the input widget should do nothing
+** Multiple parts to this problem
+- How do we say that input is required?
+- How do we disable the button?
+* TODO UI followup work
+- Styling input elements
+- Adding a fieldset and legend
+- Using icons
+* MDN Styling input elements
+* Add a fieldset and legend
+* Use a font-awesome icon for delete
+* TODO Functionality followup work
+- Adding a "Delete all" button
+- Adding quantities
+- Parsing quantities
+- Reordering items in the list
+- Drag/drop items in the list
+* Add a "Delete all" button (or "Clear list")
+* Add quantities
+* Parsing quantities
+* Re-order items in the list
+* Drag-drop items in the list
+* Javascript syntax followup work
+* TODO JSDoc comments
+  :PROPERTIES:
+  :TOPICS:   jsdoc
+  :END:
+** Good practice to comment functions
+   :PROPERTIES:
+   :REQUIREMENTS: webstorm
+   :END:
+- Programming is about communication
+  - Good comments cover *what*, and *why*
+  - The code describes *how*
+- Javascript does not have a single standard for comments
+  - =JSDoc= is a widely adopted standard
+  - IDEs understand JSDoc and do useful things with it
+** Sample JSDoc
+#+BEGIN_SRC javascript
+/**
+ * Creates and returns an 'li' element for inclusion in shopping list.
+ *
+ * @param {string} itemName Name of the item to add to the list
+ * @returns {HTMLElement} li element
+ */
+#+END_SRC
+
+- =/**=
+- Function description
+- Optionally, more detail about the function
+  - Design decisions, links to documents, specifications, etc
+- 0-n =@param= entries that describe each parameter
+- 0-1 =@return= entry for the return value
+#+BEGIN_NOTES
+JSDoc comments all start with =/**= (slash, star, star). If you type
+that before a function WebStorm will automatically prefill some of
+the rest of the material.
+
+The next line starts with a description of the function. Typically
+you would try and keep this short -- keep it one line if possible.
+
+If your "brief" description is longer than a line it's an indicator
+that the function might be doing too much and needs breaking up in
+to smaller functions.
+
+If necessary you can include more information in new paragraphs after
+the brief description. Here you can go in to more detail -- maybe
+there's a specification you're trying to follow, or a design doc
+that describes what the function needs to do. This would be a good
+place to link to that information.
+
+If the function takes any parameters then you describe them with
+=@param= entries.
+
+Each =@param= entry consists of the type of the parameter that the
+function expects, in curly brackets. Here, our function expects that
+the =itemName= parameter contains a string.
+
+After that is the name of the parameter. And then a brief description
+of what the parameter is for.
+
+Finally, if the function returns a value then there is an =@return=
+block that explains the value. This is like an =@param= block, only
+without the "name" part -- it goes straight from the type in curly
+brackets to the description.
+#+END_NOTES
+
+** Exercise: Add this JSdoc
+#+BEGIN_SRC javascript
+/**
+ * Creates and returns an 'li' element for inclusion in shopping list.
+ *
+ * @param {string} itemName Name of the item to add to the list
+ * @returns {HTMLElement} li element
+ */
+#+END_SRC
+
+- Add this immediately before your =createNewListItem= function.
+- Go to a place where the function is called, and press =Ctrl-Q=
+- =File= > =Settings= > =Editor= > =General= > =Show quick documentation on mouse move=
+- What do you think?
+** TODO Followup material on comments and commenting style
+- [[https://google.github.io/styleguide/jsguide.html#jsdoc][Google Javascript Style Guide]]
+- Add more
+* Event listeners and =this=
+* Advanced: Using validity check to prevent invalid input
+** TODO: Problem
+** Things to check
+- Should have a value (=required=)
