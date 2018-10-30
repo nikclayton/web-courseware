@@ -107,7 +107,20 @@ li code {
   border-radius: .25em;
 }
 
+/* So do headings */
+h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
+  background-color: #3f3f3f;
+  padding: 0 .25em !important;
+  border-radius: .25em;
+}
+
 /** Centre SVG diagrams. */
 div.figure p {
   text-align: center;
+}
+
+/** #+BEGIN_CENTER blocks get centered... */
+div.org-center {
+  display: inline-block;
+  margin: 0 auto;
 }
