@@ -117,7 +117,7 @@ File > Settings
  #+REVEAL_HTML: </div>
 
  #+BEGIN_NOTES
-
+[Have them check they can find all these keys on their keyboard]
  #+END_NOTES
 
 * Common mistakes
