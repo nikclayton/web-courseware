@@ -88,6 +88,10 @@ span.done, span.todo {
   content: "Javascript";
 }
 
+.src-css:after {
+  content: "CSS";
+}
+
 .src-shell:after {
   content: "Shell";
 }
