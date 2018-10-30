@@ -180,7 +180,6 @@ Our selector is now more *specific*, saying that it only matches
 #+END_NOTES
 
 ** TODO Styling all elements of particular class
- - Introduce the class attribute
 
 #+REVEAL_HTML: <div class="leftcol">
 #+INCLUDE: "day4/style-7.css" src css
@@ -342,9 +341,11 @@ p {
 - =lime=
 - =olive=
 - =yellow=
-
-...
 #+REVEAL_HTML: </div>
+
+#+BEGIN_CENTER
+... and more
+#+END_CENTER
 
 #+BEGIN_NOTES
 You've already seen this in the examples to date. CSS supports
@@ -421,7 +422,7 @@ specifying the alpha value using a similar syntax, but it's not
 widely implemented yet.
 #+END_NOTES
 
-*** Recommendation: Use =rgb()= or =rgba()=
+*** DONE Recommendation: Use =rgb()= or =rgba()=
 
 #+BEGIN_NOTES
 My recommendation for you all is to use the =rgb()= or =rgba()=
@@ -429,7 +430,7 @@ syntax when specifying colours, and that's what I'll be doing
 through the rest of the course.
 #+END_NOTES
 
-*** Colour picker for Atom
+*** TODO Colour picker for Atom
 
 - =File= > =Settings=
 - =+ Install=
@@ -443,6 +444,10 @@ through the rest of the course.
 * TODO The browser inspector
 
 - =More tools= > =Developer tools=
+
+#+BEGIN_CENTER
+Live demo
+#+END_CENTER
 
 #+BEGIN_NOTES
 A tour of the browser inspector.
@@ -487,7 +492,459 @@ and will be lost as soon as the page reloads.
 - How to get out of developer tools
 #+END_NOTES
 
+* CSS resources
+
+- MDN page
+- Colors
+  - color.adobe.com
+  - www.paletton.com
+  - coolors.co
+  - https://material.io/tools/color
+
 * TODO Exercises and Practice
 
+- Start adding styles to your portfolio
+  - Choose a colour scheme
+
+- Try and repoduce images as web page
+  - https://003.powercoders.org/files/exercise_7_webdesign_1.jpg
+  - https://003.powercoders.org/files/exercise_7_webdesign_2.jpg
+  - Prob. requires =table= and =float=
+  - (easier): https://003.powercoders.org/files/webdesign_3.PNG
+    - Float
+  - CV Workshop: https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-02/wed-may-2
+    - TODO: Make this a separate file, link to it from here.
+* Advanced CSS material
+* CSS reset
+** Where do default styles come from?
+
+- Browser has a built-in stylesheet
+- Called the "user agent stylesheet"
+- "user agent" is a fancy term for "browser"
+
+#+BEGIN_NOTES
+You might be asking yourself how the browser knows how to style
+things if you don't use any CSS?
+
+For example, even if you don't have a CSS file, the browser still
+makes =h1= headings larger than =h2= headings. And those headings
+are larger than paragraphs.
+
+Links are blue, and underlined, and so on.
+
+The answer is that each browser comes with its own default stylesheet
+that it falls back to if you don't provide any styles for a
+particular element.
+
+This is referred to as the user agent stylesheet. We say that the
+browser is acting as an "agent" on behalf of the "user", which is
+where the term comes from.
+
+Now, can anyone see how this might cause a problem when there are
+lots of different browsers?
+
+[Wait]
+#+END_NOTES
+
+** Different user agents have different default stylesheets
+
+- The same page can look different in different user agents
+- Argggggh!
+
+#+BEGIN_NOTES
+Right -- different browsers can have different default styles for
+different things.
+
+For example, one browser might give more space around headings than
+another browser. Or maybe use a different font size. Or font. Or
+colour. Or line height.
+
+This can make it very difficult to get web page designs that look
+and work correctly in all browsers when these defaults change.
+#+END_NOTES
+
+** CSS "reset" or "normalize" stylesheets
+
+- Eric Meyer's [[https://meyerweb.com/eric/tools/css/reset/][reset stylesheet]]
+- Nicolas Gallgher and Jonathan Neal's [[https://github.com/necolas/normalize.css][normalize.css]]
+
+#+BEGIN_NOTES
+In order to deal with this people started developing stylesheets
+that would "reset" or "normalize" the styles to a known baseline,
+overriding all the browser defaults and ensuring that your CSS
+rules start from the same base set of styles.
+
+Erir Meyer's reset stylesheet, and normalize.css are two of the
+most well known I think.
+
+I'm mentioning this here *not* because you need to start using
+these in your projects here (yet).
+
+But I do want you to know that this inconsistency between the
+browser default stylesheets is a problem, and these reset or
+normalize stylesheets are the ways that we work around this.
+#+END_NOTES
+* TODO Internal and inline styles
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_CENTER
+Internal
+#+END_CENTER
+#+BEGIN_SRC html
+...
+<head>
+  <style>
+    body {
+      background-color: grey;
+      color: blue;
+      font-size: 1em;
+      font-family: Arial, Sans-Serif;
+    }
+  </style>
+</head>
+...
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_CENTER
+Inline
+#+END_CENTER
+#+BEGIN_SRC html
+<p style="margin-left: 3em; color: red;">...</p>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+So far we've been putting all of our CSS in a separate file and loading
+it in the page with a =link= element.
+
+This is generally the best way to do it -- it keeps the CSS language
+entirely in its own file which is much easier to deal with.
+
+However, there are two other ways of specifying CSS rules that I want
+you to know, just in case you ever encounter them.
+
+The first, on the left, is internal CSS.
+
+You can put a =style= element in the document's =head=, and then write
+your CSS rules there.
+
+The second, on the right, is inline CSS. Each element supports a
+=style= attribute. The value of the attribute is one or more CSS
+properties, separated by semi-colons.
+
+There's no need to use a selector here, because the style only applies
+to this element.
+
+This can be a very quick way of experimenting with a different style
+just for one element -- you don't have to find the specific selector
+for it -- but I find that experimenting with the styles using the
+browser inspector is an even better approach.
+
+I'm going to use internal and inline styles in some of the examples
+just so that everything fits on one slide. But you should generally
+always use external stylesheets, and the =link= element.
+#+END_NOTES
+* TODO CSS Cascades and Specificity
+
+- Most specific CSS rule wins
+  - #id is more specific than .class
+  - .class is specific then just an element
+- Tie break, last one declared wins
+
+** Exercise: CSS Cascades and Specificity 1
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: css-specificity-1
+#+BEGIN_SRC html-chrome :exports code
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body p { color: green; }
+      html p { color: purple; }
+    </style>
+  </head>
+  <body>
+    <p>Here is a paragraph</p>
+  </body>
+</html>
+#+END_SRC
+
+#+RESULTS: css-specificity-1
+[[file:css-specificity-1.png]]
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Don't do this, this is just a quiz.
+
+Will the =p= element's content be green or purple?
+#+END_NOTES
+
+** Solution: CSS Cascades and Specificity 1
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html :noweb yes
+<<css-specificity-1>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :noweb yes :exports results
+<<css-specificity-1>>
+#+END_SRC
+
+#+RESULTS:
+[[file:solution-css-cascades-and-specificity-1.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+In this case the two CSS rules both match the heading. The first
+says "Match =h1= after =body=", and the second says "Match =h1=
+afer =html=".
+
+Both rules have the same specificity -- neither of them have classes
+or IDs, they're just simple selectors.
+
+Although the =body= element is closer to the =h1= element in the
+tree that doesn't matter.
+
+So the CSS rule that's defined last wins, and that's why the title
+is in purple and not green.
+#+END_NOTES
+
+** Exercise: CSS Cascades and Specificity 2
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: css-specificity-2
+#+BEGIN_SRC html-chrome :exports code
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      p {
+        color: white;
+        background-color: black;
+      }
+      p.info {
+        background-color: rgba(0, 0, 255, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <p class="info">Here is a paragraph</p>
+  </body>
+</html>
+#+END_SRC
+
+#+RESULTS: css-specificity-2
+[[file:css-specificity-2.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- White text, black background?
+- Black text, light blue background?
+- White text, light blue background?
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+The "C" in "CSS" stands for "cascading". We say that the rules
+cascade together to form the final style that will be applied
+to the element.
+
+In this example, what do you think the =p= heading will be?
+#+END_NOTES
+** Solution: CSS Cascades and Specificity 2
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html :noweb yes
+<<css-specificity-2>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :noweb yes :exports results
+<<css-specificity-2>>
+#+END_SRC
+
+#+RESULTS:
+[[file:solution-css-specificity-2.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+It's white text with a light blue background.  Here, the most specific
+rule is =p.info=, because the =p= has a =class= value of =info=.
+
+That sets the =background-color=. However, the paragraph also matches
+the =p= rule. The =color= property in that rule is *not* overridden
+by the =p.class= rule, so it gets applied as well.
+
+The properties have cascaded together.
+#+END_NOTES
+
+** Exercise: CSS Cascades and Specificity 3
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: css-specificity-3
+#+BEGIN_SRC html-chrome :exports code
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      p {
+        color: white;
+        background-color: black;
+        text-decoration: none;
+        border: 1px solid black;
+      }
+      p.info {
+        background-color: rgba(0, 0, 255, 0.5);
+        text-decoration: underline;
+        padding: 1em;
+      }
+      p#tip {
+        color: black;
+        background-color: rgba(0, 255, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <p id="tip" class="info">Here is a paragraph</h1>
+  </body>
+</html>
+#+END_SRC
+
+#+RESULTS: css-specificity-3
+[[file:css-specificity-3.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+What will the paragraph look like?
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+#+END_NOTES
+** Solution: CSS Cascades Specificity 3
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html :noweb yes
+<<css-specificity-3>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :noweb yes :exports results
+<<css-specificity-3>>
+#+END_SRC
+
+#+RESULTS:
+[[file:solution-css-specificity-3.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Here the paragraph has picked up styling from three rules.
+
+Because it has =id= set to =tip= it's black with a partially transparent
+green background.
+
+Because it has =class= set to =info= it's also picked up the
+=p.info= style rules.
+
+The =background-color= is ignored, because it's overridden by the
+=#info= style, but both the =text-decoration= and =padding= rules
+have been applied.
+
+Finally it also matches the =p= rule. But the =p= rule's =color=,
+=background-color=, and =text-decoration= are overriden by the other
+rules, so this rule contributes nothing.
+#+END_NOTES
 
 * TODO CSS fonts
+
+- https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-02/tue-may-1
+- https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/mon-may-7
+
+* TODO More selectors
+
+- =div + p= (all =p= after a =div=)
+- =p ~ ul= (all =ul= preceeded by =p=)
+- =[attribute]= (all elements with attribute =attribute=)
+  - =[id]= (e.g. all elements with =id= attribute)
+- =[attribute=value]=
+- =[attribute~=value]= (contains)
+- =[attribute|=value]= (starts with)
+
+* TODO Even more selectors
+
+- =:checked=
+- =:first-child=
+  - =p:first-child=
+- =::first-letter=
+- =::first-line=
+- =:hover=
+- ...
+
+* TODO Box Model
+
+- Content
+- Padding
+- Borders
+- Margins
+
+- CSS Units
+  - https://css-tricks.com/the-lengths-of-css/
+
+#+BEGIN_NOTES
+https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-02/wed-may-2
+has an image of the box model
+#+END_NOTES
+
+* TODO Positioning
+
+- https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/mon-may-7
+
+* TODO Visibility
+
+- https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/mon-may-7
+
+* TODO Float
+
+- https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-02/fri-may-4
+
+* TODO Flexbox
+
+- https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-02/fri-may-4
+
+* TODO Media queries
+
+- https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-02/fri-may-4
+
+* TODO Principles of webdesign
+
+- What is webdesign?
+- Margins
+- Whitespace
+- Grids
+
+- Bootstrap
+
+#+BEGIN_NOTES
+https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/tue-may-8
+#+END_NOTES
+
+* TODO CSS animations
+
+https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/fri-may-11
+
+* TODO calc()
+
+https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/fri-may-11
+
+* TODO Gradients
+
+https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/fri-may-11
+* TODO object-fit
+
+https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/fri-may-11
