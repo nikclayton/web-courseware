@@ -292,30 +292,60 @@ Anyone not using Windows 10, let me know.
 
 ** The directory tree
 
- TODO: Image of a directory tree. Arrows or other highlights for:
+#+BEGIN_SRC dot :file tree-filesystem.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  node [shape="folder"];
 
- - Root directory
- - A file
- - It's parent directory
- - Sibling directories, etc
+  home [label="Home"]
+  desktop [label="Desktop"];
+  documents [label="My Documents"];
+  tax [label="Tax"];
+  photos [label="My Photos"];
+  poco [label="Powercoders"];
+  basel [label="Basel"];
+  coursework [label="coursework"]
+  week2 [label="week2"];
+  day1 [label="day1.html" shape="note"];
+
+  img8198 [label="IMG_8198.jpg" shape="note"];
+  img8199 [label="IMG_8199.jpg" shape="note"];
+  img8200 [label="IMG_8200.jpg" shape="note"];
+
+  home -> desktop;
+  home -> documents;
+  documents -> tax;
+  home -> photos;
+  photos -> img8198;
+  photos -> img8199;
+  photos -> img8200;
+  home -> poco;
+  poco -> basel;
+  basel -> coursework;
+  coursework -> week2;
+  week2 -> day1;
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:tree-filesystem.svg]]
 
  #+BEGIN_NOTES
- This is a bit like that family tree, although it's been turned upside
- down.
+This is a bit like that family tree, although it's been turned upside
+down.
 
- At the top of the tree is the root directory.
+At the top of the tree is the root directory.
 
- Below that we have various child directories.
+Below that we have various child directories.
 
- And here we can see the file, with its filename.
+And here we can see the file, with its filename.
 
- We say these this (indicate slide) is the parent directory for this
- directory. Which means that this, this, and this are all child directories
- of it.
+We say these this (indicate slide) is the parent directory for this
+directory. Which means that this, this, and this are all child directories
+of it.
 
- And these directories (indicate slide) are siblings of each other.
+And these directories (indicate slide) are siblings of each other.
 
- Computer scientists love trees. You'll be seeing stuff like this a lot.
+Computer scientists love trees. You'll be seeing stuff like this a lot.
  #+END_NOTES
 
 ** Familiar directory trees
@@ -329,8 +359,6 @@ presented like this, but all the same features are there.
 #+END_NOTES
 
 [d3 tree code: https://bl.ocks.org/mbostock/999346]
-
-
 
 * Introduction to the web
 
