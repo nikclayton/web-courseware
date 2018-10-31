@@ -826,7 +826,7 @@ What will the paragraph look like?
 
 #+BEGIN_NOTES
 #+END_NOTES
-** Solution: CSS Cascades Specificity 3
+** Solution: CSS Cascades and Specificity 3
 
 #+REVEAL_HTML: <div class="leftcol">
 #+BEGIN_SRC html :noweb yes
@@ -863,8 +863,662 @@ rules, so this rule contributes nothing.
 
 * TODO CSS fonts
 
-- https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-02/tue-may-1
-- https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/mon-may-7
+- CSS gives a lot of control over the appearance of text
+- Collectively, these are the =font-*= properties.
+
+* Font-families: Serif, sans-serif, and monospace
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: basic-font-families
+#+BEGIN_SRC html
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <style>
+	h1.serif { font-family: serif; }
+	h1.sans { font-family: sans-serif; }
+	h1.mono { font-family: monospace; }
+      </style>
+    </head>
+    <body>
+      <h1 class="serif">This is serif</h1>
+      <h1 class="sans">This is sans-serif</h1>
+      <h1 class="mono">This is monospace</h1>
+    </body>
+  </html>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :exports results :noweb yes
+<<basic-font-families>>
+#+END_SRC
+
+#+RESULTS:
+[[file:serif-sans-serif-and-monospace-fonts.png]]
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+There are three main font types that we care about.
+
+Serif fonts are called that because they have the little sticking
+out bits at the ends of bits of the letters. For example, at the
+left and right ends of the top of the T.
+
+Sans-serif literally means "without serifs" -- as you can see in
+the second heading these letters have no sticking out bits.
+
+And monospace fonts might be serif or sans-serif. Ther main
+characteristic is that all the letters are the same width.
+
+When you've been programming you've been using a monospace
+font in your editor.
+#+END_NOTES
+
+** Default fonts are set in the browser
+
+- chrome://settings/fonts
+
+#+BEGIN_NOTES
+When you specify just =serif=, =sans-serif=, or =monospace= the
+browser will use whichever font the user has configured their
+browser to use for that type.
+
+In Chrome if you go this URL you'll see the configuration page
+that lets the user decide what to use.
+#+END_NOTES
+
+** A font stack
+
+#+BEGIN_SRC css
+body {
+  font-family: 'DejaVu Serif', 'Times New Roman', Times, serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'DejaVu Sans',
+}
+
+pre, code, tt {
+  font-family: 'DejaVu Sans Mono', monospace;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+You can list multiple fonts for a =font-family= entry. This is
+called a *font stack*.
+
+When the browser sees a font stack it checks to see if the first
+font in the list is installed on the user's computer. If it is
+it uses it.
+
+If it's not it moves on to the next font in the list. So you
+should list the fonts in the stack from most specific to least
+specific.
+
+In this example the =body= text will be displayed in "DejaVu Serif"
+if it's installed on the computer.
+
+If it's not then "Times New Roman" will be used. If that's not
+there then "Times". And finally, whatever the browser is configured
+to use for a serif font will be used.
+
+Notice how the fonts with spaces in the names have to be enclosed
+in double quotes.
+#+END_NOTES
+
+** "Web safe" fonts
+
+- [[[https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Fundamentals#Web_safe_fonts][MDN Web Safe fonts]]]
+
+| *Names* / *Font stack*   | *Type*     |
+|--------------------------+------------|
+| =Helvetica, Arial=       | sans-serif |
+| =Courier New, Courier=   | monospace  |
+| =Georgia=                | serif      |
+| =Times New Roman, Times= | serif      |
+| =Verdana=                | sans-serif |
+
+#+BEGIN_NOTES
+Because you can't rely on all users that are browsing your web
+page to have the same fonts installed, the idea of "web safe"
+fonts emerged.
+
+These are fonts that are so common that it's safe to assume
+that they're installed on all computers that will browse your
+site.
+
+In the table here some fonts have newer, or nicer variants,
+but that might be a bit less common.
+
+For example, =Courier New= is a newer version of =Courier=. If
+it's available then use it, otherwise fallback to =Courier= in
+the font stack.
+#+END_NOTES
+
+** Downloadable fonts
+
+#+BEGIN_SRC css
+@font-face {
+  font-family: 'Open Sans';
+  src: local('OpenSans Regular'),
+       url('/fonts/OpenSans-Regular-webfont.woff2') format('woff2'),
+       url('/fonts/OpenSans-Regular-webfont.woff') format('woff');
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+Of course, this is very limiting to the design of your site --
+if you can only assume that a handful of fonts are installed
+then you don't have a lot of flexibility.
+
+Early attempts to solve this typically involved creating images
+of the text that you wanted to appear in a special font, and
+using those images on your site.
+
+But this had problems:
+
+- The image files can be quite large
+- They don't scale well if the user zooms in or not
+- Even with the =alt= attribute they're not very accessible
+- The user can't copy the text in the image
+
+and so on.
+
+So a mechanism was invented in CSS to allow the designer to
+specify new font family names, and to provide URLs where the
+browser could download the font from.
+
+This is the =@font-face= CSS rule. Notice the leading =@= sign.
+
+This example rule defines a new face, called "Open Sans". The
+=src= block tells the browser where to find the font.
+
+This starts with a =local= entry. It tells the browser that if
+a local font called "OpenSans Regular" is already installed on
+the computer then use that.
+
+If the font isn't installed then the =url= entries tell the
+browser where the font can be downloaded from.
+
+There are several different formats for font files, and this
+example specifies two URLs in two different formats.
+
+Because these font specifications are entirely specified in CSS,
+and because you can use the =link= elemnt to point to multiple
+CSS files, people realised that you could create online repositories
+of free fonts and make it very easy to include them in web pages.
+
+Google Fonts is an example of this.
+#+END_NOTES
+
+** The Google Fonts site
+
+#+BEGIN_CENTER
+Demo - [[https://fonts.google.com]]
+#+END_CENTER
+
+#+BEGIN_NOTES
+[Demo using the Google Fonts site]
+
+[Find the Lato font]
+#+END_NOTES
+
+** Google Fonts Example
+
+#+NAME: google-fonts-example
+#+BEGIN_SRC html
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Google Fonts example</title>
+      <link href="https://fonts.googleapis.com/css?family=Lato"
+	    rel="stylesheet">
+      <style>
+	h1.lato { font-family: Lato, sans-serif; }
+	h1.sans { font-family: sans-serif; }
+      </style>
+    </head>
+    <body>
+      <h1>An unstyled heading</h1>
+
+      <h1 class="lato">A heading in Lato</h1>
+
+      <h1 class="sans">A heading in sans-serif</h1>
+    </body>
+  </html>
+#+END_SRC
+
+#+BEGIN_NOTES
+Here I have a simple page. In the =head= element I link to
+an external Google Fonts CSS file to load a font called "Lato".
+
+In the =style= element I create two different =h1= styles,
+one which will use the Lato font and fall back to =sans-serif=
+if it's not available, and one that always uses the =sans-serif=
+font.
+
+Then I create three =h1= elements styled differently.
+
+All clear?
+
+[Wait]
+#+END_NOTES
+*** Google Fonts example
+
+#+BEGIN_SRC html-chrome :noweb yes :exports results :flags --window-size=400,240 --force-device-scale-factor=2
+<<google-fonts-example>>
+#+END_SRC
+
+#+RESULTS:
+[[file:google-fonts-example.png]]
+
+#+BEGIN_NOTES
+And here's the result.
+
+The first heading uses whatever the browser's default stylesheet
+says to use as the font. In this case it's a serif font.
+
+The second heading has used Lato.
+
+And the third heading has used the browser's default sans-serif
+font.
+#+END_NOTES
+
+** Exercise: Google Fonts
+
+- Choose three fonts from Google Fonts
+  - One sans-serif, for headings
+  - One serif, for almost everything else
+  - One monospace
+- Update your files to use them
+
+#+BEGIN_NOTES
+For this exercise, go to Google Fonts and choose two fonts,
+one sans-serif, and one serif.
+
+Generally, sans-serif fonts look better when used as headlines,
+and serif fonts are better when used for the main text on the
+page.
+
+Choose one of each that you like, and use the Google Fonts site
+to get the code to include in a =link= element in the =head=
+of your pages.
+
+Make the changes to your pages, and style the =body= and =heading=
+elements to use the fonts that you have chosen.
+
+[Wait]
+#+END_NOTES
+
+** Solution: Google Fonts (html)
+
+#+NAME: google-fonts-solution
+#+BEGIN_SRC html
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Google Fonts example</title>
+      <link href="https://fonts.googleapis.com/css?family=Cardo|Cutive+Mono|Titillium+Web"
+            rel="stylesheet">
+      <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+      <h1>My first heading</h1>
+
+      <p>I like to write. Using only short sentences. It's
+        very relaxing.</p>
+
+      <pre>echo "Don't forget to 'git commit' your changes"</pre>
+    </body>
+  </html>
+#+END_SRC
+
+** Solution: Google Fonts (CSS)
+
+#+BEGIN_SRC css
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Titilliam Web', sans-serif;
+}
+
+pre, tt, code {
+  font-family: 'Cutive Mono', monospace;
+}
+
+body {
+  font-family: 'Cardo', serif;
+}
+#+END_SRC
+
+** Result: Google Fonts
+
+#+BEGIN_SRC html-chrome :exports results :flags --window-size=400,240 --force-device-scale-factor=2
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Google Fonts example</title>
+      <link href="https://fonts.googleapis.com/css?family=Cardo|Cutive+Mono|Titillium+Web"
+	    rel="stylesheet">
+      <style>
+	h1, h2, h3, h4, h5, h6 {
+	  font-family: 'Titilliam Web', sans-serif;
+	}
+
+	pre, tt, code {
+	  font-family: 'Cutive Mono', monospace;
+	}
+
+	body {
+	  font-family: 'Cardo', serif;
+	}
+      </style>
+    </head>
+    <body>
+      <h1>A simple heading</h1>
+
+      <p>I like to write. Using only short sentences. It's
+	very relaxing.</p>
+
+      <pre>echo "Don't forget to 'git commit' your changes"</pre>
+    </body>
+  </html>
+#+END_SRC
+
+#+RESULTS:
+[[file:result-google-fonts.png]]
+* TODO =font-size: ...=
+
+#+REVEAL_HTML: <div class="leftcol">
+- Sets the height of the font
+- =body= default is =16px=
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC css
+p {
+  /* Size measured in pixels */
+  font-size: 16px;
+}
+
+p.warning {
+  /* Size measured in 'm' widths (approx) */
+  font-size: 1.5em;
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+You adjust the height of the font with =font-size=.
+
+There are several different ways to specify the size, but the most
+common are =px= and =em=.
+
+Using =px= sets the size in pixels. The default value for elements
+in the body that don't have an explicit size is =16px=. Remember
+that that the user agent stylesheet might change that.
+
+Using =em= sets the size relative to the size of element that
+contains this one.
+
+All these sizes will be adjusted if the user uses the browser's
+controls to zoom in or out of the page.
+#+END_NOTES
+
+** =font-size: ...= example
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: font-size-example
+#+BEGIN_SRC html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      article { font-size: 2em; }
+      article p { font-size: 0.75em; }
+    </style>
+  </head>
+  <body>
+    <p>Unstyled p, size = 16px = 1em.</p>
+
+    <article>
+      <p>article p, size = ?px</p>
+    </article>
+  </body>
+</html>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :noweb yes :exports results
+<<font-size-example>>
+#+END_SRC
+
+#+RESULTS:
+[[file:font-size-example.png]]
+#+REVEAL_HTML: </div>
+
+** Solution: =font-size: ...=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: font-size-example2
+#+BEGIN_SRC html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      article { font-size: 2em; }
+      article p { font-size: 0.75em; }
+    </style>
+  </head>
+  <body>
+    <p>Unstyled p, size = 16px = 1em.</p>
+
+    <article>
+      <p>Article = 2em = (default * 2)
+        = (16px * 2) = 32px</p>
+
+      <p>article p = 0.75em = (article * 0.75)
+        = (32 * 0.75) = 24px</p>
+    </article>
+
+    <p style="font-size: 24px;">p, forced to 24px.</p>
+  </body>
+</html>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :exports results :noweb yes :flags --window-size=640,240 --force-device-scale-factor=2
+<<font-size-example2>>
+#+END_SRC
+
+#+RESULTS:
+[[file:solution-font-size.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Here's how that calculation works out.
+
+The default body size is 16px. Unless something's changed, 1em
+equals 16px.
+
+We set article's size to 2em. This means the default * 2, so 16 * 2,
+which is 32 pixels.
+
+Then we set the =article p= to 0.75em. This means 75% of whatever the
+default for article is. Since article is 32px this means 75% of 32,
+which is 24.
+
+So the final size for the p is 24px.
+
+I've put another =p= element at the bottom and explicitly set its
+size to 24px, and as you can see, they're the same.
+#+END_NOTES
+
+* TODO =font-weight: ...=
+
+- Says how bold the text should be
+
+#+BEGIN_SRC css
+strong {
+  font-weight: bold; /* Default */
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+strong {
+  font-weight: normal; /* Disables bold */
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+span.bolder {
+  /* <strong>This is <span class="bolder">more bold</span></strong> */
+  font-weight: bolder;
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+span.lighter {
+  /* <strong>This is <span class="lighter">less bold</span></strong> */
+  font-weight: lighter;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+=font-weight= says how *heavy* the text should be. Normal text has
+a weight of =normal=. You can say that text should be made bolder,
+or bolder than the surrounding element, or ligher than the
+surrounding element.
+#+END_NOTES
+
+* TODO =font-style: ...=
+
+- Used for italic variations, rare
+
+#+BEGIN_SRC css
+em {
+  font-style: italic; /* Default */
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+em {
+  font-style: normal; /* Disables italics */
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+em {
+  font-style: oblique; /* Simulates italic */
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+It's rare to see =font-style= used. It controls whether the content
+should be shown in italics or not. It has three values.
+
+- =italic= is the default for elements like =em=, and will show
+  the content in italics.
+
+- =normal= disables the italics, and shows the content normally.
+
+- =oblique= is a bit like italics, but instead of using the italic
+  version of font, it takes all the normal letters and applies a
+  slant to them, resulting in a slightly different effect.
+#+END_NOTES
+* TODO =line-height: ...=
+
+- How much extra space to leave around each line
+- Gives the text some "breathing room"
+- Value is a multiplier of the font-size
+
+#+BEGIN_SRC css
+body {
+  line-height: 1.2;  /* Font size * 1.2 */
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+Using =line-height= lets you set the overall height of each line.
+
+Normally, this is the =font-size= plus a little bit extra, and you
+can control how much extra.
+
+It's generally accepted that a bit more space between the lines
+gives the text some breathing room, and makes it easier to read.
+
+There are several ways to specify this (including using absolute
+px values, and ems) but the best way is generally to use a
+unit-less number, as it is in this example. Then it takes whatever
+the font-size is and multiplies it by this number to compute the
+line height.
+
+Depending on the font values of between 1.2 and 1.5 generally give
+good results.
+#+END_NOTES
+
+* TODO =font: ...= shorthand property
+
+#+BEGIN_SRC css
+p {
+  font: italic normal bold normal 3em/1.5 Helvetica, Arial, sans-serif;
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+p {
+  font-style: italic;
+  font-variant: normal;
+  font-weight: bold;
+  font-stretch: normal;
+  font-size: 3em
+  line-height: 1.5
+  font-family: Helvetica, Arial, sans-serif
+}
+#+END_SRC
+
+* TODO =text-transform: ...=
+* TODO =text-decoration: ...=
+* TODO =text-shadow: ...=
+
+* TODO Exercises: Fonts
+
+- [[https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Fundamentals]]
+- https://webdesign.tutsplus.com/articles/9-quick-wins-for-halfway-decent-design--cms-19444
+- Size calculators
+  - https://type-scale.com/
+  - https://www.modularscale.com/
+- Make your pages look prettier
+  - =line-height=
+  - =font-size=
+  - More =font-family= choices
+  - Anything else...
+#+BEGIN_NOTES
+Some exercises.
+
+First, open the MDN page for fundamentals of styling text. It covers
+all the material we've just gone over, and a few other things as well.
+It's a very handy guide to what you can and can't do.
+
+Second, read the design tips article. It turns out that you can't just
+use whatever font and font size you want and expect the result to look
+nice. That article has some good hints on what to do and what to avoid.
+
+Of course, most of the time you'll almost certainly be working with a
+User Interface designer who will be making a lot of these decisions,
+or you'll be collaborating with them on the decisions. But it doesn't
+hurt to have a basic understanding of the problems they're trying to
+solve.
+
+The two =scale= websites both provide tools that let you create a
+harmonious set of sizes to use for your fonts, so that the page
+feels balanced.
+
+And then you can use the new CSS rules we've covered to adjust your
+pages to make them look prettier and more interesting.
+#+END_NOTES
 
 * TODO More selectors
 
@@ -905,6 +1559,7 @@ has an image of the box model
 
 - https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/mon-may-7
 
+** Text alignment =text-align=
 * TODO Visibility
 
 - https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/mon-may-7
