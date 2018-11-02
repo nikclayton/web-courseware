@@ -14,20 +14,44 @@ python -m http.server 8080
 
 #+END_NOTES
 
-* Introductions
-
-* Ice breaker
 * Welcome
 
 - Course agreement and expectations
 - Asking questions is absolutely fine
+
+- Tell me if I need to speak more slowly
 
 #+BEGIN_QUOTE
 "All teaching is the process of lying, and then replacing the lies
  with successively better approximations of the truth."
 #+END_QUOTE
 
-- Tell me if I need to speak more slowly
+* TODO Goals for this week
+
+- Get everyone on the same page
+- Introductions to:
+  - HTML
+  - Version control
+  - Cascading Stylesheets (CSS)
+- Understanding online documentation
+
+* TODO Goals for today
+
+- Introductions
+- Logistics and setup
+- Using the command line
+- Playing with HTML
+- Making mistakes and fixing them
+- Reading documentation
+
+* Introductions
+
+#+BEGIN_NOTES
+Lets do a quick go around the class.
+
+Names, where you're from, ...
+
+#+END_NOTES
 
 * Logistics
 
@@ -142,14 +166,6 @@ make was not following the examples / instructions precisely.
 
 This is a skill that you will need to learn.
 #+END_NOTES
-
-* TODO Goals for this week
-
-- Get everyone on the same page
-- Introductions to:
-  - HTML
-  - Cascading Stylesheets (CSS)
-  - Version control
 
 * Taking notes
 
@@ -275,7 +291,67 @@ Anyone not using Windows 10, let me know.
 
 ** The directory tree (family tree)
 
- TODO: Image of a family tree (use a zoomed out version of mine)
+#+BEGIN_SRC dot :file family-tree.png :cmdline -Tpng -Gstylesheet=../graphviz.css
+  digraph G {
+    graph [dpi=172 scale=2 bgcolor="#002b36"];// viewport="885 800"];
+    node [style="filled" fontname="sans-serif" fontcolor="#9ee0e3" color="#eee8d5" fillcolor="#3f3f3f"];
+    edge [color="#eee8d5"];
+    subgraph ggp {
+      rank = same;
+      Walter;
+      Alice;
+
+      John;
+      Beatrice;
+
+      Arthur;
+      Lillian;
+
+      George;
+      Lena;
+    }
+
+    subgraph gp {
+      rank = same;
+      JohnC [label=John]
+      Barbara;
+      JohnC -> Barbara [dir=none];
+
+      Ralph -> Maude [dir=none];
+    }
+
+    subgraph p {
+      rank = same;
+      Steve;
+      Liz;
+      Steve -> Liz [dir=none];
+    }
+
+    Walter -> JohnC;
+    Alice -> JohnC;
+
+    John -> Barbara;
+    Beatrice -> Barbara;
+
+    Arthur -> Ralph;
+    Lillian -> Ralph;
+
+    George -> Maude;
+    Lena -> Maude;
+
+    JohnC -> Steve;
+    Barbara -> Steve;
+
+    Ralph -> Liz;
+    Maude -> Liz;
+
+    Steve -> Nik;
+    Liz -> Nik;
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:family-tree.png]]
 
  #+BEGIN_NOTES
  Another way of thinking about this directory structure is as what
@@ -363,8 +439,14 @@ presented like this, but all the same features are there.
 * Introduction to the web
 
 - Web page
+ - Text file with additional markup codes
 - Web browser
+  - Technical term: "user agent"
+  - Processes the text and codes to display the page
 - Web server
+  - Receives requests for page at http://.../some/file/name
+  - Responds with the page
+    - Or an error code
 
 #+BEGIN_NOTES
 At its heart, a web page is a file that contains text and special codes
@@ -541,13 +623,11 @@ the page in Chrome.
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
-Elements can be placed inside other elements. We say that they *nest*
-inside each other.
+Here's what you should see.
 
-For example, we can use the =em= element to make some text in the
-paragraph be emphasised.
+Does everyone see this?
 
-Try that -- make the change, save, and reload the file.
+[Wait]
 #+END_NOTES
 
 ** Elements can not overlap
