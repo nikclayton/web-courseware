@@ -101,7 +101,15 @@ span.done, span.todo {
 }
 
 /** Code blocks in list items get a grey background. */
-li code {
+/** Ditto for in table cells */
+li code, td code {
+  background-color: #3f3f3f;
+  padding: 0 .25em !important;
+  border-radius: .25em;
+}
+
+/* So do Font Awesome buttons */
+i.fab {
   background-color: #3f3f3f;
   padding: 0 .25em !important;
   border-radius: .25em;
