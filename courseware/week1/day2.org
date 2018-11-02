@@ -25,9 +25,9 @@ By the end of today everyone will:
 
 * Terminology review
 
-- "Machine" = the physical computer and hardware (disks, keyboard, etc)
-- Runs an "Operating System", which manages access to everything
-- You interact with the OS through the shell
+- =Machine= is the physical computer and hardware (disks, keyboard, etc)
+- Runs an =Operating System=, which manages access to everything
+- You interact with the OS through the =shell=
 - You use the shell to tell the operating system which programs
   to run, it runs them
 - The shell is just another program
@@ -67,16 +67,17 @@ spreadsheet, editor, and so on.
  #+END_NOTES
 
 
-* The command line
+* Shell command line
 
 - Also called the:
-   - shell
    - terminal
    - command window
    - command prompt
    - command line interface (CLI)
-- On Windows, ... "cmd"
-- On OS X, ... "terminal"
+
+| Windows            | OS X                           |
+|--------------------+--------------------------------|
+| \faWin, type =cmd= | =⌘= + =Space=, type =terminal= |
 
 #+BEGIN_NOTES
 Earlier I mentioned that you'll be doing a lot of work from the
@@ -124,96 +125,99 @@ laptop?
 TODO(nik): See, link to https://www.learnenough.com/command-line-tutorial 
 #+END_NOTES
 
-* Which directory am I in?
+* Useful commands
+** Which directory am I in?
 
-- Windows: =cd=
-- OS X: =pwd=
+| Windows | OS X  |
+|---------+-------|
+| =cd=    | =pwd= |
 
-#+BEGIN_NOTES
-In a text shell it's very important to remember which directory you
-are in.
+ #+BEGIN_NOTES
+ In a text shell it's very important to remember which directory you
+ are in.
 
-Many of the commands that you will run will operate on the files in
-the current directory, and if you can run a command in the wrong
-directory by mistake it can cause a big problem -- imagine if you
-tried to delete all the files but where in the wrong directory.
+ Many of the commands that you will run will operate on the files in
+ the current directory, and if you can run a command in the wrong
+ directory by mistake it can cause a big problem -- imagine if you
+ tried to delete all the files but where in the wrong directory.
 
-Another name for the directory you are in is the "working directory".
+ Another name for the directory you are in is the "working directory".
 
-If you can't remember which directory you are in you can always run
-(on Windows) the =cd= command, and on OS X the =pwd= command.
+ If you can't remember which directory you are in you can always run
+ (on Windows) the =cd= command, and on OS X the =pwd= command.
 
-As you might have guessed, on OS X =pwd= stands for "Print Working
-Directory".
+ As you might have guessed, on OS X =pwd= stands for "Print Working
+ Directory".
 
-[Demo]
+ [Demo]
 
-Try that now.
+ Try that now.
 
-Did that work for everyone?
-#+END_NOTES
+ Did that work for everyone?
+ #+END_NOTES
 
-* What files and directories are in this directory?
+** What files and directories are in this directory?
 
-- Windows: =dir=
-- OS X: =ls=
+| Windows | OS X |
+|---------+------|
+| =dir=   | =ls= |
 
-#+BEGIN_NOTES
-Once you know where you are you can start looking around to see what's
-there. We call this "listing the directory".
+ #+BEGIN_NOTES
+ Once you know where you are you can start looking around to see what's
+ there. We call this "listing the directory".
 
-On Windows use the =dir= command to list the directory.
+ On Windows use the =dir= command to list the directory.
 
-On OS X use the =ls= command.
+ On OS X use the =ls= command.
 
-#+END_NOTES
+ #+END_NOTES
 
-** =dir= / =ls= output
+*** =dir= / =ls= output
 
-TODO: Show the output, talk through it
+ TODO: Show the output, talk through it
 
-* Changing directories
+** Changing directories
 
-- To go in to a directory
-  - Windows: =cd /dir/=
-  - OS X: =cd /dir/=
-- To go up one directory
-  - Windows: =cd ..=
-  - OS X: =cd ..=
+| Action                  | Windows           | OS X              |
+|-------------------------+-------------------+-------------------|
+| To go in to a directory | =cd= /=dir-name=/ | =cd= /=dir-name=/ |
+| To go up one directory  | =cd ..=           | =cd ..=           |
 
-#+BEGIN_NOTES
-Finally we have a command that Windows and OS X have in common.
+ #+BEGIN_NOTES
+ Finally we have a command that Windows and OS X have in common.
 
-To change in to a directory use the =cd= command.
+ To change in to a directory use the =cd= command.
 
-Unlike the other commands we've seen this one takes an *argument* -
-that is, you have to type something after the name of the command
-in order for it to work properly.
+ Unlike the other commands we've seen this one takes an *argument* -
+ that is, you have to type something after the name of the command
+ in order for it to work properly.
 
-In both cases the argument is the name of the directory you want
-to change in to.
+ In both cases the argument is the name of the directory you want
+ to change in to.
 
-Experiment using the =cd=, =ls=, and =pwd= commands to move around
-the filesystem.
-#+END_NOTES
+ Experiment using the =cd=, =ls=, and =pwd= commands to move around
+ the filesystem.
+ #+END_NOTES
 
-* Creating (making) directories
+** Creating (making) directories
 
-- Windows: =mkdir /dir/=
-- OS X: =mkdir /dir/=
+| Windows              | OS X                 |
+|----------------------+----------------------|
+| =mkdir= /=dir-name=/ | =mkdir= /=dir-name=/ |
 
-#+BEGIN_NOTES
+ #+BEGIN_NOTES
 
-#+END_NOTES
+ #+END_NOTES
 
-* Deleting directories
+** Deleting directories
 
-- Windows: =rmdir /dir/=
-- OS X: =rmdir /dir/=
+| Windows              | OS X                 |
+|----------------------+----------------------|
+| =rmdir= /=dir-name=/ | =rmdir= /=dir-name=/ |
 
-#+BEGIN_NOTES
+ #+BEGIN_NOTES
 
-#+END_NOTES
+ #+END_NOTES
 
 * Shell demo
 
@@ -223,11 +227,11 @@ the filesystem.
 * Safe and unsafe characters
 
 - Safe
-  - a-z, 0-9, -, _, .
+  - =a-z= =0-9= =-= =_= =.=
 
 - Unsafe
   - Everything else
-  - Especially ', ", (, ), [, ], and SPACE
+  - Especially ='= ="= =(= =)= =[= =]= =Space=
 
 #+BEGIN_NOTES
 TODO(nik): Talk about files / directories with spaces, and having
@@ -258,14 +262,14 @@ of a file or a directory wrong.
 
 * Shell cheatsheet
 
-| Action                   | Windows     | OS X        |
-|--------------------------+-------------+-------------|
-| Print working directory  | cd          | pwd         |
-| List directory contents  | dir         | ls          |
-| Change to a subdirectory | cd /dir/    | cd /dir/    |
-| Go up a directory        | cd ..       | cd ..       |
-| Create a directory       | mkdir /dir/ | mkdir /dir/ |
-| Delete a directory       | rmdir /dir/ | rmdir /dir/ |
+| Action                   | Windows         | OS X            |
+|--------------------------+-----------------+-----------------|
+| Print working directory  | =cd=            | =pwd=           |
+| List directory contents  | =dir=           | =ls=            |
+| Change to a subdirectory | =cd= /=dir=/    | =cd= /=dir=/    |
+| Go up a directory        | =cd ..=         | =cd ..=         |
+| Create a directory       | =mkdir= /=dir=/ | =mkdir= /=dir=/ |
+| Delete a directory       | =rmdir= /=dir=/ | =rmdir= /=dir=/ |
 
 
 * Break
@@ -308,7 +312,7 @@ of a file or a directory wrong.
 * =git config=
 
 #+BEGIN_SRC shell
-% git config --global user.email nik@ngo.org.uk
+% git config --global user.email nikclayton@powercoders.org
 % git config --global user.name "Nik Clayton"
 #+END_SRC
 
@@ -441,7 +445,7 @@ Commit message's first line should always be a stand-alone sentence.
 #+BEGIN_SRC sh -n
 % git log
 commit d1ee782c5be32e219edfc4e8e8bc80f3ddc892b5 (HEAD -> master)
-Author: Nik Clayton &lt;nik@ngo.org.uk>
+Author: Nik Clayton &lt;nikclayton@powercoders.org>
 Date:   Mon Oct 1 14:06:36 2018 +0200
 
     Save first version of file.
