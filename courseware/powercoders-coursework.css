@@ -49,13 +49,15 @@ span.linenr {
 
 /** Styles for left and right columns. */
 div.leftcol {
+  margin-left: 5%;
   float: left;
-  width: 50%;
+  width: 45%;
 }
 
 div.rightcol {
+  margin-right: 5%;
   float: right;
-  width: 50%;
+  width: 45%;
 }
 
 /** Hide TODO / DONE entries from headings. */
