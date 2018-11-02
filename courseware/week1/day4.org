@@ -1480,8 +1480,130 @@ p {
 #+END_SRC
 
 * TODO =text-transform: ...=
+
+#+BEGIN_SRC css
+h1 {
+  text-transform: none;  /* Do nothing special */
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+h1 {
+  text-transform: uppercase;  /* Text shown in ALL CAPS */
+}
+#+END_SRC
+
+#+BEGIN_SRC css 64c0d43
+h1 {
+  text-transform: lowercase;  /* Text shown all lowercase */
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+h1 {
+  text-transform: capitalize;  /* First Letter Capitalized */
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+h1 {
+  text-transform: full-width;  /* Similar to monospace */
+}
+#+END_SRC
+
 * TODO =text-decoration: ...=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC css
+p {
+  text-decoration: none;
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+p {
+  text-decoration: underline;
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+p {
+  text-decoration: overline;
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+p {
+  text-decoration: line-through;
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC css
+p {
+  text-decoration-line: line-through;
+  text-decoration-style: wavy;
+  text-decoration-color: red;
+}
+
+/** The previous rule is identical to the next rule. */
+
+p {
+  text-decoration: line-through wavy red;
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+** Text decoration examples
+
+#+BEGIN_SRC html-chrome :exports results
+<p style="text-decoration: underline;">This has "text-decoration:
+   underline;".</p>
+
+<p style="text-decoration: overline;">This has "text-decoration:
+   overline;".</p>
+
+<p>The next text has a wavy red line-through.</p>
+
+<p style="text-decoration: line-through red wavy">Here is some text
+ that is difficult to read.</p>
+#+END_SRC
+
+#+RESULTS:
+[[file:text-decoration-examples.png]]
+
 * TODO =text-shadow: ...=
+
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC css
+p {
+  text-shadow: x-offset y-offset blur color;
+}
+#+END_SRC
+- =x-offset=: Shadow starts this many pixels right
+  - Can be negative, shadow is offset to the left
+
+- =y-offset=: Shadow starts this many pixels down
+  - Can be negative, shadow is offset up
+
+- =blur= is how blurry the shadow is.
+
+- =color= is the shadow's color, can include alpha
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome
+<h1 style="text-shadow: 5px 5px 0px red;">Me
+   and my shadow</h1>
+
+<h1 style="text-shadow: -5px -5px 5px red;">Me
+   and my shadow</h1>
+#+END_SRC
+
+#+RESULTS:
+[[file:text-shadow.png]]
+#+REVEAL_HTML: </div>
 
 * TODO Exercises: Fonts
 
@@ -1494,7 +1616,9 @@ p {
   - =line-height=
   - =font-size=
   - More =font-family= choices
+  - Decorations and shadows
   - Anything else...
+
 #+BEGIN_NOTES
 Some exercises.
 
