@@ -9,6 +9,6 @@
 #+REVEAL_MAX_SCALE: 0.0
 #+REVEAL_TRANS: fade
 #+REVEAL_INIT_SCRIPT: width: "100%"
-#+OPTIONS: toc:nil num:nil tags:nil H:4 reveal_history:t
+#+OPTIONS: toc:nil num:t tags:nil H:4 reveal_history:t
 #+Author: Nik Clayton
 #+Email: nik.clayton@powercoders.org

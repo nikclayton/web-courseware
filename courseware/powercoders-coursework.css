@@ -65,6 +65,17 @@ span.done, span.todo {
   display: none;
 }
 
+/**
+ * Disable section numbers.
+ *
+ * Disabling them with the option num:nil also disables generating
+ * stable slide IDs, which is a pain when editing content, so it's
+ * better to hide them here.
+ */
+span[class|=section-number] {
+  display: none;
+}
+
 /** Language badges */
 /* class="src src-html" <-- actual */
 /* preferred: class="badge-lang" data-badge-lang="JS" */
