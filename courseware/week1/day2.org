@@ -87,12 +87,14 @@ it.
 The first thing to do is actually start a text shell. To do that,
 on Windows press the Windows key, and type "cmd" and press RETURN.
 
-On OS X, type ... <SPACE>, and type "terminal" and press RETURN.
+On OS X, type  =⌘= + =Space=, and type =terminal= and press RETURN.
 #+END_NOTES
 
 * Shell screenshots
 
-TODO: Screenshots
+#+REVEAL_HTML: <div class="leftcol">
+[[file:windows-cmd-screenshot.png]]
+#+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 Here are some screenshots of what you should expect to see. The
@@ -105,15 +107,107 @@ correct screenshot?
 
 * Anatomy of the command line
 
-TODO: Shell tutorial image that shows the constituent parts.
+#+BEGIN_SRC dot :file windows-cmdline.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+  graph G {
+    node [shape=none fontname="Courier" fontsize="48"];
+    subgraph cmd {
+      rank=same;
+      prompt [label="C:\\Users\\Nik Clayton>"];
+      command [label="dir"];
+      option [label="\\w"];
+      argument [label="*.png"];
+    }
 
-[[https://softcover.s3.amazonaws.com/636/learn_enough_command_line/images/figures/anatomy.png]]
+    option_label [label="Option" fontname="Lato"];
+    subgraph labels {
+      node [fontname="Lato"];
+      rank=same
+      prompt_label [label="Prompt"];
+      command_label [label="Command"];
+      argument_label [label="Argument"];
+    }
 
+    prompt_label -- prompt;
+    command -- command_label;
+    option_label -- option;
+    argument_label -- argument;
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:cmdline.svg]]
+
+-----
+
+#+BEGIN_SRC dot :file osx-cmdline.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+  graph G {
+    node [shape=none fontname="Courier" fontsize="48"];
+    subgraph cmd {
+      rank=same;
+      prompt [label="macbook:~ nik$ "];
+      command [label="ls"];
+      option [label="-l"];
+      argument [label="*.png"];
+    }
+
+    option_label [label="Option" fontname="Lato"];
+    prompt_label [label="Prompt" fontname="Lato"];
+
+    subgraph labels {
+      node [fontname="Lato"];
+      rank=same
+      command_label [label="Command"];
+      argument_label [label="Argument"];
+    }
+
+    prompt_label -- prompt;
+    command -- command_label;
+    option_label -- option;
+    argument_label -- argument;
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:osx-cmdline.svg]]
 
 #+BEGIN_NOTES
 What you're looking at is called the "shell prompt". The prompt
 is showing you some information, and the shell is waiting for you
 to tell it what to do by typing in a command.
+
+In this example we've got the prompt and then what it looks like
+when you type in a command.
+
+On both systems the line normally starts with the *prompt*. This
+generally contains some helpful information, and can be customised.
+
+On Windows the prompt shows you the full name of the directory your
+commands will operate on.
+
+On OS X it's similar, but it also includes the name of the computer.
+On OS X the tilde character is a shorthand that means "Your user
+directory".
+
+On Windows the prompt ends with a greater-than sign, on OS X, by
+default, it's a dollar sign.
+
+After the prompt is where you type. Here I've shown examples of
+two command lines -- don't type these in.
+
+Each one is made up of three parts. The first part is the name of
+the command that will be run. We'll cover more of these later.
+
+The remaining parts are options, and arguments. Options control
+what the command does -- on Windows they normally start with a
+slash, on OS X it's the minus sign.
+
+And arguments control what files, if any, the command works on.
+
+Both of these commands ask for a listing of all PNG files in the
+current directory.
+
+As you can see, although the structure of the command line is the
+same, the command names can be quite different.
 
 Confusingly, Windows and OS X shells sometimes use the same names for
 the same command, and sometimes they use different ones. I'll cover
@@ -122,7 +216,6 @@ the differences as we go.
 Does everyone know whether they are using a Windows laptop or an OS X
 laptop?
 
-TODO(nik): See, link to https://www.learnenough.com/command-line-tutorial 
 #+END_NOTES
 
 * Useful commands
@@ -172,11 +265,7 @@ TODO(nik): See, link to https://www.learnenough.com/command-line-tutorial
 
  #+END_NOTES
 
-*** =dir= / =ls= output
-
- TODO: Show the output, talk through it
-
-** Changing directories
+** Changing directories                                            :exercise:
 
 | Action                  | Windows           | OS X              |
 |-------------------------+-------------------+-------------------|
@@ -184,81 +273,114 @@ TODO(nik): See, link to https://www.learnenough.com/command-line-tutorial
 | To go up one directory  | =cd ..=           | =cd ..=           |
 
  #+BEGIN_NOTES
- Finally we have a command that Windows and OS X have in common.
+Finally we have a command that Windows and OS X have in common.
 
- To change in to a directory use the =cd= command.
+To change in to a directory use the =cd= command.
 
- Unlike the other commands we've seen this one takes an *argument* -
- that is, you have to type something after the name of the command
- in order for it to work properly.
+Unlike the other commands we've seen this one takes an *argument* -
+that is, you have to type something after the name of the command
+in order for it to work properly.
 
- In both cases the argument is the name of the directory you want
- to change in to.
+In these slides, if I put something in italics, like /dir-name/ here,
+that means that you don't type it in literally, you replace it with
+the actual value you want to use.
 
- Experiment using the =cd=, =ls=, and =pwd= commands to move around
- the filesystem.
- #+END_NOTES
+This is a very common thing, you'll see it in documentation all the
+time.
 
-** Creating (making) directories
+In both cases the argument is the name of the directory you want
+to change in to.
+
+Experiment using the =cd=, =ls=, and =pwd= commands to move around
+the filesystem.
+
+[Wait]
+
+[Demo]
+#+END_NOTES
+
+** Creating (making) directories                                   :exercise:
 
 | Windows              | OS X                 |
 |----------------------+----------------------|
 | =mkdir= /=dir-name=/ | =mkdir= /=dir-name=/ |
 
- #+BEGIN_NOTES
+- Get back to your home directory
+- Create a new directory called =test=
+- Check it exists with =dir= or =ls=
+- Use the GUI shell to see the directory
 
+ #+BEGIN_NOTES
+To create a new directory you use the =mkdir= command. The argument
+for this command is the name of the directory you want it to
+create.
+
+Use the =cd= command to get back to your home directory.
+
+Then create a directory using =mkdir=, and call it =test=.
  #+END_NOTES
 
-** Deleting directories
+** Deleting directories                                            :exercise:
 
 | Windows              | OS X                 |
 |----------------------+----------------------|
 | =rmdir= /=dir-name=/ | =rmdir= /=dir-name=/ |
 
- #+BEGIN_NOTES
-
- #+END_NOTES
-
-* Shell demo
+- Remove the directory you created in the previous step
 
 #+BEGIN_NOTES
+[Wait]
 
+[Demo]
 #+END_NOTES
+
 * Safe and unsafe characters
 
 - Safe
-  - =a-z= =0-9= =-= =_= =.=
+  - =a-z= =A-Z= =0-9= =-= =_= =.=
 
 - Unsafe
   - Everything else
   - Especially ='= ="= =(= =)= =[= =]= =Space=
 
 #+BEGIN_NOTES
-TODO(nik): Talk about files / directories with spaces, and having
-to quote them with double quotes. Talk about other problematic
-characters
+When working at the command line you have to be special with some
+characters, especially when you use them in file or directory
+names.
+
+To be safe, only use upper and lower case letters, numbers, the
+minus sign, the underscore, and dot.
+
+Don't use anything else. In particular, using quotes, brackets, or
+spaces will rapidly cause things to get confusing.
 #+END_NOTES
-* What can go wrong?
+
+* What can go wrong?                                               :exercise:
 
 - Mis-spell a command: =aaaaaaaa= ('a' x 8)
 - =cd= in to a directory that does not exist
 - =cd ...=
 - =cd .=
-- =cd /filename/=
-- =mkdir doesnotexist=
+- =cd= /=filename=/
 - =rmdir aaaaaaaa=
 
 #+BEGIN_NOTES
 Sometimes things go wrong. You mis-spell a command, or get the name
 of a file or a directory wrong.
 
+Try these, just to get a sense of what the error messages are.
 
+[Wait]
+
+[Demo]
 #+END_NOTES
 
-* Recap: The command line:
+* Cursor keys and =Tab=
 
-- How to start it
-- 
+- =↑= and =↓= - Up and down through command history
+- =←= and =→= - Left and right through the command line
+- =Tab= - completes on filenames and directories
+
 
 * Shell cheatsheet
 
