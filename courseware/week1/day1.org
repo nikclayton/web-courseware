@@ -318,8 +318,8 @@ Anyone not using Windows 10, let me know.
 ** The directory tree (family tree)
 
 #+BEGIN_SRC dot :file family-tree.png :cmdline -Tpng -Gstylesheet=../graphviz.css
-  digraph G {
-    graph [dpi=172 scale=2 bgcolor="#002b36"];// viewport="885 800"];
+  graph G {
+    graph [dpi=172 scale=2 bgcolor="#002b36"];
     node [style="filled" fontname="sans-serif" fontcolor="#9ee0e3" color="#eee8d5" fillcolor="#3f3f3f"];
     edge [color="#eee8d5"];
     subgraph ggp {
@@ -341,38 +341,37 @@ Anyone not using Windows 10, let me know.
       rank = same;
       JohnC [label=John]
       Barbara;
-      JohnC -> Barbara [dir=none];
 
-      Ralph -> Maude [dir=none];
+      Ralph;
+      Maude;
     }
 
     subgraph p {
       rank = same;
       Steve;
       Liz;
-      Steve -> Liz [dir=none];
     }
 
-    Walter -> JohnC;
-    Alice -> JohnC;
+    Walter -- JohnC;
+    Alice -- JohnC;
 
-    John -> Barbara;
-    Beatrice -> Barbara;
+    John -- Barbara;
+    Beatrice -- Barbara;
 
-    Arthur -> Ralph;
-    Lillian -> Ralph;
+    Arthur -- Ralph;
+    Lillian -- Ralph;
 
-    George -> Maude;
-    Lena -> Maude;
+    George -- Maude;
+    Lena -- Maude;
 
-    JohnC -> Steve;
-    Barbara -> Steve;
+    JohnC -- Steve;
+    Barbara -- Steve;
 
-    Ralph -> Liz;
-    Maude -> Liz;
+    Ralph -- Liz;
+    Maude -- Liz;
 
-    Steve -> Nik;
-    Liz -> Nik;
+    Steve -- Nik;
+    Liz -- Nik;
   }
 #+END_SRC
 
@@ -394,8 +393,12 @@ Anyone not using Windows 10, let me know.
 
 ** The directory tree
 
-#+BEGIN_SRC dot :file tree-filesystem.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file tree-filesystem.png :cmdline -Tpng -Gstylesheet=../graphviz.css
 digraph G {
+  graph [dpi=148 scale=1 bgcolor="#002b36"];
+  node [style="filled" fontname="sans-serif" fontcolor="#9ee0e3" color="#eee8d5" fillcolor="#3f3f3f"];
+  edge [color="#eee8d5"];
+
   node [shape="folder"];
 
   home [label="Home"]
@@ -429,7 +432,7 @@ digraph G {
 #+END_SRC
 
 #+RESULTS:
-[[file:tree-filesystem.svg]]
+[[file:tree-filesystem.png]]
 
  #+BEGIN_NOTES
 This is a bit like that family tree, although it's been turned upside
