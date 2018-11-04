@@ -406,7 +406,7 @@ Try these, just to get a sense of what the error messages are.
 - [Show files with various iterations of "final" in them]
 
 * Version Control Systems (VCS): Common features
-- Let us take a collection of files and save their current contents
+- Lets us take a collection of files and save their current contents
 - Saving is called "committing" the changes
   - When we commit the changes we can provide a message that explains why
 - Then we can make changes to the files and:
@@ -420,7 +420,7 @@ Try these, just to get a sense of what the error messages are.
 - Working on complex projects
 - Working with lots of people
 
-* VCS: Git
+* VCS: Git                                                         :software:
 - There are many different version control systems
 - We're going to use one called Git
 - Because it's:
@@ -431,22 +431,103 @@ Try these, just to get a sense of what the error messages are.
 - Important: "Easy to learn" is not one of its features
 - Sorry!
 
-* =git config=
+** =git config=
 
-#+BEGIN_SRC shell
-% git config --global user.email nikclayton@powercoders.org
-% git config --global user.name "Nik Clayton"
-#+END_SRC
+ #+BEGIN_SRC shell
+ % git config --global user.email nikclayton@powercoders.org
+ % git config --global user.name "Nik Clayton"
+ #+END_SRC
 
+#+BEGIN_NOTES
+The first thing to do is to configure Git with a couple of pieces
+of information it's going to need later.
+
+So run these two commands, using your e-mail address and name.
+
+[Wait]
+#+END_NOTES
 
 * Git fundamentals
 
-- Three locations: Working directory, stage, repository
+- Three locations: Working directory, index, repository
 - Git commands copy files between these locations
 
 #+BEGIN_NOTES
 TODO(nik): Talk about the three areas. The [[https://marklodato.github.io/visual-git-guide/index-en.html][Visual Git Reference]] has
 some interesting ideas, need to clear license with the author first.
+
+There are some core version control / Git fundamentals that we need
+to cover first.
+
+So far you've been working on files directly. That's not going to
+change.
+
+Git works by managing two other locations for you. You don't have
+to worry about how it does that at the moment, you just need to
+know that the these locations exist.
+
+They are called the =index= and the =repository=.
+#+END_NOTES
+
+** Typical Git workflow
+
+#+REVEAL_HTML: <div class="leftcol">
+1. Edit one or more files to make your change
+2. Copy the files to the index, with =git add=
+3. Review the changes in the index
+  - Double check everything is included
+  - Remove files not related to this change
+4. Copy the files to the repository, with =git commit=
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file git-workflow.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  edge [fontsize=24];
+  node [fontsize=24 fontname="Lato"];
+  wd [shape=folder label="Working Directory"];
+  index [shape=folder label="Index"];
+  repository [shape=folder label="Repository"];
+
+  git_add [shape=none label="git add ..." fontname="Courier"];
+
+  wd -> git_add;
+
+  git_add -> index;
+
+  git_commit [shape=none label="git commit ..." fontname="Courier"];
+
+  index -> git_commit;
+
+  git_commit -> repository;
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:git-workflow.svg]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Here's a typical Git workflow when you're making changes and you
+want to commit them.
+
+Your change is going to affect one or more files. So you edit those
+files as necessary to do whatever you want to do.
+
+Once you think you're happy with the change you use the =git add=
+command. This copies the files in to the Git index.
+
+In the index you can check that you've included all the files, and
+that everything looks good.
+
+Once you're happy, you use =git commit= to move the files from the
+index in to the repository.
+
+Once you've done that your changes to the files are safely stored
+and you can move on to the next change.
+
+Before we can do that though there are somethings we need to do
+the first time we want to work with Git.
 #+END_NOTES
 
 * =git init=
@@ -456,16 +537,25 @@ some interesting ideas, need to clear license with the author first.
 - It's possible to have multiple repositories on the computer
 - But don't put a repository inside another
 
-* =git init= exercise
+#+BEGIN_NOTES
+Git needs to know there the top, or root, of the repository is
+going to be. Once you do this Git can start to manage all the files
+in that directory, and all the directories below.
 
-- Open the terminal
-- Navigate to the directory containing =scratch.html=
-- Make sure you're in the correct directory with =pwd=
-- Run =git init=
-#+BEGIN_SRC sh
-% git init
-#+END_SRC
+You can have multiple Git repositories on your computer, as long
+as they are not inside one another.
+#+END_NOTES
 
+** =git init= exercise
+
+ - Open a shell (or use an existing one)
+ - Navigate to the =poco= directory
+ - Make sure you're in the correct directory with =pwd=
+ - Run =git init=
+
+ #+BEGIN_SRC sh
+ % git init
+ #+END_SRC
 
 * =git status= exercise
 - What's the state of the repository?
@@ -479,43 +569,89 @@ some interesting ideas, need to clear license with the author first.
 
 #+END_NOTES
 
-* =git status= output
+** =git status= output
 
-#+BEGIN_EXAMPLE -n
-On branch master
+ #+BEGIN_EXAMPLE -n
+ On branch master
 
-No commits yet
+ No commits yet
 
-Untracked fils:
-  (use "git add <file>..." to include in what will be committed)
+ Untracked fils:
+   (use "git add <file>..." to include in what will be committed)
 
-        scratch.html
+         scratch/index.html
 
-nothing added to commit but untracked files present (use "git add" to track)
-#+END_EXAMPLE
+ nothing added to commit but untracked files present (use "git add" to track)
+ #+END_EXAMPLE
 
 #+BEGIN_NOTES
 Line 1 tells us which Git branch we're working on. We haven't talked
-about branches yet, that's a more advanced topic.
+about branches yet, that's a more advanced topic. For the moment
+you're always going to be on the master branch.
 
 Each change that we save to the repository is called a *commit*. We
 haven't made any, so it tells us there are no commits.
 
 The rest of the output tells is that there are files present that Git
-doesn't know about. This is true. We've created the repository but
-haven't told Git to pay attention to any files yet. We'll fix that
-in the next step.
+doesn't know about.
 
+This is true. We've created the repository but haven't told Git to pay
+attention to any files yet.
+
+If Git knows about a file we say it is *tracking* that file. If Git
+doesn't know about a file we say it is an *untracked* file.
+
+We'll tell Git to start tracking the file in a moment.
+
+Did you create more files from the exercises yesterday? If so, you'll
+see all those files in the output as well.  For the moment we're
+just going to commit the =scratch/index.html= file.
 #+END_NOTES
+
+* A word about Git terminology
+
+- It's a mess. Sorry.
+
+#+BEGIN_NOTES
+So here's thing.
+
+Annoyingly, Git uses multiple terms for things that are fundamentally
+the same thing.
+
+This is annoying, and confusing.
+
+For example, what I've been calling the =index= is sometimes also known
+as the =cache=, or =stage=.
+
+So as well as reading documentation that talks about *adding* a changed
+file to Git you might also see term *staged* being used.
+
+Sorry about that. Do not be afraid to ask questions, especially if a
+term is confusing to you.
+#+END_NOTES
+
 * =git add= exercise
 
-- =git add= tells Git to start paying attention to a file
+- =git add= tells Git to copy the file to the index
+  - If the file is untracked it also starts tracking it
 - This does *not* commit the file to the repository
 
 #+BEGIN_SRC shell
+% cd scratch
 % git add index.html
 % git status
 #+END_SRC
+
+#+BEGIN_NOTES
+Let's add the =scratch/index.html= file to the index.
+
+To do that, change in to the =scratch= directory, and then run
+the =git add= command here.
+
+Then run the =git status= command.
+
+[Wait]
+#+END_NOTES
 
 * =git status= after =git add=
 
@@ -527,7 +663,7 @@ No commits yet
 Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
 
-        new file:   scratch.html
+        new file:   index.html
 #+END_EXAMPLE
 
 #+BEGIN_NOTES
@@ -537,6 +673,17 @@ Now Git is telling us that there are changes to be committed to
 the repository. These changes *have not* yet been committed, we
 still need to do that, which is the next step.
 
+Remember, this file has been copied to the =index=. The =git rm=
+example it's showing is the command you would run if you changed
+your mind, and wanted to remove the file from the index.
+
+This wouldn't delete it from the working directory, just the index.
+
+Notice how the argument it shows here is =--cached=. This is an
+example of Git being inconsistent with the terminology that I was
+telling you about.
+
+Again, sorry.
 #+END_NOTES
 
 ** =git commit= exercise
@@ -552,8 +699,19 @@ still need to do that, which is the next step.
 #+END_SRC
 
 #+BEGIN_NOTES
+To make a copy of the file, or files, in the index, and save
+them in the repository we use =git commit=.
 
-Commit message's first line should always be a stand-alone sentence.
+Git needs us to give a message that is associated with the
+commit.
+
+Here, I'm using the =-m= flag to specify the commit message.
+
+If you don't do that then Git will open a text editor to allow
+you to type in a message. We'll talk about how to configure
+that later -- for the moment, use =-m= as shown here.
+
+Don't forget the double quotes.
 #+END_NOTES
 
 * =git status= again
@@ -561,18 +719,343 @@ Commit message's first line should always be a stand-alone sentence.
 - Run =git status= again
 - What do you see?
 
-* "git log"
+* =git log=
+
 - Shows you what's changed
 
 #+BEGIN_SRC sh -n
 % git log
 commit d1ee782c5be32e219edfc4e8e8bc80f3ddc892b5 (HEAD -> master)
-Author: Nik Clayton &lt;nikclayton@powercoders.org>
+Author: Nik Clayton <nikclayton@powercoders.org>
 Date:   Mon Oct 1 14:06:36 2018 +0200
 
     Save first version of file.
 
 #+END_SRC
+
+* Making and committing a change
+
+- Edit =scratch/index.html=. Add anything you like
+  - Maybe a new paragraph? Or section?
+  - Or extend the content in an existing section.
+
+#+BEGIN_NOTES
+[Wait]
+#+END_NOTES
+
+** =git diff=
+
+#+BEGIN_SRC shell
+% git diff
+#+END_SRC
+
+#+BEGIN_NOTES
+Once we've made some changes that we want to add to the =index= it
+can be helpful to easily view them to double check that they're
+what we want.
+
+For that we use the =git diff= command.
+
+This shows the *difference* between what's in the working directory
+and what's in the =index=.
+
+It does this using a special format, that's decades old.
+#+END_NOTES
+
+** Unified diff format
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_CENTER
+Old version
+#+END_CENTER
+#+BEGIN_SRC html
+<p>This was one of my example paragraphs that
+   runs over more than one line.</p>
+
+<p>This paragraph will be deleted.</p>
+
+<p>This paragraph will be updated.</p>
+
+<p>This is another example paragraph.</p>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_CENTER
+New version
+#+END_CENTER
+#+BEGIN_SRC html
+<p>This was one of my example paragraphs that
+   runs over more than one line.</p>
+
+<p>This paragraph will be updated
+  with some extra content.</p>
+
+<p>This paragraph is completely new.</p>
+
+<p>This is another example paragraph.</p>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+In the following example, this is the old and new version
+of my file.
+
+Just comparing the two you can see that:
+
+1. I have deleted a paragraph from line 4.
+
+2. I have replaced the paragraph at line 6 with a new one (that
+now starts at line 4)
+
+3. I have added a new paragraph.
+#+END_NOTES
+** Unified diff format                                             :exercise:
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC diff -n
+  @@ -10,6 +10,5 @@
+   <p>This was one of my example paragraphs that
+     runs over more than one line.</p>
+
+  -<p>This paragraph will be deleted.</p>
+  -
+  -<p>This paragraph will be updated.</p>
+  +<p>This paragraph will be updated
+  +  with some extra content.</p>
+
+  +<p>This paragraph is completely new.</p>
+  +
+   <p>This is another example paragraph.</p>
+
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- =@@= is the chunk header
+  - =-m,n= = Starts at line =m=, continues for =n= lines
+  - =+o,p= = Starts at line =o=, continues for =p= lines
+- First column is what happened:
+  - ~=~ = This line is not changed
+  - =-= = This line was deleted
+  - =+= = This line was added
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Look at your diff. There's a heading section, which we're going
+to ignore for the moment, and then there are one or more *hunks*
+
+Each hunk starts with a header marked by two @ signs, containing
+two pairs of numbers.
+
+The first pair says "This hunk is from the original version of
+the file. In that version of the file it started at line m, and
+was n lines long.
+
+The first pair says "This is what the hunk looks like in the new
+version of the file. In the new version it starts at line o,
+and is p lines long.
+
+So this tells me that the hunk starts at line 10 in both versions
+of my file. Before I made any changes it was 8 lines long, and
+because I've deleted and added some lines it is now 10 lines long.
+
+After the header is the lines from the hunk. They are indented by
+one character, because the first column contains a character to
+tell us how this line changed.
+
+If the first character is a space it means that this line was
+not changed.
+
+If the first character is a minus sign it means that this line
+was deleted.
+
+And if the first character is a plus sign it means that this line
+was added.
+
+Depending on your system you may or may not see colours for the
+lines that have been deleted and added, as they are here.
+
+Looking at this diff I can see that:
+
+- The paragraph starting on line 5 has been completely deleted.
+- The paragraph that was on line 7 has been rewritten.
+- A new paragraph has been added at the end.
+
+Now, you and I know that the re-written paragraph has only had
+a small change on that line -- the full stop and the closing =p=
+tag have been removed.
+
+However, =diff=, and =git=, operate on a line by line basis. So
+even though only a few letters have changed, it's treated as
+though the whole line has been deleted and replaced with a
+new one.
+
+Run =git diff= in your shell.
+
+Take a look at the output, and look at it to make sure that
+what you see is what you expect, based on the change you
+made.
+
+[Wait]
+#+END_NOTES
+
+* Git workflow with diff
+
+#+BEGIN_SRC dot :file git-workflow-with-diff.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+  digraph G {
+    edge [fontsize=24];
+    node [fontsize=24 fontname="Lato"];
+
+    wd [shape=folder label="Working Directory"];
+
+    git_diff [shape=none label="git diff ..." fontname="Courier"];
+
+    index [shape=folder label="Index"];
+    repository [shape=folder label="Repository"];
+
+    git_add [shape=none label="git add ..." fontname="Courier"];
+
+    wd -> git_diff;
+
+    git_diff -> wd;
+    git_diff -> git_add;
+
+    git_add -> index;
+
+    git_commit [shape=none label="git commit ..." fontname="Courier"];
+
+    index -> git_commit;
+
+    git_commit -> repository;
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:git-workflow-with-diff.svg]]
+
+#+BEGIN_NOTES
+So now our workflow has changed slightly.
+
+We can now use =git diff= to check the changes before using =git add=
+to copy them to the index. If we don't like the changes we can edit
+the files some more in the working directory until they look like what
+we want.
+#+END_NOTES
+
+* Add the changes to the index
+
+#+BEGIN_SRC shell
+% git add index.html
+#+END_SRC
+
+#+BEGIN_NOTES
+Now that you've understood the diff output, use the =git add=
+command to add your changes to the index again.
+
+[Wait]
+#+END_NOTES
+
+* Check the changes with =git diff=
+
+- Double check the changes are what you expect
+
+#+BEGIN_SRC shell
+% git diff index.html
+#+END_SRC
+
+#+BEGIN_NOTES
+Now that you've added the changes, lets double check that they're
+still what you expect.
+
+So run =git diff= to double check.
+
+[Wait]
+
+Everyone done that?
+
+What did you see?
+
+[Wait]
+
+Did anyone *not* see no output -- if you ran =git diff= properly
+you shouldn't have seen it print anything.
+#+END_NOTES
+
+* =git diff= normally compares to the index
+
+- =git diff ...= compares the working copy of the file with the
+  file in the index
+- =git add ...= copies the file to the index
+  - So there are no differences
+
+#+BEGIN_SRC shell
+% git diff --cached index.html
+#+END_SRC
+
+#+BEGIN_SRC shell
+% git diff --staged index.html   # Same thing
+#+END_SRC
+
+#+BEGIN_NOTES
+When you run =git diff= it compares the working copy of the file with
+the copy in the index (or the most recently committed copy if the file
+is not in the index).
+
+When you run =git add= the file is copied in to the index. So now the
+file in the working directory and the file in the index are identical.
+
+So there are no differences.
+
+This is why you don't get any output.
+
+If you want to see the differences that will actually be committed
+after running =git add= you can pass the =--cached= option to
+=git diff=.
+
+There is also a =--staged= option -- they mean exactly the same thing.
+
+As I said earlier, Git terminology sometimes says that =git add=
+*stages* a file in to the index, so you might find =--staged= easier
+to remember.
+
+Run =git diff= with this flag now, and check that you get the output
+that you expect -- it should show you the changes that you've made.
+
+[Wait]
+#+END_NOTES
+
+* Thought experiment: =git add=
+
+- Pretend you did the following:
+
+  1. Edit and save =scratch/index.html=
+  2. Run =git add scratch/index.html=
+  3. Edit and save =scratch/index.html=
+
+- Which version of =index.html= is in the index?
+  - The one at (1)
+  - Or the one at (3)
+
+#+BEGIN_NOTES
+Lets suppose you edit a file, add it using =git add=, and then
+edit it again.
+
+Which version of the file is in index?
+
+[Wait]
+
+It's the version as it was when you ran =git add=.
+
+When you run =git add=, you *must* think of it as copying the file
+to the index.
+
+So if you edit a file, run =git add=, and then edit the file again,
+those new changes are *not* in the index, and will not be committed.
+
+If you want to include them you need to run =git add= with the file
+again.
+#+END_NOTES
 
 * Your personal cheetsheet
 
@@ -590,13 +1073,12 @@ As we go through the rest of the course you can keep these up to date.
 * Create an index page for the cheat sheet
 
 - Now that we have multiple files we can link between them
+- Create =index.html=, and add links to =shell.html= and =git.html=
 - For that we use the =a= element
 
 #+BEGIN_EXAMPLE
 <a href="name-of-file.html">text of link</a>
 #+END_EXAMPLE
-
-- Create =index.html=, and add links to =shell.html= and =git.html=
 
 #+BEGIN_NOTES
 =a= element has content and an attribute.
@@ -619,7 +1101,7 @@ The content is the text that will appear as the link
   <body>
     <ul>
       <li><a href="git.html">What I know about Git</a></li>
-      <li><a href="termina.html">What I know about the shell</a></li>
+      <li><a href="shell.html">What I know about the shell</a></li>
     </ul>
   </body>
 </html>
@@ -628,19 +1110,14 @@ The content is the text that will appear as the link
 ** Commit all three files as a single commit
 
 #+BEGIN_SRC sh
-% git status
-% git init
 % git add index.html
 % git add git.html shell.html
+% git diff --cached  #  or --staged
 % git status
 % git commit -m "Start my cheatsheet"
 #+END_SRC
 
 #+BEGIN_NOTES
-TODO(nik):
-- Demos =git status= outside of a Git repo
-- Demos adding multiple files at once.
-
 
 #+END_NOTES
 
