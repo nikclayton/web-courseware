@@ -26,6 +26,32 @@ python -m http.server 8080
  with successively better approximations of the truth."
 #+END_QUOTE
 
+#+BEGIN_NOTES
+This course is only going to work if you all ask questions.
+
+I mean, it's possible that I've managed to design the perfect course,
+and everything is explained in enough detail at exactly the right time
+for you to understand everything.
+
+But that's pretty unlikely. So, when you have questions, ask them.
+
+This isn't a competition as to who can understand things the fastest,
+I'm not grading you on your work, or judging you based on the questions
+that you're asking.
+
+So if you have a question, ask. And if the explanation still isn't
+clear, ask again.
+
+Also -- there's varying levels of experience across all of you. If
+you hear someone ask a question and you think you have another way
+of explaining something that you think might be easier to understand,
+that's fantastic, so do feel free to help with explanations.
+
+This should all be very collaborative -- as I say, it's not a
+competition.
+#+END_NOTES
+
+
 * TODO Goals for this week
 
 - Get everyone on the same page
