@@ -1,5 +1,5 @@
 #+Title: Powercoders Basel Coursework, Day 5, More CSS
-#+INCLUDE: "../include/settings.org"
+#+SETUPFILE: "../include/settings.org"
 
 #+BEGIN_NOTES
 Experiment with no practice time in the morning, give the material,
