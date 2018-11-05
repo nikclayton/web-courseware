@@ -12,12 +12,26 @@ they have the slides to use it in the afternoon.
   - Selectors and rules
   - =id= and =class= attributes
   - CSS colours
-  - CSS Fonts
+  - CSS fonts
   - The "cascade" effect
 - Browser Inspector
 
 #+BEGIN_NOTES
-...
+Let's just recap what we looked at yesterday.
+
+We started by going over CSS syntax, including how to write CSS rules,
+which say what something should look like, and how to write selectors,
+which let us say which elements we want to be affected by the rules.
+
+We discovered =id= and =class= attributes that all elements have,
+making it easier to write CSS selectors that target particular
+elements.
+
+And we learned how CSS colours and fonts work, and the way that CSS
+rules *cascade* to generate the final style.
+
+Then we played with the browser inspector to experiment with these
+things, and you worked on making your own pages look more stylish.
 
 Today we're going to continue our in-depth look at CSS.
 
