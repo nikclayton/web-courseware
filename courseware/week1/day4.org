@@ -94,6 +94,15 @@ Commit the two files.
 
 #+INCLUDE: "day4/css-2.html" :lines "8-23" src html
 
+#+BEGIN_NOTES
+Add this content to the body. Make sure that Atom doesn't
+complain about the markup.
+
+Those =id= and =class= attributes -- those are new, we're going
+to cover those very soon, for now, just make sure you enter them
+exactly.
+#+END_NOTES
+
 ** TODO Add some HTML content
 
 #+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day4/css-2.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
