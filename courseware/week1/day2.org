@@ -93,9 +93,18 @@ On OS X, type  =⌘= + =Space=, and type =terminal= and press RETURN.
 * Shell screenshots
 
 #+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_CENTER
+Windows
+#+END_CENTER
 [[file:windows-cmd-screenshot.png]]
 #+REVEAL_HTML: </div>
 
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_CENTER
+OS X
+#+END_CENTER
+[[file:osx-terminal-screenshot.png]]
+#+REVEAL_HTML: </div>
 #+BEGIN_NOTES
 Here are some screenshots of what you should expect to see. The
 exact text will vary, but it should be something like this.
