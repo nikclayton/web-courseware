@@ -10,6 +10,11 @@
 - Version control with Git
 - Your cheatsheets
 
+* TODO Goals for today
+
+- Introducing CSS
+- More experience with version control
+
 * DONE Introducing styling to the web
 
 - HTML says "What it is", not "What it should look like"
