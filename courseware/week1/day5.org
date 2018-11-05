@@ -846,24 +846,101 @@ colours.
 #+RESULTS[ea715cb298773a9bb6143d8b10602d7d314fc959]: gold-border
 [[file:gold-border.png]]
 
-* TODO CSS float
-- Block vs. inline elements
+#+REVEAL_HTML: </div>
 
 
-* TODO CSS media queries
-- Problem -- not everyone has the same screen size
-- Want to say "If screen is x big do this, otherwise do that"
+* Display: 3 types of CSS boxes
 
-* TODO CSS Flex
+- =block=: Default for block-level elements
+  - Stacks with other block boxes
+  - Content before/after on a separate line
+- =inline=: Default for inline-level elements
+  - Content appears on same line
+  - Content will break at end of line (not a box)
+- =inline-block=: A mix of the two
+  - Appears inline
+  - Does not break across lines
+- =display= property selects them
 
-- Probably push to week 2
+#+BEGIN_NOTES
 
-* TODO Bootstrap
+#+END_NOTES
 
-- Probably push to week 2
+** =display= examples
 
-Introduce Bootstrap here? Have they seen enough to understand the problem it solves?
+#+NAME: display
+#+INCLUDE: "day5/display.html" src html
 
+** =display= examples
+
+#+INCLUDE: "day5/display.css" src css
+
+** =display= examples
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/display.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS[44c2847f952843c82775d810194c7296215b8a72]:
+[[file:display-examples.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- =inline= is not a box
+  - Content breaks at the end of the line.
+- =block= is a box
+  - Line break before and after content
+  - Element box extends to end of line
+- =inline-block= is a box
+  - Does not break
+  - Box matches content size
+#+REVEAL_HTML: </div>
+
+** Display example: Breadcrumb navigation
+
+#+INCLUDE: "day5/display-2.html" src html
+
+*** Result
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/display-2.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS:
+[[file:result.png]]
+
+*** Change the CSS
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/display-3.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Remove the left padding on =ul=
+- Display =li= items inline
+- Show =>= before each list item
+  - Except the first one
+#+REVEAL_HTML: </div>
+
+*** Results
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/display-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS:
+[[file:change-the-css.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- The visual effect is the same
+- The markup is better
+  - This will be more important next week
+#+REVEAL_HTML: </div>
+
+* TODO CSS Units
+
+   - https://css-tricks.com/the-lengths-of-css/
 
 
 * End of week recap
