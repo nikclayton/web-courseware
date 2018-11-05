@@ -599,14 +599,252 @@ you can use the single =margin= property in its 1, 2, 3, or
 4 value variant.
 #+END_NOTES
 
-** Box model: Display
+** Box model properties: =border=
 
-** Shorthand properties
+- =border-width=
+- =border-style=
+- =border-color=
 
-* TODO CSS Units
+#+BEGIN_NOTES
+The border properties are a bit more complicated.
 
-   - https://css-tricks.com/the-lengths-of-css/
+Do you remember the =font= property from yesterday, and how that
+was shorthand for =font-style=, =weight=, =family=, and so on?
 
+The =border= property is similar. To control borders you can use
+three different properties, and use =border= as the short version.
+
+Those three properties let you set the border's width, style, and
+colour. I'll introduce those first, and then we'll come back to
+how the =border= shorthand works.
+#+END_NOTES
+
+*** =border-width=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC css
+selector {
+  border-top-width: 1px;
+  border-right-width: 2px;
+  border-bottom-width: .25em;
+  border-left-width: 0;
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC css
+selector {
+  border-width: 1em;
+} /* border-width-{top, right, bottom, left}: 1em; */
+
+
+selector {
+  border-width: 0 1em;
+} /* border-width-{top, bottom}: 0;   */
+  /* border-width-{left, right}: 1em; */
+
+selector {
+  border-width: 1em 0 2em;
+} /* border-width-top: 1em;           */
+  /* border-width-{left, right}: 0;   */
+  /* border-width-bottom: 2em;        */
+
+selector {
+  border-width: 1em 2em .5em 0;
+} /* border-width-top: 1em;           */
+  /* border-width-right: 2em;         */
+  /* border-width-bottom: .5em;       */
+  /* border-width-left: 0;            */
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+=border-width= behaves identically to =padding= and =margin=.
+
+There are individual properties to set the border widths on all four
+sides of the element's box, or you can use the shorthand version.
+#+END_NOTES
+
+*** =border-style=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: border-style
+#+BEGIN_SRC html
+<p style="border-style: none;">none</p>
+
+<p style="border-style: dotted;">dotted</p>
+
+<p style="border-style: dashed;">dashed</p>
+
+<p style="border-style: solid;">solid</p>
+
+<p style="border-style: double;">double</p>
+
+<p style="border-style: groove;">groove</p>
+
+<p style="border-style: ridge;">ridge</p>
+
+<p style="border-style: inset;">inset</p>
+
+<p style="border-style: outset;">outset</p>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :noweb yes :flags --window-size=320,400 --force-device-scale-factor=2 :exports results
+<style>p {padding: .2em .5em;}</style>
+<<border-style>>
+#+END_SRC
+
+#+RESULTS[c703302eda9188ca4b0650c5e44fea7e68aa3644]:
+[[file:border-style.png]]
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+There are various predfined styles that you can use for borders, they
+don't have to be solid lines.
+#+END_NOTES
+
+*** =border-style=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: border-style-2
+#+BEGIN_SRC html-chrome
+<head>
+  <style>
+p {
+  padding: .2em .5em;
+  border-top-style: dashed;
+  border-right-style: inset;
+  border-bottom-style: solid;
+  border-left-style: dotted;
+}
+  </style>
+</head>
+<body>
+  <p>An ugly use of borders.</p>
+</body>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS[a1b7aedbe55e724195640e61d7ef2c7527541cb6]: border-style-2
+[[file:border-style-2.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+You can specify different border styles for different sides of
+the content box.
+#+END_NOTES
+
+*** =border-style=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC css
+selector {
+  border-top-style: solid;
+  border-right-style: dotted;
+  border-bottom-style: dashed;
+  border-left-style: double;
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC css
+selector {
+  border-style: solid;
+} /* border-style-{top, right, bottom, left}: solid; */
+
+
+selector {
+  border-style: solid dashed;
+} /* border-style-{top, bottom}: solid;   */
+  /* border-style-{left, right}: dashed;  */
+
+selector {
+  border-style: solid dashed double;
+} /* border-style-top: solid;             */
+  /* border-style-{left, right}: dashed;  */
+  /* border-style-bottom: double;         */
+
+selector {
+  border-style: solid dashed double none;
+} /* border-style-top: solid;             */
+  /* border-style-right: dashed;          */
+  /* border-style-bottom: double;         */
+  /* border-style-left: none;             */
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Which of course means that you can use the same shorthand style as
+for the other properties.
+#+END_NOTES
+
+*** =border-color=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC css
+selector {
+  border-top-color: gold;
+  border-right-color: red;;
+  border-bottom-color: black;
+  border-left-color: blue;
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC css
+selector {
+  border-color: gold;
+} /* border-color-{top, right, bottom, left}: gold; */
+
+
+selector {
+  border-color: gold red;
+} /* border-color-{top, bottom}: gold;   */
+  /* border-color-{left, right}: red;    */
+
+selector {
+  border-color: gold red black;
+} /* border-color-top: gold;             */
+  /* border-color-{left, right}: red;    */
+  /* border-color-bottom: black;         */
+
+selector {
+  border-color: gold red black blue;
+} /* border-color-top: gold;             */
+  /* border-color-right: red;            */
+  /* border-color-bottom: black;         */
+  /* border-color-left: blue;            */
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+And, of course, the colour of the border can be set the same
+way. Any CSS colour value can be used here. I've used named
+colours in this example to make the slide easier to read, but
+I still recommend you use =rgb()= and =rgba()= for specifying
+colours.
+#+END_NOTES
+
+*** =border=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: gold-border
+#+BEGIN_SRC html-chrome
+<p style="border: 1em dotted gold">A gold border</p>
+#+END_SRC
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS[ea715cb298773a9bb6143d8b10602d7d314fc959]: gold-border
+[[file:gold-border.png]]
 
 * TODO CSS float
 - Block vs. inline elements
