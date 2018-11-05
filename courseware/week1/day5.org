@@ -1,4 +1,4 @@
-#+Title: Powercoders Basel Coursework, Day 5
+#+Title: Powercoders Basel Coursework, Day 5, More CSS
 #+INCLUDE: "../include/settings.org"
 
 #+BEGIN_NOTES
@@ -6,22 +6,587 @@ Experiment with no practice time in the morning, give the material,
 they have the slides to use it in the afternoon.
 #+END_NOTES
 
-* TODO Box model
-- Margins
-- Padding
+* Recap
 
-* TODO Inheritance / cascading (single file not multiple)
-
-
-* TODO Debugging CSS
-- Introduce the browser's inspector
-- Show box model in UI
-- Show temporarily overriding CSS, toggling options
+- Introduced CSS
+  - Selectors and rules
+  - =id= and =class= attributes
+  - CSS colours
+  - CSS Fonts
+  - The "cascade" effect
+- Browser Inspector
 
 #+BEGIN_NOTES
-Have them try -- use the inspector to try changing the CSS, and if
-they like the effect then copy it in to their .css file.
+...
+
+Today we're going to continue our in-depth look at CSS.
+
+As with yesterday, the goal is not that you immediately understand
+all of this stuff and can use it fluently.
+
+But I want you to know that all of this stuff exists, so that when
+the time comes, you know how to search for it, refresh your memory,
+and read and understand the documentation.
 #+END_NOTES
+
+* TODO Box model
+
+[[file:box-model.png]]
+
+#+BEGIN_NOTES
+So far we've been styling content on the page without paying much
+attention to how the browser actually figures out where everything
+on the page should go, how much space it should take up, and so on.
+
+CSS does this by thinking of each and every element on the page as
+a box.
+
+The browser uses the CSS rules and the content in each element to
+figure out how big a box the element needs. Then it uses this to
+put all the boxes on the page in the right place based on how much
+space they need, whether they should go on a line on their own, and
+so on.
+
+Each element's box is actually a series of boxes, one inside the
+other.
+
+The smallest box, and the one on the inside, is the *content* box.
+This is the box that contains the content of the element, and all
+the sizing information starts from this.  This box has a *width*
+and a *height*.
+
+Immediately outside the content box is some optional extra space,
+called *padding*.
+
+Around the padding is an optional *border*. So the padding specifies
+the amount of space between the content and the border.
+
+And outside the border is the element's *margin*. This is the space
+between the element's border and other elements.
+
+There are CSS properties for all these, so we can do some
+experimentation now.
+
+---
+Based on material from [[https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Box_model][The box model (MDN)]].
+#+END_NOTES
+
+** Box model: Setup
+
+- Create =scratch/box-model= directory
+- Create =scratch/box-model/style.css=
+- Create =scratch/box-model/box-model.html=
+
+#+INCLUDE: "day5/box-model.html" src html
+
+#+BEGIN_NOTES
+Like yesterday we start with a basic HTML file and an empty
+CSS file.
+#+END_NOTES
+
+** Add some HTML content
+
+#+iNCLUDE: "day5/box-model-2.html" :lines "8-19" src html
+
+** Add some HTML content
+
+#+NAME: box-model-2
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/box-model-2.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS[e264ba4fa1d180136d5b1f773c76f3e1431eed89]: box-model-2
+[[file:box-model-2.png]]
+
+** Add and commit!
+
+** Box model: Showing borders
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/style-3.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+NAME: box-model-3
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/box-model-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS[2a8d7516d0cf6ef5b3c49ca55f5a067b5db588e9]: box-model-3
+[[file:box-model-3.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+The easiest way to see what the boxes look like is to turn on borders
+for one or more elements.
+
+Edit the CSS file to add the rule on the left, and you should see
+the results on the right.
+
+In this case we're using a new CSS selector, the *asterisk*, or
+*star*. This is the *universal* selector in CSS -- it means "apply
+these rules to each element".
+
+So we're giving each element a 1 pixel solid border to show off the
+edges of the element padding.
+
+Does everyone see something like this?
+
+[Wait]
+#+END_NOTES
+
+** Box model: Showing borders
+
+#+REVEAL_HTML: <div class="leftcol">
+[[file:box-model-3.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+ATTR_HTML: :width 50% :height 50%
+[[file:box-model.png]]
+
+- =p= elements have top / bottom margins
+- So does =ul= and =body=
+- =p=, =ul=, =li=, =body=, =html= expand to fill the full width
+  - =em= doesn't
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Here's the page again, and on the right I've put the image that
+shows the box model components.
+
+Lets pick this page apart.
+
+First, remmeber how the first element in our page is always =html=.
+Well, that element is matched by the =*= in our CSS selector, so
+it gets a border, that's this one here.
+
+[Indicate it]
+
+Our next element is the =body= element, which also has a border,
+whic is here.
+
+[Indicate it]
+
+Notice how there's space between the =html= body and the =body= border.
+
+That might be *padding* on the =html= element, or it might be a
+*margin* on the =body= element. We'll investigate that later.
+
+Here are our two =p= elements with their border.
+
+Notice how there's no blank space between the =p= content and the
+border. That means they must have no padding. But there is blank
+space between the borders of the =p= elements, so they must have a
+margin.
+
+And so does the =ul= element, you can see it at the top and bottom
+of its border.
+
+Even the =em= element in the first paragraph gets a border.
+
+Notice how the =html=, =body=, =p=, =ul=, and =li= elements are all
+wider than their content, and have expanded to fill the full width
+of the page.
+
+But the =em= element hasn't.
+
+We talked about this a little bit back on day 1. Can anyone remember
+why?
+
+[Wait]
+
+Do you remember we talked about block level elements, like =p=, and
+inline elements, like =em=?
+
+That's the difference. Normally, a block level element's content box
+automatically expands to fill the full width available to it.
+
+While an inline level element's content box is only wide enough to
+contain its content.
+
+We've seen that some of these elements have margins already. Lets
+see what happens if we disable the margins.
+#+END_NOTES
+
+** Box Model: Margins
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/style-4.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+NAME: box-model-4
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/box-model-4.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS: box-model-4
+[[file:box-model-4.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This is what happens if we set all the margins to 0. Note that all the
+blank space around the elements has disappeared.
+
+The block-level elements still extend to the full width of the page
+though.
+#+END_NOTES
+
+** Box model: Padding
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/style-5.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+NAME: box-model-5
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/box-model-5.html")) :flags --window-size=320,400 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS: box-model-5
+[[file:box-model-5.png]]
+
+#+BEGIN_NOTES
+This is what some additional padding looks like.
+
+The padding is given to the =p= and =li= elements - half an em of
+padding at the top of the element's content, and 1.5 ems at the
+bottom of the element's content.
+
+Notice how this has affected the borders -- per the box model,
+happens between the content and the border.
+
+By the way, this introduces another syntax for CSS selectors. When
+you want one set of rules to apply to different selectors, you can
+separate them with a comma, as I've done here.
+#+END_NOTES
+
+*** Multiple selectors
+
+#+BEGIN_SRC css
+/* Applies the rules to p elements AND li elements */
+p, li {
+  padding-top: .5em;
+  padding-bottom: 1.5em;
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+/* Applies the rules to li elements that are descendents
+   of p elements */
+p li {
+  padding-top: .5em;
+  padding-bottom: 1.5em;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+Don't get those two confused. These examples look very similar, but
+they mean different things.
+
+Is everyone OK with this?
+
+[Wait]
+#+END_NOTES
+
+** Box model: Margins
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/style-6.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+NAME: box-model-6
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/box-model-6.html")) :flags --window-size=380,400 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS: box-model-6
+[[file:box-model-6.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This CSS makes the margins more obvious.
+
+I've increased the width of the border, and changed the colour,
+so that it's black, but 50% opaque, so the background colour
+shows through.
+
+Both =p=, =em=, and =li= elements are now white text, with half an
+em of padding (inside the border) and half an em of margin
+(outside the border).
+
+And =p= elements get a blue background, =li= elements get a
+red background.
+
+#+END_NOTES
+
+** Box model: Margins
+
+#+REVEAL_HTML: <div class="leftcol">
+[[file:box-model-6.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- List bullets take on the text color
+- =border= and =padding= share the =background-color=
+- =margin= doesn't
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+There's a few things of note here.
+
+First, the bullets on the list items have disappeared. That's
+because, unless you style the bullets seperately, they take on
+the same colour as the list item text. Since the text color
+is white we have white bullets on a white background, and we
+can't see them.
+
+The second thing is the background colours. We can see that the
+background colour property affects the content of the element. It also
+affects the padding, because that is also blue (or red).
+
+And the background colour also extends all the way to the border
+-- remember, the border colour is black, but 50% transparent, and
+we can see that it's darker blue and darker red around the =p=
+and =li= elements, not grey, so it's picking up the background
+colour for the element.
+
+But the margins don't have colour -- the space we've said for the
+margins uses the background colour of the parent element, not the
+child element.
+
+Make sense?
+
+[Wait]
+#+END_NOTES
+** Box model: Margins
+
+#+REVEAL_HTML: <div class="leftcol">
+[[file:box-model-6.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- What's wrong with the margins?
+
+#+BEGIN_SRC css
+p, li, em {
+  ...
+  margin: .5em;
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Given that CSS, can anyone see what's odd about some of the margins
+in this page?
+
+[Wait]
+
+[Hint (if necessary). How big should the gap between the paragraphs
+and the list items be? How big is it actually?]
+
+We've specified a margin of half an em all the way around these
+elements.
+
+So when two of them are next to each other you would expect the
+total space between them to be 1em -- half an em from the bottom
+margin of the first element, and half an em for the top margin
+of the second element.
+
+Yes?
+
+[Wait]
+
+But if we look at this screenshot, or you look at your page --
+we know the border size is half an em, so we can clearly see that
+the gaps here, between the paragraphs, and here, between the
+list items, are half an em, and not the full em that we expect.
+
+What's going on?
+#+END_NOTES
+
+*** Box model: Margin collapse
+
+#+REVEAL_HTML: <div class="leftcol">
+[[file:box-model-6.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Top and bottom margins are sometimes combined in to a single margin
+- Called *margin collapse*
+  - New margin size is the larger of the two
+- Margins collapse for:
+  - Adjacent sibling elements
+    - Between the =p=, =p=, and =ul=
+    - Between the =li=, =li=, and =li=
+  - Parent and first / last child
+  - Empty blocks
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+The answer is a feature of CSS called *margin collapse*.
+
+This happens when you have two elements next to each other. If the
+conditions are right, instead of the space between them being the
+sum of their top and bottom margins, whichever margin value is
+bigger is used, and the others are ignored.
+
+There are three times this will happen.
+
+The first is if you have elements that share the same parent. For
+example, our =p=, =p=, and =ul= elements all have the =body= as
+their parent. And the three =li= elements all have the =ul= as
+their parent.
+
+So their margins collapse. That's why the space between the two
+=p= elements is only half an em and not one em, and the same for
+the margins between the three =li= elements.
+
+The second time is between margins of parent elements and their
+first or last child elements. That doesn't apply in this example.
+
+And the last is if the element's content is empty. That doesn't
+apply in this example either.
+#+END_NOTES
+
+** Box model: Browser inspector
+
+#+BEGIN_CENTER
+Demo
+#+END_CENTER
+
+#+BEGIN_NOTES
+Demo the browser inspector for looking at the box model.
+
+Show how hovering over an element shows not just where the content is
+but the extent of the element's box, including the margin, border, and
+padding.
+
+Show how the actual values are available in the box-model UI at the
+middle-right of the inspector.
+
+Demo margin collapse by changing the CSS for the li for box-model-6
+and adding margin-top and margin-bottom setting them to different
+values.
+#+END_NOTES
+
+** Box model properties: =padding=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC css
+selector {
+  padding-top: 1em;
+  padding-right: 0;
+  padding-bottom: .5em;
+  padding-left: 10px;
+}
+#+END_SRC
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC css
+selector {
+          /* padding-{top, right, bottom, left}: 1em; */
+  padding: 1em;
+}
+
+selector {
+  padding: 0 1em;    /* padding-{top, bottom}: 0;     */
+}                    /* padding-{left, right}: 1em;   */
+
+selector {
+  padding: 1em 0 2em;   /* padding-top: 1em;          */
+}                       /* padding-{left, right}: 0;  */
+                        /* padding-bottom: 2em;       */
+
+selector {
+  padding: 1em 2em .5em 0;  /* padding-top: 1em;      */
+}                           /* padding-right: 2em;    */
+                            /* padding-bottom: .5em;  */
+                            /* padding-left: 0;       */
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+We've been playing around with the =padding=, =border=, and =margin=
+properties without digging in to exactly how you specify them.
+
+Let's start with =padding=.
+
+The most legible way to specify it is with four different properties
+for the amount of padding you want on each of the four sides of the
+element's box. These are padding top, right, bottom, and left.
+
+You can also use a shortened form of the property, called just
+=padding=.
+
+If you use that and give it one value then it's used for all 4 sides.
+
+If you give it two values then the first value is used for top and
+bottom, and the second value is used for left and right.
+
+If you give it three values then the first value is used for top,
+the second is used for left and right, and the third is used for
+bottom.
+
+And if you give it 4 values then they set the top, right, bottom,
+and left properties. I remember that by imagining a clock face, and
+the minute hand sweeping around the face -- starting at the top, then
+it points right at 3, to the bottom at 6, and left at 9.
+#+END_NOTES
+
+
+** Box model properties: =margin=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC css
+selector {
+  margin-top: 1em;
+  margin-right: 0;
+  margin-bottom: .5em;
+  margin-left: 10px;
+}
+#+END_SRC
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC css
+selector {
+          /* margin-{top, right, bottom, left}: 1em; */
+  margin: 1em;
+}
+
+selector {
+  margin: 0 1em;     /* margin-{top, bottom}: 0;     */
+}                    /* margin-{left, right}: 1em;   */
+
+selector {
+  margin: 1em 0 2em;    /* margin-top: 1em;          */
+}                       /* margin-{left, right}: 0;  */
+                        /* margin-bottom: 2em;       */
+
+selector {
+  margin: 1em 2em .5em 0;   /* margin-top: 1em;      */
+}                           /* margin-right: 2em;    */
+                            /* margin-bottom: .5em;  */
+                            /* margin-left: 0;       */
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+=margin= is specified in exactly the same way as =padding=.
+You can either use four different margin properties, or
+you can use the single =margin= property in its 1, 2, 3, or
+4 value variant.
+#+END_NOTES
+
+** Box model: Display
+
+** Shorthand properties
+
+* TODO CSS Units
+
+   - https://css-tricks.com/the-lengths-of-css/
+
+
 * TODO CSS float
 - Block vs. inline elements
 
@@ -29,11 +594,6 @@ they like the effect then copy it in to their .css file.
 * TODO CSS media queries
 - Problem -- not everyone has the same screen size
 - Want to say "If screen is x big do this, otherwise do that"
-
-* Exercises
-
-- Make your portfolios work on mobile screens too. And maybe when
-  printed.
 
 * TODO CSS Flex
 
@@ -45,3 +605,12 @@ they like the effect then copy it in to their .css file.
 
 Introduce Bootstrap here? Have they seen enough to understand the problem it solves?
 
+
+
+* End of week recap
+
+
+* Exercises
+
+- Make your portfolios work on mobile screens too. And maybe when
+  printed.
