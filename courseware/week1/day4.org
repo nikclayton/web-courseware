@@ -271,12 +271,7 @@ Our selector is now more *specific*, saying that it only matches
 Some example classes.
 #+END_NOTES
 
-*** TODO Where do CSS defaults come from?
-
-- The browser includes a stylesheet
-- It sets the default behaviours that your stylesheet overrides
-- Called the =user agent stylesheet=
-- Different browsers can have different defaults
+* Break
 
 * TODO CSS colours
 
@@ -344,7 +339,7 @@ of the text. But you can change that using the =text-decoration-color=
 property.
 #+END_NOTES
 
-** How to specify CSS colors
+** How to specify CSS colours
 
 #+BEGIN_NOTES
 Now that we know that, lets take a look at the syntax for specifying
@@ -471,9 +466,11 @@ through the rest of the course.
 - Search for =color-picker=
 - Install it
 
-| Windows              | Mac                 |
+| Windows              | OS X                |
 |----------------------+---------------------|
 | =Ctrl= + =Alt= + =c= | =⌘= + =Shift= + =c= |
+
+* TODO Colour palettes
 
 * TODO The browser inspector
 
@@ -526,6 +523,9 @@ and will be lost as soon as the page reloads.
 - How to get out of developer tools
 #+END_NOTES
 
+* You experiment with the Developer Tools
+
+
 * CSS resources
 
 - MDN page
@@ -552,9 +552,10 @@ and will be lost as soon as the page reloads.
 * CSS reset
 ** Where do default styles come from?
 
-- Browser has a built-in stylesheet
-- Called the "user agent stylesheet"
-- "user agent" is a fancy term for "browser"
+- The browser includes a stylesheet
+- It sets the default behaviours that your stylesheet overrides
+- Called the =user agent stylesheet=
+- Different browsers can have different defaults
 
 #+BEGIN_NOTES
 You might be asking yourself how the browser knows how to style
@@ -711,6 +712,12 @@ always use external stylesheets, and the =link= element.
 
 #+REVEAL_HTML: </div>
 
+#+REVEAL_HTML: <div class="rightcol">
+- What colour is the paragraph?
+  - Green?
+  - Purple?
+#+REVEAL_HTML: </div>
+
 #+BEGIN_NOTES
 Don't do this, this is just a quiz.
 
@@ -778,18 +785,14 @@ is in purple and not green.
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-- White text, black background?
-- Black text, light blue background?
-- White text, light blue background?
+- What colour is the paragraph?
+  - White text, black background?
+  - Black text, blue background?
+  - White text, blue background?
+  - Black text, light blue background?
+  - White text, light blue background?
 #+REVEAL_HTML: </div>
 
-#+BEGIN_NOTES
-The "C" in "CSS" stands for "cascading". We say that the rules
-cascade together to form the final style that will be applied
-to the element.
-
-In this example, what do you think the =p= heading will be?
-#+END_NOTES
 ** Solution: CSS Cascades and Specificity 2
 
 #+REVEAL_HTML: <div class="leftcol">
@@ -816,6 +819,10 @@ the =p= rule. The =color= property in that rule is *not* overridden
 by the =p.class= rule, so it gets applied as well.
 
 The properties have cascaded together.
+
+Finally, it's a light blue background because the colour is specifed
+with a 50% alpha value -- so the blue is modified by the white of the
+page "underneath" the paragraph.
 #+END_NOTES
 
 ** Exercise: CSS Cascades and Specificity 3
@@ -823,31 +830,28 @@ The properties have cascaded together.
 #+REVEAL_HTML: <div class="leftcol">
 #+NAME: css-specificity-3
 #+BEGIN_SRC html-chrome :exports code
-<!DOCTYPE html>
-<html>
-  <head>
-    <style>
-      p {
-        color: white;
-        background-color: black;
-        text-decoration: none;
-        border: 1px solid black;
-      }
-      p.info {
-        background-color: rgba(0, 0, 255, 0.5);
-        text-decoration: underline;
-        padding: 1em;
-      }
-      p#tip {
-        color: black;
-        background-color: rgba(0, 255, 0, 0.5);
-      }
-    </style>
-  </head>
-  <body>
-    <p id="tip" class="info">Here is a paragraph</h1>
-  </body>
-</html>
+<head>
+  <style>
+    p {
+      color: white;
+      background-color: black;
+      text-decoration: none;
+      border: 1px solid black;
+    }
+    p.info {
+      background-color: rgba(0, 0, 255, 0.5);
+      text-decoration: underline;
+      padding: 1em;
+    }
+    p#tip {
+      color: black;
+      background-color: rgba(0, 255, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <p id="tip" class="info">Here is a paragraph</h1>
+</body>
 #+END_SRC
 
 #+RESULTS: css-specificity-3
@@ -1116,9 +1120,7 @@ Demo - [[https://fonts.google.com]]
     </head>
     <body>
       <h1>An unstyled heading</h1>
-
       <h1 class="lato">A heading in Lato</h1>
-
       <h1 class="sans">A heading in sans-serif</h1>
     </body>
   </html>
