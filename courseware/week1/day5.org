@@ -925,11 +925,12 @@ colours.
 *** Results
 
 #+REVEAL_HTML: <div class="leftcol">
+#+NAME: display-3
 #+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/display-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
-#+RESULTS:
-[[file:change-the-css.png]]
+#+RESULTS: display-3
+[[file:display-3.png]]
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">

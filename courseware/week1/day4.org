@@ -1,7 +1,7 @@
 #+Title: Powercoders Basel Course work, Day 4, CSS
 #+INCLUDE: "../include/settings.org"
 
-* Longer recap
+* Recap
 
 - Files and directories
 - HTML
@@ -523,8 +523,7 @@ and will be lost as soon as the page reloads.
 - How to get out of developer tools
 #+END_NOTES
 
-* You experiment with the Developer Tools
-
+** You experiment with the Developer Tools
 
 * CSS resources
 
@@ -1529,7 +1528,7 @@ h1 {
 }
 #+END_SRC
 
-#+BEGIN_SRC css 64c0d43
+#+BEGIN_SRC css
 h1 {
   text-transform: lowercase;  /* Text shown all lowercase */
 }
