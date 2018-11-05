@@ -86,9 +86,15 @@ selector {
   - Avoids mixing different syntaxes in the same file
 - Create the empty file (CLI, use touch)
 - Link to it. Reload page, show that nothing has changed.
-
-Commit the two files.
 #+END_NOTES
+
+** Don't forget to add and commit
+
+#+BEGIN_SRC shell
+git add scratch/style.css
+git add scratch/css.html
+git commit -m "..."
+#+END_SRC
 
 ** TODO Add some HTML content
 
@@ -111,11 +117,19 @@ exactly.
 #+RESULTS:
 [[file:add-some-html-content.png]]
 
+** Add and commit!
+
+#+BEGIN_CENTER
+Don't forget to add and commit the changes.
+#+END_CENTER
+
 * CSS Selectors
 ** TODO Selecting all elements of a particular type
 
  #+REVEAL_HTML: <div class="leftcol">
  #+INCLUDE: "day4/style-3.css" src css
+
+- Check, add, and commit
  #+REVEAL_HTML: </div>
 
  #+REVEAL_HTML: <div class="rightcol">
@@ -140,6 +154,8 @@ exactly.
 
 #+REVEAL_HTML: <div class="leftcol">
 #+INCLUDE: "day4/style-4.css" src css
+
+- Check, add, and commit
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -159,6 +175,8 @@ exactly.
 
 #+REVEAL_HTML: <div class="leftcol">
 #+INCLUDE: "day4/style-5.css" src css
+
+- Check, add, and commit
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -179,6 +197,8 @@ How do we fix that?
 
 #+REVEAL_HTML: <div class="leftcol">
 #+INCLUDE: "day4/style-6.css" src css
+
+- Check, add, and commit
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -1184,7 +1204,7 @@ elements to use the fonts that you have chosen.
       <p>I like to write. Using only short sentences. It's
         very relaxing.</p>
 
-      <pre>echo "Don't forget to 'git commit' your changes"</pre>
+      <pre>echo "Don't forget to add and commit your changes"</pre>
     </body>
   </html>
 #+END_SRC
@@ -1234,7 +1254,7 @@ body {
       <p>I like to write. Using only short sentences. It's
 	very relaxing.</p>
 
-      <pre>echo "Don't forget to 'git commit' your changes"</pre>
+      <pre>echo "Don't forget to and and commit your changes"</pre>
     </body>
   </html>
 #+END_SRC
