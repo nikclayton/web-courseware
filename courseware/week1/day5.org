@@ -497,24 +497,28 @@ selector {
 #+REVEAL_HTML: <div class="rightcol">
 #+BEGIN_SRC css
 selector {
-          /* padding-{top, right, bottom, left}: 1em; */
   padding: 1em;
-}
+} /* padding-{top, right, bottom, left}: 1em; */
+
 
 selector {
-  padding: 0 1em;    /* padding-{top, bottom}: 0;     */
-}                    /* padding-{left, right}: 1em;   */
+  padding: 0 1em;
+} /* padding-{top, bottom}: 0;     */
+  /* padding-{left, right}: 1em;   */
+  /* padding-{left, right}: 1em;   */
 
 selector {
-  padding: 1em 0 2em;   /* padding-top: 1em;          */
-}                       /* padding-{left, right}: 0;  */
-                        /* padding-bottom: 2em;       */
+  padding: 1em 0 2em;
+} /* padding-top: 1em;             */
+  /* padding-{left, right}: 0;     */
+  /* padding-bottom: 2em;          */
 
 selector {
-  padding: 1em 2em .5em 0;  /* padding-top: 1em;      */
-}                           /* padding-right: 2em;    */
-                            /* padding-bottom: .5em;  */
-                            /* padding-left: 0;       */
+  padding: 1em 2em .5em 0;
+} /* padding-top: 1em;             */
+  /* padding-right: 2em;           */
+  /* padding-bottom: .5em;         */
+  /* padding-left: 0;              */
 #+END_SRC
 #+REVEAL_HTML: </div>
 
@@ -558,30 +562,33 @@ selector {
   margin-left: 10px;
 }
 #+END_SRC
-
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+BEGIN_SRC css
 selector {
-          /* margin-{top, right, bottom, left}: 1em; */
   margin: 1em;
-}
+} /* margin-{top, right, bottom, left}: 1em; */
+
 
 selector {
-  margin: 0 1em;     /* margin-{top, bottom}: 0;     */
-}                    /* margin-{left, right}: 1em;   */
+  margin: 0 1em;
+} /* margin-{top, bottom}: 0;     */
+  /* margin-{left, right}: 1em;   */
 
 selector {
-  margin: 1em 0 2em;    /* margin-top: 1em;          */
-}                       /* margin-{left, right}: 0;  */
-                        /* margin-bottom: 2em;       */
+  margin: 1em 0 2em;
+} /* margin-top: 1em;             */
+  /* margin-{left, right}: 0;     */
+  /* margin-bottom: 2em;          */
+
 
 selector {
-  margin: 1em 2em .5em 0;   /* margin-top: 1em;      */
-}                           /* margin-right: 2em;    */
-                            /* margin-bottom: .5em;  */
-                            /* margin-left: 0;       */
+  margin: 1em 2em .5em 0;
+} /* margin-top: 1em;             */
+  /* margin-right: 2em;           */
+  /* margin-bottom: .5em;         */
+  /* margin-left: 0;              */
 #+END_SRC
 #+REVEAL_HTML: </div>
 
