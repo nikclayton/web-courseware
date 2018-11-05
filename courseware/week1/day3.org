@@ -1,5 +1,5 @@
 #+Title: Powercoders Basel Coursework, Day 3
-#+INCLUDE: "../include/settings.org"
+#+SETUPFILE: "../include/settings.org"
 
 * Day 3, 2018-11-28 Wed
 

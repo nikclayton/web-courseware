@@ -1,9 +1,8 @@
 #+Title: Powercoders Basel Coursework, Day 1
-#+INCLUDE: "../include/settings.org"
+#+SETUPFILE: "../include/settings.org"
 #+PROPERTY: header-args:html-chrome :flags --window-size=320,240 --force-device-scale-factor=2 :cache yes
 
 #+BEGIN_NOTES
-
 This is a special week -- no guest trainers so that I can get them up to
 speed and spend more time with them to see who struggles, get a better feel
 for the class, etc.

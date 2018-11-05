@@ -1,5 +1,5 @@
 #+Title: Powercoders Basel Coursework, Day 2
-#+INCLUDE: "../include/settings.org"
+#+SETUPFILE: "../include/settings.org"
 
 * Brief recap of previous day
 

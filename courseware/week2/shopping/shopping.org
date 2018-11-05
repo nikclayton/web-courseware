@@ -1,5 +1,5 @@
 #+Title: Powercoders Basel Coursework, DOM Shopping List Exercise
-#+INCLUDE: "../../include/settings.org"
+#+SETUPFILE: "../../include/settings.org"
 #+COLUMNS: %35ITEM %TODO %TOPICS %REQUIREMENTS %TAGS
 
 * TODO Building a shopping list
