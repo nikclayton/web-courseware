@@ -104,7 +104,9 @@ Here's our problem.
 
 * TODO JS Problem 1: Goal
 
+#+BEGIN_CENTER
 [[file:change_para_class/solution-1.html][The solution]]
+#+END_CENTER
 
 #+BEGIN_NOTES
 And here's what the solution will look like to the user.
@@ -315,7 +317,7 @@ different things in Javascript.
 
 - Variables allow us to give names to values
 
-#+BEGIN_SRC javascript
+#+BEGIN_SRC javascript -n
   let x;           // Declare a variable called 'x'
   x = 4;           // Set x's value to 4
   x;               // Evaluate the expression 'x'
@@ -521,9 +523,9 @@ document;
 Earlier, when we first introduced variables, we saw how you create them
 with the =let= keyword.
 
-There are some variables that already exist in Javascript. =document= is one
-of those variables. You don't need to declare it, it's already there,
-waitinf for you to use it.
+There are some variables that already exist in Javascript. =document=
+is one of those variables. You don't need to declare it, it's already
+there, waiting for you to use it.
 
 The =document= variable contains the DOM *object*, which gives you
 access to the DOM. Another way of saying this is that the variable's
@@ -743,10 +745,10 @@ Here are some example properties that elements have.
 ** TODO Changing element properties
 
 #+BEGIN_SRC javascript
-el.id = "newid";
-el.localname = "newname";
+el.id = 'newid';
+el.localname = 'newname';
 el.clientWidth = 400;
-el.innerHTML = "New Heading";
+el.innerHTML = 'New Heading';
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -762,7 +764,9 @@ Make all of these changes, and let me know when that's done.
 
 ** TODO Property changes are reflected on the page
 
-[Demo]
+#+BEGIN_CENTER
+Demo
+#+END_CENTER
 
 #+BEGIN_NOTES
 If you go back to the "Elements" tab in the developer tools after
@@ -808,7 +812,7 @@ But to find out if we're right we're going to have to look at
 some documentation.
 #+END_NOTES
 
-** TODO Exercise: MDN Element Properties (10 minutes)
+** TODO Exercise: MDN Element Properties                           :exercise:
 
 - Search for =MDN Element Properties=
 - Can you find anything that shows how to change classes?
@@ -946,7 +950,7 @@ You've already used one function, =alert()=. And you've used object
 methods, like =getElementById()=, which are very similar.
 #+END_NOTES
 
-** Declaring / defining a function
+** Declaring / defining a function                                 :exercise:
 
 #+BEGIN_SRC javascript
 function greet() {
@@ -1001,7 +1005,7 @@ wrote *earlier* has been called.
 Remember this, it's going to come up a lot.
 #+END_NOTES
 
-** Functions with parameters
+** Functions with parameters                                       :exercise:
 
 #+BEGIN_SRC javascript
   function double(num) {
@@ -1026,17 +1030,138 @@ it back to the caller.
 Try this, and make sure you see the same result.
 #+END_NOTES
 
-** Exercise: A function that changes the class
+* Including Javascript in the HTML
+
+#+BEGIN_SRC html
+  <html>
+    ...
+    <body>
+      ...
+      <script>
+        // Javascript code goes here
+      </script>
+    </body>
+  </html>
+#+END_SRC
+
+#+BEGIN_NOTES
+So far all of your Javascript code has been entered in to the REPL.
+It's time to change that.
+
+To add Javascript code to an HTML page we're going to use the =script=
+element.
+
+The contents of this element should be Javascript code, just as you
+entered it in to the REPL.
+
+At the moment the right place to put the =script= element is
+immediately before the =body= finishes. So just before the closing
+=</body>= tag.
+
+This is also weird -- we're really mixing and matching HTML and
+Javascript code now. I know this can be a bit confusing, and we're
+going to change it later to make it easier, but for now we have to
+do it this way.
+
+Edit the HTML file and add a =script= element immediately before the
+end of the body.
+#+END_NOTES
+
+* How do we know if our code is working?
 
 #+BEGIN_SRC javascript
-setClassTip();   // <-- goal
+console.log('some message');
+#+END_SRC
+
+#+BEGIN_NOTES
+Javascript code can send messages to the console. This very useful
+when writing code, as you can send messages containing the values of
+variables, or indicating that the program got to a particular place.
+
+To do that, we write =console.log()= add the message we want to send,
+just like this.
+#+END_NOTES
+
+** Exercise: Log a message to the console                          :exercise:
+
+#+BEGIN_SRC html
+<script>
+  console.log('My code is running!');
+</script>
+#+END_SRC
+
+#+BEGIN_NOTES
+Modify the HTML file, and add this call to =console.log= inside
+the =script= element.
+
+Save the file.
+
+Make sure the developer tools are open, and you can see the console.
+
+Reload the page.
+
+If everything worked you should see the message show up in the
+console.
+
+[Wait]
+#+END_NOTES
+
+** Exercise: Calling functions from the console                    :exercise:
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_CENTER
+In the HTML
+#+END_CENTER
+#+BEGIN_SRC html
+<script>
+  console.log('My code is running');
+
+  function greet(name) {
+    console.log('Hello, ' + name);
+  }
+</script>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_CENTER
+In the console
+#+END_CENTER
+
+#+BEGIN_SRC javascript
+greet('Your name here');
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+From the console you can call functions that are defined in your
+Javascript file.
+
+To demonstrate this, edit the HTML so that the =script= element
+contains a new function called =greet=, that looks like the one
+here.
+
+Save and reload the page.
+
+Open the console.
+
+In the console, make sure you see the "My code is running!" message,
+and then call the function, as shown on the right.
+
+[Wait]
+#+END_NOTES
+
+* Exercise: A function that changes the class                      :exercise:
+
+#+BEGIN_SRC javascript
+setClassTip();   // <-- goal (in the console)
 #+END_SRC
 
 #+BEGIN_SRC javascript
 function setClassTip() {
-  // You write the function body
+  // You write the function in the <script> element
 
-  // 1. Get the element in to a variable.
+  // 1. Get the <p id="mypara"> element in to a variable.
 
   // 2. Change the element's className property
   //    to 'tip'.
@@ -1050,8 +1175,11 @@ of the paragraph in our page.
 Here, I've provided the outline of a function that will set the element's
 class name to 'tip'.
 
-I want you to use the information that we learned earlier, and complete
-the function in the REPL.
+I want you to use the information that we learned earlier, and
+complete this function in the HTML =script= element.
+
+When it's working, you should be able to save and reload the page,
+and call =setClassTip()= in the console.
 #+END_NOTES
 
 ** Solution: A function that changes the class
@@ -1167,7 +1295,7 @@ user clicks, so we want to use the =click= event.
 
 ** Listening for click events with attributes
 
-- The =onclick= attribute lets you specify the event listen
+- The =onclick= attribute is to specify the event listener
 
 #+BEGIN_SRC javascript
 function listenForClick(event) {
@@ -1176,7 +1304,7 @@ function listenForClick(event) {
 #+END_SRC
 
 #+BEGIN_SRC html
-<p onclick="return listenForClick(event);">Some text</p>
+<p onclick="listenForClick(event);">Some text</p>
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -1212,46 +1340,17 @@ This is a bit weird -- we're mixing HTML and Javascript together.
 - Write a function that will be called when the event fires
 - Call the function from the element's =onclick= attribute
 
-** Including Javascript in the HTML
+* Exercise: Putting it all together                                :exercise:
 
-#+BEGIN_SRC html
-  <html>
-    ...
-    <body>
-      ...
-      <script>
-        // Javascript code goes here
-      </script>
-    </body>
-  </html>
-#+END_SRC
+- Write two more Javascript functions to change the paragraph's class
+  - As event listeners they'll need an =event= parameter
+- Add =onclick= attributes to the three =li= elements to call
+  those functions
+- Save the files and test
 
 #+BEGIN_NOTES
-So far all of your Javascript code has been entered in to the REPL.
-It's time to change that.
 
-To add Javascript code to an HTML page we're going to use the =script=
-element.
-
-The contents of this element should be Javascript code, just as you
-entered it in to the REPL.
-
-At the moment the right place to put the =script= element is
-immediately before the =body= finishes. So just before the closing
-=</body>= tag.
-
-This is also weird -- we're really mixing and matching HTML and
-Javascript code now. I know this can be a bit confusing, and we're
-going to change it later to make it easier, but for now we have to
-do it this way.
 #+END_NOTES
-
-** Exercise: Putting it all together
-
-1. Edit the HTML and add a =script= element.
-2. Write three Javascript functions to change the paragraph's class
-3. Add =onclick= attributes to the three =li= elements to call
-   those functions.
 
 ** Solution: Putting it all together (HTML)
 
@@ -1260,7 +1359,7 @@ do it this way.
 
 ** Solution: Putting it all together (Javascript)
 
-#+INCLUDE: "change_para_class/solution-1.html" :lines "21-37" src javascript
+#+INCLUDE: "change_para_class/solution-1.html" :lines "21-39" src javascript
 
 ** TODO =onmousemove=
 
@@ -1581,7 +1680,7 @@ last small change you made, or review it to see what went wrong.
 ** TODO Recap
 
 - Created a new file
-- Referenced it with =<script src=...> =
+- Referenced it with ~<script src=...>~
 - Moved the code over
 - Deleted code from the old location
 - Checked at each step
@@ -1602,7 +1701,7 @@ the class that we set.
 ** Exercise: Take the class name as a parameter
 
  #+BEGIN_SRC javascript
- setClass(event, "green");    // <-- goal
+ setClass(event, "tip");    // <-- goal
  #+END_SRC
 
  #+BEGIN_SRC javascript
@@ -1723,7 +1822,7 @@ of the attribute should be Javascript code. That's just weird.
 #+REVEAL_HTML: <div class="leftcol">
 #+BEGIN_SRC dot :file dependency-1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
 digraph G {
-  graph [nodesep=2, scale=2];
+  graph [nodesep=2];
   html [label="HTML"];
   javascript [label="Javascript"];
 
@@ -2438,7 +2537,7 @@ In this diagram on the right, A is the root node. It has two *children*, B and C
 
 We say that B and C are *siblings*, because they share the same *parent node*.
 
-D is a child of C. It is also a descendant of A.
+D is a child of C. D and C are *both* descendants of A.
 #+END_NOTES
 
 ** TODO File and directories as trees
@@ -2475,7 +2574,6 @@ digraph G {
   basel -> coursework;
   coursework -> week2;
   week2 -> day1;
-
 }
 #+END_SRC
 
@@ -2645,6 +2743,8 @@ Computers are really good at dealing with information in trees.
 You will need to develop the ability to mentally *flip* between
 thinking about the HTML as it is in the file, and thinking about
 the HTML as a tree.
+
+This just takes some practice.
 #+END_NOTES
 
 ** TODO Live DOM Viewer
