@@ -5,21 +5,59 @@
 * TODO Building a shopping list
 
 #+BEGIN_NOTES
+So far everything that we've been learning has been a bit abstract.
 
+That's OK, but it's time to put the pieces together and start
+building something more concrete, where we can see definite
+progress towards an end-goal.
+
+So we're going to build a web based shopping list, bit by bit.
+
+Along the way we'll discover new things that we need to learn,
+and incorporate that in to what we build.
 #+END_NOTES
 
 * TODO Features
 
 - Box to enter an item
 - Button to add the item to a list
+- The list itself
 - Each list item has a button to delete the item
+
+#+BEGIN_NOTES
+To start with, our app is going to be very simple.
+
+It's going to need a box where the user can type in the name of
+the item they want to add to the list. Add a button that the
+user can click in order to add the thing to the list.
+
+It's going to need to be able to show the list of things the user
+has entered.
+
+And each list item is going to need a button that allows the user
+to delete the thing from the list.
+
+At the moment we're not going to worry too much about how it
+looks, so we're going to keep styling to a minimum. We want to
+get the core functionality working properly first.
+#+END_NOTES
 
 * TODO Goal
 
-#+BEGIN_NOTES
-[Show the demo]
-#+END_NOTES
+#+BEGIN_CENTER
+[[file:initial-wireframe.png]]
+#+END_CENTER
 
+#+BEGIN_NOTES
+I used a sketch tool to throw together a quick wireframe of what
+the app would look like initially, to make it a bit more concrete.
+
+This is a very common approach -- the UI designer might come to you
+with some sketches of different ideas, asking how difficult it is to
+build their idea.
+
+[Wireframe is: https://wireframe.cc/Lfqgye]
+#+END_NOTES
 * TODO What do / don't we know?
 
 #+REVEAL_HTML: <div class="leftcol">
@@ -50,9 +88,19 @@ who can tell me things we're going to need to learn?
   - Removing DOM nodes
 #+REVEAL_HTML: </div>
 
+#+BEGIN_NOTES
+I think we're going to need to figure out
+
+- input boxes
+- buttons
+- removing DOM nodes (so we can delete items from the list)
+
+Everything else is stuff we've already done.
+#+END_NOTES
+
 * TODO Set up
 
-- Create a =shopping= directory
+- Create a =poco/shopping= directory
 - Create empty files:
   - =index.html=
   - =style.css=
@@ -70,7 +118,14 @@ Put this text in your HTML file, and make sure it works.
 There's nothing special about this -- it's just a skeleton file
 that contains all the normal structure for an HTML page.
 
-Commit these files so you've got something to start from.
+I've added comments that indicate where the things we're going
+to need to learn are going to go, and we'll fill these in through
+the class.
+
+Add all of these files to your repository and make a commit
+with a sensible commit message.
+
+[Wait]
 #+END_NOTES
 
 * TODO Input boxes
@@ -111,9 +166,21 @@ you're reading, as I'll be asking questions in about 10 minutes...
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+RESULTS: input-example
+#+RESULTS[7c0c47a9b351fbd177ba3deda8826d7d3733ff60]: input-example
 [[file:input-example.png]]
 #+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+We use the =input= element, generally, to get input from the
+user.
+
+This element has a =type= attribute that is used to say exactly
+what form the input should take. When we want to get a line of
+text we set the =type= attribute to =text=, but there are others.
+
+For example, if we set =type= to password then the text the user
+typed in would automatically be hidden.
+#+END_NOTES
 
 *** What property contains the typed in value?
 
@@ -125,6 +192,11 @@ you're reading, as I'll be asking questions in about 10 minutes...
 let el = document.getElementById("an-input");
 el.value
 #+END_SRC
+
+#+BEGIN_NOTES
+The =input= element has a property called =value=. This property
+contains whatever text is in the element.
+#+END_NOTES
 
 *** How do you set a placeholder value?
 
@@ -138,9 +210,15 @@ el.value
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+RESULTS: input-placeholder-example
+#+RESULTS[d9899abd0468e79cd8a8a2d7e572f08d27a398eb]: input-placeholder-example
 [[file:input-placeholder-example.png]]
 #+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Simply enough -- there is a =placeholder= attribute. It's
+value is used as the text to display in the input box if
+the user hasn't entered anything.
+#+END_NOTES
 
 *** What is the =label= element used for?
 
@@ -158,10 +236,23 @@ el.value
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+RESULTS: input-label-example
+#+RESULTS[51c3c50c098813ac2911a013d14aebcc6fb504ab]: input-label-example
 [[file:input-label-example.png]]
 #+REVEAL_HTML: </div>
 
+#+BEGIN_NOTES
+The =label= element lets us associated a label with this specific
+input element.
+
+We could have used a =p=, but the =label= has a special attribute
+that allows us to say exactly which input element the label is for.
+
+If our input element has an =id= attribute, we set the label's
+=for= attribute to the same value. Now, if the user clicks the
+label the cursor will move in to the input element. And if they
+have accessibility issues -- maybe they're using a screenreader --
+then their tools will be able do a better job.
+#+END_NOTES
 
 ** Add =label= and =input= elements
 
@@ -170,6 +261,7 @@ el.value
 
 - Edit =shopping.html=
 - Add these elements to the page
+- Don't forget to add and commit
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -185,7 +277,14 @@ el.value
 
 #+REVEAL_HTML: </div>
 
-** Checking that we can read the value
+#+BEGIN_NOTES
+So, now that we know all of that you can go ahead and add these
+elements to your page. Here's the HTML to use, just as a
+reminder.
+
+When it's working don't forget to add and commit the change.
+#+END_NOTES
+** Checking that we can read the value                             :exercise:
 
 - Type something in the box
 
@@ -197,26 +296,42 @@ el.value
 - Do you see what you typed?
 
 #+BEGIN_NOTES
-The input widget has a =value= property that contains whatever
-is entered in to the box.
+We already saw that the input widget has a =value= property that
+contains whatever is entered in to the box.
 
 We're going to need this information later.
+
+So lets make sure that our understanding is correct.
+
+Load the page in your browser, and open the developer tools.
+
+Then type something -- it doesn't matter what -- in to input
+box.
+
+Then, in the console, type this Javascript. All this does is
+find the =input= element in the page and display its =value=
+property.
+
+If everything's working then you should see what you typed in
+to the box in the console.
+
+[Wait]
 #+END_NOTES
-** Can we write the value?
+** Can we write the value?                                         :exercise:
 
 #+BEGIN_SRC javascript
 el.value = 'hello';  // <-- What happens?
 #+END_SRC
 
 #+BEGIN_NOTES
-Try this out. What happens?
+Try this out in the console. What happens?
 
 [Wait]
 
 That's cool -- we can change the value in the box by writing
 to the property.
 #+END_NOTES
-* TODO Buttons
+* TODO Buttons                                                     :exercise:
 
 - MDN documentation: [[[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button][mdn html button]]]
 - Questions:
@@ -250,9 +365,17 @@ be asking questions again in about 10 minutes...
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+RESULTS: button-example
+#+RESULTS[16d52427a726393a450c01eb6c3f4dab10dcc94f]: button-example
 [[file:button-example.png]]
+
 #+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Creating buttons is pretty easy. We just use the =button= element,
+without any special attributes.
+
+The content of the element becomes the text shown on the button.
+#+END_NOTES
 
 *** Can we make the buttons look pretty?
 
@@ -283,15 +406,36 @@ be asking questions again in about 10 minutes...
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+RESULTS: button-style-example
+#+RESULTS[fa4fa39c37eb9a955e44abfb77dc0627fad23741]: button-style-example
 [[file:button-style-example.png]]
+
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 Yes we can. There are lots of opportunities for styling buttons.
+
+This is a somewhat extreme example.
 #+END_NOTES
 
-* TODO Responding to button clicks
+** Add a =button= element to your page                             :exercise:
+
+- Add a =button= element after the =input= element
+  - Inside the =div=
+- Make sure it shows up
+- Add and commit
+
+#+BEGIN_NOTES
+So lets add that =button= element to the page. Place it after
+the =input= element, and inside the =div=.
+
+The text on the button can be anything you want.
+
+Once you've done that and it's showing up, add and commit.
+
+[Wait]
+#+END_NOTES
+
+* TODO Responding to button clicks                                 :exercise:
 
 - Use an event listener, exactly as before
 
@@ -302,6 +446,11 @@ Yes we can. There are lots of opportunities for styling buttons.
 #+END_SRC
 
 #+BEGIN_NOTES
+Our button is on the page, but it's not doing anything yet.
+
+We need to write some Javascript that will run when the button is
+clicked that will do something.
+
 To listen for button clicks we use an event listener exactly as we've
 done in the past.
 
@@ -312,6 +461,9 @@ For now, make sure that =shopping.html= is loaded, open the console,
 type this, and click the button a few times to make sure it works.
 
 [Wait]
+
+Does everyone see how this works? Did you get the message in the
+console when the button was clicked?
 
 #+END_NOTES
 
@@ -718,7 +870,7 @@ list item as soon as we're done with them.
 This is also a perfectly fine way to do things.
 #+END_NOTES
 
-* TODO Adding listitems when the button is clicked
+* TODO Adding list items when the button is clicked
 
 - Reminder: This is our current click listener
 
