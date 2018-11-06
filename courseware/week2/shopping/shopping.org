@@ -1576,6 +1576,7 @@ result.
 #+END_NOTES
 
 ** Comparison operators, strings
+#+NAME: string-comparison-operators
 #+BEGIN_SRC javascript
 let c = 'This is a string';
 let d = 'This is also a string';
@@ -1921,7 +1922,7 @@ Do this search to read up on how to do it.
 #+BEGIN_NOTES
 [Wait]
 #+END_NOTES
-** Solution: Clear the input widget
+** Solution: Give the input widget the focus
 
 #+BEGIN_SRC javascript
   document.addEventListener('DOMContentLoaded', function(event) {
@@ -1935,6 +1936,7 @@ Do this search to read up on how to do it.
       // Existing code that adds to the list
     });
 
+    let inputBox = document.getElementById('item');
     inputBox.focus();
   });
 #+END_SRC
@@ -1962,9 +1964,168 @@ had loaded as well.
 #+END_NOTES
 
 ** Add and commit the changes
+
+* A quick refactoring
+
+#+INCLUDE: "shopping-3.js" :lines "26-45" src javascript
+
+#+BEGIN_NOTES
+This is my code at this point (just for the event listeners, this
+isn't the code that creates the list item).
+
+Your code should look similar. I've used method chaining, you might
+not have, but the general structure of the code should be the same.
+
+I'm going to do a quick refactoring of this.
+
+I don't like that the input widget has to be found three different
+times. It clutters up the code a bit, and makes it a little harder
+to focus on what's going on.
+
+And the shopping list also has to found twice, so lets remove that
+duplication.
+
+It also gives me the chance to explain *scope* to you, so let's do
+that.
+#+END_NOTES
+
+** Refactored: variables at higher scopes
+
+#+INCLUDE: "shopping-4.js" :lines "26-47" src javascript -n
+
+#+BEGIN_NOTES
+This is the refactored code.
+
+On lines two and three I declare and initialise two variables, one
+for the inputBox, one for the shopping list.
+
+THen I use these throughout the rest of function.
+
+So lets talk about *scope* for a second.
+
+When we declare variables in Javascript we say that they have a
+*scope* (you might also hear the word *visibility* used).
+
+Very roughly, Javascript uses these curly brackets to indicate where
+scopes start and end.
+
+And because we can have curly bracket sections inside curly bracket
+sections, we say that they are nested inside each other.
+
+This is very similar to the way that HTML elements are nested inside
+one another.
+
+You can think of this as creating different *levels* of scope. Each
+new curly bracket pair in the nested set increases the scope level by
+one.
+
+The rule is that a variable is visible in its scope, and any scopes
+that are nested inside it.
+
+I'll use this code to explain, and then we'll do a couple more examples.
+
+At the very top level is the outermost, or *global* scope. Anything at
+this scope is visible to everything else.
+
+In this code example we don't have any variables at the global scope.
+
+Line 1 introduces a curly bracket, so we know a new scope has been
+created. Let's call this the L1 scope.
+
+We define two variables in the L1 scope.
+
+Line 5 uses the =inputBox= variable. We're in L2 scope and the
+variable was defined in L1, so this is fine.
+
+Line 5 also introduces a curly bracket, so everything from there on in
+is at L2 scope.
+
+Line 6 has another one -- the if() body -- so L3 scope starts there.
+That uses =shoppingList= and =inputBox=, both L1 scope, so visible.
+
+Line 9 has a closing curly brace, so we jump up one scope level, and
+we're back to L2 scope.
+
+Lines 13 through 18 are very similar. Importantly, when the L2 scope
+is created in line 13, and the L3 scope in line 14, these are
+*different* from the L2 and L3 scopes from earlier
+
+This is one of the reasons why we're careful to indent code -- the
+indentation also helps to show the scopes, and prevent mistakes.
+#+END_NOTES
+
+** Refactored: variables at higher scopes
+
+#+INCLUDE: "scope.html" src javascript -n
+
+#+BEGIN_NOTES
+Here's a somewhat contrived example that maybe helps.
+
+In our script element we start in global scope. That's where
+the =a= variable is defined, so it's in global scope.
+
+Our =scope= function creates an L1 scope. The =b= and =c=
+variables are in this scope.
+
+The =if= statement creates an L2 scope. Crucially, inside
+this scope we create a new =c= variable. This means that that
+=c= variable from line 6 is temporarily hidden, and replaced with
+this new =c= variable.
+
+We exit the L2 scope on line 12, back to the L1 scope.
+
+The log on line 14 shows the *original* version of =c=, not the
+one from line 10.
+
+Finally, the log statement on line 17 generates an error. We're
+back in global scope here, and =b= was defined in an L1 scope,
+so it's not visible.
+
+Is that -- somewhat -- clear?
+#+END_NOTES
+
+** Quick note on the backticks, =`=
+   :PROPERTIES:
+   :TOPICS:   backticks
+   :END:
+
+#+BEGIN_SRC javascript
+let a = '[a:g]';
+let b = '[b:1]';
+let c = '[c:1]';
+
+console.log(a + ' ' + b + ' ' + c); // "[a:g] [b:1] [c:1]"
+console.log(`${a} ${b} ${c}`);      // "[a:g] [b:1] [c:1]"
+#+END_SRC
+
+#+BEGIN_NOTES
+When you want to include a variable's value in a string we've
+been doing string concatenation with the plus sign, as in the first
+example.
+
+If you use backticks, as in the second example, you can put the
+value of the variable in the string by using this syntax with a
+dollar sign, an opening curly, the name of the variabe, and a
+closign curly.
+
+As you can see, it can be quite a bit easier to read.
+#+END_NOTES
+
 * Prevent empty items from being added
 - Pressing Enter or clicking the button adds an item
   - Even if it's the empty string
+
+#+BEGIN_NOTES
+Now that we're refactored the code slightly lets move on to the
+next problem -- prevening empty items from being added.
+
+This is the current problem.
+
+How should we solve it?
+
+[Wait]
+#+END_NOTES
+
 ** Rules
 - If the input widget is empty
   - Pressing =Enter= in the input widget should do nothing
@@ -1972,6 +2133,264 @@ had loaded as well.
 ** Multiple parts to this problem
 - How do we say that input is required?
 - How do we disable the button?
+
+* Using =if= to require input                                      :exercise:
+
+#+INCLUDE: "shopping-4.js" :lines "26-47" src javascript -n
+
+#+BEGIN_NOTES
+Here's our code again.
+
+We already use an =if= statement here (line 12) to check to see
+if the value of the =event.key= property is correct.
+
+How can we use extra =if= statements to see if the =inputBox=
+=value= is not the empty string?
+
+[Wait]
+#+END_NOTES
+
+** (hint) Which comparison operator to use?
+
+#+BEGIN_SRC javascript :noweb yes
+<<string-comparison-operators>>
+#+END_SRC
+
+** Solution: Using =if= to require input
+
+#+BEGIN_SRC javascript
+if (inputBox.value !== '') {
+  // Code to add the listitem goes here
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+We can wrap our code in this =if= statement. The code inside the
+body of the =if= will only run if =inputBox.value= is not the empty
+string.
+
+If you haven't already done that, do that, and make sure it works.
+
+[Wait]
+#+END_NOTES
+
+** Solution: Using =if= to require input
+
+#+INCLUDE: "shopping-5.js" :lines "26-49" src javascript -n
+
+#+BEGIN_NOTES
+Here's the new code, with the additional =if= statements starting
+on line 6 and 14.
+
+Everyone OK with this change? It makes sense?
+
+[Wait]
+
+OK, so add this change to your file, and commit as normal.
+
+[Wait]
+
+Now that we've done that, there's a problem with this code.
+Can anyone tell me what it is?
+#+END_NOTES
+
+** Problem: Only looks at empty strings
+
+#+BEGIN_SRC javascript
+if (inputBox.value !== '') {
+  // Code goes here
+}
+#+END_SRC
+
+- Only looks at completely empty strings
+- What if the user has typed in one space?
+- Or three spaces? Or 15?
+
+#+BEGIN_NOTES
+This is a very specific check -- it only looks to see if the string
+is completely empty.
+
+If the user has typed in a space, or lots of spaces, the string
+will no longer be empty.
+
+So the test will pass and the user will have entered what looks like
+an empty shopping list item. We'll know it's not really empty, but
+it still looks like a problem to them.
+
+So we'll have to fix that.
+#+END_NOTES
+
+** Dealing with whitespace                                         :exercise:
+
+- [[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String][MDN string]]]
+- Review the available string methods
+- Are there any that deal with whitespace?
+
+#+BEGIN_NOTES
+Lets see if we can figure out how to deal with this.
+
+Find the MDN documentation for strings by doing this search.
+
+On that page you'll see long section called "Methods". Review that
+section, looking for methods that deal with whitespace.
+
+Are there any methods that would let us deal with potential whitespace
+in the string?
+#+END_NOTES
+
+** The =trim= method                                               :exercise:
+
+#+BEGIN_QUOTE
+Trims whitespace from the beginning and end of the string.
+#+END_QUOTE
+
+#+BEGIN_NOTES
+In case it's not clear, 'trim' means remove.
+
+So this takes the string, and removes any whitespace that appears
+at the beginning or end of the string
+
+On the general string page is a link to the more detailed page for
+the =trim= method. Follow that link (the top of the page should say
+"String.prototype.trim()". There you'll see some more examples and
+a console you can play around with.
+
+Use that to get familiar with the method, then figure out what we
+should change in our code to use it to make the check work properly.
+
+Make that change to your code, and check that empty items aren't being
+added to the list any more.
+
+[Wait]
+#+END_NOTES
+
+** Solution: Using =if= and =trim= to require input
+
+#+INCLUDE: "shopping-6.js" :lines "26-49" src javascript -n
+
+#+BEGIN_NOTES
+Here's what I came up with.
+
+I use =trim()= in both of the =if= expressions so that the input
+string is trimmed of all whitespace.
+
+That's here on line 6 and on line 14.
+
+But I also make sure that the input is trimmed when it's added to
+the list, here on line 7 and on line 16. That's probably worth a
+refactor later, but it will do for the moment.
+
+Everyone OK with this so far?
+
+[Wait]
+#+END_NOTES
+
+** Add and commit the changes
+
+* Disabling the button                                             :exercise:
+
+- [[[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button][MDN button disable]]]
+
+#+BEGIN_NOTES
+With this change in place pressing the Enter key or clicking the
+button won't do anything while the input box is empty or only
+contains whitespace.
+
+This is good, but we can go a step further.
+
+At the moment the button still looks active when there's nothing
+that can be added.
+
+This is a visual clue to the user the button can be clicked, so
+they're going to be surprised when clicking the button does
+nothing.
+
+You know the drill by now -- go and look for an MDN article that
+mentions =button= and =disable=, and see if you can figure out
+how to mark a button as being disabled.
+
+[Wait]
+#+END_NOTES
+
+** Solution: Disabling the button                                  :exercise:
+
+#+BEGIN_SRC javascript
+let button = document.querySelector('button');
+button.disabled = true;  // Disable the button
+button.disabled = false; // Enable the button
+#+END_SRC
+
+#+BEGIN_NOTES
+Buttons have a =disabled= value that can be set. When it's
+=true= the button appears to be disabled.
+
+When it's set to =false= the button is enabled again.
+
+Load your shopping list page in to the browser, and open the console.
+
+Try these commands. Notice what happens visually to the button when
+you disable it. Try clicking on it when it's disabled and see what
+it does.
+
+Then enable it, watch the visuals change, and try clicking on it
+again.
+
+[Wait]
+#+END_NOTES
+
+** Where should we put this code?
+
+#+INCLUDE: "shopping-6.js" :lines "26-49" src javascript -n
+
+#+BEGIN_NOTES
+Now that we know how to disable the button, we need to think about
+where the code should go.
+
+Here's my current code again. Where in this should we put the code
+that's going to control if the button is enabled or disabled?
+
+[Wait]
+
+We need to control the button's visibility every time the user
+presses a key.
+
+There are two possibilities -- either the input is empty, or its
+not.
+
+If it's empty we should disable the button, and if it's not empty
+we should enable the button.
+
+We already have one =if= block for if the input is not empty. So
+we can add new code there.
+
+We'll need another =if= block for the case where the input is not
+empty.
+
+And we need to find the button.
+
+So go ahead and add code here, immediately after my line 14 that
+enables the button.
+
+And add another =if= statement after line 19 that disables the
+button if the input is empty.
+
+And you'll need a variable for the button.
+#+END_NOTES
+
+** Solution: Disabling the button
+
+#+INCLUDE: "shopping-7.js" :lines "26-30" src javascript -n
+
+** Solution: Disabling the button
+
+#+INCLUDE: "shopping-7.js" :lines "31-39" src javascript -n
+
+** Solution: Disabling the button
+
+#+INCLUDE: "shopping-7.js" :lines "40-56" src javascript -n
+
+* Refactoring
+** Returning early from a function
 * TODO UI followup work
 - Styling input elements
 - Adding a fieldset and legend

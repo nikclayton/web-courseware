@@ -1,0 +1,18 @@
+<script>
+  let a = '[a:g]';              // <-- global scope
+
+  function scope() {            // <-- L1 scope starts
+    let b = '[b:1]';            //     visible in L1 and below
+    let c = '[c:1]';            //     visible in L1 and below
+    console.log(`${a} ${b} ${c}`); //  "[a:g] [b:1] [c:1]"
+
+    if (true) {                 // <-- L2 scope starts
+      let c = '[c:2]';          //     This is a *different* c
+      console.log(`${b} ${c}`); //     "[b:1] [c:2]"
+    }                           // <-- L2 scope ends, back to L1
+
+    console.log(`${b} ${c}`);   //     "[b:1] [c:1]"
+  }                             // <-- L1 scope ends, back to global
+  scope();
+  console.log(b);               // Error: b is not defined
+</script>
