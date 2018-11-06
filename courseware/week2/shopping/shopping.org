@@ -330,7 +330,11 @@ Try this out in the console. What happens?
 
 That's cool -- we can change the value in the box by writing
 to the property.
+
+This is just like changing the value of the =className= property
+to change the =class= attribute value that we did earlier.
 #+END_NOTES
+
 * TODO Buttons                                                     :exercise:
 
 - MDN documentation: [[[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button][mdn html button]]]
@@ -435,14 +439,64 @@ Once you've done that and it's showing up, add and commit.
 [Wait]
 #+END_NOTES
 
+*** Solution: Add a =button= element
+
+  #+REVEAL_HTML: <div class="leftcol">
+  #+INCLUDE: "shopping-3.html" :lines "11-19" src html -n 11
+  #+REVEAL_HTML: </div>
+
+  #+REVEAL_HTML: <div class="rightcol">
+  #+BEGIN_SRC html-chrome :exports results
+      <div>
+	<label for="item">Enter a new item:</label>
+	<input type="text" id="item" placeholder="Type something to buy">
+	<button>Add item</button>
+      </div>
+  #+END_SRC
+
+  #+RESULTS[fa65ef25afcb970a28ca6144c0c8bbe9cbf8a9e8]:
+  [[file:solution-add-a-button-element.png]]
+
+  #+REVEAL_HTML: </div>
+
+ #+BEGIN_NOTES
+ So lets add that =button= element to the page. Place it after
+ the =input= element, and inside the =div=.
+
+ The text on the button can be anything you want.
+
+ Once you've done that and it's showing up, add and commit.
+
+ [Wait]
+ #+END_NOTES
+
+* Widgets / controls
+  :PROPERTIES:
+  :TOPICS:   widget
+  :END:
+
+#+BEGIN_NOTES
+The general term for things like the input box, buttons, and
+other things that you can add to forms -- like checkboxes, drop-down
+lists, radio buttons, and more -- is a *widget*. The term *control*
+is also used.
+
+So you might hear me talk about the *input widget* or the *input
+control*, or the *button widget*.
+
+You'll see these terms come up a lot in documentation as well.
+#+END_NOTES
+
 * TODO Responding to button clicks                                 :exercise:
 
 - Use an event listener, exactly as before
 
 #+BEGIN_SRC javascript
+document.addEventListener('DOMContentLoaded', function(event) {
   document.querySelector('button').addEventListener('click', function(event) {
       console.log('The button was clicked');
   });
+});
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -464,7 +518,6 @@ type this, and click the button a few times to make sure it works.
 
 Does everyone see how this works? Did you get the message in the
 console when the button was clicked?
-
 #+END_NOTES
 
 *** =querySelector()=
@@ -549,104 +602,21 @@ And on line 11 this selector finds the second =li= element of the
 first =ul= element. And then retrieve's its =innerText= property.
 #+END_NOTES
 
-** Add a =button= element
+* Log the value in the input box                                   :exercise:
 
-#+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "shopping-3.html" :lines "11-19" src html -n 11
-
-- Edit =shopping.html=
-- Add the =button= element to the page
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC html-chrome :exports results
-    <div>
-      <label for="item">Enter a new item:</label>
-      <input type="text" id="item" placeholder="Type something to buy">
-      <button>Add item</button>
-    </div>
-#+END_SRC
-
-#+RESULTS:
-[[file:add-a-button-element.png]]
-#+REVEAL_HTML: </div>
-
-** Widgets / controls
-   :PROPERTIES:
-   :TOPICS:   widget
-   :END:
+- Modify the click listener
+  - Retrieve the input widget's value
+  - Log it using =console.log=
 
 #+BEGIN_NOTES
-The general term for things like the input box, buttons, and
-other things that you can add to forms -- like checkboxes, drop-down
-lists, radio buttons, and more -- is a *widget*. The term *control*
-is also used.
-
-So you might hear me talk about the *input widget* or the *input
-control*.
-#+END_NOTES
-** Listen for clicks on the button
-
-- Quick check to make sure things work
-  - Listen for =click= events on the button
-  - Log the value of the input widget
-    - =console.log(value);=
-#+BEGIN_NOTES
-Now that our HTML is starting to take shape we can write some
-code to check that we can listen for clicks and extract the
-value from the input widget.
-
 We can use =console.log= to verify that we've got the value
 correctly before moving on to the next part of the problem.
 #+END_NOTES
 
-*** Reminder: =DOMContentLoaded=
-
-- We add handlers when the =DOMContentLoaded= event has fired
+** Solution: Button click listener
 
 #+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    // Our button listener code goes here.
-  });
-#+END_SRC
-
-*** Exercise: Button click listener
-- Add a =click= listener to the button
-- In the listener:
-  - Retrieve the input widget's value
-  - Log it using =console.log=
-
-#+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    // Our button listener code goes here.
-  });
-#+END_SRC
-
-*** Hint: Button click listener
-
-- Add a =click= listener to the button
-- In the listener:
-  - Retrieve the input widget's value
-  - Log it using =console.log=
-
-#+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      // Find the input widget
-
-      // Use 'console.log() to log its 'value' property
-    });
-  });
-#+END_SRC
-
-*** Solution: Button click listener
-
-- Add a =click= listener to the button
-- In the listener:
-  - Retrieve the input widget's value
-  - Log it using =console.log=
-
-#+BEGIN_SRC javascript
+  // With a variable.
   document.addEventListener('DOMContentLoaded', function(event) {
     document.querySelector('button').addEventListener('click', function(event) {
       let inputBox = document.queryElementById('item');
@@ -654,6 +624,17 @@ correctly before moving on to the next part of the problem.
     });
   });
 #+END_SRC
+
+#+BEGIN_SRC javascript
+  // With chaining.
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      console.log(document.queryElementById('item').value);
+    });
+  });
+#+END_SRC
+
+* Break
 
 * TODO Adding list items
 
@@ -668,23 +649,35 @@ correctly before moving on to the next part of the problem.
 #+END_SRC
 
 #+BEGIN_NOTES
-TODO:
+Now that we can do something when the user clicks the button, and
+we can see what text they added, we need to figure out how we're
+going to add an item to the list.
 
-Have the empty =ul= element.
+In our HTML file our list starts out like the example at the top.
+It's just the =ul= element with no children.
 
-We need to write a function that can take whatever's in the =input=,
-create a new =li=, create a =span=, set the text of the =span=,
-add a button.
+What we want is to create a new entry in the list for each item.
+Each entry is going to need to contain the text that the user
+typed in, and a button to delete the item from the list.
+
+In other words, it's going to look like the HTML at the bottom.
+Except "Eggs" is going to be replaced by whatever the user typed in.
+
+This means we need to write a function that can take whatever's in the
+=input=, create a new =li=, create a =span=, set the text of the
+=span=, add a button.
 
 Before we do that, let's make sure that our understanding of what
-the DOM tree for this is going to look like.
+the DOM tree for this is going to look like is correct.
 #+END_NOTES
 
-** List item graph
+** List item graph                                                 :exercise:
 
 #+BEGIN_SRC html
 <li><span>Eggs</span> <button>Delete</button></li>
 #+END_SRC
+
+- Draw the DOM tree for this HTML
 
 #+BEGIN_NOTES
 This is what we're going to add to the =ul= element every time
@@ -710,9 +703,9 @@ digraph G {
   li -> button
 
   span -> span_content;
-  span_content [label="#t: Eggs"];
+  span_content [label="#t: Eggs" shape=none];
   button -> button_content;
-  button_content [label="#t: Delete"];
+  button_content [label="#t: Delete" shape=none];
 }
 #+END_SRC
 
@@ -870,9 +863,11 @@ list item as soon as we're done with them.
 This is also a perfectly fine way to do things.
 #+END_NOTES
 
-* TODO Adding list items when the button is clicked
+* TODO Adding list items when the button is clicked                :exercise:
 
-- Reminder: This is our current click listener
+#+BEGIN_CENTER
+This is our current click listener
+#+END_CENTER
 
 #+BEGIN_SRC javascript
   document.addEventListener('DOMContentLoaded', function(event) {
@@ -882,27 +877,15 @@ This is also a perfectly fine way to do things.
     });
   });
 #+END_SRC
+
+- Call =createNewListItem= to generate the =li= node
+- Find the =ul= element and use =appendChild= to add the =li= node
 
 #+BEGIN_NOTES
 This is the click listener that we wrote earlier. Yours might have
 slightly different variable names, but it should work -- when the
 button is clicked it should log whatever is in the input widget.
-#+END_NOTES
 
-** TODO Adding listitems when the button is clicked
-#+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      let inputBox = document.queryElementById('item');
-      console.log(inputBox.value);
-    });
-  });
-#+END_SRC
-
-- =createNewListItem= returns a =li= element node
-- Find the =ul= element, and use =appendChild= to add the =li= node
-
-#+BEGIN_NOTES
 Modify this =click= listener so that it calls =createNewListItem=
 with the input widget's value to create the new =li= element.
 
@@ -913,11 +896,22 @@ Then find the =ul= element and use =appendChild= to add the =li= node.
 
 *** TODO Solution: Adding list items when the button is clicked
 #+BEGIN_SRC javascript
+  // Variables
   document.addEventListener('DOMContentLoaded', function(event) {
     document.querySelector('button').addEventListener('click', function(event) {
-      let inputBox = document.queryElementById('item');
+      let inputBox = document.getElementById('item');
       let li = createNewListItem(inputBox.value);
       document.querySelector('ul').appendChild(li);
+    });
+  });
+#+END_SRC
+
+#+BEGIN_SRC javascript
+  // Chaining
+  document.addEventListener('DOMContentLoaded', function(event) {
+    document.querySelector('button').addEventListener('click', function(event) {
+      document.querySelector('ul').appendChild(
+        createNewListItem(document.getElementById('item').value));
     });
   });
 #+END_SRC
@@ -934,10 +928,14 @@ On the next line we find the =ul= element and append our new =li=
 element to the end.
 
 [Questions?]
+
+This alternative version here does the same thing, but chains
+things together instead of using intermediate variables.
 #+END_NOTES
+
 * TODO The =Delete= button
 
-#+BEGIN_SRC javascript :noweb yes -n
+#+BEGIN_SRC javascript -n :noweb yes
 <<createNewListItemNoDelete>>
 #+END_SRC
 
@@ -950,17 +948,20 @@ from the DOM tree.
 
 This is the code that I wrote that creates and returns a new list
 item. We talked about this code a few slides back -- your code
-might look slightly different.
+might look slightly different, but the end result is the same.
 
 The important bit for the delete button is finding the place in
-the code where the button is created. In my code that's right here.
+the code where the button is created. In my code that's right here,
+lines 7 and 8.
 
 Go ahead and find that spot in your code.
 
 Because we're going to make a change right there.
+
+Let me know when you've found your equivalent code.
 #+END_NOTES
 
-** TODO Exercise: Checking we can detect the click
+** TODO Exercise: Checking we can detect the click                 :exercise:
 
 #+BEGIN_SRC javascript
 function createNewListItem(itemName) {
@@ -997,11 +998,16 @@ code might create the elements in a slightly different order, but
 as long as you create the handler after the button is created you'll
 be OK.
 
+This click listener is going to be just like the one we made for the
+"Add Item" button a while back -- it does has to listen for the
+=click= event and use =console.log= to send a message to the console.
+
 [Wait]
 #+END_NOTES
+
 ** TODO Solution: Checking we can detect the click
 #+NAME: createNewListItemLogClick
-#+BEGIN_SRC javascript
+#+BEGIN_SRC javascript -n
   function createNewListItem(itemName) {
     let listItem = document.createElement('li');
 
@@ -1029,8 +1035,11 @@ done before.
 I add an event listener for the =click= event to the delete
 button, and when it's clicked I used =console.log= to confirm
 that the listener was working.
+
+That's the new code on lines 10, 11, and 12. Everything else is
+the same.
 #+END_NOTES
-** TODO Removing DOM nodes
+** TODO Removing DOM nodes                                         :exercise:
    :PROPERTIES:
    :REQUIREMENTS: dom
    :TOPICS:   dom-remove
@@ -1039,19 +1048,19 @@ that the listener was working.
  - [[[https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove][MDN remove element]]] / [[[https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove][MDN delete element]]]
 
 #+BEGIN_NOTES
-Now that we know we can detect the click run an event listener
-we need to find out how we delete the current list item from
-the tree.
+Now that we know we can detect the click and run an event listener we
+need to find out how we delete the current list item from the tree.
 
 For that we can use the documentation again. Try one of these
 searches in Google, and read the documentation that comes up.
 
-See if you can figure out what one line of code we need to write
+See if you can figure out what *one line of code* we need to write
 in the click event listener to delete the listitem when the
 button is clicked.
 
 [Wait]
 #+END_NOTES
+
 ** Solution: Removing DOM nodes
 #+BEGIN_SRC javascript
 element.remove();
@@ -1092,10 +1101,10 @@ and "Bread", like this.
 
    span1 [label="span"];
    span1 -> span_content1;
-   span_content1 [label="#t: Eggs"];
+   span_content1 [label="#t: Eggs" shape=none];
    button1 [label="button"];
    button1 -> button_content1;
-   button_content1 [label="#t: Delete"];
+   button_content1 [label="#t: Delete" shape=none];
 
    li2 [label="li"];
    li2 -> span2
@@ -1103,10 +1112,10 @@ and "Bread", like this.
 
    span2 [label="span"];
    span2 -> span_content2;
-   span_content2 [label="#t: Milk"];
+   span_content2 [label="#t: Milk" shape=none];
    button2 [label="button"];
    button2 -> button_content2;
-   button_content2 [label="#t: Delete"];
+   button_content2 [label="#t: Delete" shape=none];
 
    li3 [label="li"];
    li3 -> span3
@@ -1114,10 +1123,10 @@ and "Bread", like this.
 
    span3 [label="span"];
    span3 -> span_content3;
-   span_content3 [label="#t: Bread"];
+   span_content3 [label="#t: Bread" shape=none];
    button3 [label="button"];
    button3 -> button_content3;
-   button_content3 [label="#t: Delete"];
+   button_content3 [label="#t: Delete" shape=none];
  }
  #+END_SRC
 
@@ -1149,10 +1158,10 @@ let secondLi = document.querySelector('li:nth-child(2)');
 
    span1 [label="span"];
    span1 -> span_content1;
-   span_content1 [label="#t: Eggs"];
+   span_content1 [label="#t: Eggs" shape=none];
    button1 [label="button"];
    button1 -> button_content1;
-   button_content1 [label="#t: Delete"];
+   button_content1 [label="#t: Delete" shape=none];
 
    subgraph cluster_li2 {
      li2 [label="li"];
@@ -1162,10 +1171,10 @@ let secondLi = document.querySelector('li:nth-child(2)');
 
    span2 [label="span"];
    span2 -> span_content2;
-   span_content2 [label="#t: Milk"];
+   span_content2 [label="#t: Milk" shape=none];
    button2 [label="button"];
    button2 -> button_content2;
-   button_content2 [label="#t: Delete"];
+   button_content2 [label="#t: Delete" shape=none];
 
    li3 [label="li"];
    li3 -> span3
@@ -1173,10 +1182,10 @@ let secondLi = document.querySelector('li:nth-child(2)');
 
    span3 [label="span"];
    span3 -> span_content3;
-   span_content3 [label="#t: Bread"];
+   span_content3 [label="#t: Bread" shape=none];
    button3 [label="button"];
    button3 -> button_content3;
-   button_content3 [label="#t: Delete"];
+   button_content3 [label="#t: Delete" shape=none];
  }
  #+END_SRC
 
@@ -1204,10 +1213,10 @@ secondLi.remove();
 
    span1 [label="span"];
    span1 -> span_content1;
-   span_content1 [label="#t: Eggs"];
+   span_content1 [label="#t: Eggs" shape=none];
    button1 [label="button"];
    button1 -> button_content1;
-   button_content1 [label="#t: Delete"];
+   button_content1 [label="#t: Delete" shape=none];
 
    li2 [label="li" style=invis];
 
@@ -1216,10 +1225,10 @@ secondLi.remove();
 
    span2 [label="span" style=invis];
    span2 -> span_content2 [style=invis];
-   span_content2 [label="#t: Milk" style=invis];
+   span_content2 [label="#t: Milk" style=invis shape=none];
    button2 [label="button" style=invis];
    button2 -> button_content2 [style=invis];
-   button_content2 [label="#t: Delete" style=invis];
+   button_content2 [label="#t: Delete" style=invis shape=none];
 
    li3 [label="li"];
    li3 -> span3
@@ -1227,10 +1236,10 @@ secondLi.remove();
 
    span3 [label="span"];
    span3 -> span_content3;
-   span_content3 [label="#t: Bread"];
+   span_content3 [label="#t: Bread" shape=none];
    button3 [label="button"];
    button3 -> button_content3;
-   button_content3 [label="#t: Delete"];
+   button_content3 [label="#t: Delete" shape=none];
  }
  #+END_SRC
 
@@ -1238,7 +1247,7 @@ secondLi.remove();
  [[file:list-item-graph4.svg]]
 
 
-*** TODO Exercise: Remove the listitem when the delete button is clicked
+*** TODO Exercise: Remove the listitem when the delete button is clicked :exercise:
 
 #+BEGIN_SRC javascript :noweb yes
 <<createNewListItemLogClick>>
@@ -1298,40 +1307,125 @@ Here we simply call the =remove= method on the =listItem=.
 - Clear the input widget after adding an item
 - Setting the input focus
 - Prevent empty items from being added
+
+#+BEGIN_NOTES
+So, there's good news and bad news.
+
+The good news is that our CEO is very happy with our work, and
+thinks that our shopping list app could make a fortune.
+
+The bad news is that we've done some user experience tests with
+early adopters, and they've identified a number of things that
+they'd like us to change about the app.
+
+They are:
+
+- At the moment they have to click the button to add an item. They'd
+  like to press the Enter key as well
+
+- After they've added an item it's still in the input widget. So they
+  have to delete whatever they typed in last before entering a new
+  item
+
+- Some of them use the keyboard a lot, and they keep having to use
+  the mouse to click in the input box before they can type there
+
+- It's really easy to add empty items to the list
+
+Lets get on and fix those problems.
+#+END_NOTES
 * Press ENTER to add an item
 - Need to click the button to add the item
 - Natural to press ENTER to add to the list
 - How?
 
-** MDN key events
-** TODO =keyup= event
+** MDN key events                                                  :exercise:
 
-- Run through the docs, highlight param and event options
-** TODO The =event= parameter
+- Search MDN for information about keyboard events
+- Look for information about keys being released
+
+#+BEGIN_NOTES
+Given the events we've been dealing with so far, you're probably not
+surprised to know that events also fire when the user presses and
+releases keys.
+
+Search MDN for information about keyboard events, look particularly
+for anything that can tell you when a key has been released by
+the user.
+
+[Wait]
+
+What did you find?
+#+END_NOTES
+
+** TODO =keyup= event properties
+
+#+BEGIN_CENTER
+[[https://developer.mozilla.org/en-US/docs/Web/Events/keyup]]
+#+END_CENTER
+
 #+BEGIN_SRC javascript
 document.addEventListener('DOMContentLoaded', function(event) {
   ...
 });
 #+END_SRC
 
-- All event listeners receive an =event= parameter
-- Contains event-specific additional information
-- For the =keyup= event it includes the key that was released
-
 #+BEGIN_NOTES
-All our event listeners have taken a special =event= parameter
-But we haven't used it yet
+So far our event listeners have only been interested in whether
+or not the event occurred. There's nothing else about the event
+that's interesting to them.
 
-Time for that to change. We're going to use the value of the =key=
-property in the =event= argument to decide whether or not to
-add the item to the list
+Things are different for the =keyup= event. Here, we don't just
+want to know that a key was released, we want to know which key
+was released -- specifically, was it the ENTER key?
+
+All of our event listeners have taken an =event= parameter, but
+we haven't used it.
+
+This parameter is where the browser tells us extra things about
+the event so that we can make decisions about it.
+
+The documentation for each event tells us what properties the
+event parameter has for this type of event, and what they mean.
+
+Looking through these there are a number of things we haven't
+covered yet, including event bubbling and cancellation. Don't worry
+about those.
+
+I'm more interested in these ones here -- from =char= on down.
+These all sound like they'll tell us more information about
+the key that was released.
+
+The =key= property looks interesting, based on its description.
+Reading that, it sounds like regular keys will have a =key=
+value like the key itself, so if you press =a= then the value
+will the string =a=, =b= is =b=, and so on.
+
+This note here about =Key values= is also interesting. This
+strongly suggests that special keys, like =Enter=, are
+represented specially, so lets look at that doc for more
+information.
+
+[[https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values][Key values]]
+
+So this document has lots of tables. It looks like the first
+column is the value of that =key= property, and then there are
+more details.
+
+Looking at the scroll bar on the right tells me that this is
+a huge document, so I'm going to just search for =Enter= and
+see if anything turns up.
+
+[Search for Enter]
+
+And straightaway, we can see that if the user presses the
+Enter key we should get a =key= value of the string =Enter=. I
+can tell that it's a string because it's surrounded by double
+quotes.
 
 #+END_NOTES
 
-** =keyup= and =event.key=
-
-
-** Exercise: Listening for =keyup= and inspecting =event.key=
+** Exercise: Listening for =keyup= and inspecting =event.key=      :exercise:
 #+BEGIN_SRC javascript
   document.addEventListener('DOMContentLoaded', function(event) {
     document.querySelector('button').addEventListener('click', function(event) {
@@ -1344,12 +1438,14 @@ add the item to the list
 #+END_SRC
 
 #+BEGIN_NOTES
-We can check that our understanding of the documentation is correct
-by writing an event listener that listens for =keyup= events on the
-input widget and logs the results.
+Lets go and check that our understanding is correct, by writing an
+input event listener that listens for =keyup= events on the input
+widget and logs the results.
 
-Do this, and let me know when it's done, and you know what string
-is used to repesent the ENTER key.
+Do this, and let me know when it's done, and you have confirmed
+which string is used to repesent the ENTER key.
+
+[Wait]
 #+END_NOTES
 
 ** Solution: Listening for =keyup= and inspecting =event.key=
@@ -1493,7 +1589,8 @@ c >=  d;   // false, >=  means "is greater than or equal to?"
 #+END_SRC
 
 #+BEGIN_NOTES
-You can use these same operators to compare strings. Try these out.
+You can use these same operators to compare strings. Try these out
+in the console.
 
 [Wait]
 #+END_NOTES
@@ -1571,10 +1668,10 @@ You will probably see them in older code.
 
 You should not use them.
 
-Rememer how values have types -- a number, or a string say.  Triple-equals
-returns true only if the values are the same and the types are the same.
-In this first comparison here it returns false because the types don't
-match.
+Rembeer how values have types -- a number, or a string say.
+Triple-equals returns true only if the values are the same and the
+types are the same.  In this first comparison here it returns false
+because the types don't match.
 
 Single-equals and bang-equals don't do this. If the types don't match it
 tries to convert them. So on this line here the result is true, because
@@ -1609,7 +1706,7 @@ We have the =if= keyword, an expression in parentheses, and then the
 code to run if the expression is true inside curly brackets.
 #+END_NOTES
 
-** Exercise: Only log the key if it's =Enter=
+** Exercise: Only log the key if it's =Enter=                      :exercise:
 
 #+BEGIN_SRC javascript :noweb yes
 <<EventKeyLog>>
@@ -1665,7 +1762,7 @@ appears when you press the Enter key.
 
 [Demo this in WebStorm to show the control flow changing]
 #+END_NOTES
-** Exercise: Adding the item if the ENTER key is released
+** Exercise: Adding the item if the ENTER key is released          :exercise:
    :PROPERTIES:
    :END:
 #+BEGIN_SRC javascript :noweb yes
@@ -1722,9 +1819,10 @@ used to create a new list item and add it to the list.
 #+REVEAL_HTML: <div class="rightcol">
 - Decisions with =if=
   - Expressions, true/false values
+- Different comparison operators
 - Don't use ~==~ and ~!=~
 #+REVEAL_HTML: </div>
-** Don't forget to =git commit=
+** Add and commit the changes
 * Clear the input widget after adding an item
 ** Problems
 - The user has to delete the text in the input widget
@@ -1732,7 +1830,7 @@ used to create a new list item and add it to the list.
 - Fix this by clearing the =input= widget after appending the list item
 - We've already seen how
 
-** Exercise: Clear the input widget
+** Exercise: Clear the input widget                                :exercise:
 
 #+BEGIN_SRC javascript
   document.addEventListener('DOMContentLoaded', function(event) {
@@ -1768,14 +1866,12 @@ used to create a new list item and add it to the list.
   });
 #+END_SRC
 
-** Don't forget to =git commit=
+** Add and commit the changes
 * Setting the input focus
   :PROPERTIES:
   :TOPICS:   focus scope
   :END:
-** What does focus mean?
-
-- Where do your keystrokes go?
+** Focus means "Where do your keystrokes go?"
 
 #+BEGIN_NOTES
 On a form with multiple controls, like this (an input widget and a
@@ -1789,7 +1885,7 @@ We say that there is the *focus*. Only one widget at a time has
 the focus. It's where your clicks and keystrokes go.
 #+END_NOTES
 
-** The focus moves with TAB key
+** The focus moves with TAB key                                    :exercise:
 
 #+BEGIN_NOTES
 Click on the input widget.
@@ -1818,7 +1914,7 @@ Javascript provides methods to set the focus to a given element.
 Do this search to read up on how to do it.
 #+END_NOTES
 
-** Exercise: Give the input widget the focus after adding an item
+** Exercise: Give the input widget the focus after adding an item  :exercise:
 
 - No code hint this time. See how you do!
 
@@ -1865,14 +1961,14 @@ had loaded as well.
 [Questions? Any problems?]
 #+END_NOTES
 
-** Don't forget to =git commit=
+** Add and commit the changes
 * Prevent empty items from being added
 - Pressing Enter or clicking the button adds an item
   - Even if it's the empty string
 ** Rules
 - If the input widget is empty
-  - The button should be disabled / clicks ignored
   - Pressing =Enter= in the input widget should do nothing
+  - The button should be disabled / clicks ignored
 ** Multiple parts to this problem
 - How do we say that input is required?
 - How do we disable the button?
