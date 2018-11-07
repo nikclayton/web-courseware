@@ -1788,7 +1788,7 @@ Off you go.
     });
 
     document.querySelector('input').addEventListener('keyup', function(event) {
-      if (event.key === 'Event') {
+      if (event.key === 'Enter') {
         let inputBox = document.getElementById('item');
         let li = createNewListItem(inputBox.value);
         document.querySelector('ul').appendChild(li);
@@ -2377,20 +2377,726 @@ button if the input is empty.
 And you'll need a variable for the button.
 #+END_NOTES
 
-** Solution: Disabling the button
+** Solution: Disabling the button, variables
 
-#+INCLUDE: "shopping-7.js" :lines "26-30" src javascript -n
+#+INCLUDE: "shopping-7.js" :lines "26-30" src javascript -n 26
 
-** Solution: Disabling the button
+#+BEGIN_NOTES
+I've had to split the code over three slides to show it all.
 
-#+INCLUDE: "shopping-7.js" :lines "31-39" src javascript -n
+The first part is the top of the =DOMContentLoaded= listener.
 
-** Solution: Disabling the button
+All I've done here is added a third variable, =addItemButton=,
+and found the first button in the DOM.
 
-#+INCLUDE: "shopping-7.js" :lines "40-56" src javascript -n
+Make sense?
 
-* Refactoring
+[Wait]
+#+END_NOTES
+
+** Solution: Disabling the button, input widget
+
+#+INCLUDE: "shopping-7.js" :lines "40-56" src javascript -n 40
+
+#+BEGIN_NOTES
+Jumping ahead to my line 40, and the =keyup= listener for the input
+widget I've made two changes.
+
+The first is line 3 of this code. The =if= statement immediately
+before means that this code will only run if the input widget is
+*not* empty.
+
+So we know that the button should be enabled here. And to enable
+the button you set its =disabled= property to =false=.
+
+The second change is lines 10-12. We need to deal with the case
+where the input box *is* empty, so I have a second =if= statement
+here to deal with that.
+
+Those of you with more programming experience are probably wondering
+why I didn't use an =else= clause here. I'm coming to that in a bit,
+don't worry.
+#+END_NOTES
+
+** Solution: Disabling the button, button widget
+
+#+INCLUDE: "shopping-7.js" :lines "31-39" src javascript -n 31
+
+#+BEGIN_NOTES
+Finally, and jumping back up the code, I've been a bit sneaky.
+
+Earlier, I didn't tell you that when the button is clicked to add
+an item to the list it should disable itself. This is because
+one of the things the button does when it's clicked is empty
+out the input wideget (here, on line 34).
+
+But there's no =keyup= event fired when that happens, so the
+button has to know to disable itself.
+
+Do you have this bug in your code? Does your button disable itself
+after it's clicked?
+
+[Wait]
+
+Fix your code so that it disables the button in all cases, then
+add and commit your changes.
+
+[Wait]
+#+END_NOTES
+
+* Recap: What have we learned
+#+REVEAL_HTML: <div class="leftcol">
+- =.focus()= method
+- Variable scopes
+- Strings with backticks =`=
+- String methods
+  - =.trim()=
+- =.disabled= property
+#+REVEAL_HTML: </div>
+
+* Refactoring: =const=
+
+#+BEGIN_NOTES
+I mentioned that I wanted to refactor this code, and there are a
+few things I want to do and introduce you to.
+#+END_NOTES
+
+** Recap: =let=
+
+- =let= declares a variable with a value that can change
+
+#+BEGIN_SRC javascript
+let a = 10;
+a;            // 10
+a = 20;
+a;            // 20
+let b;        // Variable without initial value
+b;            // undefined
+b = 30;
+b;            // 30
+#+END_SRC
+
+#+BEGIN_NOTES
+We're familiar with the =let= keyword.
+
+We use it to declare a variable, and optionally give it a value.
+
+We can later change the value in the variable, and use the new
+value.
+
+We can also declare a variable that starts out with the
+=undefined= value, and then give it a value later.
+
+This is great when the value might legitimately change in the
+future.
+
+But what do you do if you know the value should never change?
+#+END_NOTES
+
+** Introducing =const=
+
+- =const= declares a variable with a value that can't change
+  - We call this a *constant*
+
+#+BEGIN_SRC javascript
+const c = 15;
+c;            // 15;
+c = 20;       // Uncaught TypeError: Assignment to constant
+              // variable.
+
+const d;      // Uncaught SyntaxError: Missing initializer
+              // in const declaration.
+#+END_SRC
+
+#+BEGIN_NOTES
+When we know that the value should never change we should use the
+=const= keyword instead.
+
+This does a couple of useful things.
+
+First, if the value shouldn't change, and you have a bug in the code
+that tries to change the value then Javascript will tell you when that
+code runs.
+
+This is much better than if the code silently succeeded by mistake.
+
+Second, it helps communicate your intent to the next programmer
+that comes along. Now they know that this variable is not supposed
+to change in value.
+
+Third, it allows other tools to spot problems even before the code
+runs. WebStorm, for example, will analyse the code and tell you
+that you've tried to assign a value to a constant variable as you
+are writing the code, which is very helpful in preventing bugs in
+the first place.
+#+END_NOTES
+
+** Replacing =let= with =const=
+
+- =Edit= > =Find= > =Replace...=
+- Replace =let= with =const=
+
+*** Replacing =let= with =const=
+
+#+INCLUDE: "shopping-8.js" :lines "7-25" src javascript
+
+*** Replacing =let= with =const=
+
+#+INCLUDE: "shopping-8.js" :lines "26-30" src javascript
+
+* Refactoring: =else=
+
+#+BEGIN_SRC javascript
+if (expression) {
+  // Body of the if-statement
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+This is the =if= statement that we've been using so far. We
+have the =if= keyword, an expression in parentheses, and then
+the body surrounded by curly brackets.
+
+The code in the body is only executed if the expression is true.
+
+But what if we want to do something else if the expression is false?
+#+END_NOTES
+
+** The =else= keyword
+
+#+BEGIN_SRC javascript
+if (expression) {
+  // Code run if expression is true
+} else {
+  // Code run if expression is false
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+We can use the =else= keyword. This starts immediately after the
+closing curly bracket of the =if= statement, and is the keyword,
+followed by its own curly brackets, with the code to be run
+inside them.
+
+Does this make sense to everyone?
+
+[Wait]
+#+END_NOTES
+
+** Exercise: Using the =else= keyword
+
+#+BEGIN_SRC javascript -n
+function elseTest(num) {
+  if (num < 10) {
+    console.log('less than 10');
+  } else {
+    console.log('bigger than 10');
+  }
+}
+#+END_SRC
+
+#+BEGIN_SRC javascript
+elseTest(9);
+elseTest(11);
+#+END_SRC
+
+#+BEGIN_NOTES
+Try this exercise. In the Chrome console type this function, and
+then test it with these two arguments.
+
+What's printed?
+
+[Wait]
+#+END_NOTES
+
+*** Exercise: Using the =else= keyword                             :exercise:
+
+#+BEGIN_SRC javascript -n
+function elseTest(num) {
+  if (num < 10) {
+    console.log('less than 10');
+  } else {
+    console.log('bigger than 10');
+  }
+}
+#+END_SRC
+
+#+BEGIN_SRC javascript
+elseTest(9);
+elseTest(11);
+#+END_SRC
+
+#+BEGIN_SRC javascript
+elseTest(10);
+#+END_SRC
+
+#+BEGIN_NOTES
+Now try it with =10= as the argument.
+
+What's printed?
+
+[Wait]
+
+Do you see why?
+
+[Wait]
+
+There are three possible answers to this question, but we've only
+covered two of them.
+#+END_NOTES
+
+*** Exercise: Using the =else= keyword                             :exercise:
+
+#+BEGIN_SRC javascript -n
+function elseTest(num) {
+  if (num < 10) {
+    console.log('less than 10');
+  } else if (num > 10) {
+    console.log('bigger than 10');
+  } else {
+    console.log('same as 10');
+  }
+}
+#+END_SRC
+
+#+BEGIN_SRC javascript
+elseTest(9);
+elseTest(11);
+elseTest(10);
+#+END_SRC
+
+#+BEGIN_NOTES
+We can have a chain of if/else clauses that test various things
+
+Look at the syntax on line 4 -- as well as the =else= keyword we have
+a new =if= statement that checks to see if the number is larger than
+10. Finally, on line 6 we have a final =else= that covers all the
+other cases.
+
+Try this.
+
+[Wait]
+#+END_NOTES
+
+** Exercise: Refactoring with the =else= keyword                   :exercise:
+
+#+INCLUDE: "shopping-7.js" :lines "40-53" src javascript -n 40
+
+#+BEGIN_NOTES
+So, lets refactor this bit of code here.
+
+Instead of the two different =if= blocks on line 1 and line 9, replace
+the line 9 one with an =else= clause.
+
+Do that, and make sure that program still works as expected.
+
+[Wait]
+#+END_NOTES
+
+** Solution: Refactoring with the =else= keyword
+
+#+INCLUDE: "shopping-9.js" :lines "40-51" src javascript -n
+
+#+BEGIN_NOTES
+Here's the solution. How did everyone get on with it?
+
+[Wait]
+
+OK, go ahead and add and the commit your changes.
+
+[Wait]
+
+Now, I still don't like this code very much. There are a number of
+red flags for it that stand out to me.
+
+I don't expect you to notice any problems -- this is a matter of
+taste and experience. But I'm going to walk you through them, and
+then refactor them out one by one.
+
+Those problems are:
+
+- Repeated calls to inputBox.value.trim()
+
+Now, we only do this twice in this function, but it's clear that
+every time we need the value from the input box we should trim
+it.
+
+To make this very clear I'd like to create a constant that contains
+the trimmed value from the input box, and use that instead. That
+should help make the code a bit clearer as well.
+
+- There are =false= and =true keywords inside an =if= body.
+
+This is a big red flag. =if= statemtents work by evaluting the
+expression inside the parentheses to either a true or a false
+value.
+
+When you see a literal =true= or =false= inside the body of the
+=if= statement, as we have here, that's an indicator that maybe
+this =if= block isn't needed, and the value can be assigned
+directly.
+
+Don't worry if that's not very clear yet, I'm going to give some
+examples.
+
+- Too much nesting.
+
+This bit of code has 3 levels of nesting. There's one for the
+outermost function, and then we have two =if= statements nested
+inside each other, for three levels in total.
+
+That's not super excessive. But in general, the more levels
+of nesting you have the more complicated the code is to understand.
+It makes it more difficult for you to glance at it and see what
+it's going.
+
+If we can reduce the amount of nesting then we can make the code
+simpler and easier to read.
+
+And the simpler and easier to read it is the less chance there
+are any bugs.
+#+END_NOTES
+
+* Refactoring: Hoisting duplicate code in to a variable
+
+#+INCLUDE: "shopping-10.js" :lines "40-53" src javascript -n 40
+
+#+BEGIN_NOTES
+Here I've created a new constant variable called =trimmedValue=
+and set it to the trimmed copy of whatever's in the input widget.
+
+Then I use this constant in two places, once in the =if= statement,
+and once in the call to =createNewListItem=.
+
+Does this make sense to everyone?
+
+[Wait]
+
+OK, make this change to your code, check that it works, then
+add and commit.
+
+[Wait]
+
+Now, lets look at these =true= and =false= values inside the
+=if= block.
+#+END_NOTES
+
+* Refactoring: =false= and =true= inside the =if= block
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript
+if (expression) {
+  // Body
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC javascript
+let x = 10;
+let y = x === 9;
+y;                  // false
+y = x < 20;
+y;                  // true
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+- Expression must evaluate to either =true= or =false=
+
+#+BEGIN_NOTES
+Remember the structure of an =if= block.
+
+In particular, the code inside the parentheses immediately
+after the =if= keyword is an expression that must evaluate
+to either a true or false value.
+
+We can take the result of an expression and assign it to
+a variable.
+#+END_NOTES
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+BEGIN_SRC javascript
+const isEmpty = inputBox.value.trim() === '';
+#+END_SRC
+
+#+BEGIN_NOTES
+This means we could write something like this. If the trimmed
+value is the empty string then =isEmpty= will be true.
+
+And if the trimmedValue is not empty then =isEmpty= will be
+false.
+
+Does that make sense?
+
+[Wait]
+#+END_NOTES
+
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+BEGIN_SRC javascript
+const isEmpty = inputBox.value.trim() === '';
+#+END_SRC
+
+#+BEGIN_SRC javascript
+addItemButton.disabled = inputBox.value.trim() === '';
+#+END_SRC
+
+#+BEGIN_NOTES
+But this is also exactly how we want the value for the
+=disabled= property to be calculated.
+
+So there's no need to create a new variable, we can set
+the value directly.
+#+END_NOTES
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+INCLUDE: "shopping-11.js" :lines "40-53" src javascript -n 40
+
+#+BEGIN_NOTES
+This is what that looks like.
+
+This is not obviously better than just using the literal
+=true= and =false= values, right?
+
+Our code is now longer on line 44 and 50, and it's also
+duplicated.
+
+Wasn't I just talking about hoisting duplicated code in to
+a variable so that the value can be re-used?
+
+Yes I was.
+
+The reason for this step is that it lets us see that this bit of code
+in both branches of the =if / else= block is identical. Check, lines
+44 and 50 are the same.
+
+Since they're the same, they don't need to be inside the =if / else=
+block at all.
+
+And if we remove line 50 to outside the =else= block then we don't
+need the =else= either.
+
+Before I show you the resulting code, does that make sense?
+
+[Wait]
+#+END_NOTES
+
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+INCLUDE: "shopping-12.js" :lines "40-52" src javascript -n 40
+
+#+BEGIN_NOTES
+On line 42 I've set the =disabled= property on the =addItemButton=.
+
+This allows me to remove that code from inside the =if= block, and
+completely remove the =else= block.
+
+This code does exactly the same thing as the previous code, but it's
+a little but shorter and a little bit clearer.
+#+END_NOTES
+
+* Refactoring: Nesting
+
+#+INCLUDE: "shopping-12.js" :lines "40-52" src javascript -n 40
+
+#+BEGIN_NOTES
+This is our current code. It's definitely better, but I still don't
+like the nesting.
+
+This is definitely a matter of taste, but I'd prefer it if we didn't
+have =if= blocks inside =if= blocks we can help it.
+
+We can refactor those, but first we need to talk about how we return
+from a function.
+#+END_NOTES
+
+** Flow of control
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_CENTER
+Normal flow of control
+#+END_CENTER
+#+BEGIN_SRC javascript
+function foo() {
+  // Do something
+
+  // Do something else
+}
+
+// Some code
+// ...
+
+foo();
+
+// Some more code
+// ...
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_CENTER
+Flow of control with an =if=
+#+END_CENTER
+#+BEGIN_SRC javascript
+function foo() {
+  // Do something
+
+  if (expression) {
+    // Only happens when
+    // expression === true
+  }
+
+  // Do something else
+}
+
+// Some code
+// ...
+
+foo();
+
+// Some more code
+// ...
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Here are two main types of flow of control we've seen so far.
+
+On the left is without an =if= statement. Our code runs, and
+we call a function. Control flow jumps in to the function, runs
+all the way through, and then jumps back out of the function to
+where it left off.
+
+On the right is control flow with an =if= statement. It's very
+similar, but in the function there's a chance that some of the
+code might not run if the expression is false.
+#+END_NOTES
+
 ** Returning early from a function
+
+#+REVEAL_HTML: <div class="leftcol">
+- =return= keyword allows early return from a function
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC javascript
+function foo() {
+  // Do something
+
+  if (expression) {
+    // Only happens when
+    // expression === true
+    return;
+  }
+
+  // Do something else
+}
+
+// Some code
+// ...
+
+foo();
+
+// Some more code
+// ...
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+We can use a new keyword, called =return=, to return earlier than
+normal from a function.
+
+In this example, if the expression in the =if= statement is true
+then the code in the body of the =if= statement will be run, and
+then the function stops and control returns to where it was called
+from. The code under "// Do something else" is never run in this
+case.
+#+END_NOTES
+
+** Solution: Returning early from a function
+
+#+INCLUDE: "shopping-13.js" :lines "44-59" src javascript -n 40
+
+#+BEGIN_NOTES
+Here's what our function looks like using =if= statements and
+returning early.
+
+We still have two =if= statements, but they're no longer nested
+inside one another, making the code a bit simpler in my opinion.
+
+The trade off is that function is now a bit longer.
+
+This is a pretty good pattern to follow when writing functions.
+
+Specifically:
+
+- Start with a block of code defines any variables or constants
+that you need.
+
+- Then have a block of code that checks to see if the function should
+do any work, or if it should return early.
+
+- Finally, have the code that actually does what the function is
+supposed to do.
+
+This clearly separates out the different responsibilities of the
+function, and reduces the amount of nesting and duplicated code.
+
+Does this make sense? Any questions?
+
+[Wait]
+
+OK, go ahead and make the equivalent change to your =keyup=
+handler, test it, add and commit.
+
+[Wait]
+#+END_NOTES
+
+** Solution: Returning early from a function
+
+#+INCLUDE: "shopping-13.js" :lines "31-43" src javascript -n 31
+
+#+BEGIN_NOTES
+And we can make a very similar change to the click handler for
+the button.
+
+Again, we save the trimmed value in to a constant, and perform
+an early return if the value is empty.
+
+Any questions on this?
+
+[Wait]
+
+OK, go ahead and make the equivalent change to your =click=
+handler, test it, add and commit.
+
+[Wait]
+#+END_NOTES
+
+* Refactoring: Before and after
+  :PROPERTIES:
+  :HTML_CONTAINER_CLASS: smaller
+  :END:
+
+#+INCLUDE: "shopping-7.js" :lines "31-55" src javascript
+
+#+REVEAL: split
+
+#+INCLUDE: "shopping-13.js" :lines "31-61" src javascript
+
+* Refactoring: Recap
+
+- =const= to declare constant variables
+- =if (...) { ... } else if (...) { ... } else { ... }= blocks
+- Returning early from functions
+  - =return= keyword
+- Refactoring to remove nesting
+
+
 * TODO UI followup work
 - Styling input elements
 - Adding a fieldset and legend
