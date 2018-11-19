@@ -1066,11 +1066,11 @@ If you want to include them you need to run =git add= with the file
 again.
 #+END_NOTES
 
-* Your personal cheetsheet
+* Git / shell cheatsheet
 
-- Create a new directory in the =poco= directory, called =cheatsheet=.
-- Create files =shell.html=, =git.html=
-- In each file, put notes about what you've learned 
+- =poco/cheatsheet/git.html=
+- =poco/cheatsheet/shell.html=
+- In each file, put notes about what you've learned
 - Tip: use =pre= element for command lines
   - Look up =pre= on MDN
 
@@ -1082,7 +1082,7 @@ As we go through the rest of the course you can keep these up to date.
 * Create an index page for the cheat sheet
 
 - Now that we have multiple files we can link between them
-- Create =index.html=, and add links to =shell.html= and =git.html=
+- Create =index.html=, and add links
 - For that we use the =a= element
 
 #+BEGIN_EXAMPLE
@@ -1109,6 +1109,7 @@ The content is the text that will appear as the link
 
   <body>
     <ul>
+      <li><a href="html.html">What I know about HTML</a></li>
       <li><a href="git.html">What I know about Git</a></li>
       <li><a href="shell.html">What I know about the shell</a></li>
     </ul>
@@ -1116,11 +1117,10 @@ The content is the text that will appear as the link
 </html>
 #+END_SRC
 
-** Commit all three files as a single commit
+** Commit all files as a single commit
 
 #+BEGIN_SRC sh
-% git add index.html
-% git add git.html shell.html
+% git add index.html html.html git.html shell.html
 % git diff --cached  #  or --staged
 % git status
 % git commit -m "Start my cheatsheet"
@@ -1130,7 +1130,389 @@ The content is the text that will appear as the link
 
 #+END_NOTES
 
-* Glossed over sub-commands, flags, arguments
+
+* Distributed version control (DVCS)
+
+- Mechanism for sharing
+  - VCS repository
+  - Proposed changes to those repositories
+- GitHub, GitLab, BitBucket, ...
+
+#+BEGIN_NOTES
+So far your version control repository is only stored on your computer.
+
+This is OK if you're the only person working on it, but for teams of
+programmers we want to make it easy for other people on the team to
+see your changes, maybe comment on them, or review them, or learn from
+them.
+
+So distributed version control was invented.
+
+Essentially, this is a way of saying that two or more different
+repositories are linked together.
+
+Once they're linked together there are commands to manage copying
+commits from one repository to another. And lots of tools exist to
+let you see the repository in a web browser, view the commits, give
+feedback, and so on.
+
+Various companies exist that provide online hosting for copies of
+your repositories, including GitHub, GitLab, BitBucket, and more.
+These companies offer different products and features, and different
+pricing, but their core product is very similar.
+
+In this course we're going to use GitHub. I chose it because it's
+one of the most popular ones, and there's lots of online help available
+for using it.
+#+END_NOTES
+
+
+* GitHub steps                                                     :exercise:
+
+- Create a GitHub account
+- Create a repository at GitHub
+- Configure your local repository to sync to GitHub repository
+- Push commits to GitHub
+- View commits on GitHub
+- Leave comments on GitHub
+
+#+BEGIN_NOTES
+In order to get experience with GitHub we're going to do the following
+steps.
+
+First you need to create an account.
+
+Once that's done we'll create an empty repository at GitHub.
+
+With the repository created we can configure your local repository
+to connect to it.
+
+Then we can *push* your existing commits to GitHub.
+
+Once the commits are pushed we can look at them online.
+
+Then we'll experiment with leaving comments.
+#+END_NOTES
+
+** Create a GitHub account
+
+- https://www.github.com/join
+- Username
+- E-mail address
+- Password
+- Choose the free, public plan
+
+#+BEGIN_NOTES
+[Walk through this with one person, eveyrone else follow along]
+#+END_NOTES
+
+** Create a repository at GitHub
+
+- https://help.github.com/articles/create-a-repo/
+- Create a public repository
+  - Called =poco-yourname=
+- Description: "Powercoders Basel: YOUR NAME"
+- Do *not* initialize with a =README= or =LICENSE=
+
+#+BEGIN_NOTES
+[Demo]
+#+END_NOTES
+
+** Configure your local repository to sync
+
+- Other copies of your repository are called *remotes*
+- Find your GitHub repository URL
+  - Looks like =https://github.com/user/poco-yourname.git=
+- =git remote add origin https://github.com/user/poco-yourname.git=
+- =git remote -v= to view configured remotes
+
+#+BEGIN_NOTES
+In Git terminology, copies of your repository that are stored elsewhere,
+like on GitHub, are called *remotes*.
+
+To tell your local repository about these we use the =git remote add=
+command.
+
+It needs to know the URL to the remote repository. For GitHub it's
+going to look like this URL here. Replace the =user= in the URL with
+the username that you chose when you signed up to Git, and the last
+part is =poco.git= because we called the repository =poco=.
+
+This is also the URL for the repository in the browser, with =.git=
+added to the end, so you can cut and paste.
+
+The =origin= in the command is the short-name that we're going to use
+for the remote.
+
+You can use anything you want. However, the convention in Git is that
+the public version of the repository is called =origin=
+
+[Demo all of this]
+#+END_NOTES
+-
+** Push commits to GitHub
+
+- =git push -u origin master= - first time
+- =git push= - after that
+
+#+BEGIN_NOTES
+Now that that your local repository is configured to sync with the
+repository on GitHub we can copy all of our commits so far to the
+copy of the repository on GitHub.
+
+To do that, run the =git push= command.
+
+The very first time we do this we have to tell Git exactly how these
+two repositories are linked, including how they branch.
+
+Branching is a topic we haven't covered yet, and we're not going to
+for a while. So for the moment you have to treat this like a magic
+command where you don't need to understand exactly what it's doing.
+
+Sorry about that -- we will come back to this later and look in to it
+in more detail.
+
+You will probably be prompted for the password for your GitHub account.
+
+[Wait]
+#+END_NOTES
+
+** View commits / leave comments on GitHub
+
+- Open the page for your repository
+
+#+BEGIN_NOTES
+[Demo]
+
+- Browsing the repository
+  - Individual files
+    - Raw
+    - Blame
+  - Individual commits
+    - Viewing
+      - Diffs look similar
+      - Notice how first line of commit message is heading
+    - Commenting on a commit
+      - Whole commit comments (bottom of the page)
+      - Comments on individual lines
+
+- Whole bunch of other stuff in the UI which we're not going to use
+  yet.
+
+- [Give them time to explore the UI.]
+
+#+END_NOTES
+
+** New workflow
+
+- =git add ...= to add changes
+- =git commit ...= to commit the changes locally
+- =git push= to send the changes to GitHub
+
+#+BEGIN_NOTES
+This changes your workflow with Git.
+
+You still use =git add= and =git commit= as before. However, after
+you've committed (or at the end of the day), run =git push= to send
+all of your changes up to GitHub.
+#+END_NOTES
+
+** GitHub from now on                                              :exercise:
+
+- Commit all your work to your Git repository
+- =git push= regularly
+- Expect comments! Programmers *communicate*
+- Share your GitHub repository URL on Slack now
+
+#+BEGIN_NOTES
+We're going to use GitHub regularly from now on.
+
+After every excerise that involves creating or editing files you're
+going to be adding the changes and then committing them.
+
+For the first few weeks I will regularly remind you to do this. After
+that I expect that you will have got in to the habit and won't need
+to remind you.
+
+You should *regularly* run =git push= to send the changes to GitHub.
+At least once per day, but more regularly is fine.
+
+Expect comments on what you've done. I will use this as a way to look
+at what you're doing and if I see any mistakes or things that look
+unclear I will leave comments with details, so that you can go and
+fix the problem.
+
+I will also want all of you to look at each others' work and leave
+comments as well -- you might spot a problem, or see something that
+could be done better, or more clearly. Or maybe you don't understand
+something.
+
+This is all part of communicating as a programmer.
+
+To make this easier, please share the link to the GitHub page for
+your repository on Slack now.
+
+[Wait]
+#+END_NOTES
+
+** Leaving constructive comments
+
+- Code review / receiving comments can be challenging
+
+#+BEGIN_NOTES
+It can be difficult to receive code review comments -- you've written
+something, you can't see anything wrong with, and then someone else
+comes along and tells you that you're wrong, or that you've made a
+mistake.
+
+It's easy to get defensive when this happens. Culture can be a big
+factor too.
+
+There are a few things that you can do -- as the person leaving the
+comment -- to make it easier for the receiver.
+#+END_NOTES
+
+*** Provide context
+
+#+ATTR_REVEAL: :class bad
+#+BEGIN_QUOTE
+The indentation is wrong.
+#+END_QUOTE
+
+#+ATTR_REVEAL: :class good
+#+BEGIN_QUOTE
+We're following the Google styleguide, which says that indentation
+should be 2 spaces. You've used 4 here, please fix.
+#+END_QUOTE
+
+*** Repeated comments
+
+#+REVEAL_HTML: <div class="leftcol">
+#+ATTR_REVEAL: :class bad
+#+BEGIN_QUOTE
+Use doublequotes
+#+END_QUOTE
+#+ATTR_REVEAL: :class bad
+#+BEGIN_QUOTE
+Use doublequotes
+#+END_QUOTE
+#+ATTR_REVEAL: :class bad
+#+BEGIN_QUOTE
+Use doublequotes
+#+END_QUOTE
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="rightcol">
+#+ATTR_REVEAL: :class good
+#+BEGIN_QUOTE
+You've used singlequotes here and elsewhere, when the styleguide
+says use doublequotes. Please fix everywhere.
+#+END_QUOTE
+#+REVEAL_HTML: </div>
+
+*** Being judgemental
+
+#+ATTR_REVEAL: :class bad
+#+BEGIN_QUOTE
+Why didn't you do ___?
+#+END_QUOTE
+
+#+ATTR_REVEAL: :class good
+#+BEGIN_QUOTE
+You can do ___, which has the benefit of ___.
+#+END_QUOTE
+
+*** Being sarcastic
+
+#+ATTR_REVEAL: :class bad
+#+BEGIN_QUOTE
+This doesn't even load properly!
+#+END_QUOTE
+
+#+ATTR_REVEAL: :class good
+#+BEGIN_QUOTE
+Looks like you missed a closing tag here.
+#+END_QUOTE
+
+** Responding to comments
+
+- Assume good intent
+- Respond to all comments
+- Ask questions
+- Take it offline
+
+#+BEGIN_NOTES
+First, always assume that whoever wrote the comment has good
+intentions.
+
+Communication is hard, communication in writing even more so -- there's
+very little nuance or tone. So assume that they're coming from a good
+place, even if the comment appears to be overly harsh.
+
+Always respond to all comments, even if it's just to thank the person
+for leaving the comment, but that you disagree.
+
+Reviewing other people's code is time consuming and can take a lot of
+effort, so taking the the time to thank the reviewer is important.
+If you ignore some of their comments they're left wondering why.
+
+If the intent of the comment isn't clear, ask questions. If you don't
+understand why the reviewer is suggesting that you make a particular
+change, ask. This should be a conversation, and not one person telling
+the other what to do.
+
+Finally, don't be afraid to take the review off line -- if you feel like
+it merits a longer discussion, ask to talk about the change face-to-face.
+This makes the communication much easier.
+#+END_NOTES
+
+** GitHub repository review
+
+- Load the repository of the person on your left
+- Take a look through:
+  - Understandable commit messages?
+  - Sensible commits?
+  - Is the information correct?
+  - Can you understand it?
+
+#+BEGIN_NOTES
+OK, so everyone's done that.
+
+So what I want you to do now is take the URL for the person who's on
+your left, and load up their repository in the browser. Take a look
+through it, and see what you find.
+
+Particular things to look for:
+
+- Are the commit messages a good description of what was changed
+  in the commit?
+
+- Are the commits sensible -- is each commit a single change that
+  stands on its own, or does a commit contain a lot of different
+  changes all bundled in to one?
+
+- Is the information in the cheatsheet correct? Do you see any
+  mistakes? Does it show you mistakes that you've made?
+
+
+#+END_NOTES
+
+
+** GitHub organisations                                            :noexport:
+
+#+BEGIN_CENTER
+https://github.com/powercoders-basel
+#+END_CENTER
+
+#+BEGIN_NOTES
+TODO(nik): Not sure if we'll use the organisation yet. Maybe not at
+first, because this requires the organisation to create the repository,
+not the students. Although... repositories can be transferred. Maybe
+do this at the end of the week?
+
+GitHub supports what it calls *organisations*. These are a way for...
+
+#+END_NOTES
+* TODO Glossed over sub-commands, flags, arguments                 :noexport:
 
 - Go back to =git commit -m ...= example
 
@@ -1139,7 +1521,7 @@ TODO(nik): Explain more about the typical structure of a command
 
 #+END_NOTES
 
-* Day 2, 2018-11-27 Tue - afternoon
+* Day 2, 2018-11-27 Tue - afternoon                                :noexport:
 
 ** Exercises
 
