@@ -10,7 +10,6 @@ for the class, etc.
 #+BEGIN_SRC python
 python -m http.server 8080
 #+END_SRC
-
 #+END_NOTES
 
 * Welcome
@@ -64,7 +63,6 @@ competition.
 
 - Introductions
 - Logistics and setup
-- Using the command line
 - Playing with HTML
 - Making mistakes and fixing them
 - Reading documentation
@@ -83,9 +81,9 @@ Names, where you're from, ...
 - Wifi
 - Bathrooms
 - Schedule and breaks
-  - 9am - midday: Teaching, w/ 3 x 10 minute breaks
+  - 9am - midday: Teaching, w/ 10 minute breaks
   - midday - 1.30pm: Lunch
-  - 1.30pm - 5pm: Teaching, w/ 3 x 10 minute breaks
+  - 1.30pm - 5pm: Teaching, w/ 10 minute breaks
 
 #+BEGIN_NOTES
 
@@ -132,6 +130,7 @@ Names, where you're from, ...
 - Slack (Apps: [[https://slack.com/downloads/windows][Windows]] | [[https://slack.com/downloads/osx][Mac]] | [[https://play.google.com/store/apps/details?id=com.Slack&hl=en][Android]] | [[https://itunes.apple.com/us/app/slack/id803453959?mt=12][iOS]])
 - Web Browser: [[https://www.google.com/chrome/][Google Chrome]]
 - Programmer's Editor: [[https://atom.io/][Atom]]
+- Password Manager: [[https://www.bitwarden.com][Bitwarden]]
 - Version Control: Git (Windows | Mac)
 - IDE: WebStorm
 
@@ -206,6 +205,79 @@ get that ready now.
 
 If you need me to wait because you're taking a note on something
 that is *absolutely fine*. Just let me know, OK.
+#+END_NOTES
+
+* On levels of experience
+
+#+BEGIN_NOTES
+We have very different levels of experience in this group.
+
+Some of you already have some years experience with some of these
+technologies, and for some of you it's going to be the first time
+you've seen it.
+
+For those of you that already know some of this material you might
+find the first couple of weeks very easy, and be tempted to stop
+paying attention.
+
+Don't.
+
+First, I might cover some things that you've never seen before, or
+do it in a way that helps explain other things that we're going to
+learn.
+
+Second, this is a valuable opportunity to practice what you do know.
+Programming is difficult -- the more practice you get at the easier
+things so they become second nature, the more it frees up your brain
+to focus on the more difficult things, until they become easier.
+
+Third, if you find yourself completing some of the exercises earlier
+than others, this is an opportunity to help them out if they need it.
+If someone in the class has a question during the exercises and I
+and the other trainers are busy, do try and help them out. Explaining
+something to someone else is the best way to make sure that you
+understand it.
+
+There's one other thing I wanted to address before we get started.
+
+You're all here because -- in the technical sessions -- you
+demonstrated you could:
+
+- read and understand new material
+- accurately follow instructions
+- learn new things
+- break problems down in to smaller parts
+- solve those parts to solve the bigger problem
+
+Those are all core traits required for any programmer, and I am
+completely convinced that you can succeed at this course.
+
+As we go through this, each one of you will almost certainly find
+yourself getting to a point where you don't understand something and
+it feels like you never will.
+
+For some of you it might be in 6 weeks time. Or 3 weeks time. Or even
+by the end of today. You will find youself worrying that you don't
+belong on the course, that the material is too difficult, that other
+people are doing this much better than you are.
+
+This is completely normal. It's called "Imposter Syndrome".
+
+[Google anecdote]
+
+So I need you to remember that you absolutely belong here, and that
+you are definitely able to learn and understand all the material
+we're going to cover.
+
+That said, not everyone learns at the same pace, or benefits from the
+same examples. So if you do feel like you haven't understood something,
+or are feeling confused, let me know. We'll schedule some 1:1 sessions
+to go through the material again, or find different ways of explaining
+it, or try additional exercises until it makes sense.
+
+OK?
+
+[Wait]
 #+END_NOTES
 
 * Files and directories
@@ -316,7 +388,7 @@ Anyone not using Windows 10, let me know.
 
 ** The directory tree (family tree)
 
-#+BEGIN_SRC dot :file family-tree.png :cmdline -Tpng -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :cache yes :file family-tree.png :cmdline -Tpng -Gstylesheet=../graphviz.css
   graph G {
     graph [dpi=172 scale=2 bgcolor="#002b36"];
     node [style="filled" fontname="sans-serif" fontcolor="#9ee0e3" color="#eee8d5" fillcolor="#3f3f3f"];
@@ -374,7 +446,7 @@ Anyone not using Windows 10, let me know.
   }
 #+END_SRC
 
-#+RESULTS:
+#+RESULTS[28ff7e5334e06f5fd040c8eba62c844e3dbdbf32]:
 [[file:family-tree.png]]
 
  #+BEGIN_NOTES
@@ -392,7 +464,7 @@ Anyone not using Windows 10, let me know.
 
 ** The directory tree
 
-#+BEGIN_SRC dot :file tree-filesystem.png :cmdline -Tpng -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :cache yes :file tree-filesystem.png :cmdline -Tpng -Gstylesheet=../graphviz.css
 digraph G {
   graph [dpi=148 scale=1 bgcolor="#002b36"];
   node [style="filled" fontname="sans-serif" fontcolor="#9ee0e3" color="#eee8d5" fillcolor="#3f3f3f"];
@@ -430,7 +502,7 @@ digraph G {
 }
 #+END_SRC
 
-#+RESULTS:
+#+RESULTS[94309ac0718013170deb2e03181f8d1c84e2d0b7]:
 [[file:tree-filesystem.png]]
 
  #+BEGIN_NOTES
@@ -615,7 +687,7 @@ licensed under [[https://creativecommons.org/licenses/by-sa/2.5/][CC-BY-SA 2.5]]
 
 #+END_NOTES
 
-** TODO Nesting elements
+* TODO Nesting elements
 
 #+NAME: nesting-elements
 #+BEGIN_SRC html
@@ -674,7 +746,7 @@ very strange results.
 #+END_NOTES
 
 
-** Keyboard shortcuts
+* Keyboard shortcuts
 
 | Action         | Windows       | Mac         |
 |----------------+---------------+-------------|
@@ -700,7 +772,7 @@ Once you're back in Chrome, =Ctrl= or =Command= and =r= will reload
 the page, allowing you to see your changes.
 #+END_NOTES
 
-** Block-level and inline elements
+* Block-level and inline elements
 
 #+NAME: block-level-and-inline-elements
 #+BEGIN_SRC html
@@ -760,7 +832,7 @@ right.
 #+REVEAL_HTML: </div>
 
 
-** A more complicated example
+* A more complicated example
 
 #+NAME: a-more-complicated-example
 #+BEGIN_SRC html -n
@@ -846,14 +918,15 @@ save, and reload.
 
 ** Results
 
+#+NAME: a-more-complicated-example-results
 #+BEGIN_SRC html-chrome :noweb yes :exports results
 <<a-more-complicated-example>>
 #+END_SRC
 
-#+RESULTS:
-[[file:results.png]]
+#+RESULTS[57aad9bf348b7c3644a118d8ddbf7051051a7924]: a-more-complicated-example-results
+[[file:a-more-complicated-example-results.png]]
 
-** Exercise: Break it
+* Exercise: Break it
 
 1. Mis-spell =<h1>= as =<h>=
 2. Mis-spell =</h1>= as =</h>=
@@ -985,7 +1058,7 @@ Browsers completely ignore any whitespace *outside* HTML elements.
 We saw this earlier too with the *block* vs. *inline* display example.
 #+END_NOTES
 
-** Adding checks to Atom
+* Adding checks to Atom
 
 - =File= > =Settings=
 - =+ Install=
@@ -1003,7 +1076,7 @@ To do so,
 
 [Demo]
 #+END_NOTES
-** Adding images
+* Images
 
 #+BEGIN_SRC html
 <img src="name-of-file" alt="Image of ...">
@@ -1041,7 +1114,7 @@ readers* that read the contents of the page to them. In this case
 the contents of the =alt= attribute is read to the user.
 #+END_NOTES
 
-*** Download an image
+** Download an image
 
 1. Go to https://powercoders.org
 2. Right-click the Powercoders logo at the top of the page
@@ -1049,7 +1122,7 @@ the contents of the =alt= attribute is read to the user.
 4. Save to your =scratch= directory
   - Should be called =powercoders-logo-CMYK.svg=
 
-*** Update your scratch file
+** Update your scratch file
 
 #+NAME: example-with-image
 #+BEGIN_SRC html -n
@@ -1075,7 +1148,7 @@ Add the =img= element below the =p= element, exactly as shown here.
 Save, and reload the page in the browser.
 #+END_NOTES
 
-*** An image on the page
+** An image on the page
 
 #+BEGIN_SRC html-chrome :noweb yes :exports results :flags --window-size=640x240 --force-device-scale-factor=2
 <<example-with-image>>
@@ -1094,7 +1167,7 @@ it, and tell me.
 a block level element.
 #+END_NOTES
 
-*** Exercise: Break it
+** Exercise: Break it
 
 1. Mis-spell =src= as =source=
 2. Leave off a double-quote ="=
@@ -1128,7 +1201,7 @@ work properly.
 3. If you mis-spell the filename then the image won't be found.
 #+END_NOTES
 
-*** Types of images
+** Types of images
 
 - PNG (Portable Network Graphics), =.png=
   - Raster format
@@ -1182,7 +1255,7 @@ SVG is best used for logos, technical drawings, and the like.
 The Powercoders logo file that we downloaded was an SVG image.
 #+END_NOTES
 
-** Element content and attribute content
+* Element content and attribute content
 
 #+BEGIN_SRC html
 <!-- This does *not* work -->
@@ -1213,7 +1286,7 @@ the minus signs. That's what a comment looks like in HTML. We'll talk
 more about that later.
 #+END_NOTES
 
-** Different elements have different attributes
+* Different elements have different attributes
 
 #+BEGIN_SRC html
 <!-- This does *not* work -->
@@ -1231,7 +1304,7 @@ So this example here does not work.
 We'll be seeing many more attributes as we go through the course.
 #+END_NOTES
 
-** TODO Heading levels
+* TODO Heading levels
 
 #+REVEAL_HTML: <div class="leftcol">
 #+NAME: html-headings
@@ -1261,9 +1334,15 @@ different heading elemnts.
 
 If so, you're right. There are six of them. =h1= is the largest,
 to =h6= which is the smallest.
+
+Copy these in to your =scratch= file (don't delete the existing
+content, just add these to the body) to make sure it works for
+you.
+
+[Wait]
 #+END_NOTES
 
-** TODO Unordered lists
+* TODO Unordered lists
 
 #+NAME: html-ul
 #+BEGIN_SRC html
@@ -1282,21 +1361,29 @@ to =h6= which is the smallest.
   </ul>
 #+END_SRC
 
+#+BEGIN_NOTES
+Copy these in to your =scratch= file (don't delete the existing
+content, just add these to the body) to make sure it works for
+you.
+
+[Wait]
+#+END_NOTES
+
 ** TODO Unordered lists
 
-#+REVEAL_HTML: <div class="leftcol">
-#+NAME: html-ul-results
-#+BEGIN_SRC html-chrome :noweb yes
-<<html-ul>>
-#+END_SRC
-#+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div class="leftcol">
+ #+NAME: html-ul-results
+ #+BEGIN_SRC html-chrome :noweb yes
+ <<html-ul>>
+ #+END_SRC
+ #+REVEAL_HTML: </div>
 
-#+REVEAL_HTML: <div class="rightcol">
-#+RESULTS: html-ul-results
-[[file:html-ul-results.png]]
-#+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div class="rightcol">
+ #+RESULTS: html-ul-results
+ [[file:html-ul-results.png]]
+ #+REVEAL_HTML: </div>
 
-** TODO Ordered lists
+* TODO Ordered lists
 
 #+NAME: html-ol
 #+BEGIN_SRC html
@@ -1317,24 +1404,241 @@ to =h6= which is the smallest.
 
 ** TODO Ordered lists
 
+ #+REVEAL_HTML: <div class="leftcol">
+ #+NAME: html-ol-results
+ #+BEGIN_SRC html-chrome :noweb yes
+ <<html-ol>>
+ #+END_SRC
+ #+REVEAL_HTML: </div>
+
+ #+REVEAL_HTML: <div class="rightcol">
+ #+RESULTS: html-ol-results
+ [[file:html-ol-results.png]]
+ #+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Copy these in to your =scratch= file (don't delete the existing
+content, just add these to the body) to make sure it works for
+you.
+
+[Wait]
+#+END_NOTES
+
+* TODO =div=
+
+- =div= element is purely structural
+- Use it to group blocks of related elements
+- Grouping making styling easier later
+
+#+BEGIN_NOTES
+
+#+END_NOTES
+
+** TODO =div= example
+
 #+REVEAL_HTML: <div class="leftcol">
-#+NAME: html-ol-results
-#+BEGIN_SRC html-chrome :noweb yes
-<<html-ol>>
+#+NAME: div-example
+#+BEGIN_SRC html-chrome
+<div id="header">
+  <p>Article heading</p>
+
+  <p>Home : Articles : Article one</p>
+</div>
+
+<div id="content">
+  <p>Some content.</p>
+
+  <p>Some more content.</p>
+</p>
+
+<div id="footer">
+  <p>Author: Nik</p>
+</div>
 #+END_SRC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+RESULTS: html-ol-results
-[[file:html-ol-results.png]]
+#+RESULTS[78d23a885b7bc8e99a897809603f16b92185f324]: div-example
+[[file:div-example.png]]
+
 #+REVEAL_HTML: </div>
 
-#+RESULTS:
-** MDN and exercises
+#+BEGIN_NOTES
+In this example I've decided that my page consists of three logical
+units. They are:
+
+- A header
+- The main content
+- A footer
+
+I've wrapped the content elements -- the paragraphs -- in =div=
+elements to reflect that structure.
+
+As you can see in the screenshot, right now this doesn't do anything
+different to the presentation of the material, it looks exactly the
+same. There's no extra whitespace, or indentation, or anything like
+that.
+
+This will, however, become more important in a couple of days when
+we introduce stylesheets to all of this.
+
+That's why you need to know about =div= now.
+
+You see those =id= attributes? Those are also new. Again, there's more
+on them later, but for now it's enough to know that, within each page
+they must be unique, and we use them to be able to refer back to
+specific =div= elements in stylesheets and other places.
+
+Copy these in to your =scratch= file (don't delete the existing
+content, just add these to the body) to make sure it works for
+you.
+
+[Wait]
+#+END_NOTES
+
+* TODO =span=
+
+- =span= is also purely structural
+- Like =div=, but for inline content
+
+#+BEGIN_NOTES
+THe =span= element is used the same way as =div=, but instead of
+using it group related block level elements together we use it
+to wrap inline elements that we want to treat differently.
+#+END_NOTES
+
+** TODO =span= example
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: span-example
+#+BEGIN_SRC html-chrome
+  <div id="header">
+    <p>Article heading</p>
+
+    <p><span class="nav">Home</span> :
+      <span class="nav">Articles</span> :
+      Article one</p>
+  </div>
+
+  <div id="content">
+    <p>Some content.</p>
+
+    <p>Some more content.</p>
+  </p>
+
+  <div id="footer">
+    <p>Author:
+      <span class="author-name">Nik</span></p>
+  </div>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS[9f101ba20955146133ecf3c65a8f01ce7937bae5]: span-example
+[[file:span-example.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This is the same HTML as in the =div= example, only I've added
+some =span= elements to it.
+
+In the navigation section I've used it to indicate that some text
+is part of the navigation in the page.
+
+And in the footer I've used it to indicate that a bit of text is
+the name of the author.
+
+Just like with =div= this doesn't make the text look any different
+at this point. We'll come to that later when we use stylesheets, but
+just like =div= you need to know that this is possible.
+
+Copy these in to your =scratch= file (don't delete the existing
+content, just add these to the body) to make sure it works for
+you.
+
+[Wait]
+#+END_NOTES
+
+* TODO Entities
+
+- Difficult to write some characters in HTML
+- Because they have special meaning
+- =<=, =>=, =&=
+- Use *entities*
+- =&lt;= =&gt;= =&amp;=
+
+#+BEGIN_NOTES
+Some characters are difficult to include in your HTML, because
+they have special meanings.
+
+The obvious examples are the left and right angle brackets, because
+they're used for tags.
+
+Ampersand also sometimes has problems.
+
+To includes these in your pages we use a thing called *entities*.
+
+To write an entity you start with an ampersand, then the entity
+name, and then a semi-colon.
+
+The names for the brackets are =lt, =gt=, and for ampersand it's
+=amp=.
+
+We're going to need this very shortly in the exercises.
+#+END_NOTES
+
+** Entity example
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: html-entitites
+#+BEGIN_SRC html-chrome
+<p>You write a p tag like &lt;p&gt;.</p>
+
+<p>You write an & entity like &amp;amp;.</p>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS[82991b0f0ae17ede9ccf9c6365206d8071539f4a]: html-entitites
+[[file:html-entitites.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Copy these in to your =scratch= file (don't delete the existing
+content, just add these to the body) to make sure it works for
+you.
+
+[Wait]
+#+END_NOTES
+
+** Other entities include...
+
+#+REVEAL_HTML: <div class="leftcol">
+- \copy = =&copy;=
+- \frac14 = =&frac14;=
+- \frac12 = =&frac12;=
+- \frac34 = =&frac34;=
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- \leftarrow = =&leftarrow;=
+- \uparrow = =&uparrow;=
+- \rightarrow = =&rightarrow;=
+- \downarrow = =&downarrow;=
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+There are more entities, used as handy ways for describing hard to
+enter characters.
+#+END_NOTES
+
+* Mozilla Developer Network
 
 - Mozilla Developer Network (MDN)
 - https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-- Search for "mdn html elements"
+- Search for [mdn html elements]
+- Search for [mdn html entity]
 
 #+BEGIN_NOTES
 Mozilla is the organization responsible for, amongst other things,
@@ -1342,26 +1646,148 @@ the Firefox web browser, and the provide a very comprehensive set of
 reference documents and tutorials online.
 
 As a programmer you'll need to get used to reading and understanding
-technical documentation, so for the rest of the afternoon you'll be
-using the MDN documentation to learn about more HTML elements and add
-them to your scratch page.
+technical documentation.
+
+[Demo the HTML elements page. Show the big list, including many we
+haven't seen yet. Go to a details page for an element, demo the
+sections, the examples, live editing, codepen, jsfiddle, and the
+things, like CSS, that we're going to cover later].
 #+END_NOTES
 
+* Structure recap
 
-* Exercises
+#+BEGIN_SRC html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title goes here</title>
+  </head>
+
+  <body>
+    <!-- other elements go here -->
+  </body>
+</html>
+#+END_SRC
+
+#+BEGIN_NOTES
+Let's just recap the basic structure of every HTML page. You're
+going to be doing these like this from now on.
+
+Every page starts with the =DOCTYPE= declaration.
+
+The first element is always =html=, which itself contains two
+elements, the =head= and the =body=.
+
+You put a =title= in the =head= element, and the rest of the
+content goes inside the =body= element.
+
+Sometimes, for reasons of space on the slides, I'm not going to
+show this boilerplate, but it's always there, and when you're
+creating HTML files it needs to be there too.
+
+And don't forget the indentation!
+#+END_NOTES
+
+* HTML recap
 
 #+REVEAL_HTML: <div class="leftcol">
-- Add more headings, =h1=, =h2=, etc
-- Add more paragraphs, =p=
-- Add an ordered list, =ol=
-- Add an unordered list, =ul=
-- Add images
+- Headings, =h1= ... =h6=
+- Paragraph, =p=
+- Lists
+  - =ol= and =li=
+  - =ul= and =li=
+- Images, =img=
+  - =src= and =alt= attributes
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-- =div=
-- =span=
-- Mark up the recipe
-- Start a notes / cheatsheet document
-- Start a portfolio
+- Structure
+  - =div=
+  - =span=
+- Entities
+  - =&lt;=, =&gt;=, =&amp;=
 #+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+And here are the elements we've seen so far.
+
+Headings use =h1= through =h6=, depending on how important the
+heading is.
+
+Paragraphs are wrapped with a =p= element, while lists use either
+=ol= if it's *ordered list* with numbers, or =ul= if it's an
+*unordered list* with bullet points.
+
+Either way, the individual *list items* are wrapped in =li= elements.
+
+Images are included using the =img= element, which has an attribute,
+=src= that references the file name of the image, and =alt=, which
+provides alternative text to use if the image can't be used.
+
+=div= and =span= allows us to apply additional structure to our
+document, and you can use these three entities to include special
+characters in the page.
+#+END_NOTES
+
+* Exercises
+
+** Setup
+ - Create directories in =poco=
+   - =poco/cheatsheet=
+   - =poco/recipes=
+   - =poco/portfolio=
+
+** Cheatsheet
+
+- Create =poco/cheatsheet/html.html=
+- Add notes about what you've learned
+- Structure, not style
+- Remember, =&lt;=, =&gt;=, and =&amp;=
+- Look up other entities
+
+#+BEGIN_NOTES
+Start creating a cheatsheet for yourself. This will be a document
+that contains any information you want to remember or refer back to.
+
+This should be an HTML file. Note down the elements and other things
+that you've learned so far, in as much detail as you can.
+
+All through today you've been copying stuff in to your =scratch= file,
+so use that as a reference for the things you want to put in your
+cheatsheet.
+
+[Wait]
+#+END_NOTES
+
+** Recipes
+
+#+REVEAL_HTML: <div class="leftcol">
+- Create HTML files for 3 recipes
+- Focus on the HTML structure and elements
+- Add at least one image to each
+- *DO NOT* use CSS or other formatting
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Recipe has a:
+  - Description
+  - Details
+    - # servings
+    - cooking time
+    - notes (allergy, special ingredients, etc)
+  - List of ingredients
+  - Instructions
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This is a chance to put together the elements we've alreaedy seen.
+You can use regular paragraphs, headings, and lists.
+
+Different sections of the recipe should be wrapped in =div= elements,
+and you can use =span= to indicate special things in the text.
+#+END_NOTES
+
+** Portfolio
+
+- Implement your CV / portfolio in HTML
+- Include a photo of yourself
