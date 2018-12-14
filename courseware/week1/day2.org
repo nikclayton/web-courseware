@@ -1,4 +1,4 @@
-#+Title: Powercoders Basel Coursework, Day 2
+#+TITLE: The shell and version control
 #+SETUPFILE: "../include/settings.org"
 
 * Brief recap of previous day
@@ -307,7 +307,32 @@ the filesystem.
 
 [Demo]
 #+END_NOTES
+** Mental model of the directory tree
 
+[[file:tree-filesystem.png]]
+
+#+BEGIN_NOTES
+[Note: Image is from day1.org]
+
+Talk about how we work by making mental models of things, thinking
+about how we want to change the world (coming up with a mental model
+of what we want the world to be) and then carrying out actions to
+make that change.
+
+[iPhone example -- pinch to zoom for example, and how everyone learned
+it from the ads]
+
+We model the filesystem as a tree of directories and files. Figure out
+which working directory you're in, and imagine you're standing in that
+directory.
+
+WHen you change in to a new directory imagine that you move down the
+tree. Picture yourself walking from here to here.
+
+And when you move up a directory using =cd ..= visualise yourself moving
+up instead of down.
+
+#+END_NOTES
 ** Creating (making) directories                                   :exercise:
 
 | Windows              | OS X                 |
@@ -346,19 +371,28 @@ Then create a directory using =mkdir=, and call it =test=.
 * Safe and unsafe characters
 
 - Safe
-  - =a-z= =A-Z= =0-9= =-= =_= =.=
+  - =a-z= =0-9= =-= =_= =.=
+
+- OK
+  - =A-Z=
 
 - Unsafe
   - Everything else
-  - Especially ='= ="= =(= =)= =[= =]= =Space=
+  - Especially ='= ="= =(= =)= =[= =]= =<= =>= =Space=
 
 #+BEGIN_NOTES
 When working at the command line you have to be special with some
 characters, especially when you use them in file or directory
 names.
 
-To be safe, only use upper and lower case letters, numbers, the
+To be really safe, only use lower case letters, numbers, the
 minus sign, the underscore, and dot.
+
+Upper case characters are OK, but a bit unusual. Also, on Windows
+systems it treats upper and lower case characters identically, on
+OS X systems they're different, and this can cause frustrating
+problems if you get it wrong. So if you can, avoid using uppercase
+letters.
 
 Don't use anything else. In particular, using quotes, brackets, or
 spaces will rapidly cause things to get confusing.
@@ -390,7 +424,6 @@ Try these, just to get a sense of what the error messages are.
 - =←= and =→= - Left and right through the command line
 - =Tab= - completes on filenames and directories
 
-
 * Shell cheatsheet
 
 | Action                   | Windows         | OS X            |
@@ -402,8 +435,10 @@ Try these, just to get a sense of what the error messages are.
 | Create a directory       | =mkdir= /=dir=/ | =mkdir= /=dir=/ |
 | Delete a directory       | =rmdir= /=dir=/ | =rmdir= /=dir=/ |
 
+#+BEGIN_NOTES
+[This is a good spot for a break]
+#+END_NOTES
 
-* Break
 * Version control: Why
 - You're going to be working on a long project
 - You might make mistakes
@@ -411,8 +446,14 @@ Try these, just to get a sense of what the error messages are.
 - How do we do that safely?
 
 * Version control: By copies
+
+#+REVEAL_HTML: <div class="leftcol">
 - This is one way, but it doesn't really scale.
-- [Show files with various iterations of "final" in them]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+[[file:vcs-copies.png]]
+#+REVEAL_HTML: </div>
 
 * Version Control Systems (VCS): Common features
 - Lets us take a collection of files and save their current contents
@@ -423,7 +464,6 @@ Try these, just to get a sense of what the error messages are.
   - Easily undo the changes (or some of them)
   - Or commit these as new versions of the files
 - Over time this builds up a timeline of changes to the files
-  - Graphic
 
 * This is incredibly useful when:
 - Working on complex projects
@@ -486,7 +526,7 @@ They are called the =index= and the =repository=.
 3. Review the changes in the index
   - Double check everything is included
   - Remove files not related to this change
-4. Copy the files to the repository, with =git commit=
+4. Move the files from the index to the repository, with =git commit=
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -732,7 +772,7 @@ Don't forget the double quotes.
 
 - Shows you what's changed
 
-#+BEGIN_SRC sh -n
+#+BEGIN_SRC sh
 % git log
 commit d1ee782c5be32e219edfc4e8e8bc80f3ddc892b5 (HEAD -> master)
 Author: Nik Clayton <nikclayton@powercoders.org>
@@ -845,7 +885,7 @@ now starts at line 4)
   - =-m,n= = Starts at line =m=, continues for =n= lines
   - =+o,p= = Starts at line =o=, continues for =p= lines
 - First column is what happened:
-  - ~=~ = This line is not changed
+  - =Space= This line is not changed
   - =-= = This line was deleted
   - =+= = This line was added
 #+REVEAL_HTML: </div>
@@ -1066,7 +1106,7 @@ If you want to include them you need to run =git add= with the file
 again.
 #+END_NOTES
 
-* Git / shell cheatsheet
+* Git / shell cheatsheet                                           :exercise:
 
 - =poco/cheatsheet/git.html=
 - =poco/cheatsheet/shell.html=
@@ -1079,15 +1119,15 @@ As we go through the rest of the course you can keep these up to date.
 
 #+END_NOTES
 
-* Create an index page for the cheat sheet
+* Create an index page for the cheat sheet                         :exercise:
 
 - Now that we have multiple files we can link between them
 - Create =index.html=, and add links
 - For that we use the =a= element
 
-#+BEGIN_EXAMPLE
+#+BEGIN_SRC html
 <a href="name-of-file.html">text of link</a>
-#+END_EXAMPLE
+#+END_SRC
 
 #+BEGIN_NOTES
 =a= element has content and an attribute.
@@ -1355,7 +1395,25 @@ your repository on Slack now.
 [Wait]
 #+END_NOTES
 
-** Leaving constructive comments
+* Git: Renaming files
+
+#+BEGIN_SRC shell
+% git mv old-name new-name
+% ...
+% git commit -m "..."
+#+END_SRC
+
+* Git: Deleting files
+
+- First, delete the file, then:
+
+#+BEGIN_SRC shell
+% git rm file-name
+% ...
+% git commit -m "..."
+#+END_SRC
+
+* Leaving constructive comments
 
 - Code review / receiving comments can be challenging
 
@@ -1372,7 +1430,7 @@ There are a few things that you can do -- as the person leaving the
 comment -- to make it easier for the receiver.
 #+END_NOTES
 
-*** Provide context
+** Provide context
 
 #+ATTR_REVEAL: :class bad
 #+BEGIN_QUOTE
@@ -1385,7 +1443,7 @@ We're following the Google styleguide, which says that indentation
 should be 2 spaces. You've used 4 here, please fix.
 #+END_QUOTE
 
-*** Repeated comments
+** Repeated comments
 
 #+REVEAL_HTML: <div class="leftcol">
 #+ATTR_REVEAL: :class bad
@@ -1409,7 +1467,7 @@ says use doublequotes. Please fix everywhere.
 #+END_QUOTE
 #+REVEAL_HTML: </div>
 
-*** Being judgemental
+** Being judgemental
 
 #+ATTR_REVEAL: :class bad
 #+BEGIN_QUOTE
@@ -1421,7 +1479,7 @@ Why didn't you do ___?
 You can do ___, which has the benefit of ___.
 #+END_QUOTE
 
-*** Being sarcastic
+** Being sarcastic
 
 #+ATTR_REVEAL: :class bad
 #+BEGIN_QUOTE
@@ -1465,7 +1523,7 @@ it merits a longer discussion, ask to talk about the change face-to-face.
 This makes the communication much easier.
 #+END_NOTES
 
-** GitHub repository review
+** GitHub repository review                                        :exercise:
 
 - Load the repository of the person on your left
 - Take a look through:
@@ -1492,10 +1550,7 @@ Particular things to look for:
 
 - Is the information in the cheatsheet correct? Do you see any
   mistakes? Does it show you mistakes that you've made?
-
-
 #+END_NOTES
-
 
 ** GitHub organisations                                            :noexport:
 
@@ -1521,11 +1576,24 @@ TODO(nik): Explain more about the typical structure of a command
 
 #+END_NOTES
 
-* Day 2, 2018-11-27 Tue - afternoon                                :noexport:
+* Exercises
 
-** Exercises
+- Extend portfolio
+  - Add a link to your GitHub page
+- Extend cheatsheets with more information
 
-- Extend portfolio / notes pages with things learned. Create different
-  commits for each
-- Consider making the portfolio different pages
+* Double check repository
 
+#+BEGIN_SRC shell
+% cd scratch
+% dir .git     # or "ls .git"
+#+END_SRC
+
+* Exercise: Recipes
+
+#+BEGIN_SRC shell
+% cd recipes
+% git add .
+% git commit -m "..."
+% git push
+#+END_SRC

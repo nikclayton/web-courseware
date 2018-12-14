@@ -1,5 +1,24 @@
-#+Title: Powercoders Basel Coursework, Week 2, Day 1
+#+TITLE: Powercoders Basel Coursework, Week 2, Day 1
 #+SETUPFILE: "../include/settings.org"
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../html-export.css" />
+
+
+* AsciiToSVG test                                                  :noexport:
+
+#+BEGIN_SRC asciitosvg
+ .-------------------------.
+ |                         |
+ | .---.-. .-----. .-----. |
+ | | .-. | +-->  | |  <--+ |
+ | | '-' | |  <--+ +-->  | |
+ | '---'-' '-----' '-----' |
+ |  ascii     2      svg   |
+ |                         |
+ '-------------------------'
+#+END_SRC
+
+#+RESULTS:
+[[file:ascii-to-svg-test.svg]]
 
 * TODO Recap of last week
 
@@ -50,7 +69,7 @@ Here's something that could be a computer program.
 Can anyone tell me what it actually is?
 #+END_NOTES
 
-* TODO Socks picture
+* TODO Socks!
 
 #+CAPTION: https://www.knitpicks.com/patterns/Do_The_Twist_Socks__D55946220.html
 [[file:c:/Users/Nik%20Clayton/Documents/Powercoders/Course%20material/socks.jpg]]
@@ -94,14 +113,6 @@ Here's our problem.
 [Run through the problem]
 #+END_NOTES
 
-* JS Problem 1: Initial CSS setup
-
-#+INCLUDE: "change_para_class/index-1.html" src html
-
-* JS Problem 1: Initial CSS setup
-
-#+INCLUDE: "change_para_class/style.css" src css
-
 * TODO JS Problem 1: Goal
 
 #+BEGIN_CENTER
@@ -111,6 +122,14 @@ Here's our problem.
 #+BEGIN_NOTES
 And here's what the solution will look like to the user.
 #+END_NOTES
+
+* JS Problem 1: Initial HTML setup
+
+#+INCLUDE: "change_para_class/index-1.html" src html
+
+* JS Problem 1: Initial CSS setup
+
+#+INCLUDE: "change_para_class/style.css" src css
 
 * TODO JS Problem 1: Decompose the problem
 
@@ -136,8 +155,6 @@ tip. When the style changes the paragraph will change appearance.
 * TODO JS Problem 1: Check the solution should work
 
 #+BEGIN_NOTES
-TODO(nik): Has the inspector been introduced by this point?
-
 An easy way to check and see if this solution should work is to
 use the browser inspector to modify the paragraph's style to use
 the appropriate CSS class.
@@ -156,7 +173,7 @@ idea that this will work.
 #+BEGIN_NOTES
 I need to:
 
-- Figure out if the user clicked on a paragraph
+- Figure out if the user clicked on a listitem
 - Change the class associated with the paragraph
 
 This is a big part of the learning process -- you decide what you
@@ -201,6 +218,10 @@ results, and then loop back and let you enter more code.
 
 To get to it, open the Developer Tools, and then click the "Console"
 tab at the top.
+
+TODO: Relate this to the terminal. It has a prompt, it's waiting
+for you to type stuff. However, instead of typing in commands,
+you're typing in Javascript code.
 #+END_NOTES
 
 * TODO Javascript expressions
@@ -304,10 +325,10 @@ This is called *concatenation*.
 Notice how Javascript *does not* add a space between the two words, it
 just sticks them right together.
 
-Look at the result as well -- see how it's contained inside double quotes.
-This is its way of showing you that the value returned is also a string of
-characters. Compare that with the results from further up, which are just
-numbers, without quotes.
+Look at the result as well -- see how it's contained inside double
+quotes.  This is the console's way of showing you that the value
+returned is also a string of characters. Compare that with the results
+from further up, which are just numbers, without quotes.
 
 This should tell you something interesting -- numbers and strings are
 different things in Javascript.
@@ -399,12 +420,16 @@ is *not* saved in the variable.
 * TODO Functions
 
 #+BEGIN_SRC javascript
-alert('hello, world');
+> alert('hello, world');
+< undefined
 #+END_SRC
 
 #+BEGIN_NOTES
 What we're doing here is called *calling a function*.  We know it's a
 function because of the round braces, or *parentheses*.
+
+TODO: Does this look like anything else we've seen [Wait: hope they
+say the calc() function in CSS]
 
 A function is a way of taking a chunk of code and giving it a name so
 that we can re-use it, and call it from other places. Javascript provides
@@ -1030,7 +1055,25 @@ it back to the caller.
 Try this, and make sure you see the same result.
 #+END_NOTES
 
-* Including Javascript in the HTML
+*** Functions with parameters
+
+ #+BEGIN_SRC javascript
+ function greet(name) {
+   return 'hello, ' + name;
+ }
+ #+END_SRC
+
+ #+BEGIN_SRC javascript
+ > greet('Nik');
+ < "hello, Nik"
+ #+END_SRC
+
+ #+BEGIN_SRC javascript
+ > greet();
+ < // What does this show?
+ #+END_SRC
+
+* Including Javascript in the HTML                                 :noexport:
 
 #+BEGIN_SRC html
   <html>
@@ -1067,7 +1110,7 @@ Edit the HTML file and add a =script= element immediately before the
 end of the body.
 #+END_NOTES
 
-* How do we know if our code is working?
+* How do we know if our code is working?                           :noexport:
 
 #+BEGIN_SRC javascript
 console.log('some message');
@@ -1151,7 +1194,7 @@ and then call the function, as shown on the right.
 [Wait]
 #+END_NOTES
 
-* Exercise: A function that changes the class                      :exercise:
+* Exercise: A function that changes the class             :exercise:noexport:
 
 #+BEGIN_SRC javascript
 setClassTip();   // <-- goal (in the console)
@@ -1199,7 +1242,7 @@ What problems did you have? Let's talk through them with the class.
 [Wait]
 #+END_NOTES
 
-* TODO JS: Problem 1: We're going to...
+* TODO JS: Problem 1: We're going to...                            :noexport:
 
 1. Write a function...
   - Done
@@ -1218,7 +1261,7 @@ The last thing we need to figure out is how do we call our functions
 when the user clicks on one of those listitems?
 #+END_NOTES
 
-* TODO DOM Events
+* TODO DOM Events                                                  :noexport:
 
 - General term for "An interesting thing has happened"
 - Let's you say
@@ -1332,18 +1375,16 @@ the attribute value in double quotes.
 The only difference is that the attribute's value is some more
 Javascript code.
 
-This is a bit weird -- we're mixing HTML and Javascript together.
+This is a bit weird -- we're mixing HTML and Javascript together
+inside a single element.
 #+END_NOTES
 
-** To respond to clicks
-
-- Write a function that will be called when the event fires
-- Call the function from the element's =onclick= attribute
-
-* Exercise: Putting it all together                                :exercise:
+* Exercise: Putting it all together                       :exercise:noexport:
 
 - Write two more Javascript functions to change the paragraph's class
   - As event listeners they'll need an =event= parameter
+  - =setClassWarning=
+  - =clearClass=
 - Add =onclick= attributes to the three =li= elements to call
   those functions
 - Save the files and test
@@ -1354,23 +1395,32 @@ This is a bit weird -- we're mixing HTML and Javascript together.
 
 ** Solution: Putting it all together (HTML)
 
-
 #+INCLUDE: "change_para_class/solution-1.html" :lines "11-16" src html
 
 ** Solution: Putting it all together (Javascript)
 
 #+INCLUDE: "change_para_class/solution-1.html" :lines "21-39" src javascript
 
-** TODO =onmousemove=
+** Add and commit!
+
+* Just for fun: =mousemove=                                        :noexport:
+
+- =click= is one of many events that can fire
+- =mousemove= is another
+- Change one or more =onclick= to =onmousemove=
+- See what happens
 
 #+BEGIN_NOTES
 =click= is one of the events that can fire, but we've seen that there are
 many others.
 
-One of them is called =on
+One of them is called =mousemove=, with an =onmousemove= attribute.
+
+Just for fun, see what happens if you change one or more of the
+=onclick= attributes to =onmousemove=.
 #+END_NOTES
 
-* TODO IDEs
+* TODO IDEs                                                        :noexport:
 ** TODO Some web development problems
 
 TODO(nik): Move this later, since they don't use WebStorm immediately
@@ -1408,6 +1458,20 @@ very quickly become difficult to work with.
 ** TODO Integrated Development Environments (IDE)
 
 - Like a word processor, but for programmers
+
+
+#+BEGIN_SRC asciitosvg
+
+ NotePad++      vAtom     SublimeText           VS Code     WebStorm
+
+    ^              ^          ^                     ^           ^
+    |              |          |                     |           |
+ <--+--------------+----------+---------------------+-----------+-->
+Less complex                                                More complex
+#+END_SRC
+
+#+RESULTS:
+[[file:integrated-development-environments-ide.svg]]
 
 #+BEGIN_NOTES
 TODO(nik): Move some of this material to when Atom is introduced
@@ -1544,7 +1608,7 @@ Topics to hit are in the slide
 #+END_NOTES
 
 
-* TODO Refactoring
+* TODO Refactoring                                                 :noexport:
 
 - Rare to design a program correctly on first go
 - Requirements can change
@@ -1555,7 +1619,7 @@ Topics to hit are in the slide
 
 #+END_NOTES
 
-* TODO What's wrong with our code?
+* TODO What's wrong with our code?                                 :noexport:
 
  - Inline Javascript
  - Repeated code
@@ -1596,7 +1660,7 @@ it is a good way to show the technique.
 
 #+END_NOTES
 
-* TODO Refactoring: Inline Javascript
+* TODO Refactoring: Inline Javascript                              :noexport:
 
 - Place the Javascript in a separate file
 
@@ -1688,7 +1752,7 @@ last small change you made, or review it to see what went wrong.
 #+BEGIN_NOTES
 
 #+END_NOTES
-* TODO Refactoring: Repeated code
+* TODO Refactoring: Repeated code                                  :noexport:
 
 #+INCLUDE: "change_para_class/set-class-1.js" src javascript
 
@@ -1795,7 +1859,7 @@ Fewew lines of code means fewer bugs.
 #+END_NOTES
 
 
-* TODO Refactoring: Event binding with =onclick=
+* TODO Refactoring: Event binding with =onclick=                   :noexport:
 
 #+BEGIN_SRC html
 ... onlick="nameOfFunction(event)" ...
@@ -2337,7 +2401,7 @@ one of the elements.
 
 #+INCLUDE: "change_para_class/refactor-3-4.js" src javascript
 
-* Refactoring: Cleaning up =setClass()=
+* Refactoring: Cleaning up =setClass()=                            :noexport:
 
 #+INCLUDE: "change_para_class/refactor-3-4.js" :lines "1-5" src javascript
 
@@ -2440,7 +2504,7 @@ Is this clear to everyone?
 Make this change and commit.
 #+END_NOTES
 
-* TODO Refactoring: Reflection
+* TODO Refactoring: Reflection                                     :noexport:
 
 #+REVEAL_HTML: <div class="leftcol">
 - External Javascript
@@ -2485,9 +2549,9 @@ didn't (with the event listeners) it was easy to know exactly which
 change was causing the problem.
 #+END_NOTES
 
-* BREAK
+* BREAK                                                            :noexport:
 
-* TODO The DOM tree
+* TODO The DOM tree                                                :noexport:
 
 - An HTML page is a tree of elements
 - The DOM allows us to inspect and change the tree
@@ -2503,7 +2567,7 @@ Does everyone remember that?
 HTML pages are also trees.
 #+END_NOTES
 
-* TODO Tree refresher
+* TODO Tree refresher                                              :noexport:
 
 #+REVEAL_HTML: <div class="leftcol">
 - Tree is a hierarchy of *nodes*
@@ -2588,6 +2652,7 @@ digraph G {
 
 ** TODO HTML as a tree
 
+#+NAME: html-as-a-tree-example
 #+BEGIN_SRC html
 <html>
   <head>
@@ -2613,16 +2678,8 @@ that the root node.
 ** TODO =html= as root node
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC html
-<html>
-  <head>
-    <title>My first page</title>
-  </head>
-  <body>
-    <h1>My first heading</h1>
-    <p>My first paragraph</p>
-  </body>
-</html>
+#+BEGIN_SRC html :noweb yes
+<<html-as-a-tree-example>>
 #+END_SRC
 #+REVEAL_HTML: </div>
 
@@ -2639,90 +2696,218 @@ digraph G {
 
 #+REVEAL_HTML: </div>
 
-** TODO =head= and =body= are child nodes
-
-#+REVEAL_HTML: <div class="column" style="float:left; width:50%">
-#+BEGIN_SRC html
-<html>
-  <head>
-    <title>My first page</title>
-  </head>
-  <body>
-    <h1>My first heading</h1>
-    <p>My first paragraph</p>
-  </body>
-</html>
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="column" style="float:right; width:50%">
-#+BEGIN_SRC dot :file html-tree2.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
-digraph G {
-  node [shape="hexagon"];
-  html -> head
-  html -> body
-}
-#+END_SRC
-
-#+RESULTS:
-[[file:html-tree2.svg]]
-
-#+REVEAL_HTML: </div>
-
-** TODO =title=, =h1=, and =p= are also child nodes
+** TODO =head= is a child of =body=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC html
-<html>
-  <head>
-    <title>My first page</title>
-  </head>
-  <body>
-    <h1>My first heading</h1>
-    <p>My first paragraph</p>
-  </body>
-</html>
+#+BEGIN_SRC html :noweb yes
+<<html-as-a-tree-example>>
 #+END_SRC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file html-tree3.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file html-tree-2.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
 digraph G {
   node [shape="hexagon"];
-  html -> head;
+  html -> head
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:html-tree-2.svg]]
+
+#+REVEAL_HTML: </div>
+
+** TODO =title= is a child of =head=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html :noweb yes
+<<html-as-a-tree-example>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file html-tree-3.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  node [shape="hexagon"];
+  html -> head
+  head -> title
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:html-tree-3.svg]]
+
+#+REVEAL_HTML: </div>
+
+** =title= content is a child of =title=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html :noweb yes
+<<html-as-a-tree-example>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file html-tree-4.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  node [shape="hexagon"];
+  html -> head
+  head -> title
+  title -> title_content
+  title_content  [label="My first page" shape=none];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:html-tree-4.svg]]
+
+#+REVEAL_HTML: </div>
+
+** TODO =body= is a child of =html=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html :noweb yes
+<<html-as-a-tree-example>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file html-tree-5.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  node [shape="hexagon"];
+  html -> head
+  head -> title
+  title -> title_content
+  title_content  [label="My first page" shape=none];
+
   html -> body;
-  head -> title;
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:html-tree-5.svg]]
+
+#+REVEAL_HTML: </div>
+
+** TODO =h1=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html :noweb yes
+<<html-as-a-tree-example>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file html-tree-6.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  node [shape="hexagon"];
+  html -> head
+  head -> title
+  title -> title_content
+  title_content  [label="My first page" shape=none];
+
+  html -> body;
   body -> h1;
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:html-tree-6.svg]]
+
+#+REVEAL_HTML: </div>
+
+** TODO =h1= content
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html :noweb yes
+<<html-as-a-tree-example>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file html-tree-7.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  node [shape="hexagon"];
+  html -> head
+  head -> title
+  title -> title_content
+  title_content  [label="My first page" shape=none];
+
+  html -> body;
+  body -> h1;
+  h1 -> h1_content;
+  h1_content [label="My first heading" shape=none];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:html-tree-7.svg]]
+
+#+REVEAL_HTML: </div>
+
+** TODO =p=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html :noweb yes
+<<html-as-a-tree-example>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file html-tree-8.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  node [shape="hexagon"];
+  html -> head
+  head -> title
+  title -> title_content
+  title_content  [label="My first page" shape=none];
+
+  html -> body;
+  body -> h1;
+  h1 -> h1_content;
+  h1_content [label="My first heading" shape=none];
+
   body -> p;
 }
 #+END_SRC
 
 #+RESULTS:
-[[file:html-tree3.svg]]
+[[file:html-tree-8.svg]]
 
 #+REVEAL_HTML: </div>
 
-** TODO And the content is also nodes
+** TODO =p= content
 
-#+BEGIN_SRC dot :file html-tree4.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
-  digraph G {
-    node [shape="hexagon"];
-    html -> head;
-    html -> body;
-    head -> title;
-    title -> title_content
-    title_content  [label="#t: My first page" shape="none"];
-    body -> h1;
-    h1 -> h1_content
-    h1_content [label="#t: My first heading" shape="none"];
-    body -> p;
-    p -> p_content;
-    p_content [label="#t: My first paragraph" shape="none"];
-  }
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html :noweb yes
+<<html-as-a-tree-example>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file html-tree-9.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  node [shape="hexagon"];
+  html -> head
+  head -> title
+  title -> title_content
+  title_content  [label="My first page" shape=none];
+
+  html -> body;
+  body -> h1;
+  h1 -> h1_content;
+  h1_content [label="My first heading" shape=none];
+
+  body -> p;
+  p -> p_content;
+  p_content [label="My first paragraph" shape=none];
+}
 #+END_SRC
 
 #+RESULTS:
-[[file:html-tree4.svg]]
+[[file:html-tree-9.svg]]
+
+#+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 This is a really, *really* important thing to understand.
@@ -2800,39 +2985,39 @@ OK?
     html -> head;
     head -> title;
     title -> title_content;
-    title_content [label="#t: A test page" shape="none"];
+    title_content [label="A test page" shape="none"];
 
     html -> body;
     body -> h1;
     h1 -> h1_content;
-    h1_content [label="#t: This is a test page" shape="none"];
+    h1_content [label="This is a test page" shape="none"];
 
     body -> p1;
     p1 [label="p"];
     p1 -> p1_content;
-    p1_content [label="#t: It has some content in a paragraph" shape="none"];
+    p1_content [label="It has some content in a paragraph" shape="none"];
 
     body -> img;
 
     body -> p2;
     p2 [label="p"];
     p2 -> p2_content_1;
-    p2_content_1 [label="#t: It has another para with " shape="none"];
+    p2_content_1 [label="It has another para with " shape="none"];
     p2 -> em;
     em -> em_content;
-    em_content [label="#t: emphasised" shape="none"];
+    em_content [label="emphasised" shape="none"];
     p2 -> p2_content_2;
-    p2_content_2 [label="#t: text." shape="none"];
+    p2_content_2 [label="text." shape="none"];
 
     body -> ul;
     ul -> li1;
     li1 [label="li"];
     li1 -> li1_content;
-    li1_content [label="#t: And a list..." shape="none"];
+    li1_content [label="And a list..." shape="none"];
     ul -> li2;
     li2 [label="li"];
     li2 -> li2_content;
-    li2_content [label="#t: ... of items." shape="none"];
+    li2_content [label="... of items." shape="none"];
   }
 #+END_SRC
 
@@ -2849,13 +3034,12 @@ complex than this example -- and draw the tree for that page.
 
 
 
-* TODO Changing the DOM tree with Javascript
+* TODO Changing the DOM tree with Javascript                       :noexport:
 
 - =document= provides a method to create new nodes
 - =Element= provides methods to attach the nodes to the tree
 
 #+BEGIN_NOTES
-
 
 #+END_NOTES
 
@@ -2878,11 +3062,11 @@ digraph G {
   node [shape="hexagon"];
   body -> h1;
   h1 -> h1_content;
-  h1_content [label="#t: First heading" shape="none"];
+  h1_content [label="First heading" shape="none"];
 
   body -> p;
   p -> p1_content;
-  p1_content [label="#t: First para" shape="none"];
+  p1_content [label="First para" shape="none"];
 }
 #+END_SRC
 #+RESULTS:
@@ -2904,11 +3088,11 @@ digraph G {
   node [shape="hexagon"];
   body -> h1;
   h1 -> h1_content;
-  h1_content [label="#t: First heading" shape="none"];
+  h1_content [label="First heading" shape="none"];
 
   body -> p;
   p -> p1_content;
-  p1_content [label="#t: First para" shape="none"];
+  p1_content [label="First para" shape="none"];
 
   p2 [label="p"];
 }
@@ -2933,15 +3117,15 @@ digraph G {
   node [shape="hexagon"];
   body -> h1;
   h1 -> h1_content;
-  h1_content [label="#t: First heading" shape="none"];
+  h1_content [label="First heading" shape="none"];
 
   body -> p;
   p -> p1_content;
-  p1_content [label="#t: First para" shape="none"];
+  p1_content [label="First para" shape="none"];
 
   p2 [label="p"];
   p2 -> p2_content;
-  p2_content [label="#t: Second para" shape="none"];
+  p2_content [label="Second para" shape="none"];
 }
 #+END_SRC
 
@@ -2969,16 +3153,16 @@ digraph G {
   node [shape="hexagon"];
   body -> h1;
   h1 -> h1_content;
-  h1_content [label="#t: First heading" shape="none"];
+  h1_content [label="First heading" shape="none"];
 
   body -> p;
   p -> p1_content;
-  p1_content [label="#t: First para" shape="none"];
+  p1_content [label="First para" shape="none"];
 
   body -> p2;
   p2 [label="p"];
   p2 -> p2_content;
-  p2_content [label="#t: Second para" shape="none"];
+  p2_content [label="Second para" shape="none"];
 }
 #+END_SRC
 
@@ -3091,6 +3275,29 @@ elBody.appendChild(elP);
 #+END_SRC
 
 [[file:dom-add-para-4.svg]]
+
+
+* Exercises: Changing the DOM tree                                 :noexport:
+
+** Adding a paragraph
+
+- Create an HTML page with a paragraph of text
+- Clicking the text should add a new a paragraph to the bottom
+  of the page
+
+** Adding lists
+
+- Change the previous page
+- Add a new paragraph, that, if clicked, adds a list with three
+  listitems to the bottom of the page.
+
+** Showing / hiding a menu
+
+#+BEGIN_NOTES
+See [[file:day5/][week2/day5 directory]] for details.
+
+Goal is to introduce the =style= property on an element.
+#+END_NOTES
 
 * Race conditions (async)                                          :noexport:
 

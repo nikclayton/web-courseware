@@ -1,0 +1,407 @@
+#+COLUMNS: %35ITEM %TODO %TOPICS %REQUIREMENTS %TAGS
+
+* Javascript flow of control
+- Demo with debugging in WebStorm
+
+* Examples for Javascript events
+- Dragging elements by adjusting their position
+  - Make a draggable div, see [[https://metafizzy.co/blog/this-in-event-listeners/]]
+  - Covers removing event listeners as well
+
+* Advanced CSS
+
+See [[file:week1/day4.org]] for specifics.
+
+
+** TODO More selectors
+
+ - =div + p= (all =p= after a =div=)
+ - =p ~ ul= (all =ul= preceeded by =p=)
+ - =[attribute]= (all elements with attribute =attribute=)
+   - =[id]= (e.g. all elements with =id= attribute)
+ - =[attribute=value]=
+ - =[attribute~=value]= (contains)
+ - =[attribute|=value]= (starts with)
+
+** TODO Even more selectors
+
+ - =:checked=
+ - =:first-child=
+   - =p:first-child=
+ - =::first-letter=
+ - =::first-line=
+ - =:hover=
+ - ...
+
+** TODO Positioning
+
+- Week 1 / Day 5 has static/relative/absolute
+- Need to cover =fixed= and =sticky=
+
+
+*** Text alignment =text-align=
+** TODO Visibility
+
+ - https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/mon-may-7
+
+** TODO Float
+
+ - https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-02/fri-may-4
+
+** TODO Bootstrap
+
+** TODO Flex
+
+** TODO Flexbox
+
+ - https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-02/fri-may-4
+
+- https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox
+
+** TODO Grid
+
+https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids
+
+** TODO Float
+
+https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Floats
+
+** TODO Principles of webdesign
+
+ - What is webdesign?
+ - Margins
+ - Whitespace
+ - Grids
+
+ - Bootstrap
+
+ #+BEGIN_NOTES
+ https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/tue-may-8
+ #+END_NOTES
+
+** TODO CSS animations
+
+ https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/fri-may-11
+
+** TODO calc()
+
+ https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/fri-may-11
+
+** TODO Gradients
+
+ https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/fri-may-11
+** TODO object-fit
+
+ https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/fri-may-11
+* Shopping example
+
+** Follow up exercises
+ - Set validity checks on the input box, selectively
+   disable the add button
+ - Add "quantity" spinners
+ - Allow the user to type "\d+ something" and parse out the quantity
+
+** Final goal?
+- Front end and backend?
+- Save shopping list?
+- Sign in?
+  - Unsure about that, maybe tricky
+
+** Initial app refactor
+
+*** Better CSS
+- Color scheme and palette (to demo Sass later on?)
+*** TODO ='use strict;'=
+ - Introduce this earlier on so it's the default
+ - [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode][MDN strict mode reference]]
+
+*** =this= value
+
+** Add a "Delete all" button
+*** TODO Arrays and loops
+
+ Introduce when deleting multiple elements from a page
+
+* Introduction to HTTP
+Do this now, because the next bit talks about the difference
+between GET and POST requests.
+
+Can't do a POST from the filesytem, so we need a real webserver.
+
+* A Node.js webserver                                              :software:
+Just something that serves the static content for now
+
+Gets Node installed and them used to the idea of running the server.
+
+* TODO Form POSTs
+  :PROPERTIES:
+  :TOPICS:   forms
+  :END:
+
+Could demo a backend that returns the data transformed in some
+way, but without saving it?
+
+* Node-based backend
+  :PROPERTIES:
+  :TOPICS:   backends
+  :REQUIREMENTS: node-server
+  :END:
+- Iterations:
+  - Log that the endpoint has been hit
+  - Log the results
+  - Transform the results and return them
+    - As JSON, so that comes in here
+  - Frontend displays the returned results
+
+** How to design an API
+- Maybe we want multiple shopping lists in the future
+- Autocomplete on items? Get a list of known items from the
+  server?
+
+* Unit testing?
+Is this the right point to introduce it? We're going to have
+enough functions by this point.
+
+* Other Backends
+
+* TODO Conditionals
+  :PROPERTIES:
+  :TOPICS:   js-if
+  :END:
+
+Table, even/odd example
+
+Maybe a function that zebra-stripes tables should be
+in a module?
+
+In CSS that's =tr:nth-child(even) { ... }=
+
+* TODO More complicated data structures
+  :PROPERTIES:
+  :TOPICS:   data-structures
+  :END:
+
+- [[https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-05/tue-may-22][Books example]]
+
+- [[https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-09/mon-jun-18][Lausanne]] had some info on data structures, including a so-so
+presentation.
+  - Looks at JSON, YAML, XML
+
+* JSON
+  :PROPERTIES:
+  :TOPICS:   json
+  :REQUIREMENTS: data-structures
+  :END:
+
+Maybe mix this with data-structures as visualisation?
+* Javascript classes, objects
+  :PROPERTIES:
+  :REQUIREMENTS: data-structures
+  :END:
+- Shopping list is an object
+  - Methods:
+    - Add item
+    - Remove item
+    - Save list
+  - With item objects
+    - Quantity
+    - Description
+* Non-HTML / DOM functionality
+
+- Time (ex: [[https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-05/tue-may-22][time exercise]])
+
+** =var=
+
+** Multiple files, libraries
+   :PROPERTIES:
+   :TOPICS:   js-libs
+   :END:
+
+Problem:
+- JS files get too large
+- Too hard to understand
+
+Solution:
+- Break program in to multiple files
+- Load them all
+
+Problem:
+- One flat namespace.
+
+** Javascript versions and compatability
+   :PROPERTIES:
+   :TOPICS:   js-versions
+   :END:
+
+** ES6 modules
+   :PROPERTIES:
+   :REQUIREMENTS: js-versions js-scope js-libs
+   :TOPICS:   js-modules
+   :END:
+
+- Images!: https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/
+- https://hacks.mozilla.org/2015/08/es6-in-depth-modules/
+
+Problem:
+- Break up a large application in to smaller pieces
+- Want to reuse functionality
+- Want to make it easy to test things
+- Lack of namespaces (two libraries with same function name)
+
+** Javascript testing?
+* Polyfills
+- Browser incompatbilities
+- Polyfills
+- How to use them
+* TODO Frontend developer tools
+  :PROPERTIES:
+  :TOPICS:   fe-tools
+  :END:
+For each one of these, need to introduce the problem that it
+solves first
+** CSS preprocessors
+   :PROPERTIES:
+   :TOPICS:   css
+   :END:
+- Sass
+
+Problem:
+- CSS gets more complicated
+  - Multiple files
+  - Repetition
+  - Maintainability
+
+Example problem:
+Trying to use a consistent colour palette your site.
+
+Assume three colours, primary, accent, highlight.
+
+Want to be able to say "This element is the primary colour"
+and be able to change the primary colour without having to
+search and replace everything.
+
+Or do math.
+
+*** Exercise:                                                      :software:
+
+- Install Sass (requires Ruby)
+- Extend your stylesheet to use Sass
+** Using third party libraries
+   :PROPERTIES:
+   :TOPICS:   packages npm
+   :REQUIREMENTS: json js-libs node
+   :END:
+
+Problem:
+- Don't want to have to reinvent the wheel
+- Lots of other code out there that we can use
+- Code distributed as packages
+
+Solution:
+- =npm=, "Node Package Manager"
+
+** Javascript preprocessors
+   :PROPERTIES:
+   :TOPICS:   javascript
+   :END:
+- Babel
+** Frameworks
+   :PROPERTIES:
+   :TOPICS:   css
+   :END:
+- Bootstrap
+- Kanbasu
+** Packaging / bundling                                            :software:
+   :PROPERTIES:
+   :REQUIREMENTS: javascript jslibs node
+   :TOPICS:   webpack
+   :END:
+Problem:
+- Want to minimise # downloads
+- Every network connection has overhead
+  - More connections = slower sites
+  - So we want 1 big CSS file, 1 big JS file
+- But that makes things more complicated for the developer
+- Solution is to write smaller files, then bundle them into
+  one larger file
+
+** Task runners
+- Gulp
+
+Problem:
+Once you start using preprocessors and other tools you have
+to remember to run them at the right time.
+
+Tasks+depdencies.
+
+Gulp allows you to describe what the tasks are, what steps
+have to be done to complete each task, and the order in which
+those tasks should be run.
+* TODO Project management
+** TODO SCRUM / Agile
+** TODO How to work with a project manager
+** TODO Kanban boards
+* Databases
+  :PROPERTIES:
+  :TOPICS:   database
+  :END:
+** Install SQLite                                                  :software:
+** Tablular data
+   - Use spreadsheets as an example
+** Fundamentals
+   - Rows
+   - Columns
+   - Data types
+   - Primary key
+   - Composite keys
+** Querying a single table
+   - SELECT x FROM Y
+   - WHERE clauses
+   - Functions operating on data in the table
+** Relating data
+   - Customer and orders
+   - Show how one table is a bad idea
+** Multiple tables
+   - Defining relationships
+   - Joins
+     - Inner
+     - Left outer
+       - Introduce NULLs here?
+     - Right outer
+     - Full outer
+* Javascript Frameworks
+Re-write the shopping app in a framework?
+** AngularJS
+** React
+* Typescript
+Re-write the shopping app in Typescript?
+* Git
+** Basic git stuff
+- Diffing against different commits
+- Unstaging a change
+- Git gui
+** Git branches
+
+ Need to find a way to talk about this.
+
+ Maybe different ways of solving a problem?
+ Or two competing features for the shopping list? Perhaps use this
+ as an opportunity to show project management, priorities changing,
+ and features getting more important -- so create a branch to work
+ on it?
+*** TODO Frontend / backend distinction
+*** TODO Calling Web APIs from Javascript
+**** How to read API documentation
+**** Find an API for them to call
+*** TODO Writing Web APIs
+** Git logs
+** Amending commits
+** Remote repositories
+- Create a GitHub account
+- Adding a remote:
+[[https://help.github.com/articles/adding-a-remote/]]
+
+
+* Programmer comments
+- What and why, not how
+- Standards like TODO, BUG, FIXME, etc

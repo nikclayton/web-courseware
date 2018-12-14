@@ -1,14 +1,23 @@
-#+REVEAL_ROOT: file:///C:\Users\Nik%20Clayton\Documents\Powercoders\Course%20material\reveal.js-3.7.0\
-#++REVEAL_ROOT: http://cdn.jsdelivr.net/npm/reveal.js@3.7.0/
+#++REVEAL_ROOT: /reveal.js-3.7.0/
+#++REVEAL_ROOT: file:///C:\Users\Nik%20Clayton\Powercoders\004.powercoders\reveal.js-3.7.0\
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js@3.7.0/
 #+REVEAL_HLEVEL: 1
-#+REVEAL_PLUGINS: (notes history)
+#+REVEAL_PLUGINS: (classList zoom notes history)
 #+REVEAL_EXTRA_CSS: https://use.fontawesome.com/releases/v5.4.1/css/all.css
 #+REVEAL_EXTRA_CSS: ../powercoders-coursework.css
+#+REVEAL_EXTRA_CSS: ../../powercoders-coursework.css
+#+REVEAL_SLIDE_HEADER: Powercoders, Basel 2018/19
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../html-export.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../../html-export.css" />
 #+REVEAL_MARGIN: 0.0
 #+REVEAL_MIN_SCALE: 0.0
 #+REVEAL_MAX_SCALE: 0.0
 #+REVEAL_TRANS: fade
 #+REVEAL_INIT_SCRIPT: width: "100%"
-#+OPTIONS: toc:nil num:t tags:nil H:4 reveal_history:t
-#+Author: Nik Clayton
-#+Email: nik.clayton@powercoders.org
+#+PROPERTY: header-args:html-chrome :cache yes :flags --window-size=320,240 --force-device-scale-factor=2
+#+OPTIONS: toc:nil num:t tags:nil H:4 todo:nil
+#+OPTIONS: reveal_history:t reveal_global_headers:t
+#+TAGS: exercise software
+#+COLUMNS: %35ITEM %TODO %TOPICS %REQUIREMENTS %TAGS
+#+AUTHOR: Nik Clayton
+#+EMAIL: nik.clayton@powercoders.org

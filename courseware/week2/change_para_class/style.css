@@ -2,14 +2,14 @@
   padding: .5em;
   border-radius: .25em;
   border-color: rgba(0, 0, 0, .25);
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
-.warning { background: red; }
+.warning { background: rgb(192, 0, 0); }
 
 .warning::before { content: "WARNING: "; }
 
-.tip { background: green; }
+.tip { background: rgb(0, 192, 0); }
 
 .tip::before { content: "TIP: "; }
 

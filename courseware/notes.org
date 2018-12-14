@@ -1,0 +1,272 @@
+* Exercise files / directories
+
+** Week 1 / day 1
+  - =poco/cheatsheet/*=
+  - =poco/recipes/*=
+  - =poco/scratch/*=
+  - =poco/portfolio/*=
+
+** Week 1 / day 2
+
+- =poco/cheatsheet/git.html=
+- =poco/cheatsheet/shell.html=
+- =poco/cheatsheet/index.html=
+
+** Week 1 / day 4
+
+- =scratch/style.css=
+- =scratch/css.html=
+
+** Week 1 / day 5
+
+- =scratch/box-model/style.css=
+- =scratch/box-model/box-model.html=
+
+- =scratch/display/display.css=
+- =scratch/display/display.html=
+
+- =scratch/display/breadcrumb.html=
+- =scratch/display/breadcrumb.css=
+
+** Week 1 / day 5
+
+- =scratch/3column/*=
+
+
+day 1
+
+
+css exercises
+
+Day 1
+
+- Create some HTML files
+  - Recipes
+  - Portfolio / CV
+  - Notes
+- Don't worry about looking pretty, focus on the structure
+
+Day 2
+
+- Git
+  - HTML files (this is currently in day2, move to day1)
+  - Create an index page
+
+- Space in day 2 to create Github account, and add a remote. Extend
+material to include GitHub.
+
+
+
+What files do they have at this point?
+  - Check day1/day2 exercises
+
+
+
+- Add an external stylesheet
+
+
+
+
+- Portfolio
+  - Identify content that only exists once:
+    - about-me
+    - education
+    - work
+
+  - Add appropriate id attributes to the markup.
+
+
+  - Identify classes for the content
+    - company-name
+    - date
+    - role
+    - job-description
+
+    - school-name
+
+  - Add classes to the markup
+  - Use CSS to style the markup appropriately
+    - TODO: Find some examples of portfolios they can copy from
+
+
+  - Decide on a layout and colour palette for your portfolio
+
+
+
+Write a Slack bot? Use the Slack API?
+
+
+
+
+
+
+* TODO General
+
+** TODO Tech setup
+
+Move the content from week 1 in to its own presentation, give
+to the students ahead of time.
+
+** TODO Line numbers
+
+Bring line numbers back
+
+** DONE Table presentation
+
+Make tables look nicer.
+
+** Name badges for the students
+** Flags?
+
+* TODO Week 1
+** Day 1
+*** General notes
+
+ Is this enough content for one day?
+
+*** TODO Title slide
+
+ =week1.org= export puts on the titles on first slide.
+
+ Maybe split the files up in to dayN-content.org which can be
+ included, and dayN.org which also includes?
+
+*** TODO Missing introductions
+
+ - Quick go around the class, everyone says:
+   - Hi
+   - Where they're from
+   - ? Check with Lausanne
+
+*** DONE Delete icebreaker slide
+
+ Covered by previous material
+
+*** DONE Welcome
+
+ Put move earlier?
+
+*** DONE Create a "Goals for today" slide
+
+ Already exists (although it's about the week), slide 13. move earlier,
+ split in to goals for the week and the day, and talk about:
+
+ - Everyone up to speed with the schedule
+ - Verified all tech is setup
+ - Everyone's on Slack
+
+ - Using the command line
+ - First HTML page
+ - Core HTML elements
+   - p, headings, lists
+   - Images, types of images
+ - Making mistakes
+ - Reading documentation
+
+*** DONE Introduction to the web
+
+ Add bullets from content.
+
+*** DONE Nesting elements
+
+ Two slides, duped speaker notes on second slide.
+
+*** DONE Results
+
+ Slide with results for inline and block elements (around 36)
+
+ Left bullets are too far left.
+
+*** TODO Exercises
+
+ - Flesh out with more details
+ - Include a link to the recipe
+ - Explain the portfolio idea
+
+
+** TODO Day 2
+
+*** General notes
+
+Also a bit light on initial content.
+
+*** DONE Terminology review
+
+ - Use code font instead of quotes
+
+*** TODO Add a "Goals for today slide
+
+ - Getting used to the command line
+ - Starting to use version control
+ - Linking between HTML files
+
+*** DONE The command line
+
+ - Use code font instead of quotes
+
+*** TODO Shell screenshots
+
+ - Need to create them
+
+*** TODO Anatomy of the command line
+
+ - Redo the image
+
+*** DONE All the command examples
+
+ - Use tables instead of bullets
+
+*** DONE Changing / Making directories
+
+ - Italics isn't working
+
+*** DONE Cheatsheet
+
+ - Use code font
+
+*** TODO Git content
+
+**** DONE Update my e-mail address in the examples
+
+**** TODO Needs diagrams
+
+**** TODO Go through the idea of stuff being copied from WD to Stage to Repo
+ repeatedly.
+
+
+
+** TODO Day 4
+
+*** DONE Goals
+
+ - Introduce CSS
+ - More version control
+
+*** DONE Adding CSS to the scratch file
+
+ - Include the git command
+
+*** DONE Add some HTML content
+
+- Commit it after it's working correctly and Atom doesn't complain
+
+*** DONE Selectors slides
+
+- Commit after every example.
+
+*** DONE CSS Colours
+
+Maybe have a break before here?
+
+*** TODO Browser Inspector
+
+Maybe got to lunch around here?
+
+*** TODO CSS Resources
+
+- Include some information about generating a nice palette, discuss
+more in the colours sections.
+
+*** TODO Exercises and practice
+
+Haven't done enough at that point to reproduce the page.

@@ -1,6 +1,5 @@
 #+Title: Powercoders Basel Coursework, DOM Shopping List Exercise
 #+SETUPFILE: "../../include/settings.org"
-#+COLUMNS: %35ITEM %TODO %TOPICS %REQUIREMENTS %TAGS
 
 * TODO Building a shopping list
 
@@ -3098,12 +3097,32 @@ handler, test it, add and commit.
 
 
 * TODO UI followup work
+
+#+REVEAL_HTML: <div class="leftcol">
+- Choose a colour palette
+- Header image
 - Styling input elements
-- Adding a fieldset and legend
+  - Red border when the input is empty?
+- Different fonts and font-sizes
+  - A font that looks like handwriting for the list?
 - Using icons
-* MDN Styling input elements
-* Add a fieldset and legend
-* Use a font-awesome icon for delete
+  - Font Awesome, trash can icon for delete button
+  - Shopping cart icon for "Add item"
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Time for a change of pace.
+
+We've been doing a lot Javascript, and it's been a while since
+we touched CSS.
+
+So now you've got some time to add some CSS
+#+END_NOTES
 * TODO Functionality followup work
 - Adding a "Delete all" button
 - Adding quantities

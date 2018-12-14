@@ -1,0 +1,18 @@
+* Tags used in these files
+
+- :noexport: -- don't export the slide
+
+- :software: -- slide references software that needs to be installed
+
+- :exercise: -- slide contains an exercise
+
+Set tags with =C-x C-q=.
+
+* Properties
+
+- Topics
+
+- Requirements -- topics that need to be covered before this one
+
+
+Set properties with =C-c C-x p=.

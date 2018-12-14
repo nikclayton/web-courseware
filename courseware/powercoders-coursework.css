@@ -15,7 +15,7 @@
 
 /** Auto line numbering */
 pre.src, pre.example {
-  counter-reset: line;
+  counter-reset: line var(--data-ox-src-line-start);
   background-color: #3f3f3f;
   margin: 2em auto;
   padding: 0.5em;
@@ -29,15 +29,28 @@ span.linenr {
 
 .reveal pre code {
   display: inline;
-  font-size: 125%;
+  font-size: 140%; /* 40px; */ /* 125%; */
   line-height: 1.2;
+}
+
+/* Smaller fonts in two column layouts, otherwise text generally
+   doesn't fit */
+.reveal div.leftcol pre code, .reveal div.rightcol pre code {
+  font-size: 125%;
+}
+
+.reveal section.smaller pre code {
+  font-size: 110%;
+}
+.reveal div.leftcol pre, .reveal div.rightcol pre {
+  min-width: 0;
 }
 
 .reveal pre.src code {
   counter-increment: line;
 }
 
-.reveal pre.src code:before {
+.reveal pre.line-number code:before {
   content: counter(line);
   border-right: 1px solid #ddd;
   padding: 0 0.5em;
@@ -83,11 +96,11 @@ span[class|=section-number] {
   position: absolute;
   top: -10px;
   right: -10px;
-  font-size: 70%;
+  font-size: 100%;
   background: green;
   color: white;
   text-align: center;
-  line-height: 18px;
+  line-height: 24px;
   border-radius: .25em;
   padding: 0 0.5em;
   box-shadow: 0 0 1px #333;
@@ -115,7 +128,8 @@ span[class|=section-number] {
 
 /** Code blocks in list items get a grey background. */
 /** Ditto for in table cells */
-li code, td code {
+/** And paras (e.g., in center blocks) */
+li code, p code, td code {
   background-color: #3f3f3f;
   padding: 0 .25em !important;
   border-radius: .25em;
@@ -146,6 +160,11 @@ div.org-center {
   margin: 0 auto;
 }
 
+/** asciitosvg SVG */
+svg > text {
+  fill: #eee8d5 !important;
+}
+
 /** Make slies a bit taller */
 .slides {
   height: 900px !important;
@@ -153,6 +172,11 @@ div.org-center {
 
 
 /** Improve table styling */
+/* More space at the bottom */
+.reveal table {
+  margin-bottom: 1em;
+}
+
 .reveal table td {
   border: none;
 }
@@ -160,6 +184,37 @@ div.org-center {
 .reveal blockquote {
   padding: 1em 2em;
   max-width: 35%;
+}
+
+.reveal .leftcol blockquote {
+  max-width: 90%;
+}
+
+.reveal .rightcol blockquote {
+  max-width: 90%;
+}
+
+.reveal blockquote.bad:after, .reveal blockquote.good:after {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 70%;
+  background: green;
+  color: white;
+  text-align: center;
+  line-height: 42px;
+  border-radius: .25em;
+  padding: 0 0.5em;
+  box-shadow: 0 0 1px #333;
+}
+
+.reveal blockquote.bad:after {
+  background: red;
+  content: "\2718";
+}
+
+.reveal blockquote.good:after {
+  content: "\2714";
 }
 
 /** Try a bit more spacing between list items */
@@ -170,10 +225,38 @@ div.org-center {
 /** No borders around images */
 .reveal div.figure p img {
   border: none;
+  max-height: 75vh;
 }
 
-.reveal pre {
+.reveal div.org-src-container pre {
   margin-left: auto;
   margin-right: auto;
-  max-width: 70em;
+  width: fit-content;
+  min-width: 60em;
+  padding-right: 2em;
 }
+
+div.leftcol pre.src, div.rightcol pre.src {
+  /* min-width: 30em; */
+  min-width: 80%;
+}
+
+/** Keep heading size the same regardless of level */
+.reveal h3, .reveal h4 {
+  font-size: 2.11em;
+}
+
+/* Apply HTML_CONTAINER_CLASS property, value = no-heading */
+section.no-heading h2, section.no-heading h3 {
+  display: none;
+}
+
+.reveal div.slide-header {
+  position: fixed;
+  left: 2em;
+  top: -1em;
+  color: rgba(238, 232, 213, .5);
+  font-size: 70%;
+  font-variant: small-caps;
+}
+

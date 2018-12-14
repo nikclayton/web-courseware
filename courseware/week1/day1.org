@@ -1,6 +1,8 @@
-#+Title: Powercoders Basel Coursework, Day 1
+#+Title: The first day
 #+SETUPFILE: "../include/settings.org"
 #+PROPERTY: header-args:html-chrome :flags --window-size=320,240 --force-device-scale-factor=2 :cache yes
+
+* Internal notes                                                   :noexport:
 
 #+BEGIN_NOTES
 This is a special week -- no guest trainers so that I can get them up to
@@ -12,12 +14,28 @@ python -m http.server 8080
 #+END_SRC
 #+END_NOTES
 
-* Welcome
+* Welcome                                                          :noexport:
 
+- Introductions
 - Course agreement and expectations
-- Asking questions is absolutely fine
+- Contracts
+- -> SBB to get GA (after lunch)
 
-- Tell me if I need to speak more slowly
+#+BEGIN_NOTES
+From Sunita's message:
+
+- we introduce ourselves as a team and explain who is the contact
+  person for what
+- the class introduces themselves, saying their name and something
+  about this name, so we can remember their names (I can lead this)
+- Hussam says a few things about Hosts/ Orga/ things they have read in
+  the Email
+- Sunita explains the contracts and has them signed
+- after lunch Hussam and I go to SBB with the students who need a GA
+  from us.
+#+END_NOTES
+
+* About asking questions
 
 #+BEGIN_QUOTE
 "All teaching is the process of lying, and then replacing the lies
@@ -47,8 +65,14 @@ that's fantastic, so do feel free to help with explanations.
 
 This should all be very collaborative -- as I say, it's not a
 competition.
-#+END_NOTES
 
+One other thing -- I know, habitually, that I tend to speak quite
+quickly. I'm doing my best to slow down and be really clear, but I
+know that sometimes I will fail at that. When I do, and you need me
+to slow down, tell me.
+
+OK?
+#+END_NOTES
 
 * TODO Goals for this week
 
@@ -67,18 +91,9 @@ competition.
 - Making mistakes and fixing them
 - Reading documentation
 
-* Introductions
-
-#+BEGIN_NOTES
-Lets do a quick go around the class.
-
-Names, where you're from, ...
-
-#+END_NOTES
-
 * Logistics
 
-- Wifi
+- Wifi (=PowerCoder= / =ImPhilo18=)
 - Bathrooms
 - Schedule and breaks
   - 9am - midday: Teaching, w/ 10 minute breaks
@@ -87,8 +102,7 @@ Names, where you're from, ...
 
 #+BEGIN_NOTES
 
-... speaker notes go here ...
-   
+
 #+END_NOTES
 
 * Tech setup
@@ -131,17 +145,11 @@ Names, where you're from, ...
 - Web Browser: [[https://www.google.com/chrome/][Google Chrome]]
 - Programmer's Editor: [[https://atom.io/][Atom]]
 - Password Manager: [[https://www.bitwarden.com][Bitwarden]]
-- Version Control: Git (Windows | Mac)
-- IDE: WebStorm
 
 ** Atom
 
 #+BEGIN_NOTES
-Download
-
-Windows install:
-File > Settings
-
+Make sure everyone can open Atom and navigate around it.
 #+END_NOTES
 
 ** Find the keys
@@ -371,20 +379,37 @@ Anyone not using Windows 10, let me know.
 
 ** Paths
 
- - Each file is in exactly one directory
- - "path" is the route to the file through all the directories it is in,
-   starting from the root.
- - /.../..../... TODO(nik): Use a plausible full path here
+- Each file is in exactly one directory
+- "path" is the route to the file through all the directories it is in,
+  starting from the root.
+- Possible paths
+  - (Windows) =C:\Users\Nik Clayton\poco.txt=
+  - (OS X) =/Users/nik/poco.txt=
+  - (Windows) =c:/users/nik clayton/poco.txt=
 
- #+BEGIN_NOTES
- A file can only ever be in one directory at a time.
+#+BEGIN_NOTES
+A file can only ever be in one directory at a time.
 
- This means that we can uniquely identify a file by starting at the
- root directory and then listing all the directories that we have to go
- through to get to file.
+This means that we can uniquely identify a file by starting at the
+root directory and then listing all the directories that we have to go
+through to get to file.
 
- We separate these directory names with a '/' slash character too.
- #+END_NOTES
+We separate these directory names with a '/' slash character too.
+
+Windows and OS X show you different slash characters for the separator,
+but in Windows you can use either. For programming purposes the forward
+slash is easier to use than the backward slash.
+
+Windows also generally doesn't pay attention to the *case* of the path,
+it treats upper and lower case the same. OS X does.
+
+Windows also has *drive letters*, which are a holdover from about 30
+years ago. If you're accessing a file on the same drive on Windows you
+don't need to include the drive letter, but if it's on a different
+drive then you do.
+
+That generally won't be an issue in this class.
+#+END_NOTES
 
 ** The directory tree (family tree)
 
@@ -472,7 +497,15 @@ digraph G {
 
   node [shape="folder"];
 
-  home [label="Home"]
+  root [label="/"];
+  apps [label="Apps"];
+  apps_dot [label="..."];
+
+  program_files [label="Program Files"];
+  program_files_dot [label="..."];
+
+  users [label="Users"];
+  home [label="Nik Clayton"]
   desktop [label="Desktop"];
   documents [label="My Documents"];
   tax [label="Tax"];
@@ -480,13 +513,20 @@ digraph G {
   poco [label="Powercoders"];
   basel [label="Basel"];
   coursework [label="coursework"]
-  week2 [label="week2"];
+  week1 [label="week1"];
   day1 [label="day1.html" shape="note"];
 
   img8198 [label="IMG_8198.jpg" shape="note"];
   img8199 [label="IMG_8199.jpg" shape="note"];
   img8200 [label="IMG_8200.jpg" shape="note"];
 
+  root -> apps;
+  apps -> apps_dot;
+  root -> program_files;
+  program_files -> program_files_dot;
+  root -> users;
+
+  users -> home;
   home -> desktop;
   home -> documents;
   documents -> tax;
@@ -497,12 +537,12 @@ digraph G {
   home -> poco;
   poco -> basel;
   basel -> coursework;
-  coursework -> week2;
-  week2 -> day1;
+  coursework -> week1;
+  week1 -> day1;
 }
 #+END_SRC
 
-#+RESULTS[94309ac0718013170deb2e03181f8d1c84e2d0b7]:
+#+RESULTS[cd587466c574d5cf5193b0f0e91a715892bc8f85]:
 [[file:tree-filesystem.png]]
 
  #+BEGIN_NOTES
@@ -524,17 +564,6 @@ And these directories (indicate slide) are siblings of each other.
 Computer scientists love trees. You'll be seeing stuff like this a lot.
  #+END_NOTES
 
-** Familiar directory trees
-
-TODO: Screenshots of directory trees in Windows Explorer, OS X Finder,
-etc, to show that this isn't an alien concept for them.
-
-#+BEGIN_NOTES
-You're probably more familiar with the directory trees when it's
-presented like this, but all the same features are there.
-#+END_NOTES
-
-[d3 tree code: https://bl.ocks.org/mbostock/999346]
 
 * Introduction to the web
 
@@ -564,7 +593,7 @@ download a web page. We'll cover that in more detail a lot later.
 
 - Open https://www.powercoders.org/
 - Right-click on the page
-- Choose "View source" from the menu that appeara
+- Choose "View source" from the menu that appears
 
 #+BEGIN_NOTES
 This is text for the Powercoders home page. There's a lot here that at
@@ -695,7 +724,7 @@ licensed under [[https://creativecommons.org/licenses/by-sa/2.5/][CC-BY-SA 2.5]]
 #+END_SRC
 
 - =em= element is *nested* inside the =p= element
-- =em= means "emphasis", often shown as italics, as here
+- =em= means "emphasis", often shown as italics
 
 #+BEGIN_NOTES
 Elements can be placed inside other elements. We say that they *nest*
@@ -733,7 +762,7 @@ Does everyone see this?
 ** Elements can not overlap
 
 #+BEGIN_EXAMPLE
-<p>This is a <em>bad example.</p><em>
+<p>This is a <em>bad example.</p></em>
 #+END_EXAMPLE
 
 #+BEGIN_NOTES
@@ -1449,7 +1478,7 @@ you.
   <p>Some content.</p>
 
   <p>Some more content.</p>
-</p>
+</div>
 
 <div id="footer">
   <p>Author: Nik</p>

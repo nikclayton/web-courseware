@@ -1,0 +1,117 @@
+#+TITLE: Powercoders Courseware
+
+* Overview
+This is the courseware for the 2018/2019 Powercoders Basel course.
+
+* Content and structure
+Previous versions of the course have -- as far as I can tell --
+generally taken the approach of provding blocks of material in
+significant chunks, and then moving on to a different block when
+the previous topic has been exhausted.
+
+With this course I've tried to introduce new material as soon
+as it would be useful for the students to use it.
+
+For example, in previous versions of the course, version control
+with Git was not introduced until around week 6. In this course
+I introduce it in the first week, so that that the students can
+integrate version control in to their habits as soon as possible.
+
+There are two additional significant changes to the previous material.
+
+1. Exercises come much more frequently. I'm aiming for no more than
+25-30 minutes elapsing before the students are trying something out
+on their computers, sometimes a lot less time.
+
+2. Explicitly providing space for the students to deliberately "break"
+something, and see what that looks like -- mis-spellings, ommitting
+quotes, incorrect closing tags, things like that. So they can learn
+what this looks like and recognise it in the future when they
+inevitably make these mistakes.
+
+* Technical instructions for authors / editors
+The courseware is written in Org, as implemented in Emacs' Org Mode.
+
+Roughly, each slide corresponds to a different heading in the file,
+and the content of the section is the content of the slide.
+** Rationale
+I wanted an authoring environment that:
+
+- Prioritised keyboard over mouse for authoring content
+- Supported automatically generating content
+  - E.g., screenshots from HTML shown on the slides
+- Supported including content from other sources
+  - E.g., live snippets of source code
+- Was amenable to version control
+- Was not propriatory to one vendor
+- Had multiple export options
+
+** TODO Structure of a slide
+** Generating the slides, speaker notes, etc.
+*** Prerequisites
+
+The =emacs.el= file in the repository configures Emacs to
+load all the necessary packages and configures them
+appropriately.
+
+Any third-party software that needs to be installed is
+described in more detail in =emacs.el=.
+
+Installing the software, loading =emacs.el=, and running
+=M-x eval-buffer= should be sufficient to configure Emacs.
+
+*** Interactively generating slides
+
+Open one of the =.org= files corresponding to a day, week, or
+topic.
+
+Then run =C-c C-e R R= to run the =ox-reveal= export process.
+This will write a RevealJS presentation to the same directory
+as the =.org= file. Any graphics or screenshots needed by
+the presentation will be generated automatically (see the
+documentation later in this file for [[#html-chrome][html-chrome]] and [[#graphviz][graphviz]]
+SRC blocks for more information on how that works.
+
+*** Interactively generating a one-pager
+
+Open one of the =.org= files corresponding to a day, week, or
+topic.
+
+Then run =C-c C-e h h= to export a single HTML file that
+contains the whole content suitable for giving out or sharing
+as lecture notes.
+
+*** TODO Batch generation of output files
+
+** Additional feeatures
+Various Emacs and =org-mode features are used to make editing the
+content easier and ensuring it is consistent.
+
+*** TODO =html= and =javascript= SRC blocks
+*** TODO =html-chrome= SRC blocks
+:PROPERTIES:
+:CUSTOM_ID: html-chrome
+:END:
+*** TODO =graphviz= SRC blocks
+:PROPERTIES:
+:CUSTOM_ID: graphviz
+:END:
+*** TODO INCLUDE files
+*** TODO =TOPIC= and =REQUIREMENTS= properties
+Each heading contains optional =TOPIC= and =REQUIREMENTS= properties.
+
+These are used to try and ensure that all the necessary material
+is covered, and material is not introduced without first
+covering any required material first.
+
+The =TOPIC= property for a heading is a keyword that describes the
+topic that is covered in this slide.
+
+The =REQUIREMENTS= property for a heading is a space-separated list
+of values used in =TOPIC=s
+
+The =my/check-topics= function walks all the headings and verifies
+that no heading lists a =REQUIREMENT= that is not listed as a
+=TOPIC= on one of the preceding slides.
+
+For more information about Org properties see...

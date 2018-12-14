@@ -1,0 +1,24 @@
+div.NOTES {
+  border: 1px solid #ccc;
+  box-shadow: 3px 3px 3px #eee;
+  padding: 8pt;
+  margin: 1.2em;
+}
+
+div.NOTES:before {
+  position: relative;
+  background-color: white;
+  top: -20px;
+  left: -20px;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 3px;
+  padding-bottom:3px;
+  border: 1px solid black;
+  content: "Speaker notes";
+}
+
+span.section-number-2, span.section-number-3 {
+  display: none;
+}
+

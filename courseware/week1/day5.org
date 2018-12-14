@@ -1,4 +1,4 @@
-#+Title: Powercoders Basel Coursework, Day 5, More CSS
+#+TITLE: More CSS
 #+SETUPFILE: "../include/settings.org"
 
 #+BEGIN_NOTES
@@ -44,6 +44,10 @@ and read and understand the documentation.
 #+END_NOTES
 
 * TODO Box model
+  :PROPERTIES:
+  :TOPICS:   css-box-model
+  :REQUIREMENTS: css-intro
+  :END:
 
 [[file:box-model.png]]
 
@@ -480,6 +484,87 @@ and adding margin-top and margin-bottom setting them to different
 values.
 #+END_NOTES
 
+** Box model properties: =height=
+- Height of the content area
+  - =height: auto;=
+  - =height: 150px=
+  - =height: 6em;=
+  - =height: 50%;=
+- Also =min-height= and =max-height=
+*** =height= examples
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: height-example
+#+BEGIN_SRC html
+<style>
+div {
+  margin-bottom: 5px;
+  border: 1px solid rgb(0, 0, 0);
+}
+#taller { height: 50px; }
+#shorter { height: 25px; }
+#parent { height: 100px; }
+#child { height: 50%; }
+</style>
+<div id="taller">I'm 50 pixels tall.</div>
+<div id="shorter">I'm 25 pixels tall.</div>
+<div id="parent">
+  <div id="child">
+    I'm half the height of my parent.
+  </div>
+</div>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :exports results :noweb yes
+<<height-example>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+** Box model properties: =width=
+- Width of the content area
+  - =width: auto;=
+  - =width: 150px;=
+  - =width: 6em;=
+  - =width: 50%;=
+- Also =min-width= and =max-width=
+
+*** =width= examples
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: width-example
+#+BEGIN_SRC html
+<style>
+div {
+  border: 1px solid rgb(0, 0, 0);
+  margin-bottom: 5px;
+}
+.px-width { width: 200px; }
+.em-width { width: 5em; }
+.pct-width { width: 50%; }
+</style>
+<div class="px-width">
+  This is 200px wide
+</div>
+<div class="em-width">
+  This is 5em wide
+</div>
+<div class="pct-width">
+  This is 50% wide
+</div>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :exports results :noweb yes
+<<width-example>>
+#+END_SRC
+
+#+RESULTS[9484d84f7ad7fc699efbc7825ea9eb1460d3ae01]:
+[[file:width-examples.png]]
+
+#+REVEAL_HTML: </div>
 ** Box model properties: =padding=
 
 #+REVEAL_HTML: <div class="leftcol">
@@ -548,55 +633,6 @@ And if you give it 4 values then they set the top, right, bottom,
 and left properties. I remember that by imagining a clock face, and
 the minute hand sweeping around the face -- starting at the top, then
 it points right at 3, to the bottom at 6, and left at 9.
-#+END_NOTES
-
-
-** Box model properties: =margin=
-
-#+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC css
-selector {
-  margin-top: 1em;
-  margin-right: 0;
-  margin-bottom: .5em;
-  margin-left: 10px;
-}
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC css
-selector {
-  margin: 1em;
-} /* margin-{top, right, bottom, left}: 1em; */
-
-
-selector {
-  margin: 0 1em;
-} /* margin-{top, bottom}: 0;     */
-  /* margin-{left, right}: 1em;   */
-
-selector {
-  margin: 1em 0 2em;
-} /* margin-top: 1em;             */
-  /* margin-{left, right}: 0;     */
-  /* margin-bottom: 2em;          */
-
-
-selector {
-  margin: 1em 2em .5em 0;
-} /* margin-top: 1em;             */
-  /* margin-right: 2em;           */
-  /* margin-bottom: .5em;         */
-  /* margin-left: 0;              */
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+BEGIN_NOTES
-=margin= is specified in exactly the same way as =padding=.
-You can either use four different margin properties, or
-you can use the single =margin= property in its 1, 2, 3, or
-4 value variant.
 #+END_NOTES
 
 ** Box model properties: =border=
@@ -848,8 +884,119 @@ colours.
 
 #+REVEAL_HTML: </div>
 
+** Box model properties: =margin=
 
-* Display: 3 types of CSS boxes
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC css
+selector {
+  margin-top: 1em;
+  margin-right: 0;
+  margin-bottom: .5em;
+  margin-left: 10px;
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC css
+selector {
+  margin: 1em;
+} /* margin-{top, right, bottom, left}: 1em; */
+
+
+selector {
+  margin: 0 1em;
+} /* margin-{top, bottom}: 0;     */
+  /* margin-{left, right}: 1em;   */
+
+selector {
+  margin: 1em 0 2em;
+} /* margin-top: 1em;             */
+  /* margin-{left, right}: 0;     */
+  /* margin-bottom: 2em;          */
+
+
+selector {
+  margin: 1em 2em .5em 0;
+} /* margin-top: 1em;             */
+  /* margin-right: 2em;           */
+  /* margin-bottom: .5em;         */
+  /* margin-left: 0;              */
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+=margin= is specified in exactly the same way as =padding=.
+You can either use four different margin properties, or
+you can use the single =margin= property in its 1, 2, 3, or
+4 value variant.
+#+END_NOTES
+
+** Box model properties: =box-sizing=
+- Total height
+  - content height...
+  - plus padding-top plus padding-bottom...
+  - plus border-top plus border-bottom
+- Total width
+  - content width...
+  - plus padding-left plus padding-right...
+  - plus border-left plus border-right
+- This is =box-sizing: content-box;=
+- Change with =box-sizing: border-box;=
+#+BEGIN_NOTES
+Normally the element's final width and height are calculated from
+the inside out -- width and height are applied to the content,
+then any padding and border sizes are added, to give the element's
+final size.
+
+This is the default behaviour.
+
+You can change this with the =box-sizing= property. The default
+value is =content-box=.
+
+If you set this to =border-box= then the width and height properties
+are applied to the border box of the element, then the padding,
+and the content box is resized as necessary.
+#+END_NOTES
+
+*** =box-sizing= example
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: box-sizing-example
+#+BEGIN_SRC html
+<style>
+div {
+  border: .5em solid rgb(0, 0, 0);
+  margin-bottom: 5px;
+  width: 15em;
+  padding: 1em;
+}
+div.content-box {
+  box-sizing: content-box; /* default */
+}
+div.border-box {
+  box-sizing: border-box;
+}
+</style>
+<div class="content-box">
+  15em + 1em + 1em + .5em + .5em = 18em.
+</div>
+<div class="border-box">
+  15em only.
+</div>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC html-chrome :exports results :noweb yes
+<<box-sizing-example>>
+#+END_SRC
+
+#+RESULTS[dca6e9df4e00e782ee88737500b04c90dab7c292]:
+[[file:box-sizing-example.png]]
+
+#+REVEAL_HTML: </div>
+* TODO Display: 3 types of CSS boxes
 
 - =block=: Default for block-level elements
   - Stacks with other block boxes
@@ -865,6 +1012,12 @@ colours.
 #+BEGIN_NOTES
 
 #+END_NOTES
+
+** =display=: Setup
+
+- Create =scratch/display= directory
+- Create =scratch/display/display.css=
+- Create =scratch/display/display.html=
 
 ** =display= examples
 
@@ -896,9 +1049,14 @@ colours.
   - Box matches content size
 #+REVEAL_HTML: </div>
 
-** Display example: Breadcrumb navigation
+* =display= example: Breadcrumb navigation
 
-#+INCLUDE: "day5/display-2.html" src html
+- Create =scratch/display/breadcrumb.css=
+- Create =scratch/display/breadcrumb.html=
+
+** =breadcrumb.html=
+
+ #+INCLUDE: "day5/display-2.html" src html
 
 *** Result
 
@@ -909,7 +1067,42 @@ colours.
 #+RESULTS:
 [[file:result.png]]
 
-*** Change the CSS
+** =breadcrumb.css=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/display-3.css" :lines "6-9" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Edit =breadcrumb.html=
+  - Add =link= element for =breadcrumb.css=
+- Edit =breadcrumb.css=
+  - Display =li= items inline
+#+REVEAL_HTML: </div>
+
+** =breadcrumb.css=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/display-3.css" :lines "6-13" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Show =>= before each list item
+#+REVEAL_HTML: </div>
+
+
+** =breadcrumb.css=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/display-3.css" :lines "6-17" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Show =>= before each list item
+  - Except the first one
+#+REVEAL_HTML: </div>
+
+** =breadcrumb.css=
 
 #+REVEAL_HTML: <div class="leftcol">
 #+INCLUDE: "day5/display-3.css" src css
@@ -917,20 +1110,19 @@ colours.
 
 #+REVEAL_HTML: <div class="rightcol">
 - Remove the left padding on =ul=
-- Display =li= items inline
-- Show =>= before each list item
-  - Except the first one
+- Add a background colour
 #+REVEAL_HTML: </div>
 
 *** Results
 
 #+REVEAL_HTML: <div class="leftcol">
 #+NAME: display-3
-#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/display-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/display-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
-#+RESULTS: display-3
+#+RESULTS[3dff6790850a0396f3c7e5ffbef1fe04abca0789]: display-3
 [[file:display-3.png]]
+
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -939,15 +1131,1105 @@ colours.
   - This will be more important next week
 #+REVEAL_HTML: </div>
 
-* TODO CSS Units
+* TODO CSS Positioning
 
-   - https://css-tricks.com/the-lengths-of-css/
+#+BEGIN_NOTES
+We've looked at how the box model works, and the difference between
+block level elements, inline elements, and inline-block elements.
+
+Now we need to take a deeper look at how elements are actually
+positioned on the page. Then we can use CSS features to change how
+this positioning happens.
+#+END_NOTES
+
+** Position: Setup
+
+- Create =scratch/position= directory
+- Create =scratch/position/style.css=
+- Create =scratch/position/position.html=
+
+#+INCLUDE: "day5/position-1.html" src html
+
+** Add some HTML content
+
+#+INCLUDE: "day5/position-2.html" :lines "8-19" src html
+
+#+BEGIN_NOTES
+There's nothing special here so far. All we've done is created a
+heading and three paragraphs and given them some content and classes.
+
+Because the classes don't currently exist this does nothing out of the
+ordinary.
+
+Make these changes, double check everything looks good.
+
+[Wait]
+#+END_NOTES
+
+** Add some HTML content
+
+#+NAME: position-2
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-2.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS[fce87eb4489f4368b6c594d8f6c433433e63a36c]: position-2
+[[file:position-2.png]]
+
+#+BEGIN_NOTES
+You should have ended up with something that looks like this.
+
+Everyone OK?
+#+END_NOTES
+** Add and commit!
+
+** =position: static;=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/position-3.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+NAME: position-3
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS[c4175d82fcd23d2c95032e05f168153165aabc5b]: position-3
+[[file:position-3.png]]
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+As you may have guess from the class names we used there are a
+few different types of positioning available.
+
+The first of these is =static=. This is the default if an element
+hasn't been given an explicit position.
+
+This just means that the element is laid out in entirely the normal
+way. Block level elements are stacked one under the other, while
+inline elements don't break a line and appear exactly as we covered
+earlier.
+
+We can verify this by explicitly setting the position to =static= on
+an existing element.
+
+We have the =pos-static= class, so create the CSS file and add the
+rule shown here. It sets the background colour just so we can be
+certain that the rule is being applied. When you save and reload
+you should see this result here.
+
+Our paragraph has not moved at all.
+
+Also, I've added a border to the =body= element, just to highlight
+something interesting -- notice how the body element border is *not*
+the edge of the page. There's a margin between the =body= and the
+edge of the page. We're going to come back to that shortly...
+#+END_NOTES
+
+** =position: relative;=
+
+#+INCLUDE: "day5/position-4.css" src css
+
+#+BEGIN_NOTES
+Lets set a relative position on one of the paragraphs. To make it
+stand out some more I've given it a blue background and white text.
+
+Make this change, save, and reload.
+
+What do you see?
+
+[Wait]
+#+END_NOTES
+
+** =position: relative;=
+
+#+NAME: position-4
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-4.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS[7dc7ae7d3895dc41f674e94f9f541e19e331bda4]: position-4
+[[file:position-4.png]]
+
+#+BEGIN_NOTES
+Our paragraph's position hasn't moved.
+
+The problem here is that we've used relative positioning, but we
+haven't told the element where to move to. Without that, it stays in
+its normal place.
+
+Notice also that the yellow and blue background colours show something
+else -- our paragraphs are entirely contained within the =body=
+element.
+#+END_NOTES
+
+** =position: relative;=
+
+#+REVEAL_HTML: <div class="leftcol">
+- Properties to adjust the element's position
+  - =top=
+  - =bottom=
+  - =left=
+  - =right=
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+INCLUDE: "day5/position-5.css" src css
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+To control the position we use the =top=, =bottom=, =left=, and
+=right= properties.
+
+Confusingly, these operate in the opposite direction to their names.
+
+In the example on the right this will push the top of the element
+*down* by 20 pixels, and will move the left edge of the element *in to
+the page* by 10 pixels.
+
+Make this change to the styelesheet, and see what happens.
+
+[Wait]
+#+END_NOTES
+
+** =position: relative;=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/position-5.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+NAME: position-5
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-5.html")) :flags --window-size=320,320 --force-device-scale-factor=2 --hide-scrollbars :exports results
+#+END_SRC
+
+#+RESULTS[70dd0989d36928a9414cfa25a676ec4a73a0a46d]: position-5
+[[file:position-5.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+We can see that the middle paragraph has been moved from its normal
+location, pushed down 20 pixels and right 10 pixels.
+
+Notice how the other paragraphs are not affected. In particular,
+the third one *does not* move further down to accommodate the
+middle one.
+
+Also, look at the blue background -- it extends out *past* the =body=
+element's border. Our paragraph is now partly in and partly outside.
+#+END_NOTES
+
+** =position: absolute;=
+   :PROPERTIES:
+   :HTML_CONTAINER_CLASS: no-heading
+   :END:
+
+#+INCLUDE: "day5/position-6.css" src css
+
+#+BEGIN_NOTES
+Let's give the third paragraph an absolute position.
+
+Make this change to the CSS, and reload the page.
+
+[Wait]
+#+END_NOTES
+
+** =position: absolute;=
+
+#+NAME: position-6
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-6.html")) :flags --hide-scrollbars --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS[7dc7ae7d3895dc41f674e94f9f541e19e331bda4]: position-6
+[[file:position-6.png]]
+
+#+BEGIN_NOTES
+What's happened here.
+
+Our first two paragraphs are unchanged -- the first one is =static=
+and the second is =relative=, so they appear exactly as they did
+before.
+
+The third paragraph has been taken completely out of the normal document
+flow. See how the final paragraph has moved up to use the space that
+the absolutely positioned paragraph used to take.
+
+This is different from the relative positioning.
+
+Our absolutely positioned paragraph needs to go somewhere. Because
+we did't tell it where to go, its default position is at the bottom
+left of the =body= element. You can see that by comparing its position
+to the =body= border.
+#+END_NOTES
+
+** =position: absolute;=
+   :PROPERTIES:
+   :HTML_CONTAINER_CLASS: no-heading
+   :END:
+
+#+REVEAL_HTML: <div class="leftcol">
+- Properties to adjust the element's position
+  - =top=
+  - =bottom=
+  - =left=
+  - =right=
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+INCLUDE: "day5/position-7.css" src css
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Absolutely positioned elements use the same =top=, =bottom=, =left=,
+and =right= properties to control their position as relatively
+positioned elements do.
+
+However, they mean something different.
+
+With a relatively positioned element these mean "Figure out where
+the element would normally go, then adjust its position by these
+amounts".
+
+With an absolutely positioned element these mean "Find the first
+parent element with a non-static position. Put the element in its
+top left corner, then adjust it using these properties."
+
+Add these =top= and =left= properties and see what happens.
+
+[Wait]
+#+END_NOTES
+
+** =position: absolute;=
+   :PROPERTIES:
+   :HTML_CONTAINER_CLASS: no-heading
+   :END:
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/position-7.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+NAME: position-7
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-7.html")) :flags --window-size=320,320 --force-device-scale-factor=2 --hide-scrollbars :exports results
+#+END_SRC
+
+#+RESULTS[8cd233f6bb29faf39ee0614c25dbf3267915e964]: position-7
+[[file:position-7.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Our absolutely positioned paragraph has changed position.
+
+Because we gave it =top= and =left= properties the browser has had to
+figure out where to put it.
+
+It's contained inside the =body= element, which has a static position,
+so the browser checks the next parent element, the =html= element.
+Since that doesn't have a position, and is the root element, the
+paragraph is placed at the top left of the =html= element, and then
+moved down and in based on the =top= and =left= properties.
+
+That might be a bit confusing, so lets see what happens when one of
+the parent elements *does* have a non-static position.
+#+END_NOTES
+
+** =position: absolute;=
+   :PROPERTIES:
+   :HTML_CONTAINER_CLASS: no-heading
+   :END:
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/position-8.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+NAME: position-8
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-8.html")) :flags --window-size=320,320 --force-device-scale-factor=2 --hide-scrollbars :exports results
+#+END_SRC
+
+#+RESULTS[6059ed0e54b2fb4a1ffa5498e8464512aa080bfd]: position-8
+[[file:position-8.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This is the same CSS -- all I've done is set the body's position to
+=relative=.
+
+Remember, without a =top= or other property, =relative= is just like
+=static=.
+
+However, now the location of our absolutely positioned paragraph
+has changed. Instead of its position being based on where the =html=
+element starts, it's based on where the =body= starts. Because the
+=body= has a non-static position.
+#+END_NOTES
+
+* 3-column layout
+
+[[file:day5/3column/goal.png]]
+#+BEGIN_NOTES
+We're going to build a typical 3 column layout for a page using
+CSS.
+
+This will use much of the information we're already covered, as well
+as a couple of toosl that we haven't seen before.
+
+At the end we'll have something that looks like this, that you can use
+as a skeleton for the exercises.
+
+The dimensions here are going to be used through the CSS, so I'll cover
+them briefly.
+
+The left and right columns are each 15ems wide. With the margins and
+padding they take up 37ems of width in total, leaving the rest for the
+main content div.
+#+END_NOTES
+
+** 3-column: Setup
+
+- Create =scratch/3column= directory
+- Create =scratch/3column/style.css=
+- Create =scratch/3column/index.html=
+
+#+INCLUDE: "day5/3column/3column.html" src html
+
+#+BEGIN_NOTES
+This is our initial HTML, very similar to what we've seen before.
+
+The heading, and the 3 columns, are different =div= elements, and
+I've given each of them a unique identifier so they can styled
+appropriately in the CSS.
+
+Do this, and let me know when you're finished.
+
+[Wait]
+#+END_NOTES
+
+** 3-column: Initial HTML
+
+#+NAME: 3column-initial
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+END_SRC
+
+#+RESULTS[8604f09c1f98cc1dd4f5b9eb6dcdaf84969245e4]: 3column-initial
+[[file:3column-initial.png]]
+
+#+BEGIN_NOTES
+So far, not very impressive.
+
+We'll add styles bit by bit to end up with the layout I showed earlier.
+#+END_NOTES
+
+** 3-column: =body=, =div=, =#header= styles
+
+#+INCLUDE: "day5/3column/3column-1.css" src css
+
+#+BEGIN_NOTES
+We start with some general styles for the body and the divs.
+
+We set relative positioning on the =body= element. This ensures that
+any absolutely positioned divs later are positioned off the =body=
+element and not the =html= element.
+
+For all divs we give them a solid black border, a light grey
+background, and a little bit of padding to let the design breathe
+a little bit.
+
+The top header also gets a 1em margin all the way around.
+[Wait]
+#+END_NOTES
+
+** 3-column: =body=, =div=, =#header= styles
+
+#+NAME: 3column-1
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-1.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+END_SRC
+
+#+RESULTS[8604f09c1f98cc1dd4f5b9eb6dcdaf84969245e4]: 3column-1
+[[file:3column-1.png]]
 
 
-* End of week recap
+
+** 3-column: =#content= styles
+
+#+INCLUDE: "day5/3column/3column-2.css" :lines "15-21" src css
+
+#+BEGIN_NOTES
+There are are a few things here that we haven't seen before.
+
+[skip, using absolute positioning now]
+The first is =float=.
+
+This is a bit like absolute positioning, in that it takes the element
+out of the normal flow of the page. Howeever, it remains part of the
+flow.
+
+The element is shifted to the left (in this case) until it's touching
+the edge.
+
+However, we want the contet to appear to the right of the secondary
+content div, so we give it a left margin of 18ems -- that covers the
+15ems width of the secondary content div, and the margins.
+[end skip]
+
+I use absolute positioning to put the content div 18ems from the left
+of the page. This covers the width of the secondary content as well
+as padding and margins.
+
+Since I want the content div to take up a minimum amount of height
+I set a =min-height= property.
+
+=50vh= is also new. The value =50vh= means "50% of the view height".  The view, or viewport
+is the size of the web browser window, so this ensure that the main
+content div is at least 50% of the viewport height.
+
+Finally, we say how wide the =div= should be, using =calc()=. This is
+also new. It allows us to compute sizes based on percentages and
+absolute values.
+
+Here I'm saying I want the width of the main content =div= to be 100%
+of the width of the browser, minus 37ems. That accounts for the width
+of the left and right columns and margins and padding.
+
+[Wait]
+#+END_NOTES
+
+** 3-column: =#content= styles
+
+#+NAME: 3column-2
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-2.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+END_SRC
+
+#+RESULTS[5e5acb4d09cf94bf05fa2946f8b9de61aa1b3373]: 3column-2
+[[file:3column-2.png]]
+
+#+BEGIN_NOTES
+The end result looks like this. You can see how the layout is starting
+to take shape.
+#+END_NOTES
+
+** 3-column: =#secondary= styles
+
+#+INCLUDE: "day5/3column/3column-3.css" :lines "22-28" src css
+
+#+BEGIN_NOTES
+This should be pretty straightforward by now.
+
+We position the secondary contetn div absolutely, and 1em from the left
+of its containing element. We also give it a fixed width of 15ems,
+and the same minimum height that the main content div has as well.
+
+[Wait]
+#+END_NOTES
+
+** 3-column: =#secondary= styles
+
+#+NAME: 3column-3
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-3.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+END_SRC
+
+#+RESULTS[5e5acb4d09cf94bf05fa2946f8b9de61aa1b3373]: 3column-3
+[[file:3column-3.png]]
+
+#+BEGIN_NOTES
+Did everyone get something that looks like this?
+
+[Wait]
+#+END_NOTES
+
+** 3-column: =#tertiary= styles                                    :exercise:
+
+#+NAME: 3column-4
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-4.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+END_SRC
+
+#+RESULTS[4d0b6b60af6ac4af44f4a143c6c671e2f2470be4]: 3column-4
+[[file:3column-4.png]]
+
+#+BEGIN_NOTES
+OK, now you go and write the style for the =#tertiary= div, to position
+it on the right hand side with 1em's worth of indentation. It should also
+be 15ems wide, just like the secondary one.
+
+The end result should look like this.
+
+[Wait]
+#+END_NOTES
+
+** 3-column: =#tertiary= styles
+
+#+INCLUDE: "day5/3column/3column-4.css" :lines "29-36" src css
+
+#+BEGIN_NOTES
+This should be pretty straightforward by now.
+
+We position the secondary contetn div absolutely, and 1em from the left
+of its containing element. We also give it a fixed width of 15ems,
+and the same minimum height that the main content div has as well.
+
+[Wait]
+#+END_NOTES
+
+** 3-column exercises: Overview                                    :exercise:
+
+- Use columns in your portofolio and recipes
+- Experiment with different widths, heights, and other styles
+
+** 3-column exercises: Portfolio example                           :exercise:
+
+#+NAME: 3column-portfolio
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-portfolio.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+END_SRC
+
+#+RESULTS[2fc0cf404491b0c11c71043d0a2f64e1c60d5d6e]: 3column-portfolio
+[[file:3column-portfolio.png]]
+
+#+BEGIN_NOTES
+This is one way that you might decide to lay out your portfolio.
+
+You don't have to do it exactly like this -- if you think you have a better
+layout in mind, go for it.
+
+Experiment with different widths, heights, colors, borders, and so on,
+until you have something that you're happy with.
+
+#+END_NOTES
+** 3-column exercises: Recipe example
+
+#+NAME: 3column-recipe
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-recipe.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+END_SRC
+
+#+RESULTS[5743a7671946c6797ab89bd6b6733bc17b9d5b02]: 3column-recipe
+[[file:3column-recipe.png]]
+
+#+BEGIN_NOTES
+For the recipes, again, this is just a suggestion. Notice how I've
+removed the third column because for me I didn't think I needed it,
+but you might find uses for it -- maybe you want to include some
+information about where the recipe came from, or what it means to you.
+
+Again, up to you. This is your chance to experiment.
+#+END_NOTES
+
+** 3-column exercises: =position: sticky;=
+
+- Look up what =position: sticky;= does
+  - Use MDN
+- Can you find a way to include that in your layout?
+
+* TODO Problems with these layouts
+
+- Try resizing the page to be very narrow
+  - Where would you see a narrow screen?
+- What about very wide?
+
+#+BEGIN_NOTES
+There are some problems with these layouts.
+
+One is that they don't really work when the screen is quite narrow.
+The fixed sizes for the side columns means that the main content
+gets squashed as the screen gets narrower.
+
+Where would you see a narrow screen?
+
+[Wait]
+
+Also, if the browser is very wide then the main content becomes
+difficult to read.
+
+There are lots of studies that show that people read text most
+effectively when the line is somewhere between 60 and 80 characters
+wide. Any wider than that and the reader loses track of where they
+are when their eye reaches the end of the line and they have to
+scan back to the beginning of the next one.
+
+So what we want, ideally, is a way to change the styling depending
+on the characteristics of the device that the user is using.
+#+END_NOTES
+
+* TODO CSS Media queries
+
+- *Conditional* CSS rules based on device characteristics
+  - =width=
+  - =height=
+  - =orientation=
+  - =print=
+  - ...
+
+#+BEGIN_NOTES
+So far all of the CSS we've been writing is always applied to the
+page, no matter what sort of device the user is using to view the
+page.
+
+In the last 15 years or so the type and style of devices that people
+can view webpages on has changed drastically. We've gone from
+computers with monitors to tablets of all shapes and sizes, phones,
+and even watches.
+
+These devices have different capabilities and sizes, and trying to
+create a "one size fits all" stylesheet that worked no matter what
+device was being used to view the page is very difficult.
+
+Media queries are a way of extending your stylesheet to be able to
+say "Only apply this rule if the device has *this* characteristic".
+
+Some examples will probably make this clearer.
+#+END_NOTES
+
+** Breadcrumb navigation
+
+#+REVEAL_HTML: <div class="leftcol">
+#+INCLUDE: "day5/display-3.css" src css
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+[[file:display-3.png]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Remember our breadcrumb navigation example from earlier. At the moment
+this unconditionally renders our breadcrumb list like this.
+
+You can imagine that on a small display, like a phone, this might not
+be ideal. The individual entries in the list are small and hard to tap,
+and it wraps around on to mulitiple lines in a way that isn't very
+pleasing.
+
+What we want is a way to choose between two different types of
+presentation of the list, depending on the type of device that's being
+used to view the page.
+
+We can use a media query to do this -- to say that this presentation
+should only happen when the screen is wider than some amount -- if
+it's not, we'll use different CSS to show the breadcrumbs in a
+traditional list.
+#+END_NOTES
+
+** Media query, end result
+
+#+BEGIN_CENTER
+[[file:day5/display-4.html][Breadcrumb with media query]]
+#+END_CENTER
+
+#+BEGIN_NOTES
+[Demo the page]
+
+Here's the end result.
+
+Watch what happens when I resize the page.
+
+[Demo resizing the page]
+
+So when the page gets narrower than a certain width the presentation
+of the list changes.
+
+- It appears on mulitple lines.
+- Indentation is used to show the hierarchy
+- There's a different arrow
+
+Resizing the page like this to test things out can get annoying, so
+let me show you a trick with the developer tools as well.
+
+- First, I open the developer tools
+- Then I click this "Toggle device toolbar" button
+
+See how the page has changed.
+
+At the top here I have some controls to let me say how large I want to
+pretend the page is.
+
+I can either type in some numbers directly, or I can use these handles
+on the page to drag to change the size of the page.
+
+While I'm doing this my main browser window stays the same size.
+
+[Demo]
+
+Notice how when the page width is less than the threshold that the
+presentation changes exactly as it did before.
+
+You can also use the "Responsive" drop down to set the size of the
+display to that of specific devices for testing.
+
+[Demo]
+
+So, now we know the end result, lets look in to how this works.
+#+END_NOTES
+
+** The viewport
+   :PROPERTIES:
+   :HTML_CONTAINER_CLASS: no-heading
+   :END:
+
+[[file:viewport.png]]
+
+#+BEGIN_NOTES
+When a web page is loaded the browser has to figure out the size
+of the page -- the width and the height.
+
+It does this using the HTML, CSS rules, images, videos, font sizes,
+and so on, to figure out how the big the page is. Then it *renders*
+the page. You can think of *rendering* as being a fancy word for
+*drawing*.
+
+The rendered page might be bigger than the browser window.. If it is
+then the browser adds scrollbars to the page. You'll have seen this,
+when the page is too tall you get a vertical scrollbar to scroll up
+and down, and if it's too wide you get a horizontal scrollbar to
+scroll left and right.
+
+We say that the bit of the page you can see at any point is the
+*viewport*, and when you scroll the page you're moving the viewport
+around.
+
+This is exactly what this image shows. The whole page is here, but the
+browser window is this brighter part here -- this is the viewport, and
+it's a lot smaller than the whole page. When you use the scrollbars
+to move up and down the page don't think of this as the page moving
+up and down -- think of it as the viewport moving up and down.
+
+On narrow screens, like you find on phones and tablets, this happens
+a lot.
+
+What also happens on phones and tablets is that the browser pretends
+that the viewport is bigger than it is. For example, if the phone
+screen is 600 pixels wide it might pretend that it's 1,000 pixels
+wide.
+
+Then it renders the page as it if had 1,000 pixels of width to
+create an image of the page.
+
+Then is scales that image so that it's 600 pixels wide to fit the
+screen.
+
+Then you can use the pinch-zoom feature in the browser to zoom in or
+out of the page.
+
+This works well for non-mobile-optimized web pages.
+
+But it's a problem for mobile-optimized pages. We want to be able to
+say "Use this different style if the screen is less than 600 pixels wide".
+But the browser is pretending that the screen is a lot larger. We need
+a way to tell the browser to stop pretending that the screen is bigger
+than it is, and use the real screen size.
+#+END_NOTES
+
+** The =viewport= =meta= element
+
+#+INCLUDE: "day5/display-4.html" :lines "6-7" src html
+
+- Belongs in the document's =head=
+
+#+BEGIN_NOTES
+The way to shut off this browser behaviour is with a =meta= element.
+This provide a mechanism to communicate additional information to the
+browser, with a =name= and =content= attribute.
+
+To control the viewport we set the =name= to viewport, and put the
+control in the =content= attribute.
+
+Earlier I said that the browser can pretend that the viewport is wider
+than the device.
+
+By adding this to the document's =head= element we tell it to always
+set the viewport's width to be the same as the device's width.
+#+END_NOTES
+
+** Writing media queries
+
+#+BEGIN_SRC css
+@media type (expression) {
+  /* CSS rules go here */
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+The general format of a media query in a CSS file is the literal string
+=@media=, followed by the media type (which is optional), and a series
+of one or more expressions.
+
+If the type matches the device, and all the expressions are true, then
+the CSS inside the media query is used.
+
+If it doesn't then it's ignored.
+#+END_NOTES
+
+** Media query =type=
+
+#+BEGIN_SRC css
+@media type (expression) {
+  /* CSS rules go here */
+}
+#+END_SRC
+
+- =all= - All devices, the default
+- =print= - When printing the page
+- =screen= - When displaying the page on screen
+- =speech= - When speaking the page
+
+#+BEGIN_NOTES
+The =type= is optional, and specifies the type of device that the
+page is being viewed on.
+
+The default is =all=. If it's missing then this is assumed. You can
+also use
+
+=print= - the CSS rules will only apply if the page is being printed
+
+=screen= - the CSS rules will only apply if the page is being viewed
+on a screen
+
+=speech= - the CSS rules will only apply if the page is being read
+by a speech-synthesisor, e.g., for people using the page who are
+partially sighted or blind.
+#+END_NOTES
+
+** Media query =expression=
+
+#+BEGIN_SRC css
+@media type expression {
+  /* CSS rules go here */
+}
+#+END_SRC
+
+#+REVEAL_HTML: <div class="leftcol">
+- =min-width=
+- =min-height=
+- =orientation=
+- =pointer=
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- =hover=
+- =resolution=
+- =aspect-ration=
+- ...
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+The expression allow to query the capabilities of the device to decide
+if the CSS rules should apply or not. You can query for many things,
+including
+
+- the devices minimum width and height
+- its orientation (portrait or landscape)
+- does it have a pointing device?
+- can the user hover over elements?
+- the display resolution
+- the aspect ratio
+#+END_NOTES
+
+** Media query examples
+
+#+BEGIN_SRC css
+@media screen and (min-width: 600px) {
+  /* ... */
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+@media print and (orientation: landscape) {
+  /* ... */
+}
+#+END_SRC
+
+#+BEGIN_SRC css
+@media screen and (not(hover)) {
+  /* ... */
+}
+#+END_SRC
+
+#+BEGIN_CENTER
+[MDN Media Query]
+#+END_CENTER
+
+#+BEGIN_NOTES
+Here are some examples.
+
+In the first one, the CSS rules will only apply if the page is being
+viewed on screen and the minimum width of the page is at least 600
+pixels wide.
+
+In the second one, the CSS rules will only apply if the page is being
+printed and the paper orientation is landscape.
+
+The third one applies if the page is being viewed on the screen and
+the device does not support "hovering" over elements. For example,
+in a device with a mouse you can hover the mouse pointer over an
+element. But on a device with no mouse and only a touch screen that
+doesn't work.
+#+END_NOTES
+
+** New CSS 1/3
+   :PROPERTIES:
+   :HTML_CONTAINER_CLASS: no-heading
+   :END:
+
+#+INCLUDE: "day5/display-4.css" :lines "1-5" src css
+
+#+BEGIN_NOTES
+This is the start of the CSS. It's identical to the previous
+CSS, because the list's padding and colour are the same no matter
+what the width of the viewport is.
+#+END_NOTES
+
+** New CSS 2/3
+   :PROPERTIES:
+   :HTML_CONTAINER_CLASS: no-heading
+   :END:
+
+#+INCLUDE: "day5/display-4.css" :lines "6-19" src css
+
+#+BEGIN_NOTES
+These are the same CSS rules from earlier, but we only want them to
+apply if the browser viewport is 600 pixels wide (or wider). So
+they're wrapped in a media query that tests this.
+#+END_NOTES
+
+** New CSS 3/3
+   :PROPERTIES:
+   :HTML_CONTAINER_CLASS: no-heading
+   :END:
+
+#+INCLUDE: "day5/display-4.css" :lines "20-44" src css
+
+#+BEGIN_NOTES
+These are new CSS rules.
+
+Because of the media query they take effect when the viewport is
+less than 600 pixels wide.
+
+The first one make sure that each =li= element has an arrow before
+it. The =\2ba1= is the code for the arrow.
+
+The :before elements normally have a =display= value of =inline=. This
+means that trying to set the width doesn't work, and the arrow character
+is a bit bigger than normal. So I set the =display= to =inline-block=,
+which we saw earlier, and give it a minimum width.
+
+The very first =li= element doesn't need an arrow, so we specialise
+that in the second rule.
+
+These last three rules increase the padding of the 2nd, 3rd, 4th, and
+every following =li= item.
+
+The effect is that the second one appears indented by 1em, the third
+by 2em, and the 4th and all the following ones by 3em.
+
+Then the media query is closed out.
+#+END_NOTES
+
+** Media query recap
+
+#+BEGIN_SRC html
+<meta name="viewport" content="width=device-width">
+#+END_SRC
+
+#+BEGIN_SRC css
+@media type expression {
+  /* CSS rules go here */
+}
+#+END_SRC
+
+** Loading different CSS based on media query
+
+#+BEGIN_SRC html
+<head>
+  <link href="style.css" rel="stylesheet">
+  <link href="large.css" rel="stylesheet"
+     media="screen and (min-width: 600px)">
+  ...
+</head>
+#+END_SRC
+
+#+BEGIN_NOTES
+You don't have to put the media query in the CSS file.
+
+Instead, you can put the media query in a =media= attribute on the
+=link= element that loads the CSS file.
+
+In this example our page will always load the first stylesheet.
+
+But it will only load the second stylesheet if the expression in the
+=media= attribute is true.
+
+Since mobile devices tend to be less powerful, this ensures that the
+CSS for larger devices is only loaded and processed by those devices.
+Mobile devices will never even load =large.css=, making the page
+slightly faster to load for them.
+#+END_NOTES
+
+** Hiding elements with =display: none;=
+
+#+BEGIN_SRC css
+@media screen and (max-width: 600px) {
+  ul.breadcrumb {
+    display: none;
+  }
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+I mentioned three different possible values for the =display=
+property earlier. There are others, and one of the most useful is
+=none=.
+
+Use this to completely remove the element from the display. This
+is very useful with media queries, as you can use this to hide
+elements that aren't so useful on small screens.
+
+For example, if we wanted to hide the breadcrumb list entirely we
+would write this CSS rule with the associated media query.
+#+END_NOTES
+
+** Best practice: Design for smaller sizes first
+
+- Build stylesheet assuming small device
+  - Default to hiding elements
+- Then add stylesheets with media queries
+  - Progressively show content as the screen gets bigger
+  - Called "Mobile first" design
+- *Breakpoint*: The size or other change that triggers a new stylesheet
+
+#+BEGIN_NOTES
+Now that you know all this you might be asking -- what's the best
+way to do things? Should I design for a large screen first, and then
+build stylesheets that remove content as the screen gets smaller?
+
+Or should I design for smaller screen first, and then shown content
+as screens get larger?
+
+In general, designing is much easier if you start with the smaller
+size first, and get that working. Then start adding additional
+stylesheets with different media queries as the size (or something
+else) changes.
+
+We call the point where a new stylesheet is needed a "breakpoint".
+
+A good way to figure out if you need to add a new breakpoint is by
+looking at the width of the widest block of text on the page. If it's
+more than about 80 characters (roughly 8 to 10 English words) then
+it's time to add a breakpoint with a new stylesheet that adjusts
+sizing, padding, margins, and layout to keep the information legibile.
+#+END_NOTES
 
 
-* Exercises
+* Games
 
-- Make your portfolios work on mobile screens too. And maybe when
-  printed.
+- CSS Selectors: http://flukeout.github.io/
+
+* Exercises                                               :exercise:
+
+- Improve cheatsheets, recipes, and portfolio
+- Use media queries / mobile first design
+- Inspiration:
+  - [[https://mediaqueri.es/]]
+  - https://colly.com/about
+- Change font size, line height
+- Hide / show elements
+- Change element presentation
+- Adjust padding, margin, borders
+
+#+BEGIN_NOTES
+Adjust your stylesheets
+#+END_NOTES
