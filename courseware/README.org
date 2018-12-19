@@ -1,9 +1,13 @@
 #+TITLE: Powercoders Courseware
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org.css">
+#+HTML_HEAD: <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Roboto+Slab" rel="stylesheet">
 
 * Overview
+
 This is the courseware for the 2018/2019 Powercoders Basel course.
 
 * Content and structure
+
 Previous versions of the course have -- as far as I can tell --
 generally taken the approach of provding blocks of material in
 significant chunks, and then moving on to a different block when
@@ -20,21 +24,55 @@ integrate version control in to their habits as soon as possible.
 There are two additional significant changes to the previous material.
 
 1. Exercises come much more frequently. I'm aiming for no more than
-25-30 minutes elapsing before the students are trying something out
-on their computers, sometimes a lot less time.
+  25-30 minutes elapsing before the students are trying something out
+  on their computers, sometimes a lot less time.
 
 2. Explicitly providing space for the students to deliberately "break"
-something, and see what that looks like -- mis-spellings, ommitting
-quotes, incorrect closing tags, things like that. So they can learn
-what this looks like and recognise it in the future when they
-inevitably make these mistakes.
+  something, and see what that looks like -- mis-spellings, ommitting
+  quotes, incorrect closing tags, things like that. So they can learn
+  what this looks like and recognise it in the future when they
+  inevitably make these mistakes.
+
+* Material to date
+
+The files:
+
+- =week1/day1.org=
+- =week1/day2.org=
+- =week1/day3.org=
+- =week1/day4.org=
+- =week1/day5.org=
+
+and
+
+- =week2/day1.org=
+
+contain approximately 4 weeks worth of material. I had originally
+expected the progress to match the week/day filenames, but I was
+over-optimistic in estimating how rapidly we would progress through
+the content.
+
+This is fine, as we're roughly on par with the pace of previous
+courses.
+
+The contents of =week2/shopping= are several weeks worth of project
+and exercises where we will build frontend application from the
+ground up, applying the material that has been covered in the previous
+weeks.
+
+The material for the second half of the course will be written during
+December '18 / January 19, and will be based on the requirements of
+the companies offering internships.
 
 * Technical instructions for authors / editors
+
 The courseware is written in Org, as implemented in Emacs' Org Mode.
 
 Roughly, each slide corresponds to a different heading in the file,
 and the content of the section is the content of the slide.
+
 ** Rationale
+
 I wanted an authoring environment that:
 
 - Prioritised keyboard over mouse for authoring content
@@ -47,7 +85,146 @@ I wanted an authoring environment that:
 - Had multiple export options
 
 ** TODO Structure of a slide
+
+*** General structure
+
+Each slide is a seperate Org heading (delimited by one or more =*=
+characters starting at the first column of the file).
+
+The slide's title is the heading text.
+
+The content of the slide is the content of the section. Generally this
+is a bulleted list.
+
+*** Speaker notes
+
+Content for speaker notes is included in
+
+#+BEGIN_EXAMPLE
+#+BEGIN_NOTES
+... notes go here ...
+#+END_NOTES
+#+END_EXAMPLE
+
+blocks in each section. This is not rendered in the slides, but is
+included when the HTML for the speaker notes is generated.
+
+*** Language blocks
+
+To show source code in a particular language use a =SRC= block and
+identify the language.
+
+#+BEGIN_EXAMPLE
+#+BEGIN_SRC html
+<p>A paragraph</p>
+#+END_SRC
+#+END_EXAMPLE
+
+This will render as a syntax-highlighted block in the slide, with
+a badge at the top-right corner of the block showing the language.
+
+Valid values for the language tag include:
+
+- =html=
+- =css=
+- =javascript=
+- =shell= (not technically a language)
+
+*** Graphviz blocks
+
+You can describe graphs using the [[http://graphviz.org/][Graphviz]] language. If you have
+the tools installed these will be converted to a =.svg= file when
+the slide is exported and included in the presentation.
+
+The syntax looks like:
+
+#+BEGIN_EXAMPLE
+#+BEGIN_SRC dot :file dependency-1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  A -> B -> C;
+}
+#+END_SRC
+#+END_EXAMPLE
+
+The additional settings on the =#+BEGIN_SRC= line are:
+
+- =:file= -- name of the file to generate
+- =:cmdline= -- additional parameters to pass to the Graphviz
+  command line tools
+
+In this example the output type (=T=) is set to SVG, and a
+particular stylesheet is embedded in the SVG file.
+
+To tell Emacs to evaluate this graph and create the SVG file
+place the cursor somewhere within the block and press =C-c C-c=.
+In a few moments the SVG file should be created and included in
+the file.
+
+If you make a change to the graph code just press =C-c C-c= again
+to regenerate the image.
+
+*** =html-chrome= blocks
+
+The slides need to show a lot of HTML, and then show screenshots
+of what that HTML looks like when loaded in to the browser.
+
+In order to automate this process I wrote some code that:
+
+- Saves the HTML from the slide and saves it to a temporary file
+- Runs Chrome in "headless" mode, load the file, and make a virtual
+  "screenshot" of the result
+- Save the screenshot to a PNG file
+- Insert the PNG file in to the presentation
+
+The practical upshot of this is that you can type example HTML into
+the slide and automatically generate a screesnhot of the rendered
+result.
+
+To do that, use a =SRC= block with the language set to =html-chrome=.
+For example:
+
+#+BEGIN_EXAMPLE
+#+NAME: html-test
+#+BEGIN_SRC html
+<p>A paragraph</p>
+#+END_SRC
+#+END_EXAMPLE
+
+Note the preceding =#+NAME: ...= line. The generated PNG file will
+have this as the basename -- so in this example the generated PNG file
+will be called =html-test.png=.
+
+*** Two column slides
+
+There's basic support for creating slides with two columns. To do
+that, wrap the content you want to appear in the left column in
+
+#+BEGIN_EXAMPLE
+#+REVEAL_HTML: <div class="left">
+... slide content goes here ...
+#+REVEAL_HTML: </div>
+#+END_EXAMPLE
+
+and wrap the content you want to appear in the right column in
+
+#+BEGIN_EXAMPLE
+#+REVEAL_HTML: <div class="right">
+... slide content goes here ...
+#+REVEAL_HTML: </div>
+#+END_EXAMPLE
+
+It would be possible to create more complex slide layouts using
+CSS (e.g., =flex= or =grid= layouts) but I haven't found it
+necessary so far.
+
+** Visual concerns
+
+The slides are written assuming they will projected on an HD (1920x1080)
+display. Image dimensions, the number of lines of text on each slide, etc
+are based on that.
+
 ** Generating the slides, speaker notes, etc.
+
 *** Prerequisites
 
 The =emacs.el= file in the repository configures Emacs to
@@ -68,9 +245,7 @@ topic.
 Then run =C-c C-e R R= to run the =ox-reveal= export process.
 This will write a RevealJS presentation to the same directory
 as the =.org= file. Any graphics or screenshots needed by
-the presentation will be generated automatically (see the
-documentation later in this file for [[#html-chrome][html-chrome]] and [[#graphviz][graphviz]]
-SRC blocks for more information on how that works.
+the presentation will be generated automatically.
 
 *** Interactively generating a one-pager
 
@@ -83,21 +258,83 @@ as lecture notes.
 
 *** TODO Batch generation of output files
 
-** Additional feeatures
-Various Emacs and =org-mode features are used to make editing the
+#+BEGIN_SRC
+% emacs -Q --batch
+   path/to/file.org \
+  -L /path/to/org-reveal \
+  -L /path/to/ob-html-chrome \
+  -l /path/to/emacs.el \
+  -f org-reveal-export-to-html
+#+END_SRC
+
+- =-Q= -- disables loading Emacs' normal startup configuration
+- =--batch= -- run Emacs in batch mode, no UI
+- =/path/to/file.org= -- path to the file that contains the content
+  you want to convert to slides
+- =-l /path/to/emacs.el= -- path to the =emacs.el= file in the
+   =courseware/= directory of this repository
+- =-f org-reveal-export-to-html= -- run the function that generates
+  the HTML
+
+The two =-L= parameters are only necessary until local changes to
+these files are accepted in to the Emacs package repository.
+
+** Presenting
+
+Once the slides have been generated you can view them in the browser
+and present them
+
+*** Viewing in the browser
+
+Load the generated HTML in to a Chrome tab. The slides are a [[https://revealjs.com/#/][Reveal JS]]
+presentation. To move between them:
+
+- =SPACE= or =n= -- advance to the next slide
+- =p= -- go back to the previous slide
+- =b= -- blank the screen (press =b= again to
+- =s= -- pop up a new window containing the speaker notes
+
+The slides have a hierarchy, visible if you press =Esc=. The hierarchy
+is based on the level hierarchy in the original =.org= file.
+
+You can move across levels in the hierarchy by pressing the right arrow
+key. I don't actually use this in the class, I mention it just so you
+know what's happened if you inadvertently press the right arrow key.
+
+*** Presenting in class
+
+In class we have a projector with a Chromecast attached to its HDMI
+port. The presentor laptop, the Chromecast, and all the student
+laptops are connected to the same Wi-Fi network.
+
+Running Google Chrome, this allows you to load the generated HTML for
+the presentation in to a tab, and then "cast" the contents of the tab.
+
+Once the presentation is loaded you can then press =s= to load the
+speaker notes. These will display on the laptop, but will not be shown
+via the Chromecast, because they appear in a separate window.
+
+If you need to demonstrate other programs (e.g., a shell) or show
+something that Chrome does not consider to be part of the web page,
+such as the browser inspector UI, you will need to switch from casting
+the tab to castng your entire desktop. Use the Cast UI to do this.
+
+** Additional features
+
+Various Emacs and =org-mode= features are used to make editing the
 content easier and ensuring it is consistent.
 
-*** TODO =html= and =javascript= SRC blocks
-*** TODO =html-chrome= SRC blocks
-:PROPERTIES:
-:CUSTOM_ID: html-chrome
-:END:
-*** TODO =graphviz= SRC blocks
-:PROPERTIES:
-:CUSTOM_ID: graphviz
-:END:
-*** TODO INCLUDE files
+*** Common settings
+
+Common settings for the slides are stored in the =include/settings.org=
+file and included using Org's =#+SETUPFILE= directive (see the top
+of each file for more).
+
 *** TODO =TOPIC= and =REQUIREMENTS= properties
+
+*Note:* This is partly aspirational, as I'm still working on adding
+this information through the course material.
+
 Each heading contains optional =TOPIC= and =REQUIREMENTS= properties.
 
 These are used to try and ensure that all the necessary material
@@ -110,8 +347,6 @@ topic that is covered in this slide.
 The =REQUIREMENTS= property for a heading is a space-separated list
 of values used in =TOPIC=s
 
-The =my/check-topics= function walks all the headings and verifies
-that no heading lists a =REQUIREMENT= that is not listed as a
-=TOPIC= on one of the preceding slides.
-
-For more information about Org properties see...
+I'm in the process of writing code that validates that each slide's
+list of =REQUIREMENTS= is met by at least one prior slide that lists
+it as a =TOPIC=.
