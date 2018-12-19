@@ -1,5 +1,17 @@
 ;; Emacs config file for the slides
 
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+
+(package-initialize)
+
+;; Bootstrap use-package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(require 'ox-reveal)
 
 ;; TODO: Load Org
 
