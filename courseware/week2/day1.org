@@ -747,7 +747,7 @@ the variable?
 
 #+BEGIN_SRC javascript
 el.id;           // "myheading"
-el.localName;    // "h1"
+el.tagName;    // "h1"
 el.clientWidth;  // 883
 el.innerHTML;    // "Hello, Powercoders"
 #+END_SRC
@@ -762,7 +762,7 @@ shows what you should see.
 Here are some example properties that elements have.
 
 - =id= is the element's ID, if it has one
-- =localName= is the name of the element
+- =tagName= is the text of the element's tag
 - =clientWidth= is how wide the element is
 - =innerHTML= is the HTML text inside this element
 #+END_NOTES
@@ -771,7 +771,7 @@ Here are some example properties that elements have.
 
 #+BEGIN_SRC javascript
 el.id = 'newid';
-el.localname = 'newname';
+el.tagName = 'newname';
 el.clientWidth = 400;
 el.innerHTML = 'New Heading';
 #+END_SRC
