@@ -2512,7 +2512,7 @@ Make this change and commit.
   - Avoids mixing languages in a file
 - Replaced similar functions with a single function
 - Removed =onclick= attributes, =addEventListener=
-- =DOMContentReady= listener
+- =DOMContentLoaded= listener
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -2537,7 +2537,7 @@ And we removed the =onclick= attributes entirely, replacing them with calls
 to =addEventListener= to install our own event listeners. Doing this we
 discovered how there are timing issues that affect how the browser loads
 Javascript and HTML, and we fixed the problem by listening for the
-=DOMContentReady= event.
+=DOMContentLoaded= event.
 
 With all of that done we discovered a couple of other simplifications
 that allowed us to remove an unused paremter, and employed property
