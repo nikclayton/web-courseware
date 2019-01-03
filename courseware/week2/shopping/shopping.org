@@ -702,9 +702,9 @@ digraph G {
   li -> button
 
   span -> span_content;
-  span_content [label="#t: Eggs" shape=none];
+  span_content [label="Eggs" shape=none];
   button -> button_content;
-  button_content [label="#t: Delete" shape=none];
+  button_content [label="Delete" shape=none];
 }
 #+END_SRC
 
@@ -1100,10 +1100,10 @@ and "Bread", like this.
 
    span1 [label="span"];
    span1 -> span_content1;
-   span_content1 [label="#t: Eggs" shape=none];
+   span_content1 [label="Eggs" shape=none];
    button1 [label="button"];
    button1 -> button_content1;
-   button_content1 [label="#t: Delete" shape=none];
+   button_content1 [label="Delete" shape=none];
 
    li2 [label="li"];
    li2 -> span2
@@ -1111,10 +1111,10 @@ and "Bread", like this.
 
    span2 [label="span"];
    span2 -> span_content2;
-   span_content2 [label="#t: Milk" shape=none];
+   span_content2 [label="Milk" shape=none];
    button2 [label="button"];
    button2 -> button_content2;
-   button_content2 [label="#t: Delete" shape=none];
+   button_content2 [label="Delete" shape=none];
 
    li3 [label="li"];
    li3 -> span3
@@ -1122,10 +1122,10 @@ and "Bread", like this.
 
    span3 [label="span"];
    span3 -> span_content3;
-   span_content3 [label="#t: Bread" shape=none];
+   span_content3 [label="Bread" shape=none];
    button3 [label="button"];
    button3 -> button_content3;
-   button_content3 [label="#t: Delete" shape=none];
+   button_content3 [label="Delete" shape=none];
  }
  #+END_SRC
 
@@ -1157,10 +1157,10 @@ let secondLi = document.querySelector('li:nth-child(2)');
 
    span1 [label="span"];
    span1 -> span_content1;
-   span_content1 [label="#t: Eggs" shape=none];
+   span_content1 [label="Eggs" shape=none];
    button1 [label="button"];
    button1 -> button_content1;
-   button_content1 [label="#t: Delete" shape=none];
+   button_content1 [label="Delete" shape=none];
 
    subgraph cluster_li2 {
      li2 [label="li"];
@@ -1170,10 +1170,10 @@ let secondLi = document.querySelector('li:nth-child(2)');
 
    span2 [label="span"];
    span2 -> span_content2;
-   span_content2 [label="#t: Milk" shape=none];
+   span_content2 [label="Milk" shape=none];
    button2 [label="button"];
    button2 -> button_content2;
-   button_content2 [label="#t: Delete" shape=none];
+   button_content2 [label="Delete" shape=none];
 
    li3 [label="li"];
    li3 -> span3
@@ -1181,10 +1181,10 @@ let secondLi = document.querySelector('li:nth-child(2)');
 
    span3 [label="span"];
    span3 -> span_content3;
-   span_content3 [label="#t: Bread" shape=none];
+   span_content3 [label="Bread" shape=none];
    button3 [label="button"];
    button3 -> button_content3;
-   button_content3 [label="#t: Delete" shape=none];
+   button_content3 [label="Delete" shape=none];
  }
  #+END_SRC
 
@@ -1212,10 +1212,10 @@ secondLi.remove();
 
    span1 [label="span"];
    span1 -> span_content1;
-   span_content1 [label="#t: Eggs" shape=none];
+   span_content1 [label="Eggs" shape=none];
    button1 [label="button"];
    button1 -> button_content1;
-   button_content1 [label="#t: Delete" shape=none];
+   button_content1 [label="Delete" shape=none];
 
    li2 [label="li" style=invis];
 
@@ -1224,10 +1224,10 @@ secondLi.remove();
 
    span2 [label="span" style=invis];
    span2 -> span_content2 [style=invis];
-   span_content2 [label="#t: Milk" style=invis shape=none];
+   span_content2 [label="Milk" style=invis shape=none];
    button2 [label="button" style=invis];
    button2 -> button_content2 [style=invis];
-   button_content2 [label="#t: Delete" style=invis shape=none];
+   button_content2 [label="Delete" style=invis shape=none];
 
    li3 [label="li"];
    li3 -> span3
@@ -1235,10 +1235,10 @@ secondLi.remove();
 
    span3 [label="span"];
    span3 -> span_content3;
-   span_content3 [label="#t: Bread" shape=none];
+   span_content3 [label="Bread" shape=none];
    button3 [label="button"];
    button3 -> button_content3;
-   button_content3 [label="#t: Delete" shape=none];
+   button_content3 [label="Delete" shape=none];
  }
  #+END_SRC
 
