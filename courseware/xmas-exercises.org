@@ -4,6 +4,26 @@
 
 Here are some things to do in the two week break to keep practicing different skills.
 
+* Undoing changes with Git
+
+Before attempting any of the following, remember that if you have made a change to one or more files and you decide that the change is a mistake, you can set the file back to the contents it had when you last committed it by running
+
+#+BEGIN_SRC shell
+git checkout -- filename
+#+END_SRC
+
+For example, if you have experimented with a stylesheet file called =style.css= and decide that you don't like the results you can run
+
+#+BEGIN_SRC shell
+git checkout -- style.css
+#+END_SRC
+
+and it will be immediately set back to the last version that you committed.
+
+*All* the changes that you have made since the last commit will be deleted, so be careful.
+
+Experiment with this -- take a file that you are certain you have committed, and make some changes to it (just bash away at the keyboard if you want). Then run the =git checkout ...= command to reset the file, and verify that it works.
+
 * Git commit messages
 
 One of the things I covered on Friday was good Git commit messages.
@@ -36,5 +56,145 @@ git config --global core.editor notepad
 
 If your laptop runs OS X, run:
 
+#+BEGIN_SRC shell
+git config --global core.editor "open -W -n"
+#+END_SRC
 
 Second, you will no longer use the =-m= option to write the commit message, you will just run =git commit=.
+
+When you do that the =git commit= command will wait, and the editor (Notepad on Windows, probably TextEdit OS X) will start, with a default commit message loaded and ready for you to edit.
+
+Type the commit message in to the editor. Any lines that start with a =#= character will be ignored.
+
+Save the file in the editor.
+
+**Important**: Do *not* save the file with a different name.
+
+Quit the editor.
+
+The =git commit= command will finish, using the message you entered as the commit message.
+
+If you decide that you have a made a mistake then completely delete the commit message, save, and then quit. =git commit= will see that the commit message is empty and it will cancel the commit.
+
+* Typing
+
+If you need to practice your typing (and it's something I recommend all of you do) then try the online typing tutor at https://www.tipp10.com/en/. It's free, and has a range of lessons that you can do.
+
+It also (once you've registereed and are signed in) lets you say exactly what language keyboard you have, with lessons for each keyboard type.
+
+* HTML
+
+** Using an HTML validator
+
+As we know, there are rules about how elements can be placed inside
+one another in HTML.
+
+For example, you can't have an =h1= element inside a =p= element.
+
+WebStorm will try and tell you when your HTML is correct, but you can also use online services to "validate" your HTML files and identify any problems.
+
+One of those is https://validator.w3.org/#validate_by_upload+with_options. You can use this to upload each of your HTML files files and identify any errors that WebStorm doesn't show.
+
+Once you've identified errors in the files, fix them, and make sure the validator confirms the file is correct.
+
+When you've done this, commit and push the changes.
+
+** Read MDN articles
+
+If you haven't already, read three of the HTML articles linked to from https://developer.mozilla.org/en-US/docs/Learn/HTML.
+
+Specifically, read:
+
+- Introduction to HTML
+- Multimedia and embedding
+- HTML tables
+
+There are various exercises for you to try throughout that documentation. Some of it will be very familiar to you, and others will be aspects of HTML that we have not yet formally covered in class. Don't worry about that, go ahead and experiment.
+
+We will be covering HTML Forms in the first two weeks of next year, so you *do not* need to read the Forms documentation on MDN yet.
+
+* CSS
+
+** Using a CSS validator
+
+Just like HTML, there are rules for what is and isn't valid CSS. You can use http://jigsaw.w3.org/css-validator/#validate_by_upload to upload your CSS files and confirm that they are valid.
+
+If the validator reports problems you can fix them, and re-upload the file to confirm the fix.
+
+When you've done this, commit and push the changes.
+
+** Try the selector game
+
+If you haven't already worked through all the levels of https://flukeout.github.io/ then do so. It lets you practice your understanding of CSS selectors.
+
+It also introduces a few new selectors that we haven't needed to use in the class.
+
+** CSS Grid
+
+CSS grid is another way of laying out content using CSS with a =display: grid= property.
+
+Some of you have already started to use it.
+
+If you haven't, you can read more about it at https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout -- start with that page, and then read the articles linked to from the left of the page under "Guides" ("Basic concepts of grid layout", etc).
+
+Try the =grid= game at http://cssgridgarden.com/ to practice.
+
+Optionally, if you think you can simplify any of your page stylesheets, or make layouts easier by using CSS grid then try updating the stylesheet to use it, and experiment.
+
+** CSS Flex
+
+CSS flex is another way of laying out content using CSS with a =display: flex= property.
+
+Some of you have already started to use it.
+
+If you haven't, you can read more about it at https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout -- start with that page, and then read the articles linked to from the left of the page under "Guides".
+
+Try the Flexbox Froggy game at https://flexboxfroggy.com/.
+
+You might find it easier to use flex for multi-column layouts than absolute positioning, especially for your portfolio. Try updating the portfolio stylesheet to use flex.
+
+** Practice implementing layouts
+
+https://003.powercoders.org/files/exercise_7_webdesign_1.jpg and https://003.powercoders.org/files/exercise_7_webdesign_2.jpg show two different layouts.
+
+See if you can write the HTML and CSS for these.
+
+The text is "dummy" text called "lorem ipsum". You can generate this text using a site like https://loremipsum.io/ and copy/paste it in to your page.
+
+** Read MDN articles
+
+You should be able to read and understand all of the MDN CSS material at https://developer.mozilla.org/en-US/docs/Learn/CSS. There are some things that we haven't covered in the class yet (and I won't expect you to know them, I'll teach them when we need them) but it's good practice to read and understand these guides now.
+
+* Javascript
+
+** Functions
+
+We've practiced writing functions in a Javascript file and calling them from from the browser inspector console.
+
+So do that. Create an HTML file with a =script= element that loads a Javascript file, write functions in the Javascript file, and then call the functions from the console.
+
+Some suggestions for functions to try and write are below.
+
+*** Convert celsius to fahrenheit
+
+Write a function that takes one parameter, which should be a number in degrees celsius.
+
+The function should return the value converted to degrees fahrenheit.
+
+The math for conversion is to take the value in celsius, multiply it by 9, divide it by 5, and then add 32.
+
+For example, 20 celsius is 68 fahrenheit.
+
+*** Convert fahrenheit to celsius
+
+Write a function that takes one parameter, which should be a number in degrees fahrenheit.
+
+The function should return the value converted to degrees celsius.
+
+The math for conversion is to take the value in fahrenheit, subtract 32, multiply by 5, and then divide by 9.
+
+For example, 100 fahrenheit is 37.7 celsius.
+
+** Read MDN articles
+
+At the moment I suggest that you *do not* read ahead about Javascript on MDN or other sites. The Javascript we've done so far has been covered in an order that's not typical on these sites, and their early tutorials introduce concepts that we haven't covered yet in class (but we will in the first two weeks of the course in 2019).
