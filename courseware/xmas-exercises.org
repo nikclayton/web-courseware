@@ -1,0 +1,40 @@
+#+TITLE: BSL: Xmas break exercises
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org.css">
+#+HTML_HEAD: <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Roboto+Slab" rel="stylesheet">
+
+Here are some things to do in the two week break to keep practicing different skills.
+
+* Git commit messages
+
+One of the things I covered on Friday was good Git commit messages.
+
+So far we haven't focused on the types of things you've been writing in your commit messages and that's fine -- I wanted to make sure you were all using Git appropriately before introducing new rules.
+
+Now, though, it's time to start writing proper commit messages -- in many ways they are part of the "public face" of your work, and writing high-quality commit messages is one way of communicating that you are an engineer who takes pride in their work and thinks about quality.
+
+** Git commit message exercises
+
+*** Reading
+
+Read [[https://chris.beams.io/posts/git-commit]]. It is a detailed article that explains what makes a good commit message, how to format it, and so on.
+
+From now on, all your commit messages should follow the structure and guides described in that article.
+
+*** Configuration
+
+If you use the Git integration in WebStorm that I showed you then writing good commit messages should be relatively easy. When you commit using WebStorm it provides an editor for entering your commit message, and ways of seeing exactly which files have changed and what changed.
+
+However, if you want to continue to use =git commit= from the command line then you will need to make a few changes.
+
+First, you need to configure Git to use the correct editor when writing the commit message. To do that, run *one* of the following commands in the shell, depending on your laptop type.
+
+If your laptop runs Windows, run:
+
+#+BEGIN_SRC shell
+git config --global core.editor notepad
+#+END_SRC
+
+If your laptop runs OS X, run:
+
+
+Second, you will no longer use the =-m= option to write the commit message, you will just run =git commit=.
