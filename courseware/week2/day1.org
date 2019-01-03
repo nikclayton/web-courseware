@@ -1420,195 +1420,14 @@ Just for fun, see what happens if you change one or more of the
 =onclick= attributes to =onmousemove=.
 #+END_NOTES
 
-* TODO IDEs                                                        :noexport:
-** TODO Some web development problems
+* Revert the change
 
-TODO(nik): Move this later, since they don't use WebStorm immediately
-
-- Too many files
-- Easy to make mistakes
-- "tightly coupled" content
-
-#+BEGIN_NOTES
-I want to talk about some of the problems you may already have
-encountered that makes this stuff difficult.
-
-As you're probably beginning to realise, there are a lot of files
-needed for web development. Each page is its own file, and then there
-are the CSS files as well.
-
-And we're going to be introducing more files later in the course.
-Pretty soon it becomes difficult to keep track of them all.
-
-The syntax of the files can be complicated -- keeping track of which
-HTML element needs to be closed, or forgetting to close a double
-quote, or mis-spelling a CSS property name can all cause issues that
-can be difficult to track down.
-
-And the information in these files is what we call "tightly coupled".
-This means that when you, for example, change the class name in a CSS
-file you have to change it everywhere it's used in the HTML files as
-well. If you miss just one instance your web page is going to look
-strange, and might be broken.
-
-If you imagine a site with 100s of pages you can see how this would
-very quickly become difficult to work with.
-#+END_NOTES
-
-** TODO Integrated Development Environments (IDE)
-
-- Like a word processor, but for programmers
-
-
-#+BEGIN_SRC asciitosvg
-
- NotePad++      vAtom     SublimeText           VS Code     WebStorm
-
-    ^              ^          ^                     ^           ^
-    |              |          |                     |           |
- <--+--------------+----------+---------------------+-----------+-->
-Less complex                                                More complex
+#+BEGIN_SRC shell
+% git checkout -- index.html
 #+END_SRC
 
-#+RESULTS:
-[[file:integrated-development-environments-ide.svg]]
 
-#+BEGIN_NOTES
-TODO(nik): Move some of this material to when Atom is introduced
-
-[Check: Has everyone here used a word processor before?]
-
-Forget about web development for a moment, and think abour writing
-documents.
-
-They have their own set of problems -- am I using the fonts and
-headings consistently? Do the footnotes have the correct numbers?  Is
-the table of contents correct? That sort of thing.
-
-To solve those problems for writing documents we invented word
-processors, which provide features to take care of all of that for
-you, so you can focus on writing the text of the document.
-
-We did similar things for programming -- we invented special tools
-specifically to try and make programming easier, and to help us when
-we write code so that it's more difficult to make mistakes.
-
-We call these programs *Integrated Development Environments*, or
-*IDEs*.
-
-There are lots of different IDEs available, with different
-functionality. At the simpler end are programs like Notepad++ on
-Windows, which helps show you the HTML structure and uses colours to
-help you distinguish between HTML elements, content, and attributes.
-
-Atom, which we've been using so far, has a few more features to
-help out -- for example, the HTML linter that we've been using to
-catch simple mistakes. This is somewhere in the middle of the
-spectrum.
-
-At the other end are more complicated IDEs like Visual Studio and
-*Web Storm*. These are very powerful, but are more complicated to
-learn.
-
-However, once you get used to the features they can make web
-development a lot easier, and speed up a lot of things.
-
-#+END_NOTES
-
-** TODO WebStorm: Installation
-
-- Live exercise
-
-#+BEGIN_NOTES
-Going to be using an IDE called WebStorm.
-
-TODO(nik): Installation
-#+END_NOTES
-
-** TODO WebStorm: Initial setup
-
-- Live exercise
-
-#+BEGIN_NOTES
-TODO(nik): Cover
-
-- Opening the first time
-- Setting project options
-  - 2 spaces not 4
-  - Indentation for all block level elements
-- Disable Language Injection feature (not necessary yet)
-- Mark modified tabs with asterisks
-#+END_NOTES
-
-** TODO WebStorm: Opening a project
-
-- Live exercise
-
-#+BEGIN_NOTES
-TODO(nik): Complete
-#+END_NOTES
-
-** TODO WebStorm: Initial tour
-
-- Live exercise
-
-#+BEGIN_NOTES
-- Initial window layout (files, directories on left, contents on right)
-- Tool windows, showing and hiding
-- [MAYBE] View > Enter Distraction Free mode
-- Editor help
-  - HTML
-    - Syntax colouring
-    - Highlighting start and end tags
-    - Automatic indentation
-    - Reformatting code to match style (Code > Reformat code)
-    - Collapsible sections (left hand margin, "code folding")
-    - Syntax / validity checking (check mark at the top right)
-    - Open file in a browser
-    - Current 'path' through the document structure (bottom of the screen)
-    - "Structure" tool window
-    - TODOs
-    - Autocompletion
-    - Auto-closing tags
-  - CSS
-    - Common features
-      - Syntax highlighting
-      - Code reformatting
-      - Validity checking
-      - Current
-
-- Creating new files
-  - File > New, choose the type
-  - Right-click on directory / file, choose the type
-
-
-#+END_NOTES
-** TODO WebStorm: Troubleshooting
-
-- Live exercise
-
-#+BEGIN_NOTES
-- Delete a quote from a CSS class
-- Delete closing bracket from opening tag
-- Delete opening bracket from closing tag
-
-#+END_NOTES
-
-** TODO WebStorm: Debugging
-
-- Breakpoints
-- Starting the debugger
-- Stepping through code
-- Inspecting variables
-- Flow of control
-- Ending debug session
-
-#+BEGIN_NOTES
-Topics to hit are in the slide
-#+END_NOTES
-
-
-* TODO Refactoring                                                 :noexport:
+* TODO Refactoring
 
 - Rare to design a program correctly on first go
 - Requirements can change
@@ -1858,8 +1677,177 @@ Verify, and then commit your changes.
 Fewew lines of code means fewer bugs.
 #+END_NOTES
 
+* TODO IDEs
+** TODO Some web development problems
 
-* TODO Refactoring: Event binding with =onclick=                   :noexport:
+- Too many files
+- Easy to make mistakes
+- "tightly coupled" content
+
+#+BEGIN_NOTES
+I want to talk about some of the problems you may already have
+encountered that makes this stuff difficult.
+
+As you're probably beginning to realise, there are a lot of files
+needed for web development. Each page is its own file, and then there
+are the CSS files as well.
+
+And we're going to be introducing more files later in the course.
+Pretty soon it becomes difficult to keep track of them all.
+
+The syntax of the files can be complicated -- keeping track of which
+HTML element needs to be closed, or forgetting to close a double
+quote, or mis-spelling a CSS property name can all cause issues that
+can be difficult to track down.
+
+And the information in these files is what we call "tightly coupled".
+This means that when you, for example, change the class name in a CSS
+file you have to change it everywhere it's used in the HTML files as
+well. If you miss just one instance your web page is going to look
+strange, and might be broken.
+
+If you imagine a site with 100s of pages you can see how this would
+very quickly become difficult to work with.
+#+END_NOTES
+
+** TODO Integrated Development Environments (IDE)
+
+#+BEGIN_NOTES
+TODO(nik): Move some of this material to when Atom is introduced
+
+[Check: Has everyone here used a word processor before?]
+
+Forget about web development for a moment, and think about writing
+documents.
+
+They have their own set of problems -- am I using the fonts and
+headings consistently? Do the footnotes have the correct numbers?  Is
+the table of contents correct? That sort of thing.
+
+To solve those problems for writing documents we invented word
+processors, which provide features to take care of all of that for
+you, so you can focus on writing the text of the document.
+
+We did similar things for programming -- we invented special tools
+specifically to try and make programming easier, and to help us when
+we write code so that it's more difficult to make mistakes.
+
+We call these programs *Integrated Development Environments*, or
+*IDEs*.
+
+There are lots of different IDEs available, with different
+functionality. At the simpler end are programs like Notepad++ on
+Windows, which helps show you the HTML structure and uses colours to
+help you distinguish between HTML elements, content, and attributes.
+
+Atom, which we've been using so far, has a few more features to
+help out -- for example, the HTML linter that we've been using to
+catch simple mistakes. This is somewhere in the middle of the
+spectrum.
+
+At the other end are more complicated IDEs like Visual Studio and
+*Web Storm*. These are very powerful, but are more complicated to
+learn.
+
+However, once you get used to the features they can make web
+development a lot easier, and speed up a lot of things.
+
+#+END_NOTES
+
+** TODO WebStorm: Installation
+
+- Live exercise
+
+#+BEGIN_NOTES
+Going to be using an IDE called WebStorm.
+
+TODO(nik): Installation
+#+END_NOTES
+
+** TODO WebStorm: Initial setup
+
+- Live exercise
+
+#+BEGIN_NOTES
+TODO(nik): Cover
+
+- Opening the first time
+- Setting project options
+  - 2 spaces not 4
+  - Indentation for all block level elements
+- Disable Language Injection feature (not necessary yet)
+- Mark modified tabs with asterisks
+#+END_NOTES
+
+** TODO WebStorm: Opening a project
+
+- Live exercise
+
+#+BEGIN_NOTES
+TODO(nik): Complete
+#+END_NOTES
+
+** TODO WebStorm: Initial tour
+
+- Live exercise
+
+#+BEGIN_NOTES
+- Initial window layout (files, directories on left, contents on right)
+- Tool windows, showing and hiding
+- [MAYBE] View > Enter Distraction Free mode
+- Editor help
+  - HTML
+    - Syntax colouring
+    - Highlighting start and end tags
+    - Automatic indentation
+    - Reformatting code to match style (Code > Reformat code)
+    - Collapsible sections (left hand margin, "code folding")
+    - Syntax / validity checking (check mark at the top right)
+    - Open file in a browser
+    - Current 'path' through the document structure (bottom of the screen)
+    - "Structure" tool window
+    - TODOs
+    - Autocompletion
+    - Auto-closing tags
+  - CSS
+    - Common features
+      - Syntax highlighting
+      - Code reformatting
+      - Validity checking
+      - Current
+
+- Creating new files
+  - File > New, choose the type
+  - Right-click on directory / file, choose the type
+
+
+#+END_NOTES
+** TODO WebStorm: Troubleshooting
+
+- Live exercise
+
+#+BEGIN_NOTES
+- Delete a quote from a CSS class
+- Delete closing bracket from opening tag
+- Delete opening bracket from closing tag
+
+#+END_NOTES
+
+** TODO WebStorm: Debugging
+
+- Breakpoints
+- Starting the debugger
+- Stepping through code
+- Inspecting variables
+- Flow of control
+- Ending debug session
+
+#+BEGIN_NOTES
+Topics to hit are in the slide
+#+END_NOTES
+
+
+* TODO Refactoring: Event binding with =onclick=
 
 #+BEGIN_SRC html
 ... onclick="nameOfFunction(event);" ...
@@ -3290,14 +3278,8 @@ elBody.appendChild(elP);
 - Change the previous page
 - Add a new paragraph, that, if clicked, adds a list with three
   listitems to the bottom of the page.
+  - The second listitem should contain emphasised and non-emphasised text
 
-** Showing / hiding a menu
-
-#+BEGIN_NOTES
-See [[file:day5/][week2/day5 directory]] for details.
-
-Goal is to introduce the =style= property on an element.
-#+END_NOTES
 
 * Race conditions (async)                                          :noexport:
 
