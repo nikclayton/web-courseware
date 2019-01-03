@@ -1294,7 +1294,9 @@ secondLi.remove();
 #+BEGIN_NOTES
 Here we simply call the =remove= method on the =listItem=.
 #+END_NOTES
+
 * TODO Recap: What have we learned?
+
 #+REVEAL_HTML: <div class="leftcol">
 - Widgets
   - =input=
@@ -1311,10 +1313,14 @@ Here we simply call the =remove= method on the =listItem=.
 - =element.remove()=
   - To remove elements from the DOM
 #+REVEAL_HTML: </div>
+
 * Play
+
 - Play around with the shopping list
 - Identify things we could change to make it easier for users
+
 * TODO UX followup work
+
 - Press =ENTER= to add an item
 - Clear the input widget after adding an item
 - Setting the input focus
@@ -1346,7 +1352,9 @@ They are:
 
 Lets get on and fix those problems.
 #+END_NOTES
+
 * Press ENTER to add an item
+
 - Need to click the button to add the item
 - Natural to press ENTER to add to the list
 - How?
@@ -1703,6 +1711,7 @@ bang-equals-equals.
 #+END_NOTES
 
 ** Reminder: =if= statement syntax
+
 #+BEGIN_SRC javascript
 if (expression) {
   // Code that only runs if 'expression' is true
@@ -3136,33 +3145,44 @@ we touched CSS.
 
 So now you've got some time to add some CSS
 #+END_NOTES
+
 * TODO Functionality followup work
 - Adding a "Delete all" button
 - Adding quantities
 - Parsing quantities
 - Reordering items in the list
 - Drag/drop items in the list
+
 * Add a "Delete all" button (or "Clear list")
 * Add quantities
+
 * Parsing quantities
+
 * Re-order items in the list
+
 * Drag-drop items in the list
+
 * Javascript syntax followup work
+
 * TODO JSDoc comments
   :PROPERTIES:
   :TOPICS:   jsdoc
   :END:
+
 ** Good practice to comment functions
    :PROPERTIES:
    :REQUIREMENTS: webstorm
    :END:
+
 - Programming is about communication
   - Good comments cover *what*, and *why*
   - The code describes *how*
 - Javascript does not have a single standard for comments
   - =JSDoc= is a widely adopted standard
   - IDEs understand JSDoc and do useful things with it
+
 ** Sample JSDoc
+
 #+BEGIN_SRC javascript
 /**
  * Creates and returns an 'li' element for inclusion in shopping list.
@@ -3178,6 +3198,7 @@ So now you've got some time to add some CSS
   - Design decisions, links to documents, specifications, etc
 - 0-n =@param= entries that describe each parameter
 - 0-1 =@return= entry for the return value
+
 #+BEGIN_NOTES
 JSDoc comments all start with =/**= (slash, star, star). If you type
 that before a function WebStorm will automatically prefill some of
