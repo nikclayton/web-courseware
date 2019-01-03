@@ -587,6 +587,10 @@ document.querySelector('p.warning');
 
 document.querySelector('ul li:nth-of-type(2)').innerText;
   // "Second li"
+
+document.querySelector('p');
+  // <p id="first">
+  // Finds the first matching element
 #+END_SRC
 #+REVEAL_HTML: </div>
 
