@@ -648,8 +648,6 @@ correctly before moving on to the next part of the problem.
   });
 #+END_SRC
 
-* Break
-
 * TODO Adding list items
 
 #+BEGIN_SRC html
