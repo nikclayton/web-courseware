@@ -100,16 +100,27 @@ Everything else is stuff we've already done.
 * TODO Set up
 
 - Create a =poco/shopping= directory
-- Create empty files:
-  - =index.html=
-  - =style.css=
-  - =shopping.js=
+- Create =index.html=
+  - Heading "My shopping list"
+  - Empty unordered list
+- Link to empty =style.css= and =shopping.js= files
+
+#+BEGIN_NOTES
+We'll set up the infrastructure for our project.
+
+Create a new directory in your =poco= directory called =shopping=.
+
+In there, create an =index.html= file. It should have a level 1 heading
+with the text =My shopping list=, and an empty unordered list -- the =ul=
+element should be there, but it shouldn't have an listitems.
+
+Make sure this HTML file links to two empty files, =style.css= and
+=shopping.hs=.
+#+END_NOTES
 
 * TODO Set up HTML
 
 #+INCLUDE: "shopping-1.html" src html
-
-- =style.css= and =shopping.js= remain empty
 
 #+BEGIN_NOTES
 Put this text in your HTML file, and make sure it works.
