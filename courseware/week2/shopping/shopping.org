@@ -1617,8 +1617,7 @@ in the console.
 #+END_NOTES
 ** What does =<= and =>= mean for strings?
 
-- First compare by length, shorter string is always less-than
-- Then compare character by character
+- Dictionary order
 
 #+BEGIN_SRC javascript
 // let c = 'This is a string';
@@ -1633,30 +1632,26 @@ e < f;   // false, 'e' comes before 's'
 #+END_SRC
 
 #+BEGIN_NOTES
-There are a few rules to figure out if one string is less than or greater
-to another one.
-
-First, if the strings are not the same length then the shorter string
-is always less than the longer string.
-
-In the example here this is why =c= is less than =d=.
-
-If the strings are the same length then the letters in the string
-are compared one by one.
+Strings are compared in dictionary order. Imagine that you had to put
+the string in a dictionary. Any word, or string that would occur first
+in the dictionary is *less than* any word or string that would appear
+after.
 
 Here, strings =e= and =f= are different from the first letter of the
 second word. Since the =e= in =example= is before the =s= in =string=,
 string =f= is less then string =e=, and the comparison is false.
 #+END_NOTES
+
 ** Expressions can mix variables and values
+
 #+BEGIN_SRC javascript
 // let a = 10;
 // let c = 'This is a string';
 
-c === 'This is a string';   // true
 a > 5;                      // true
 a <= 10;                    // true
 
+c === 'This is a string';   // true
 #+END_SRC
 
 #+BEGIN_NOTES
