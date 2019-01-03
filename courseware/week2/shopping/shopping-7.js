@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   let shoppingList = document.querySelector('ul');
   let addItemButton = document.querySelector('button');
 
-  document.querySelector('button').addEventListener('click', function(event) {
+  addItemButton.addEventListener('click', function(event) {
     if (inputBox.value.trim() !== '') {
       shoppingList.appendChild(createNewListItem(inputBox.value.trim()));
       inputBox.value = '';
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     inputBox.focus();
   });
 
-  document.querySelector('input').addEventListener('keyup', function(event) {
+  inputBox.addEventListener('keyup', function(event) {
     if (inputBox.value.trim() !== '') {
       addItemButton.disabled = false;
       if (event.key === 'Enter') {

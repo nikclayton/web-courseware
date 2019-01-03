@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   const shoppingList = document.querySelector('ul');
   const addItemButton = document.querySelector('button');
 
-  document.querySelector('button').addEventListener('click', function (event) {
+  addItemButton.addEventListener('click', function (event) {
     const trimmedValue = inputBox.value.trim();
 
     if (trimmedValue === '') {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     inputBox.focus();
   });
 
-  document.querySelector('input').addEventListener('keyup', function (event) {
+  inputBox.addEventListener('keyup', function (event) {
     const trimmedValue = inputBox.value.trim();
     addItemButton.disabled = trimmedValue === '';
 

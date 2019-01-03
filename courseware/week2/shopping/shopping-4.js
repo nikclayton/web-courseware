@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     inputBox.focus();
   });
 
-  document.querySelector('input').addEventListener('keyup', function (event) {
+  inputBox.addEventListener('keyup', function (event) {
     if (event.key === 'Enter') {
       shoppingList.appendChild(createNewListItem(inputBox.value));
       inputBox.value = '';
