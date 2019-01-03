@@ -1,7 +1,13 @@
 #+COLUMNS: %35ITEM %TODO %TOPICS %REQUIREMENTS %TAGS
 
+* Other HTML elements
+
+- =header=
+- =nav=
+- =footer=
+
 * Javascript flow of control
-- Demo with debugging in WebStorm
+** DONE Demo with debugging in WebStorm
 
 * Examples for Javascript events
 - Dragging elements by adjusting their position
@@ -93,6 +99,15 @@ https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Floats
 ** TODO object-fit
 
  https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/fri-may-11
+* document.readyState
+
+After introducing =if= statements, check document.readyState before
+installing the DOMContentLoaded handler.
+
+See
+https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded
+for details.
+
 * Shopping example
 
 ** Follow up exercises
