@@ -6,6 +6,16 @@
 
 This is the courseware for the 2018/2019 Powercoders Basel course.
 
+If you're reading the HTML version of this file you can find the
+Org source in [[https://bitbucket.org/hussamallaham/004.powercoders/src/master/courseware/README.org][courseware/README.org]].
+
+* Repository
+
+The courseware is in the https://bitbucket.org/hussamallaham/004.powercoders/src/master/courseware/ repository and directory. Ask Hussam for access if you don't already
+have it.
+
+Please coordinate with Nik before making any changes.
+
 * Content and structure
 
 Previous versions of the course have -- as far as I can tell --
@@ -84,7 +94,7 @@ I wanted an authoring environment that:
 - Was not propriatory to one vendor
 - Had multiple export options
 
-** TODO Structure of a slide
+** Structure of a slide
 
 *** General structure
 
@@ -256,7 +266,7 @@ Then run =C-c C-e h h= to export a single HTML file that
 contains the whole content suitable for giving out or sharing
 as lecture notes.
 
-*** TODO Batch generation of output files
+*** Batch generation of output files
 
 #+BEGIN_SRC
 % emacs -Q --batch
