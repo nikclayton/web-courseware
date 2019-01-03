@@ -8,7 +8,7 @@ function setClassTip(event) {
   el.className = 'tip';
 }
 
-function setClassNormal(event) {
+function clearClass(event) {
   let el = document.getElementById('mypara');
   el.className = '';
 }
