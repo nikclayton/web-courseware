@@ -21,3 +21,9 @@ li {
 
 pre, code {
   background-color: rgb(232, 232, 232);
+}
+
+code {
+  padding: 0 .4em;
+  border-radius: 4px;
+}
