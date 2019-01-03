@@ -1073,7 +1073,7 @@ Try this, and make sure you see the same result.
  < // What does this show?
  #+END_SRC
 
-* Including Javascript in the HTML                                 :noexport:
+* Including Javascript in the HTML
 
 #+BEGIN_SRC html
   <html>
@@ -1110,7 +1110,7 @@ Edit the HTML file and add a =script= element immediately before the
 end of the body.
 #+END_NOTES
 
-* How do we know if our code is working?                           :noexport:
+* How do we know if our code is working?
 
 #+BEGIN_SRC javascript
 console.log('some message');
@@ -1194,7 +1194,7 @@ and then call the function, as shown on the right.
 [Wait]
 #+END_NOTES
 
-* Exercise: A function that changes the class             :exercise:noexport:
+* Exercise: A function that changes the class                      :exercise:
 
 #+BEGIN_SRC javascript
 setClassTip();   // <-- goal (in the console)
@@ -1242,7 +1242,7 @@ What problems did you have? Let's talk through them with the class.
 [Wait]
 #+END_NOTES
 
-* TODO JS: Problem 1: We're going to...                            :noexport:
+* TODO JS: Problem 1: We're going to...
 
 1. Write a function...
   - Done
@@ -1261,7 +1261,7 @@ The last thing we need to figure out is how do we call our functions
 when the user clicks on one of those listitems?
 #+END_NOTES
 
-* TODO DOM Events                                                  :noexport:
+* TODO DOM Events
 
 - General term for "An interesting thing has happened"
 - Let's you say
@@ -1379,7 +1379,7 @@ This is a bit weird -- we're mixing HTML and Javascript together
 inside a single element.
 #+END_NOTES
 
-* Exercise: Putting it all together                       :exercise:noexport:
+* Exercise: Putting it all together                                :exercise:
 
 - Write two more Javascript functions to change the paragraph's class
   - As event listeners they'll need an =event= parameter
@@ -1403,7 +1403,7 @@ inside a single element.
 
 ** Add and commit!
 
-* Just for fun: =mousemove=                                        :noexport:
+* Just for fun: =mousemove=
 
 - =click= is one of many events that can fire
 - =mousemove= is another
@@ -1619,7 +1619,7 @@ Topics to hit are in the slide
 
 #+END_NOTES
 
-* TODO What's wrong with our code?                                 :noexport:
+* TODO What's wrong with our code?
 
  - Inline Javascript
  - Repeated code
@@ -1660,7 +1660,7 @@ it is a good way to show the technique.
 
 #+END_NOTES
 
-* TODO Refactoring: Inline Javascript                              :noexport:
+* TODO Refactoring: Inline Javascript
 
 - Place the Javascript in a separate file
 
@@ -1752,7 +1752,7 @@ last small change you made, or review it to see what went wrong.
 #+BEGIN_NOTES
 
 #+END_NOTES
-* TODO Refactoring: Repeated code                                  :noexport:
+* TODO Refactoring: Repeated code
 
 #+INCLUDE: "change_para_class/set-class-1.js" src javascript
 
@@ -2401,7 +2401,7 @@ one of the elements.
 
 #+INCLUDE: "change_para_class/refactor-3-4.js" src javascript
 
-* Refactoring: Cleaning up =setClass()=                            :noexport:
+* Refactoring: Cleaning up =setClass()=
 
 #+INCLUDE: "change_para_class/refactor-3-4.js" :lines "1-5" src javascript
 
@@ -2504,7 +2504,7 @@ Is this clear to everyone?
 Make this change and commit.
 #+END_NOTES
 
-* TODO Refactoring: Reflection                                     :noexport:
+* TODO Refactoring: Reflection
 
 #+REVEAL_HTML: <div class="leftcol">
 - External Javascript
@@ -2549,9 +2549,9 @@ didn't (with the event listeners) it was easy to know exactly which
 change was causing the problem.
 #+END_NOTES
 
-* BREAK                                                            :noexport:
+* BREAK
 
-* TODO The DOM tree                                                :noexport:
+* TODO The DOM tree
 
 - An HTML page is a tree of elements
 - The DOM allows us to inspect and change the tree
@@ -2567,7 +2567,7 @@ Does everyone remember that?
 HTML pages are also trees.
 #+END_NOTES
 
-* TODO Tree refresher                                              :noexport:
+* TODO Tree refresher
 
 #+REVEAL_HTML: <div class="leftcol">
 - Tree is a hierarchy of *nodes*
@@ -2696,7 +2696,7 @@ digraph G {
 
 #+REVEAL_HTML: </div>
 
-** TODO =head= is a child of =body=
+** TODO =head= is a child of =html=
 
 #+REVEAL_HTML: <div class="leftcol">
 #+BEGIN_SRC html :noweb yes
@@ -3034,7 +3034,7 @@ complex than this example -- and draw the tree for that page.
 
 
 
-* TODO Changing the DOM tree with Javascript                       :noexport:
+* TODO Changing the DOM tree with Javascript
 
 - =document= provides a method to create new nodes
 - =Element= provides methods to attach the nodes to the tree
@@ -3277,7 +3277,7 @@ elBody.appendChild(elP);
 [[file:dom-add-para-4.svg]]
 
 
-* Exercises: Changing the DOM tree                                 :noexport:
+* Exercises: Changing the DOM tree
 
 ** Adding a paragraph
 
