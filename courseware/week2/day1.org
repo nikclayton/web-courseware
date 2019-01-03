@@ -1862,7 +1862,7 @@ Fewew lines of code means fewer bugs.
 * TODO Refactoring: Event binding with =onclick=                   :noexport:
 
 #+BEGIN_SRC html
-... onlick="nameOfFunction(event)" ...
+... onclick="nameOfFunction(event);" ...
 #+END_SRC
 
 - This is how we've been binding listeners to events
