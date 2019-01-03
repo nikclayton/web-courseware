@@ -2015,7 +2015,7 @@ This is the refactored code.
 On lines two and three I declare and initialise two variables, one
 for the inputBox, one for the shopping list.
 
-THen I use these throughout the rest of function.
+Then I use these throughout the rest of function.
 
 So lets talk about *scope* for a second.
 
@@ -2061,6 +2061,9 @@ That uses =shoppingList= and =inputBox=, both L1 scope, so visible.
 
 Line 9 has a closing curly brace, so we jump up one scope level, and
 we're back to L2 scope.
+
+On line 11 I can use the =inputBox= variable instead of calling
+=querySelector= again.
 
 Lines 13 through 18 are very similar. Importantly, when the L2 scope
 is created in line 13, and the L3 scope in line 14, these are
@@ -3149,6 +3152,516 @@ So now you've got some time to add some CSS
 - Drag/drop items in the list
 
 * Add a "Delete all" button (or "Clear list")
+
+#+REVEAL_HTML: <div class="leftcol">
+- We know
+ - How to create a button
+ - How to listen for button clicks
+ - How to find an element
+  - =document.querySelector()=
+ - How to delete an element
+  - =el.remove()=
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- We don't know
+ - How to find all elements of a type
+ - How to delete all elements of a type
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+We want to be able to add a button called "Clear list".
+
+When it's clicked we'll delete all of the list items that have been
+added, so the list is empty.
+
+We already know most of how to do this. We can create the button and
+listen for clicks on it, and we can find individual elements. But
+finding more than one element, or deleting more than element is new.
+
+So lets learn how to do that.
+#+END_NOTES
+
+** =document.querySelectorAll()=
+
+- =.querySelector(...);= returns first element
+- =.querySelectorAll(...);= returns all elements
+- As a =NodeList=
+
+** =NodeList=?
+
+- A collection of nodes in the DOM tree
+- Organised as a list of things
+- A bit like an array
+
+** Array?
+** Non-array variables
+
+#+BEGIN_SRC javascript
+let x = 10;
+let y = 'This is a string';
+let z = document.querySelector('body');
+#+END_SRC
+
+#+BEGIN_NOTES
+Before we can progress much further though we need to expand our
+understanding of Javascript variables and what they can contain.
+
+So far we've been looking at variables as though they contain a
+single thing.
+
+That thing might be a number, or a string, or an element, but it's
+always been just one thing.
+#+END_NOTES
+
+** Arrays of numbers
+
+#+BEGIN_SRC javascript
+let a = [1, 2, 3];
+
+a[0];  // 1  (index 0)
+a[1];  // 2  (index 1)
+a[2];  // 3  (index 2)
+a[3];  // undefined
+a;     // [1, 2, 3]
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's how we declare and use an array.
+
+Just like with regular variables we use =let= to declare them, and
+we give them a name.
+
+However, because the array variable can contain multiple values
+we have to write those values inside square brackets, and separate them
+with spaces.
+
+This creates the array with three different values.
+
+We say that each value is at a different *index* in array.
+
+*Indicies* start counting at 0. So the first value in the array is at
+index 0, the second value is at index 1, and so on.
+
+To find out what value is in the array at a particular index we write the
+name of the array variable, and then we put the index number that we are
+interested in inside square brackets.
+
+There should be no spaces between the name of the variable and the square
+brackets.
+
+If we try and use an index value that does not contain a value then we get
+back the special =undefined= value that we've seen before.
+
+We can also use the whole array, by giving its name. We use this if we want
+to pass an array as a parameter to a function, for example.
+#+END_NOTES
+
+** Arrays of strings
+
+#+BEGIN_SRC javascript
+let b = ['Hello', 'Powercoders'];
+
+b[0];  // "Hello";
+b[1];  // "Powercoders";
+#+END_SRC
+
+#+BEGIN_NOTES
+Values in an array don't have to be numbers, they can be strings to, as in
+this example.
+
+Using the index numbers to find out what values are at each index is
+identical.
+#+END_NOTES
+
+** Arrays of mixed types
+
+#+BEGIN_SRC javascript
+let c = [100, 'Basel'];
+
+c[0];  // 100
+c[1];  // "Basel"
+#+END_SRC
+
+#+BEGIN_NOTES
+And you can mix the types of the values in a single array. Here we have an
+array where the first element in the array is a number and the second is a
+string.
+#+END_NOTES
+
+** Index values can be expressions
+
+#+BEGIN_SRC javascript
+// let c = [100, 'Basel'];
+
+let x = 1;
+c[x];      // "Basel"
+c[x - 1];  // 100
+#+END_SRC
+
+#+BEGIN_NOTES
+Array index values don't have to be numbers -- they can be expressions that
+evaluate to numbers as well.
+
+In this example =x= is 1, so if we use that as the index value we get the
+second element in the array.
+
+If we substract 1 from x we get 0, which is why the second example returns
+the first element in the array (remember, indices always start at 0).
+#+END_NOTES
+
+** Arrays have a =length= property
+
+#+BEGIN_SRC javascript
+// let c = [100, 'Basel'];
+
+c.length;  // 2
+
+c[c.length - 1];  // "Basel"
+#+END_SRC
+
+#+BEGIN_NOTES
+Arrays are also objects, which means that they have properties and methods.
+
+The only property we typically care about for an array is the =length=
+property. This tells us how long the array is -- how many elements it
+contains.
+
+This is always one larger than the last index in the array. So you can use
+the length property to find the value of the last element in the array like
+this.
+#+END_NOTES
+
+** Single-element arrays
+
+#+BEGIN_SRC javascript
+let d = [1];
+
+d.length;  // 1
+#+END_SRC
+
+#+BEGIN_NOTES
+Even if an array is going to start with only a single element you must
+still put the element inside square brackets, like this.
+#+END_NOTES
+
+** Empty arrays
+
+#+BEGIN_SRC javascript
+let e = [];
+
+e.length;  // 0
+#+END_SRC
+
+#+BEGIN_NOTES
+And it's possible to have completely empty arrays, with no elements. We
+declare them like this.
+#+END_NOTES
+
+** Modifying arrays
+
+#+BEGIN_SRC javascript
+// let e = [];
+
+e[0] = 1;
+e[1] = 2;
+e;         // [1, 2]
+e[0] = 3;
+e;         // [3, 2]
+e.length;  // 2
+
+e.length = 0;
+e;         // []
+e.length = 3;
+e;         // [undefined, undefined, undefined]
+#+END_SRC
+
+#+BEGIN_NOTES
+Assigning a value to an array is the same as assigning a value to a
+variable, you use the equals sign.
+
+However, you must specify the index in the array that you're assigning
+in to.
+
+If you assign in to an index that doesn't already exist, as in the first
+two examples, then it's automatically created for you.
+
+If you assign to an index that does exist then the value at that index is
+replaced with the new value.
+
+And if you change the length then the array shrinks or grows based on the
+new length.
+#+END_NOTES
+
+** (some) Array methods
+
+- =push=
+- =pop=
+- =shift=
+- =unshift=
+- =join=
+- =foreach=
+- Check MDN for more
+
+#+BEGIN_NOTES
+As objects arrays also have some useful methods, including =push=, =pop=,
+=shift=, =unshift=, =join=, and =foreach=.
+
+This isn't a complete list by the way, for that you can check out MDN.
+
+#+END_NOTES
+*** =push=
+
+- Adds a new element to the end of the array
+- Returns the new length
+
+#+BEGIN_SRC javascript
+let x = [1, 2, 3];
+
+x.push(0);  // 4
+x;          // [1, 2, 3, 0];
+#+END_SRC
+
+*** =pop=
+
+- Removes the last element from the end of the array
+- Returns the element removed
+
+#+BEGIN_SRC javascript
+let x = [1, 2, 3];
+
+x.pop();    // 3
+x;          // [1, 2]
+#+END_SRC
+
+*** =shift=
+
+- Removes the first element from the array
+- Returns the element removed
+
+#+BEGIN_SRC javascript
+let x = [1, 2, 3];
+
+x.shift();  // 1;
+x;          // [2, 3]
+#+END_SRC
+
+*** =unshift=
+
+- Adds one or more elements to the front of the array
+- Returns the new length
+
+#+BEGIN_SRC javascript
+let x = [1, 2, 3];
+
+x.unshift(4, 5);  // 5
+x;                // [4, 5, 1, 2, 3]
+#+END_SRC
+
+*** =join=
+
+- Converts elements to strings
+- Returns new string, joining the elements
+
+#+BEGIN_SRC javascript
+let x = [1, 2, 3];
+
+x.join(' ');   // "1 2 3"
+x.join(',');   // "1,2,3"
+x.join(', ');  // "1, 2, 3"
+
+[1, 2, 3].join(' ');  // "1 2 3"
+#+END_SRC
+
+*** =join=
+
+#+BEGIN_SRC javascript
+let x = ['Hello', 'Powercoders', 'Basel'];
+
+x.join('');     // "HelloPowercodersBasel"
+x.join(' ');    // "Hello Powercoders Basel"
+x.join(' - ');  // "Hello - Powercoders - Basel"
+#+END_SRC
+
+*** =forEach=
+
+- Calls a function once for each element
+
+#+BEGIN_SRC javascript
+let x = [1, 2, 3];
+
+x.forEach(function(el) {
+  console.log(el + 2);
+});
+
+// 3
+// 4
+// 5
+#+END_SRC
+
+** Iterables
+
+- =forEach= *iterates* over the array
+
+#+BEGIN_QUOTE
+Iterate: To say or do again and again
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Iterable: Something we can iterate over
+#+END_QUOTE
+
+#+BEGIN_NOTES
+=forEach= is an important example here.
+
+We say that it *iterates* over the array. Our function is called again
+and again while there are elements in the array.
+
+This means that our array is an example of an *iterable* -- something that
+we can iterate over.
+#+END_NOTES
+
+** =NodeList= is not an array...
+
+- ... but it is an *iterable*
+- So we can iterate over it with =forEach=
+- And we can remove elements with =.remove()=
+
+** Exercise: Removing nodes
+
+- Open the shopping list in the browser
+- Add some items
+- Open the console
+- Find all the list items using =querySelectorAll()=
+- Iterate over them using =forEach()=
+- Call the =remove()= method in the function
+
+** Solution: Removing nodes
+
+#+BEGIN_SRC javascript
+let items = document.querySelectorAll('li');
+li.forEach(function(el) {
+  el.remove();
+});
+#+END_SRC
+
+** Adding a "Clear list" button
+
+*** Exercise: Add a button
+
+- Add a button next to the "Add item" button
+- Set the =id= to =clear=
+- Give the existing button an =id= of =add=
+
+*** Solution: Add a button
+
+#+INCLUDE: "shopping-15.html" :lines "14-21" src html
+
+*** Exercise: Click listener to delete the listitems
+
+- Add a =const= variable, store the "Clear list" button
+- Add a click event listener that
+ - Finds all the =li= elements
+ - Removes them
+ - Disables the "Clear list" button
+
+*** Solution: Click listener to delete the listitems
+
+#+INCLUDE: "shopping-15.js" :lines "31-37" src javascript
+
+#+INCLUDE: "shopping-15.js" :lines "68-76" src javascript
+
+*** Exercise: Enable the button when items are added
+
+- Find both places in the code where items are added
+- Modify both of them to enable =clearListButton=
+
+*** Solution: Enable the button when items are added
+
+#+INCLUDE: "shopping-15.js" :lines "37-51" src javascript
+
+*** Solution: Enable the button when items are added
+
+#+INCLUDE: "shopping-15.js" :lines "51-68" src javascript
+
+*** Exercise: Disable the button when the page is loaded
+
+- Disable the button when =DOMContentReady= fires
+
+*** Solution: Disable the button when the page is loaded
+
+#+INCLUDE: "shopping-15.js" :lines "76-80" src javascript
+
+*** Conditionally disable the button when clicking delete item
+
+- Deleting an item might need to disable the button
+- If there are still items in the list then leave it enabled
+- Otherwise, delete it
+- Find the =deleteButton= click handler code
+- Modify it to disable the button if there are no =li= elements
+
+*** Hint: Conditionally disable the button when clicking delete item
+
+- How do you find all the =li= elements?
+- What property can you check to see if any elements were found?
+
+*** Big hint
+
+- How do you find all the =li= elements?
+
+#+BEGIN_SRC javascript
+const listItems = document.querySelectorAll('li');
+#+END_SRC
+
+- What property can you check to see if any elements were found?
+
+#+BEGIN_SRC javascript
+listItems.length;
+#+END_SRC
+
+*** Solution: Conditionally disable the button when clicking delete item
+
+#+BEGIN_SRC javascript
+deleteButton.addEventListener('click', function(event) {
+  listItem.remove();
+
+  const clearListButton = document.querySelector('button#clear');
+  const listItems = document.querySelectorAll('li');
+
+  if (listItems.length === 0) {
+    clearListButton.disabled = true;
+  } else {
+    clearListButton.disabled = false;
+  }
+});
+#+END_SRC
+
+*** Refactor: Remove the =if= statement
+
+#+BEGIN_SRC javascript
+deleteButton.addEventListener('click', function(event) {
+  listItem.remove();
+
+  const clearListButton = document.querySelector('button#clear');
+  const listItems = document.querySelectorAll('li');
+
+  clearListButton.disabled = listItems.length === 0;
+});
+#+END_SRC
+
+*** Refactor: Remove the variables
+
+#+INCLUDE: "shopping-15.js" :lines "19-25" src javascript
+
+** TODO Alternative: Using =.firstChild=                           :noexport:
+
+#+BEGIN_SRC javascript
+// el == the ul element
+while (el.firstChild) {
+  el.removeChild(el.firstChild);
+}
+#+END_SRC
+
 * Add quantities
 
 * Parsing quantities
