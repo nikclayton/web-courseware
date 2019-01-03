@@ -559,7 +559,7 @@ element is returned.
 *** =querySelector()= examples
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC html -n
+#+BEGIN_SRC html
 <p id="first">...</p>
 
 <h1 class="warning">...</h1>
@@ -574,7 +574,7 @@ element is returned.
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC javascript -n
+#+BEGIN_SRC javascript
 document.querySelector('#first');
   // <p id="first">
   // Identical to getElementById('first');
@@ -945,7 +945,7 @@ things together instead of using intermediate variables.
 
 * TODO The =Delete= button
 
-#+BEGIN_SRC javascript -n :noweb yes
+#+BEGIN_SRC javascript :noweb yes
 <<createNewListItemNoDelete>>
 #+END_SRC
 
@@ -1017,7 +1017,7 @@ This click listener is going to be just like the one we made for the
 
 ** TODO Solution: Checking we can detect the click
 #+NAME: createNewListItemLogClick
-#+BEGIN_SRC javascript -n
+#+BEGIN_SRC javascript
   function createNewListItem(itemName) {
     let listItem = document.createElement('li');
 
