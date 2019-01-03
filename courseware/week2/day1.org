@@ -2130,7 +2130,7 @@ called.
 
 #+BEGIN_SRC javascript
 let p = function() {
-  "hello, Powercoders!";
+  return 'hello, Powercoders!';
 };
 
 p;     // What does this print?
