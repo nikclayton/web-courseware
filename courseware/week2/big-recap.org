@@ -1,0 +1,69 @@
+#+TITLE: Big Recap
+#+SETUPFILE: "../include/settings.org"
+
+* Files and directories
+
+- =basename.ext=
+- Path: =dir1/dir2/dir3/file.html=
+
+* HTML
+
+- HTML consists of nested *elements*
+- Element: =<start_tag>content</end_tag>=
+- Empty element: =<start_tag>=
+- Elements can nest
+
+#+BEGIN_EXAMPLE
+<el-one>
+  <el-two>Some content</el-two>
+</el-one>
+#+END_EXAMPLE
+
+* HTML template
+
+#+BEGIN_SRC html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title goes here</title>
+  </head>
+
+  <body>
+    <!-- other elements go here -->
+  </body>
+</html>
+#+END_SRC
+
+#+INCLUDE: "../week1/day2.org::*Anatomy of the command line"
+
+#+INCLUDE: "../week1/day2.org::*Shell cheatsheet"
+
+#+INCLUDE: "../week1/day2.org::*Typical Git workflow"
+
+#+InCLUDE: "../week1/day2.org::*Commit all files as a single commit"
+
+#+INCLUDE: "../week1/day4.org::*A CSS rule"
+
+#+INCLUDE: "../week1/day4.org::*The =id= attribute"
+
+#+INCLUDE: "../week1/day4.org::*The =class= attribute"
+
+* Box Model
+
+[[file:c:/Users/Nik%20Clayton/Powercoders/004.powercoders/courseware/week1/box-model.png]]
+
+* Media queries
+
+#+BEGIN_SRC html
+<head>
+  <meta name="viewport" content="width=device-width">
+  <link href="style.css" rel="stylesheet">
+  <link href="large.css" rel="stylesheet"
+     media="screen and (min-width: 600px)">
+  ...
+</head>
+#+END_SRC
+
+#+INCLUDE: "../week1/day5.org::*Best practice: Design for smaller sizes first"
+
+#+INCLUDE: "../week1/day5.org::*Games"
