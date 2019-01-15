@@ -1,7 +1,7 @@
 /**
  * Creates and returns an 'li' element for inclusion in the shopping list.
  *
- * @param {string} itemName Name of the item to add to the list
+ * @param {string} itemName Name of the item to append to the list
  * @returns {HTMLElement} li element
  */
 function createNewListItem(itemName) {
@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
   document.querySelector('input').addEventListener('keyup', function(event) {
     const trimmedValue = inputBox.value.trim();
-    addItemButton.disabled = trimmedValue === '';
 
     if (trimmedValue !== '') {
       if (event.key === 'Enter') {
@@ -47,6 +46,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
         inputBox.value = '';
       }
     }
+
+    addItemButton.disabled = inputBox.value.trim() === '';
   });
 
   inputBox.focus();

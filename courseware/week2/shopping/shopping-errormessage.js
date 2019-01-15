@@ -11,16 +11,10 @@ function createNewListItem(itemName) {
   listText.textContent = itemName;
 
   const deleteButton = document.createElement('button');
-  const trashIcon = document.createElement('i');
-  trashIcon.className = 'fas fa-trash';
-  deleteButton.appendChild(trashIcon);
-  //deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+  deleteButton.textContent = 'Delete';
 
   deleteButton.addEventListener('click', function (event) {
     listItem.remove();
-
-    document.querySelector('button#clear').disabled =
-        document.querySelectorAll('li').length === 0;
   });
 
   listItem.appendChild(listText);
@@ -32,8 +26,8 @@ function createNewListItem(itemName) {
 document.addEventListener('DOMContentLoaded', function (event) {
   const inputBox = document.getElementById('item');
   const shoppingList = document.querySelector('ul');
-  const addItemButton = document.querySelector('button#append');
-  const clearListButton = document.querySelector('button#clear');
+  const addItemButton = document.querySelector('button');
+  const itemWarning = document.querySelector('#item-warning');
 
   addItemButton.addEventListener('click', function (event) {
     const trimmedValue = inputBox.value.trim();
@@ -45,13 +39,21 @@ document.addEventListener('DOMContentLoaded', function (event) {
     shoppingList.appendChild(createNewListItem(trimmedValue));
     inputBox.value = '';
     addItemButton.disabled = true;
-    clearListButton.disabled = false;
+    itemWarning.className = 'hidden';
     inputBox.focus();
   });
 
   inputBox.addEventListener('keyup', function (event) {
     const trimmedValue = inputBox.value.trim();
     addItemButton.disabled = trimmedValue === '';
+
+    if (trimmedValue) {
+      itemWarning.className = 'hidden';
+    } else if (inputBox.value.length === 0) {
+      itemWarning.className = 'hidden';
+    } else {
+      itemWarning.className = '';
+    }
 
     if (trimmedValue === '') {
       return;
@@ -64,18 +66,10 @@ document.addEventListener('DOMContentLoaded', function (event) {
     shoppingList.appendChild(createNewListItem(trimmedValue));
     inputBox.value = '';
     addItemButton.disabled = true;
-    clearListButton.disabled = false;
-  });
-
-  clearListButton.addEventListener('click', function (event) {
-    const listItems = document.querySelectorAll('li');
-    listItems.forEach(function (element) {
-      element.remove();
-    });
-    clearListButton.disabled = true;
+    itemWarning.className = '';
   });
 
   inputBox.focus();
   addItemButton.disabled = true;
-  clearListButton.disabled = true;
+  itemWarning.className = 'hidden';
 });

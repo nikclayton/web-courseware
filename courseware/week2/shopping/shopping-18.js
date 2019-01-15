@@ -29,7 +29,12 @@ function createNewListItem(itemName) {
   return listItem;
 }
 
-document.addEventListener('DOMContentLoaded', function (event) {
+/**
+ * Set up event listeners and configure initial element state when the
+ * DOM is ready.
+ */
+function domContentLoaded() {
+  const quantityBox = document.getElementById('quantity');
   const inputBox = document.getElementById('item');
   const shoppingList = document.querySelector('ul');
   const addItemButton = document.querySelector('button#append');
@@ -43,10 +48,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
     }
 
     shoppingList.appendChild(createNewListItem(trimmedValue));
+    quantityBox.value = '';
     inputBox.value = '';
     addItemButton.disabled = true;
     clearListButton.disabled = false;
-    inputBox.focus();
+    quantityBox.focus();
   });
 
   inputBox.addEventListener('keyup', function (event) {
@@ -65,6 +71,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
     inputBox.value = '';
     addItemButton.disabled = true;
     clearListButton.disabled = false;
+    quantityBox.value = '';
+    quantityBox.focus();
   });
 
   clearListButton.addEventListener('click', function (event) {
@@ -75,7 +83,14 @@ document.addEventListener('DOMContentLoaded', function (event) {
     clearListButton.disabled = true;
   });
 
-  inputBox.focus();
-  addItemButton.disabled = true;
+  quantityBox.focus();
   clearListButton.disabled = true;
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function (event) {
+    domContentLoaded();
+  });
+} else {
+  domContentLoaded();
+}

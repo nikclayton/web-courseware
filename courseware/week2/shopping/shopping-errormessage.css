@@ -1,0 +1,11 @@
+#item-warning {
+  color: rgb(240, 0, 0);
+  font-size: 70%;
+  display: block;
+  margin-left: 1em;
+  margin-top: .4em;
+}
+
+#item-warning.hidden {
+  display: none;
+}

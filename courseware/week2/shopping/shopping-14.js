@@ -1,7 +1,7 @@
 /**
  * Creates and returns an 'li' element for inclusion in the shopping list.
  *
- * @param {string} itemName Name of the item to add to the list
+ * @param {string} itemName Name of the item to append to the list
  * @returns {HTMLElement} li element
  */
 function createNewListItem(itemName) {
@@ -34,10 +34,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
   document.querySelector('button').addEventListener('click', function (event) {
     const trimmedValue = inputBox.value.trim();
 
-    if (trimmedValue === '') {
-      return;
-    }
-
     shoppingList.appendChild(createNewListItem(trimmedValue));
     inputBox.value = '';
     addItemButton.disabled = true;
@@ -58,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
     shoppingList.appendChild(createNewListItem(trimmedValue));
     inputBox.value = '';
+    addItemButton.disabled = true;
   });
 
   inputBox.focus();

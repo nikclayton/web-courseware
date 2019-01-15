@@ -29,6 +29,10 @@ function createNewListItem(itemName) {
   return listItem;
 }
 
+function domContentLoaded() {
+
+}
+
 document.addEventListener('DOMContentLoaded', function (event) {
   const inputBox = document.getElementById('item');
   const shoppingList = document.querySelector('ul');
@@ -76,6 +80,5 @@ document.addEventListener('DOMContentLoaded', function (event) {
   });
 
   inputBox.focus();
-  addItemButton.disabled = true;
   clearListButton.disabled = true;
 });

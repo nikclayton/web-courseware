@@ -200,7 +200,7 @@ typed in would automatically be hidden.
 
 #+BEGIN_SRC javascript
 let el = document.getElementById("an-input");
-el.value
+el.value;
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -267,9 +267,9 @@ then their tools will be able do a better job.
 ** Add =label= and =input= elements
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "shopping-2.html" :lines "11-18" src html -n 11
+#+INCLUDE: "shopping-2.html" :lines "12-18" src html -n 11
 
-- Edit =shopping.html=
+- Edit =index.html=
 - Add these elements to the page
 - Don't forget to add and commit
 #+REVEAL_HTML: </div>
@@ -300,7 +300,7 @@ When it's working don't forget to add and commit the change.
 
 #+BEGIN_SRC javascript
 let el = document.getElementById('item');
-el.value
+el.value;
 #+END_SRC
 
 - Do you see what you typed?
@@ -521,7 +521,7 @@ done in the past.
 I know =querySelector= here is new. We're going to talk about that
 in a moment.
 
-For now, make sure that =shopping.html= is loaded, open the console,
+For now, make sure that =index.html= is loaded, open the console,
 type this, and click the button a few times to make sure it works.
 
 [Wait]
@@ -633,7 +633,7 @@ correctly before moving on to the next part of the problem.
   // With a variable.
   document.addEventListener('DOMContentLoaded', function(event) {
     document.querySelector('button').addEventListener('click', function(event) {
-      let inputBox = document.queryElementById('item');
+      let inputBox = document.getElementById('item');
       console.log(inputBox.value);
     });
   });
@@ -643,7 +643,7 @@ correctly before moving on to the next part of the problem.
   // With chaining.
   document.addEventListener('DOMContentLoaded', function(event) {
     document.querySelector('button').addEventListener('click', function(event) {
-      console.log(document.queryElementById('item').value);
+      console.log(document.getElementById('item').value);
     });
   });
 #+END_SRC
@@ -786,6 +786,8 @@ function createNewListItem(itemName) {
 #+END_SRC
 #+REVEAL_HTML: </div>
 
+
+
 ** Solution: Write a function that creates this tree
 
 #+NAME: createNewListItemNoDelete
@@ -884,7 +886,7 @@ This is our current click listener
 #+BEGIN_SRC javascript
   document.addEventListener('DOMContentLoaded', function(event) {
     document.querySelector('button').addEventListener('click', function(event) {
-      let inputBox = document.queryElementById('item');
+      let inputBox = document.getElementById('item');
       console.log(inputBox.value);
     });
   });
@@ -1211,7 +1213,7 @@ let secondLi = document.querySelector('li:nth-child(2)');
 secondLi.remove();
 #+END_SRC
 
- #+BEGIN_SRC dot :file list-item-graph4.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+#+BEGIN_SRC dot :file list-item-graph4.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
  digraph G {
    node [shape="hexagon"];
 
@@ -2794,6 +2796,9 @@ Does this make sense to everyone?
 OK, make this change to your code, check that it works, then
 add and commit.
 
+IMPORTANT: This doesn't actually work, because the else branch
+needs to always be taken.
+
 [Wait]
 
 Now, lets look at these =true= and =false= values inside the
@@ -2903,13 +2908,12 @@ Before I show you the resulting code, does that make sense?
 [Wait]
 #+END_NOTES
 
-
 ** Refactoring: =false= and =true= inside the =if= block
 
 #+INCLUDE: "shopping-12.js" :lines "40-52" src javascript -n 40
 
 #+BEGIN_NOTES
-On line 42 I've set the =disabled= property on the =addItemButton=.
+On line 50 I've set the =disabled= property on the =addItemButton=.
 
 This allows me to remove that code from inside the =if= block, and
 completely remove the =else= block.
@@ -3038,7 +3042,7 @@ case.
 
 ** Solution: Returning early from a function
 
-#+INCLUDE: "shopping-13.js" :lines "44-59" src javascript -n 40
+#+INCLUDE: "shopping-13.js" :lines "40-56" src javascript -n 40
 
 #+BEGIN_NOTES
 Here's what our function looks like using =if= statements and
@@ -3077,7 +3081,7 @@ handler, test it, add and commit.
 
 ** Solution: Returning early from a function
 
-#+INCLUDE: "shopping-13.js" :lines "31-43" src javascript -n 31
+#+INCLUDE: "shopping-13.js" :lines "31-39" src javascript -n 31
 
 #+BEGIN_NOTES
 And we can make a very similar change to the click handler for
@@ -3105,7 +3109,7 @@ handler, test it, add and commit.
 
 #+REVEAL: split
 
-#+INCLUDE: "shopping-13.js" :lines "31-61" src javascript
+#+INCLUDE: "shopping-13.js" :lines "31-56" src javascript
 
 * Refactoring: Recap
 
@@ -3115,6 +3119,93 @@ handler, test it, add and commit.
   - =return= keyword
 - Refactoring to remove nesting
 
+* TODO JSDoc comments
+  :PROPERTIES:
+  :TOPICS:   jsdoc
+  :END:
+
+** Good practice to comment functions
+   :PROPERTIES:
+   :REQUIREMENTS: webstorm
+   :END:
+
+- Programming is about communication
+  - Good comments cover *what*, and *why*
+  - The code describes *how*
+- Javascript does not have a single standard for comments
+  - =JSDoc= is a widely adopted standard
+  - IDEs understand JSDoc and do useful things with it
+
+** Sample JSDoc
+
+#+BEGIN_SRC javascript
+/**
+ * Creates and returns an 'li' element for inclusion in shopping list.
+ *
+ * @param {string} itemName Name of the item to add to the list
+ * @returns {HTMLElement} li element
+ */
+#+END_SRC
+
+- =/**=
+- Function description
+- Optionally, more detail about the function
+  - Design decisions, links to documents, specifications, etc
+- 0-n =@param= entries that describe each parameter
+- 0-1 =@return= entry for the return value
+
+#+BEGIN_NOTES
+JSDoc comments all start with =/**= (slash, star, star). If you type
+that before a function WebStorm will automatically prefill some of
+the rest of the material.
+
+The next line starts with a description of the function. Typically
+you would try and keep this short -- keep it one line if possible.
+
+If your "brief" description is longer than a line it's an indicator
+that the function might be doing too much and needs breaking up in
+to smaller functions.
+
+If necessary you can include more information in new paragraphs after
+the brief description. Here you can go in to more detail -- maybe
+there's a specification you're trying to follow, or a design doc
+that describes what the function needs to do. This would be a good
+place to link to that information.
+
+If the function takes any parameters then you describe them with
+=@param= entries.
+
+Each =@param= entry consists of the type of the parameter that the
+function expects, in curly brackets. Here, our function expects that
+the =itemName= parameter contains a string.
+
+After that is the name of the parameter. And then a brief description
+of what the parameter is for.
+
+Finally, if the function returns a value then there is an =@return=
+block that explains the value. This is like an =@param= block, only
+without the "name" part -- it goes straight from the type in curly
+brackets to the description.
+#+END_NOTES
+
+** Exercise: Add this JSdoc
+#+BEGIN_SRC javascript
+/**
+ * Creates and returns an 'li' element for inclusion in the shopping list.
+ *
+ * @param {string} itemName Name of the item to add to the list
+ * @returns {HTMLElement} li element
+ */
+#+END_SRC
+
+- Add this immediately before your =createNewListItem= function.
+- Go to a place where the function is called, and press:
+  - =Ctrl-Q= (Windows)
+  - =Ctrl-J= (OS X)
+- =File= > =Settings= > =Editor= > =General= > =Show quick documentation on mouse move=
+- What do you think?
+** TODO Followup material on comments and commenting style
+- [[https://google.github.io/styleguide/jsguide.html#jsdoc][Google Javascript Style Guide]]
 
 * TODO UI followup work
 
@@ -3125,14 +3216,12 @@ handler, test it, add and commit.
   - Red border when the input is empty?
 - Different fonts and font-sizes
   - A font that looks like handwriting for the list?
-- Using icons
-  - Font Awesome, trash can icon for delete button
-  - Shopping cart icon for "Add item"
-
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-
+- Using icons
+  - Font Awesome, trash can icon for delete button
+  - Shopping cart icon for "Add item"
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
@@ -3143,13 +3232,12 @@ we touched CSS.
 
 So now you've got some time to add some CSS
 #+END_NOTES
-
 * TODO Functionality followup work
+
 - Adding a "Delete all" button
+- Handling =document.readyState=
 - Adding quantities
-- Parsing quantities
-- Reordering items in the list
-- Drag/drop items in the list
+
 
 * Add a "Delete all" button (or "Clear list")
 
@@ -3267,8 +3355,8 @@ b[1];  // "Powercoders";
 #+END_SRC
 
 #+BEGIN_NOTES
-Values in an array don't have to be numbers, they can be strings to, as in
-this example.
+Values in an array don't have to be numbers, they can be strings too,
+as in this example.
 
 Using the index numbers to find out what values are at each index is
 identical.
@@ -3567,9 +3655,9 @@ li.forEach(function(el) {
 
 *** Solution: Click listener to delete the listitems
 
-#+INCLUDE: "shopping-15.js" :lines "31-37" src javascript
+#+INCLUDE: "shopping-15.js" :lines "32-37" src javascript
 
-#+INCLUDE: "shopping-15.js" :lines "68-76" src javascript
+#+INCLUDE: "shopping-15.js" :lines "70-77" src javascript
 
 *** Exercise: Enable the button when items are added
 
@@ -3578,11 +3666,11 @@ li.forEach(function(el) {
 
 *** Solution: Enable the button when items are added
 
-#+INCLUDE: "shopping-15.js" :lines "37-51" src javascript
+#+INCLUDE: "shopping-15.js" :lines "38-51" src javascript
 
 *** Solution: Enable the button when items are added
 
-#+INCLUDE: "shopping-15.js" :lines "51-68" src javascript
+#+INCLUDE: "shopping-15.js" :lines "52-69" src javascript
 
 *** Exercise: Disable the button when the page is loaded
 
@@ -3590,13 +3678,13 @@ li.forEach(function(el) {
 
 *** Solution: Disable the button when the page is loaded
 
-#+INCLUDE: "shopping-15.js" :lines "76-80" src javascript
+#+INCLUDE: "shopping-15.js" :lines "76-82" src javascript
 
 *** Conditionally disable the button when clicking delete item
 
 - Deleting an item might need to disable the button
-- If there are still items in the list then leave it enabled
-- Otherwise, delete it
+ - If there are still items in the list then leave it enabled
+ - Otherwise, delete it
 - Find the =deleteButton= click handler code
 - Modify it to disable the button if there are no =li= elements
 
@@ -3653,113 +3741,1070 @@ deleteButton.addEventListener('click', function(event) {
 
 #+INCLUDE: "shopping-15.js" :lines "19-25" src javascript
 
-** TODO Alternative: Using =.firstChild=                           :noexport:
+* More loops
+** =for= loops
 
-#+BEGIN_SRC javascript
-// el == the ul element
-while (el.firstChild) {
-  el.removeChild(el.firstChild);
+ - =.forEach= is a good way to loop over everything
+ - Sometimes you need more control
+
+*** =for= loop syntax
+
+ #+BEGIN_SRC javascript
+ for (initial; condition; last) {
+   // Loop body
+ }
+ #+END_SRC
+
+ - =initial= - code executed before the loop starts
+ - =condition= - expression evaluated before each loop
+  - If true then the loop body runs
+ - =last= - code executed at the end of each loop
+ - All three separated by =;=
+
+*** =for= loop example
+
+ #+BEGIN_SRC javascript
+ for (let i = 0; i < 9; i = i + 1) {
+   console.log(i);
+ }
+ #+END_SRC
+
+ 1. Create a variable called =i=, set to =0=.
+ 2. Is =i= < =9=? If so, run the loop body, else exit
+ 3. Add =1= to =i=.
+ 4. Go to step 2.
+
+ #+BEGIN_NOTES
+ Creates a variable called =i=
+
+ Checks to see if i < 9. It is, so it runs the body of the loop.
+
+ Then adds one to i.
+
+ The =i= variable's visibility, or scope, is limited to the body
+ of the =for= loop.
+ #+END_NOTES
+
+*** =i++= syntax
+
+ #+BEGIN_SRC javascript
+ i = i + 1;
+ #+END_SRC
+
+ #+BEGIN_SRC javascript
+ i++;
+ #+END_SRC
+
+*** =for= loop example
+
+ #+BEGIN_SRC javascript
+ let a = [1, 2, 3, 4, 5, 6, 7, 8];
+
+ for (const i = 0; i < a.length; i = i + 1) {
+   console.log(a[i]);
+ }
+ #+END_SRC
+
+*** What if you wanted to process every second element?
+
+ #+BEGIN_SRC javascript
+ let a = [1, 2, 3, 4, 5, 6, 7, 8];
+
+ for (const i = i; i < a.length; i = i + 2) {
+   console.log(a[i]);
+ }
+ #+END_SRC
+
+*** =for= loop for deleting elements
+
+ #+BEGIN_SRC javascript
+ clearListButton.addEventListener('click', function (event) {
+   const listItems = document.querySelectorAll('li');
+   for (let i = 0; i < listitems.length; i++) {
+     listItems.item(i).remove();
+   });
+   clearListButton.disabled = true;
+ });
+ #+END_SRC
+
+** =while= loops
+
+ #+BEGIN_SRC javascript
+ while (expression) {
+   // Loop body
+ }
+ #+END_SRC
+
+ - Executes the loop body while the expression is true
+ - Might not execute the expression at all
+
+*** =while= loop example
+
+ #+BEGIN_SRC javascript
+ let i = 0;
+ while (i < 9) {
+   console.log(i);
+   i++;
+ }
+ #+END_SRC
+
+*** =while= loop to delete elements
+
+ #+BEGIN_SRC javascript
+ clearListButton.addEventListener('click', function (event) {
+   const listItems = document.querySelectorAll('li');
+   let i = 0;
+   while (i < listItems.length) {
+     listItems.item(i).remove();
+     i++;
+   }
+   clearListButton.disabled = true;
+ });
+ #+END_SRC
+
+ #+BEGIN_NOTES
+ Here's how we could delete elements with a =for= loop, just as
+ a reminder.
+ #+END_NOTES
+
+*** =firstChild= property
+
+ - Elements have a =firstChild= property
+
+ #+BEGIN_QUOTE
+ The =.firstChild= property returns the node's first child in
+ the tree, or =null= if the node has no children.
+ #+END_QUOTE
+
+ - =null= is a false value.
+
+*** =while= loop to delete elements
+
+ #+BEGIN_SRC javascript
+ clearListButton.addEventListener('click', function (event) {
+   const ul = document.querySelector('ul');
+   while (ul.firstChild) {
+     ul.firstChild.remove();
+   }
+ });
+ #+END_SRC
+** Leaving loops earlier than normal
+
+ - Use =break= to exit a loop sooner than normal
+
+ #+BEGIN_SRC javascript
+ let a = [1, 2, 3, 4, 'stop', 5, 6, 7];
+
+ for (let i = 0; i < a.length; i++) {
+   if (a[i] === 'stop') {
+     break;
+   }
+   console.log(a[i]);
+ }
+ #+END_SRC
+
+ #+BEGIN_SRC javascript
+ let a = [1, 2, 3, 4, 'stop', 5, 6, 7];
+
+ let i = 0;
+ while (i < a.length) {
+   if (a[i] === 'stop') {
+     break;
+   }
+   console.log(a[i])
+ }
+ #+END_SRC
+
+** Restarting loops earlier than normal
+
+ - Use =continue= to exit a loop sooner than normal
+
+ #+BEGIN_SRC javascript
+ let a = [1, 2, 3, 4, 'ignore', 5, 6, 7];
+
+ for (let i = 0; i < a.length; i++) {
+   if (a[i] === 'ignore') {
+     continue;
+   }
+   console.log(a[i]);
+ }
+ #+END_SRC
+
+ #+BEGIN_SRC javascript
+ let a = [1, 2, 3, 4, 'ignore', 5, 6, 7];
+
+ let i = 0;
+ while (i < a.length) {
+   if (a[i] === 'ignore') {
+     continue;
+   }
+   console.log(a[i])
+ }
+ #+END_SRC
+
+** When to use each loop type
+
+ - =forEach=, you need to process everything
+   - You won't need to stop part way through the loop
+ - =for=, knowing the loop index is important
+   - You won't need the index variable elsewhere
+ - =while=, everything else
+
+* Speed, and =document.readyState=
+
+- Websites need to be fast
+ - Fast to load
+ - Fast to interact with
+- We notice latency (delays) of 1/10th of a second
+ - 1/10th is 100ms (milliseconds)
+- Each new file loaded takes time
+ - Overhead even if the file is small
+
+#+BEGIN_NOTES
+We want websites to be fast.
+
+Roughly, this means two things.
+
+First, the site should be fast to load - the time between you pressing
+RETURN on the URL or clicking a link, and the site loading, should be
+as small as possible -- the user should see something very quickly.
+
+Second, it should be possible to interact with the site quickly. If the user
+has to wait around for the Javascript to load, or images to appear, or things
+like that then they will get frustrated with your site. Or worse, they'll get
+bored and go and do something else.
+
+When we talk about delays we typically talk about it as *latency*. This is
+(roughly) a fancy word for how long something takes to start. If you've
+ever had a phone call or video chat with someone thousands of miles away
+then you've experienced this -- you think they've stopped talking, so you
+start talking, but there's a half second delay, they've started talking
+again, and you end up talking over them.
+
+Humans can easily notice latency of a 10th of a second or more.
+
+We normally measure latency in thousanths of a second, or milliseconds.
+
+Every time we need to load a new file as part of our site there's some
+overhead involved in loading that file, even if the file is small. We want
+to do things to minimise that as much as possible.
+#+END_NOTES
+
+** How long is our page taking to load?
+
+#+BEGIN_CENTER
+[Network tab for shopping-15.html]
+#+END_CENTER
+
+#+BEGIN_NOTES
+- Demo the Network tab
+- Show how long the HTML takes to load
+- Show how long it takes until DOMContentLoaded fires
+ - Should be roughly 80ms.
+- Big delay that we can reduce
+#+END_NOTES
+
+** Loading timeline
+
+#+BEGIN_SRC dot :file timeline1.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+digraph G {
+  load_html [label="Load HTML"];
+  parse_html [label="Parse HTML"];
+  load_css [label="Load CSS"];
+  load_javascript [label="Load Javascript"];
+  parse_javascript [label="Parse Javascript"];
+  finish_html [label="Finish HTML"];
+  dom_loaded [label="DOMContentLoaded"];
+  js_runs [label="Javascript runs"];
+
+  load_html -> parse_html;
+  parse_html -> load_css;
+  parse_html -> load_javascript;
+  load_javascript -> parse_javascript;
+  parse_javascript -> finish_html;
+  finish_html -> dom_loaded;
+  dom_loaded -> js_runs;
 }
 #+END_SRC
 
-* Add quantities
+#+RESULTS:
+[[file:timeline1.svg]]
 
-* Parsing quantities
+** Loading Javascript asynchronously
 
-* Re-order items in the list
-
-* Drag-drop items in the list
-
-* Javascript syntax followup work
-
-* TODO JSDoc comments
-  :PROPERTIES:
-  :TOPICS:   jsdoc
-  :END:
-
-** Good practice to comment functions
-   :PROPERTIES:
-   :REQUIREMENTS: webstorm
-   :END:
-
-- Programming is about communication
-  - Good comments cover *what*, and *why*
-  - The code describes *how*
-- Javascript does not have a single standard for comments
-  - =JSDoc= is a widely adopted standard
-  - IDEs understand JSDoc and do useful things with it
-
-** Sample JSDoc
-
-#+BEGIN_SRC javascript
-/**
- * Creates and returns an 'li' element for inclusion in shopping list.
- *
- * @param {string} itemName Name of the item to add to the list
- * @returns {HTMLElement} li element
- */
-#+END_SRC
-
-- =/**=
-- Function description
-- Optionally, more detail about the function
-  - Design decisions, links to documents, specifications, etc
-- 0-n =@param= entries that describe each parameter
-- 0-1 =@return= entry for the return value
+- =<script ... async>=
 
 #+BEGIN_NOTES
-JSDoc comments all start with =/**= (slash, star, star). If you type
-that before a function WebStorm will automatically prefill some of
-the rest of the material.
+We can tell the browser that we want the Javascript to be loaded in the
+background, at the same time as the rest of the HTML is being processed.
 
-The next line starts with a description of the function. Typically
-you would try and keep this short -- keep it one line if possible.
+We say that the the Javascript is being handled *asynchronously*.
 
-If your "brief" description is longer than a line it's an indicator
-that the function might be doing too much and needs breaking up in
-to smaller functions.
+To do that, we add the =async= attribute to the =script= element in the
+HTML.
 
-If necessary you can include more information in new paragraphs after
-the brief description. Here you can go in to more detail -- maybe
-there's a specification you're trying to follow, or a design doc
-that describes what the function needs to do. This would be a good
-place to link to that information.
-
-If the function takes any parameters then you describe them with
-=@param= entries.
-
-Each =@param= entry consists of the type of the parameter that the
-function expects, in curly brackets. Here, our function expects that
-the =itemName= parameter contains a string.
-
-After that is the name of the parameter. And then a brief description
-of what the parameter is for.
-
-Finally, if the function returns a value then there is an =@return=
-block that explains the value. This is like an =@param= block, only
-without the "name" part -- it goes straight from the type in curly
-brackets to the description.
+[Demo this, with the inspector, show the difference in =DOMContentLoaded=
+time]
 #+END_NOTES
 
-** Exercise: Add this JSdoc
-#+BEGIN_SRC javascript
-/**
- * Creates and returns an 'li' element for inclusion in shopping list.
- *
- * @param {string} itemName Name of the item to add to the list
- * @returns {HTMLElement} li element
- */
+** Loading timeline now
+
+#+BEGIN_SRC dot :file timeline2.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+digraph G {
+  load_html [label="Load HTML"];
+  parse_html [label="Parse HTML"];
+  load_css [label="Load CSS"];
+  load_javascript [label="Load Javascript"];
+  parse_javascript [label="Parse Javascript"];
+  finish_html [label="Finish HTML"];
+  dom_loaded [label="DOMContentLoaded"];
+  js_runs [label="Javascript runs"];
+
+  load_html -> parse_html;
+  parse_html -> load_css;
+  parse_html -> load_javascript;
+  parse_html -> finish_html;
+  load_javascript -> parse_javascript;
+  parse_javascript -> js_runs;
+  finish_html -> dom_loaded;
+  dom_loaded -> js_runs;
+}
 #+END_SRC
 
-- Add this immediately before your =createNewListItem= function.
-- Go to a place where the function is called, and press =Ctrl-Q=
-- =File= > =Settings= > =Editor= > =General= > =Show quick documentation on mouse move=
-- What do you think?
-** TODO Followup material on comments and commenting style
-- [[https://google.github.io/styleguide/jsguide.html#jsdoc][Google Javascript Style Guide]]
-- Add more
+#+RESULTS:
+[[file:timeline2.svg]]
+
+#+BEGIN_NOTES
+So now the operations that are happening look more like this.
+
+But there's a problem here -- the =DOMContentLoaded= event might fire before
+we've had a chance to listen to it.
+
+The event only fires once, if we're not listening for it when it fires we
+have a problem.
+
+[Demo the problem in the page -- none of the UI should work]
+#+END_NOTES
+
+** Race Conditions
+
+- This is called a *Race Condition*
+- Two things are *racing* to finish
+- Depending on which one wins changes the result
+
+#+BEGIN_NOTES
+We call this a *race condition*.
+
+We have two things that need to finish -- loading the HTML, and running the
+Javascript.
+
+They are *racing* to finish.
+
+Sometimes loading the HTML will finish first -- it wins the race. If that
+happens then the =DOMContentLoaded= event will fire before the Javascript
+runs, and we see this problem.
+
+Other times the Javascript might win the race, and run first. If that happens
+then everything appears to be fine.
+
+Race conditions can be difficult to track down, because the problem might
+not occur all the time. So you need to have a good mental model of what the
+code is doing at all times in order to be able to predict things like this.
+#+END_NOTES
+
+** Fixing the race with =document.readyState=
+
+- =document.readyState= property (string)
+- Describes the *loading* state of the page
+- 3 possible values
+  - =loading=
+  - =interactive=
+  - =complete=
+
+** Using =document.readyState=
+
+#+BEGIN_SRC javascript
+/**
+ * Set up event listeners and configure initial element state when the
+ * DOM is ready.
+ */
+function domContentLoaded() {
+  // Code that needs to interact with the DOM
+}
+
+if (document.readyState === 'loading') {
+  // DOMContentLoaded has not fired yet.
+  document.addEventListener('DOMContentLoaded', function(event) {
+    domContentLoaded();
+  });
+} else {
+  // DOMContendLoaded has fired.
+  domContentLoaded();
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+In general terms, this is how we can use =document.readyState=.
+
+We have to put our set up code in to a function, instead of being an
+anonymous function here. This is because we need to call it from two places.
+
+It's still only going to be called once, but we can't predict when it's
+going to be called.
+
+This is the new =domContentLoaded= function.
+
+Then we use an =if= statement to decide how to call our function.
+
+If the document is still loading then we know that =DOMContentLoaded= hasn't
+fired yet, and we should use an event handler.
+
+But if the =readyState= is not =loading= then we know that the DOM is ready
+and we can run our code directly.
+
+Go and make this change to your code, and verify that everything works as
+you expect.
+#+END_NOTES
+
+* Add quantities
+
+- Allow the user to say how much of a thing to buy
+  - 6 eggs
+  - 1 litre milk
+  - 500g flour
+
+** Quantity: HTML changes
+
+- Add a new =input= element for quantity
+- What problems do you see?
+
+*** Problems
+
+- Focus is wrong
+  - How do you fix this?
+- Input widget is very wide
+  - How do you fix this ([MDN input size])
+- Quantity is not cleared when adding items
+  - How do you fix this?
+
+*** Fixes
+
+#+BEGIN_NOTES
+Show shopping-18.html and shopping-18.js
+#+END_NOTES
+
+** Quantity: Using the new quantity
+
+- =createNewListItem= needs a new =quantity= parameter
+  - If the =quantity= parameter is not =''=
+    - Create a new text node
+      - Set the content to =' '= (single space)
+      - Append to the list item
+    - Create a new =span=
+      - Set the =span= content to =(= + the quantity + =)=
+      - Append to the list item
+  - Don't forget the JSDoc!
+- Modify calls to =createNewListItem=
+  - Pass a value for the new parameter
+
+** Solution
+
+#+BEGIN_NOTES
+Walk through shopping-19.js
+#+END_NOTES
+
+* Objects
+
+** Problem: Loosely-coupled data
+
+- Each list item has two values
+  - Name of the thing
+  - Quantity
+- But we have to pass them around separately
+- Better if we could bundle them together in some way
+- Objects!
+
+** Already seen objects
+
+- E.g., Elements
+ - Bundles of data, different properties
+ - =.id=, =.value=, =.tagName=, etc
+ - With a single name
+
+** Object example: tables
+
+- Table has 4 legs, flat top, no back
+  - That's the *class description*
+- The specific tables in this room are *instances* of that
+
+** An object for shopping list items
+
+- Each list item has two values
+  - Name of the thing
+  - Quantity
+
+** Simple object data structures
+
+#+BEGIN_SRC javascript
+const item = {
+  name: 'Eggs',
+  quantity: '6'
+};
+
+item.name;       // 'Eggs'
+item.quantity;   // '6'
+#+END_SRC
+
+*** Terms
+
+#+BEGIN_SRC javascript
+const objectName = {
+  memberName1: memberValue1;
+  memberName2: memberValue2;
+  memberName3: memberValue3;
+  // ...
+};
+#+END_SRC
+
+*** Values
+
+#+BEGIN_SRC javascript
+const person = {
+  name: 'Nik',
+  interests: ['Teaching', 'Skiing'],
+  greet: function() {
+    console.log(`Hello ${this.name}`);
+  }
+};
+
+person.name;          // 'Nik'
+person.interests[0];  // 'Teaching'
+person.greet();       // 'Hello Nik'
+#+END_SRC
+
+*** Nested objects
+
+#+BEGIN_SRC javascript
+const person = {
+  name: {
+    first: 'Nik',
+    last: 'Clayton',
+  },
+  interests: ['Teaching', 'Skiing'],
+  greet: function() {
+    console.log(`Hello ${this.name.first}`);
+  }
+};
+
+person.name.first;    // 'Nik'
+person.name.last;     // 'Clayton'
+person.interests[0];  // 'Teaching'
+person.greet();       // 'Hello Nik'
+#+END_SRC
+
+#+BEGIN_NOTES
+Here, the value of the =name= property is another object, with
+two properties, =first= and =last=.
+
+We use the same dotted notation to access them.
+#+END_NOTES
+
+*** Bracket syntax
+
+#+BEGIN_SRC javascript
+const person = {
+  name: {
+    first: 'Nik',
+    last: 'Clayton',
+  },
+  interests: ['Teaching', 'Skiing'],
+  greet: function() {
+    console.log(`Hello ${this.name.first}`);
+  }
+};
+
+person['name']['first'];    // 'Nik'
+person['name']['last'];     // 'Clayton'
+person['interests'][0];     // 'Teaching'
+person['greet']();          // 'Hello Nik'
+#+END_SRC
+
+#+BEGIN_NOTES
+Like arrays, but instead of using a number as the index you use
+a string.
+#+END_NOTES
+
+*** Bracket syntax and variables
+
+#+BEGIN_SRC javascript
+const person = {
+  name: {
+    first: 'Nik',
+    last: 'Clayton',
+  },
+  interests: ['Teaching', 'Skiing'],
+  greet: function() {
+    console.log(`Hello ${this.name.first}`);
+  }
+};
+
+const property = 'interests';
+
+person[property];  // ['Teaching', 'Skiing']
+
+person.property;   // DOES NOT WORK
+#+END_SRC
+
+#+BEGIN_NOTES
+For example, this is useful when the name of the property you
+want to access is stored in a variable.
+#+END_NOTES
+
+*** Assigning values
+
+#+BEGIN_SRC javascript
+const person = {
+  name: {
+    first: 'Nik',
+    last: 'Clayton',
+  },
+  interests: ['Teaching', 'Skiing'],
+  greet: function() {
+    console.log(`Hello ${this.name.first}`);
+  }
+};
+
+person['name']['first'];    // 'Nik'
+person.name.first = 'Nicholas';
+person.name.first;          // 'Nicholas'
+person['name']['first'] = 'Nik';
+person.name.first;          // 'Nik'
+#+END_SRC
+
+*** =const= ?
+
+#+BEGIN_SRC javascript
+const person = {
+  name: {
+    first: 'Nik',
+    last: 'Clayton',
+  },
+  interests: ['Teaching', 'Skiing'],
+  greet: function() {
+    console.log(`Hello ${this.name.first}`);
+  }
+};
+
+person.name.first = 'Nicholas';  // Works
+
+person = {                       // DOES NOT WORK
+  name: { ... }
+  ...
+};
+
+#+END_SRC
+
+#+BEGIN_NOTES
+Notice how we declare that =person= is a constant, with =const=.
+
+This *does* *not* mean that we can't change the value of its
+properties -- we can.
+
+It does mean that after we have declared =person= to contain
+one object, we can *not* assign it a completely different object.
+#+END_NOTES
+
+*** Javascript Object Notation (JSON)
+
+#+BEGIN_SRC javascript
+const person = {
+  name: {
+    first: 'Nik',
+    last: 'Clayton',
+  },
+  interests: ['Teaching', 'Skiing'],
+  greet: function() {
+    console.log(`Hello ${this.name.first}`);
+  }
+};
+#+END_SRC
+
+#+BEGIN_NOTES
+This way of writing complex data structures has become popular in
+the industry, and you will see it referred to as JSON, or Javascript
+Object Notation.
+#+END_NOTES
+
+*** =this=
+
+#+BEGIN_SRC javascript
+const person = {
+  name: {
+    first: 'Nik',
+    last: 'Clayton',
+  },
+  interests: ['Teaching', 'Skiing'],
+  greet: function() {
+    console.log(`Hello ${this.name.first}`);
+  }
+};
+#+END_SRC
+
+- Inside an object, =this= refers to the object
+- Allows code in an object to reference itself
+
+#+BEGIN_NOTES
+Notice how the code in the =greet= function uses the =this=
+keyword.
+
+Code inside an object can refer to other properties in the same
+object. To do so it uses the special keyword =this=.
+
+So in the code here, =this.name= means "The value of the name
+property in the current object.".
+#+END_NOTES
+
+*** =this=
+
+#+BEGIN_SRC javascript
+const person = {
+  name: {
+    first: 'Nik',
+    last: 'Clayton',
+  },
+  interests: ['Teaching', 'Skiing'],
+  greet: function() {
+    console.log(`Hello ${this.name.first}`);
+  }
+};
+
+person.greet();                  // 'Hello Nik'
+person.name.first = 'Nicholas';
+person.greet();                  // 'Hello Nicholas'
+#+END_SRC
+
+#+BEGIN_NOTES
+If we change the value of the property then accessing it via
+=this= in the code ensures that we always get the correct value.
+
+In the example here the =greet()= function uses it to ensure that
+when the =name.first= property is changed it uses the correct
+value.
+#+END_NOTES
+
+** Single variable, complex structure
+
+#+BEGIN_NOTES
+So we can have a single variable with an arbitrarily complex
+structure.
+#+END_NOTES
+
+** Modeling shopping items as objects
+
+#+BEGIN_NOTES
+This is shopping-20.js and onwards.
+
+Changest to cover in shopping-20.js
+
+Order: 2
+- JSDoc update, line 4
+- Param name update, line 7
+- item.name, line 11
+- item.quantity, line 27, 30
+
+Order: 3
+- Create item, line 53-56
+- Pass item, line 58
+
+Order: 1
+- Create item, line 78-81
+- Pass item, line 83
+
+#+END_NOTES
+
+** Constructing objects, object literals
+
+#+BEGIN_SRC javascript
+const person = {
+  name: {
+    first: 'Nik',
+    last: 'Clayton',
+  },
+  interests: ['Teaching', 'Skiing'],
+  greet: function() {
+    console.log(`Hello ${this.name.first}`);
+  }
+};
+
+const s = 'Hello';
+const i = 10;
+#+END_SRC
+
+#+BEGIN_NOTES
+The code so far creates objects using an *object literal* value.
+
+This is no different than the ways we've been creating strings or
+numbers -- we write the literal value that we want the variable
+to have.
+
+However, this can get tiresome when we have objects with a
+complex structure. It's more typing (imagine we had to create
+lots of different objects like this) and there's plenty of
+opportunity to make mistakes -- for example, by accidentally
+misspelling the name of a property.
+
+It would be nice if we could automate this in some way.
+#+END_NOTES
+
+** Constructor functions
+
+- *Constuctor* is any function that creates ("constructs") an
+  object
+- Name starts with a capital letter, by convention
+- Called using the =new= keyword
+- Inside constructor, =this= means the object being created
+
+#+BEGIN_NOTES
+When we create an object, the technical term for it is *constructing*
+the object.
+
+So we call functions that create objects *constructor* functions.
+
+We call these functions slightly differently, using the =new= keyword.
+#+END_NOTES
+
+*** Writing a constructor
+
+#+BEGIN_SRC javascript
+function Person(first, last, interests) {
+  this.name.first = first;
+  this.name.last = last;
+  this.interests = interests;
+  this.greet = function() {
+    console.log(`Hello ${this.name.first}`);
+  };
+}
+
+let nik = new Person('Nik', 'Clayton', ['Teaching', 'Skiing']);
+
+nik.first.name;   // 'Nik'
+nik.greet();      // 'Hello Nik'
+
+let chris = new Person('Christian', 'Hirsig', ['Powercoders']);
+chris.interests;  // ['Powercoders']
+chris.greet();    // 'Hello Chris'
+#+END_SRC
+
+** Using a constuctor in our code
+
+#+BEGIN_NOTES
+shopping-21.js
+
+Show the constructor function, + JSDoc
+
+Using it, line 65 and 87
+
+Change to createNewListItem JSDoc.
+#+END_NOTES
+
+* Objects: That was old-style syntax
+
+- How objects in Javascript originally worked
+- Important because:
+  1. There's a lot of code still out there that looks like that
+  2. JSON is an extremely common format
+
+#+BEGIN_NOTES
+Everything that I've just shown you is the old-style way of creating
+and referring to objects.
+
+Normally in this course we've been focused on the most modern way
+of writing code, and haven't paid too much attention to older ways
+of doing so.
+
+Objects are different, for two main reasons.
+
+The first is that there is a vast amount of code out there that uses
+the old way of doing things, and you will definitely see it in your
+jobs. So you need to be able to understand and work with it.
+
+The second is that this way of writing objects, using JSON, is
+*extremely* popular, even outside Javascript, so it's important
+that you get used to it.
+#+END_NOTES
+
+** New-style object syntax: Goal
+
+#+BEGIN_SRC javascript
+const itemInstance = new ShoppingListItem('Eggs', '6');
+itemInstance.name;
+  // Property, "Eggs"
+itemInstance.quantity;
+   // Property, "6"
+itemInstance.asListItem();
+  // Method
+  // <li><span>Eggs</span> <span>(6)</li> <button>delete</button>
+#+END_SRC
+
+#+BEGIN_NOTES
+This is what we're working towards.
+
+The code that we're writing will let us (eventually), write this.
+
+Our object's class is going to be called =ShoppingListItem=. Note that
+this is the UpperCamelCase -- it's very common to use that for class
+names.
+
+Our object is going to have two properties, one for the item name, and
+one for the quantity.
+
+To create an *instance* of the object we use the =new= keyword, and the
+name of the object. We pass in two parameters, one for the name of the
+object, and one for the quantity.
+
+Our object is going to have two properties that let us retrieve the item's
+name and quantity. And it will have one method, that generates the HTML
+elements to show the item in a list.
+
+This is the goal. Let's look at how we get there.
+#+END_NOTES
+
+** Object terms
+
+- Object is described by a *class*
+ - Defines what the object is
+ - A bit like a blueprint, or general instructions
+- After defining an object you create an *instance* of it
+- Objects have
+  - *properties* -- data that is specific to the object
+  - *methods* -- functions that work on the object's data
+
+** Multiple instances of the same object
+
+#+BEGIN_SRC javascript
+let item1 = new ShoppingListItem('Eggs', '6');
+let item2 = new ShoppingListItem('Flour', '500g');
+
+item1.name;  // "Eggs"
+item2.name;  // "Flour"
+#+END_SRC
+
+#+BEGIN_NOTES
+We can create multiple instances of the same object, with different values,
+and assign them to different variables.
+
+Each one of these is a different *instance* of the object.
+
+These are kept completely separate. The values in one don't affect the
+values in the other.
+#+END_NOTES
+
+** Defining a class
+
+#+BEGIN_SRC javascript
+class ShoppingListItem {
+  // Properties and methods go here
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+To define a class you use the =class= keyword, the name of the new class,
+and curly brackets.
+
+All the code that makes up the class will go inside those curly brackets.
+#+END_NOTES
+
+** Making =new= work
+
+#+BEGIN_SRC javascript
+let itemInstance = new ShoppingListItem('Eggs', '6');
+#+END_SRC
+
+#+BEGIN_SRC javascript
+class ShoppingListItem {
+  constructor(name, quantity) {
+    this.name = name;
+    this.quantity = quantity;
+  }
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+When we use the =new= keyword we say we are *constructing* the object.
+
+We have to tell Javascript how our object should be constructed, and we
+use a function for that.
+
+This function *must* have the name =constructor=.
+
+It can take parameters just like a function does. Our constructor needs
+to take two parameters, one for the name, one for the quantity, so we
+list them in parentheses, just like we do for functions.
+
+Inside the body of the constructor things are a little different. We
+want to save the values that were passed in.
+
+In order to do that we use the special variable =this=. What's that?
+
+Rememeber, the code in our class is the blueprint for all *instances* of
+the object. We need some way to refer to the variables for this instance,
+and to do that we use the keyword =this=.
+
+So this code is saying -- construct a new instance of this object, and set
+this instance's name and quantity appropriately.
+
+*Important*: Notice how we do not use the =function= keyword here.
+#+END_NOTES
+
+** Testing
+
+#+BEGIN_SRC javascript
+let item1 = new ShoppingListItem('Eggs', '6');
+let item2 = new ShoppingListItem('Flour', '500g');
+
+item1.name;
+item1.quantity;
+
+item2.name;
+item2.quantity;
+#+END_SRC
+
+#+BEGIN_NOTES
+This is enough code to get this working.
+#+END_NOTES
+
+** Implementing =toListItem()=
+
+#+BEGIN_SRC javascript
+class ShoppingListItem {
+  constructor(..) { ... }
+
+  toListItem() {
+    let li = document.createElement('li');
+    let span = document.createElement('span');
+    span.innerText = this.name;
+
+    ...
+  }
+}
+#+END_SRC
+
+#+BEGIN_SRC javascript
+This is the start of our
+#+END_SRC
+
+
+* Refactoring -- split in to multiple files
+
+* Model - View - Controller
+
+* Parsing quantities
+* Re-order items in the list
+* Drag-drop items in the list
+* Javascript syntax followup work
 * Event listeners and =this=
 * Advanced: Using validity check to prevent invalid input
 ** TODO: Problem
 ** Things to check
 - Should have a value (=required=)
+
