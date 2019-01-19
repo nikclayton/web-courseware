@@ -60,18 +60,21 @@ git checkout -b 005-istanbul
 
 *** Change output pathnames
 
-Edit =emacs.el= and change the definitions for the entries:
+Edit =courseware/emacs.el= and change the definitions for the entries:
 
-- =my/poco-path=
-  - Path to the checked out =courseware= directory.
-- =:base-directory=
-  - Path to the root of the repository
-- =:publishing-directory=
-  - Path that output will be published to
+- =my/poco-repo-root=
+  - Full path to the checked out repository (i.e., the path to the
+    =004.powercoders= directory, including the =004.powercoders=
+    directory).
+- =my/poco-export-root=
+  - Full path to the directory where exported HTML files will be
+    saved.
 - =org-babel-html-chrome-chrome-executable=
   - Path to Google Chrome
 
-to reflect the correct paths for your system
+to reflect the correct paths for your system. If you use backslash
+(=\=) in paths then they must be entered twice. It's easier to use
+forward slashes, which are valid even on Windows systems.
 
 ** Build the content
 

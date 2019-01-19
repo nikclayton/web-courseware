@@ -11,6 +11,17 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(use-package f
+  :ensure t)
+
+;; Full path to the root of the repository.
+(setq my/poco-repo-root
+      "c:/Users/Nik Clayton/Powercoders/004.powercoders")
+
+;; Full path to the directory that contains exported files.
+(setq my/poco-export-root
+      "c:/Users/Nik Clayton/exports")
+
 (use-package ox-reveal
   :ensure t)
 
@@ -61,33 +72,33 @@
 (require 'ox-publish)
 (setq org-publish-project-alist
       '(("bsl-slides-reveal"
-	 :base-directory "c:/users/Nik Clayton/Powercoders/004.powercoders"
+	 :base-directory my/poco-repo-root
 	 :base-extension "org"
-	 :publishing-directory "c:/Users/Nik Clayton/exports/slides"
+	 :publishing-directory (f-join my/poco-export-root "slides")
 	 :recursive t
 	 :publishing-function org-reveal-publish-to-reveal)
 	("bsl-slides-static"
-	 :base-directory "c:/Users/Nik Clayton/Powercoders/004.powercoders"
+	 :base-directory my/poco-repo-root
 	 :base-extension "css\\|png\\|svg"
-	 :publishing-directory "c:/Users/Nik Clayton/exports/slides"
+	 :publishing-directory (f-join my/poco-export-root "slides")
 	 :recursive t
 	 :publishing-function org-publish-attachment)
 	("bsl-notes-html"
-	 :base-directory "c:/users/Nik Clayton/Powercoders/004.powercoders"
+	 :base-directory my/poco-repo-root
 	 :base-extension "org"
-	 :publishing-directory "c:/Users/Nik Clayton/exports/notes"
+	 :publishing-directory (f-join my/poco-export-root "notes")
 	 :recursive t
 	 :publishing-function org-html-publish-to-html)
 	("bsl-notes-static"
-	 :base-directory "c:/Users/Nik Clayton/Powercoders/004.powercoders"
+	 :base-directory my/poco-repo-root
 	 :base-extension "css\\|png\\|svg"
-	 :publishing-directory "c:/Users/Nik Clayton/exports/notes"
+	 :publishing-directory (f-join my/poco-export-root "notes")
 	 :recursive t
 	 :publishing-function org-publish-attachment)
 	("bsl-org"
-	 :base-directory "c:/users/Nik Clayton/Powercoders/004.powercoders"
+	 :base-directory my/poco-repo-root
 	 :base-extension "org"
-	 :publishing-directory "c:/Users/Nik Clayton/exports/org"
+	 :publishing-directory (f-join my/poco-export-root "org")
 	 :recursive t
 	 :publishing-function org-org-publish-to-org)
 	("bsl-slides" :components ("bsl-slides-reveal" "bsl-slides-static"))
@@ -324,22 +335,17 @@ Each problem is a list that describes the problem, entries in..."
 ;; Refiling headings
 
 ;; Org stuff for PoCo
-;;
-(use-package f				; Path / file manipulation
-  :ensure t)
-(setq my/poco-path
-      "c:/Users/Nik Clayton/Powercoders/004.powercoders/courseware")
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 (setq org-refile-use-outline-path t)
 (setq org-outline-path-complete-in-steps nil)
 
 (defun my/poco-presentation-targets ()
-  (interactive)
-  (f-files my/poco-path (lambda (file) (equal (f-ext file) "org")) t))
+  (f-files (f-join my/poco-repo-root "couseware")
+	   (lambda (file) (equal (f-ext file) "org")) t))
 
-(setq org-refile-targets (quote ((nil :maxlevel . 9)
-				 (my/poco-presentation-targets :maxlevel . 9))))
-
+(setq org-refile-targets
+      (quote ((nil :maxlevel . 9)
+	      (my/poco-presentation-targets :maxlevel . 9))))
 
 ;; Better completion for "#+" at the start of a line.
 ;;
