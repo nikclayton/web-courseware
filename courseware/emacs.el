@@ -94,9 +94,9 @@
 	("bsl-all" :components ("bsl-slides" "bsl-notes" "bsl-org"))))
 
 ;; Render HTML to PNG using Chrome
-;; (use-package ob-html-chrome
-;;   :ensure t
-;;   :config
+(use-package ob-html-chrome
+  :ensure t)
+
 (setq org-babel-html-chrome-chrome-executable
       "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe")
 
