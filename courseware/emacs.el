@@ -22,10 +22,13 @@
 (setq my/poco-export-root
       "c:/Users/Nik Clayton/exports")
 
-(use-package ox-reveal
-  :ensure t)
+(require 'org)
 
-;; TODO: Load Org
+;; ox-reveal on Melpa has compatability problems with Org (it's
+;; set to an older version). Load the local version to avoid
+;; version number problems.
+(load-file (f-join my/poco-repo-root "org-reveal/ox-reveal.el"))
+
 (require 'org-id)
 ;; Properties supported for all entries
 
