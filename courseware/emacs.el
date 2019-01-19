@@ -11,7 +11,8 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'ox-reveal)
+(use-package ox-reveal
+  :ensure t)
 
 ;; TODO: Load Org
 (require 'org-id)
