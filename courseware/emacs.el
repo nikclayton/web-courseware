@@ -328,7 +328,7 @@ Each problem is a list that describes the problem, entries in..."
 (use-package f				; Path / file manipulation
   :ensure t)
 (setq my/poco-path
-      "c:\\Users\\Nik Clayton\\Powercoders\\004.powercoders\\courseware")
+      "c:/Users/Nik Clayton/Powercoders/004.powercoders/courseware")
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 (setq org-refile-use-outline-path t)
 (setq org-outline-path-complete-in-steps nil)
