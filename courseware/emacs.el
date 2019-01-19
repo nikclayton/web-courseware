@@ -36,6 +36,17 @@
       ;; '(("TOPICS_ALL" . "html css javascript dom")
       ;; 	("REQUIREMENTS_ALL" . "html css javascript dom")))
 
+;; Use Zenburn theme so that the colours of the exported HTML and
+;; other SRC blocks are as expected.
+(use-package zenburn-theme
+  :ensure t
+  :config
+  (load-theme 'zenburn t))
+
+;; The htmlize package is used to export syntax-highlighed HTML.
+(use-package htmlize
+  :ensure t)
+
 ;; Local version of ox-reveal with our customisations
 (add-to-list 'load-path "c:/Users/Nik Clayton/GitHub/org-reveal")
 
