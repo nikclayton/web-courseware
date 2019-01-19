@@ -91,7 +91,8 @@ to the repository that you checked out.
 *** Windows
 
 #+BEGIN_SRC
-% path\to\runemacs.exe -Q --batch
+% cd $REPO
+% path\to\emacs.exe -Q --batch
   courseware\week1\day1.org \
   -l $REPO\courseware\emacs.el \
   -f org-reveal-export-to-html
