@@ -56,7 +56,7 @@
 	("var" . italic)))
 
 
-;; Seehttps://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
+;; See https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
 (require 'ox-publish)
 (setq org-publish-project-alist
       '(("bsl-slides-reveal"
