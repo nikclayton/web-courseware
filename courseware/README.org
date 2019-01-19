@@ -9,12 +9,98 @@ This is the courseware for the 2018/2019 Powercoders Basel course.
 If you're reading the HTML version of this file you can find the
 Org source in [[https://bitbucket.org/hussamallaham/004.powercoders/src/master/courseware/README.org][courseware/README.org]].
 
+* Software you'll need to install
+
+** Git
+
+https://git-scm.com
+
+** Emacs
+
+https://www.gnu.org/software/emacs/download.html
+
+For Windows download the 64 bit version with all dependencies
+
+** Google Chrome
+
+https://google.com/chrome
+
+** Graphviz
+
+http://graphviz.org/download/
+
 * Repository
 
-The courseware is in the https://bitbucket.org/hussamallaham/004.powercoders/src/master/courseware/ repository and directory. Ask Hussam for access if you don't already
+The courseware is in the
+https://bitbucket.org/hussamallaham/004.powercoders/src/master/courseware/
+repository and directory. Ask Hussam for access if you don't already
 have it.
 
+* Make sure everything works
+
+** Clone the respository
+
+To clone this:
+
+#+BEGIN_SRC shell
+git clone https://bitbucket.org/hussamallaham/004.powercoders.git
+#+END_SRC
+
 Please coordinate with Nik before making any changes.
+
+** Local modifications
+
+*** Work on a branch
+
+Create a branch to work on for your course. For example:
+
+#+BEGIN_SRC shell
+git checkout -b 005-istanbul
+#+END_SRC
+
+*** Change output pathnames
+
+Edit =emacs.el= and change the definitions for the entries:
+
+- =my/poco-path=
+  - Path to the checked out =courseware= directory.
+- =:base-directory=
+  - Path to the root of the repository
+- =:publishing-directory=
+  - Path that output will be published to
+- =org-babel-html-chrome-chrome-executable=
+  - Path to Google Chrome
+
+to reflect the correct paths for your system
+
+** Build the content
+
+In the examples that follow, replace =$REPO= with the full path
+to the repository that you checked out.
+
+*** Linux / Mac
+
+#+BEGIN_SRC
+% cd $REPO
+% /path/to/emacs -Q --batch
+  courseware/week1/day1.org \
+  -l courseware/emacs.el \
+  -f org-reveal-export-to-html
+#+END_SRC
+
+*** Windows
+
+#+BEGIN_SRC
+% path\to\runemacs.exe -Q --batch
+  courseware\week1\day1.org \
+  -l $REPO\courseware\emacs.el \
+  -f org-reveal-export-to-html
+#+END_SRC
+
+*** Check
+
+This should have created =courseware/day1.html=. Load this in to
+your browser and verify that everything works.
 
 * Content and structure
 
