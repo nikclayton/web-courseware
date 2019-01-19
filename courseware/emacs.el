@@ -14,7 +14,7 @@
 (require 'ox-reveal)
 
 ;; TODO: Load Org
-
+(require 'org-id)
 ;; Properties supported for all entries
 
 (setq org-global-properties nil)
