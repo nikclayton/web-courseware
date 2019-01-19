@@ -29,6 +29,12 @@ https://google.com/chrome
 
 http://graphviz.org/download/
 
+Update the =PATH= variable to contain the full path to the Graphviz
+=bin= directory.
+
+This has worked if you can run the =dot= command from anywhere on
+your system.
+
 * Repository
 
 The courseware is in the
