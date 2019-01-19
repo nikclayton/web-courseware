@@ -71,34 +71,34 @@
 ;; See https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
 (require 'ox-publish)
 (setq org-publish-project-alist
-      '(("bsl-slides-reveal"
-	 :base-directory my/poco-repo-root
+      `(("bsl-slides-reveal"
+	 :base-directory ,my/poco-repo-root
 	 :base-extension "org"
-	 :publishing-directory (f-join my/poco-export-root "slides")
+	 :publishing-directory ,(f-join my/poco-export-root "slides")
 	 :recursive t
 	 :publishing-function org-reveal-publish-to-reveal)
 	("bsl-slides-static"
-	 :base-directory my/poco-repo-root
+	 :base-directory ,my/poco-repo-root
 	 :base-extension "css\\|png\\|svg"
-	 :publishing-directory (f-join my/poco-export-root "slides")
+	 :publishing-directory ,(f-join my/poco-export-root "slides")
 	 :recursive t
 	 :publishing-function org-publish-attachment)
 	("bsl-notes-html"
-	 :base-directory my/poco-repo-root
+	 :base-directory ,my/poco-repo-root
 	 :base-extension "org"
-	 :publishing-directory (f-join my/poco-export-root "notes")
+	 :publishing-directory ,(f-join my/poco-export-root "notes")
 	 :recursive t
 	 :publishing-function org-html-publish-to-html)
 	("bsl-notes-static"
-	 :base-directory my/poco-repo-root
+	 :base-directory ,my/poco-repo-root
 	 :base-extension "css\\|png\\|svg"
-	 :publishing-directory (f-join my/poco-export-root "notes")
+	 :publishing-directory ,(f-join my/poco-export-root "notes")
 	 :recursive t
 	 :publishing-function org-publish-attachment)
 	("bsl-org"
-	 :base-directory my/poco-repo-root
+	 :base-directory ,my/poco-repo-root
 	 :base-extension "org"
-	 :publishing-directory (f-join my/poco-export-root "org")
+	 :publishing-directory ,(f-join my/poco-export-root "org")
 	 :recursive t
 	 :publishing-function org-org-publish-to-org)
 	("bsl-slides" :components ("bsl-slides-reveal" "bsl-slides-static"))
