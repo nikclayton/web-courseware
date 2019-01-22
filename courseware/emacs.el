@@ -31,6 +31,16 @@
 
 (require 'org-id)
 
+;; Murhaf's system reports the error:
+;; "Symbol's function definition is void: org-strip-quotes" when
+;; exporting the files. Suspect an Org version mismatch between our
+;; systems. This is a temporary fix until I figure out the real
+;; problem.
+(defun org-strip-quotes (string)
+  "Strip double quotes from around STRING, if applicable.
+If STRING is nil, return nil."
+  (org-unbracket-string "\"" "\"" string))
+
 ;; Properties supported for all entries
 
 (setq org-global-properties nil)
