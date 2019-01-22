@@ -222,7 +222,6 @@ digraph G {
 
 (add-to-list 'company-backends 'my/org-keyword-backend)
 
-
 (defun my/org-src-block-name-backend (command &optional arg &rest ignored)
   "Complete `<<' with the names of defined SRC blocks."
   (interactive (list 'interactive))
@@ -356,8 +355,12 @@ Each problem is a list that describes the problem, entries in..."
 (setq org-outline-path-complete-in-steps nil)
 
 (defun my/poco-presentation-targets ()
-  (f-files (f-join my/poco-repo-root "couseware")
-	   (lambda (file) (equal (f-ext file) "org")) t))
+  "Return a list of all .org files in the courseware/ tree."
+  (f-files (f-join my/poco-repo-root "courseware")
+	   (lambda (file)
+	     (and (equal (f-ext file) "org")
+		  (not (string-prefix-p "." (f-filename file)))))
+	   t))
 
 (setq org-refile-targets
       (quote ((nil :maxlevel . 9)
