@@ -1,6 +1,6 @@
 #++REVEAL_ROOT: /reveal.js-3.7.0/
-#++REVEAL_ROOT: file:///C:\Users\Nik%20Clayton\Powercoders\004.powercoders\reveal.js-3.7.0\
-#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js@3.7.0/
+#+REVEAL_ROOT: file:///C:\Users\Nik%20Clayton\Powercoders\004.powercoders\reveal-js\
+#++REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js@3.7.0/
 #+REVEAL_HLEVEL: 1
 #+REVEAL_PLUGINS: (classList zoom notes history)
 #+REVEAL_EXTRA_CSS: https://use.fontawesome.com/releases/v5.4.1/css/all.css
