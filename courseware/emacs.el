@@ -196,6 +196,10 @@ digraph G {
 	     '("\\.x?html?\\'" . emacs))
 
 
+(use-package company
+  :ensure t
+  :hook (org-mode . company-mode))
+
 (use-package company-quickhelp
   :ensure t)
 
