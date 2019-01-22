@@ -64,7 +64,7 @@ Create a branch to work on for your course. For example:
 git checkout -b 005-istanbul
 #+END_SRC
 
-*** Change output pathnames
+*** Change output pathnames in =courseware/emacs.el=
 
 Edit =courseware/emacs.el= and change the definitions for the entries:
 
@@ -82,6 +82,17 @@ to reflect the correct paths for your system. If you use backslash
 (=\=) in paths then they must be entered twice. It's easier to use
 forward slashes, which are valid even on Windows systems.
 
+*** Change settings in =courseware/include/settings.org=
+
+Edit =include/settings.org=.
+
+Line 1: Change to the path to the checked-out =reveal-js= directory
+on your system.
+
+Line 8 (=REVEAL_SLIDE_HEADER=): Update for your course as appropriate.
+
+Lines 21 and 22 (=AUTHOR= and =EMAIL=): Update to refer to yourself.
+
 ** Build the content
 
 In the examples that follow, replace =$REPO= with the full path
@@ -93,7 +104,7 @@ to the repository that you checked out.
 % cd $REPO
 % /path/to/emacs -Q --batch
   courseware/week1/day1.org \
-  -l courseware/emacs.el \
+  -l $REPO/courseware/emacs.el \
   -f org-reveal-export-to-html
 #+END_SRC
 
@@ -367,8 +378,6 @@ as lecture notes.
 #+BEGIN_SRC
 % emacs -Q --batch
    path/to/file.org \
-  -L /path/to/org-reveal \
-  -L /path/to/ob-html-chrome \
   -l /path/to/emacs.el \
   -f org-reveal-export-to-html
 #+END_SRC
@@ -381,9 +390,6 @@ as lecture notes.
    =courseware/= directory of this repository
 - =-f org-reveal-export-to-html= -- run the function that generates
   the HTML
-
-The two =-L= parameters are only necessary until local changes to
-these files are accepted in to the Emacs package repository.
 
 ** Presenting
 
