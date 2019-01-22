@@ -30,6 +30,7 @@
 (load-file (f-join my/poco-repo-root "org-reveal/ox-reveal.el"))
 
 (require 'org-id)
+
 ;; Properties supported for all entries
 
 (setq org-global-properties nil)
@@ -46,9 +47,6 @@
 ;; The htmlize package is used to export syntax-highlighed HTML.
 (use-package htmlize
   :ensure t)
-
-;; Local version of ox-reveal with our customisations
-(add-to-list 'load-path "c:/Users/Nik Clayton/GitHub/org-reveal")
 
 ;; Remove default attributes from tables so that styling is done
 ;; with CSS.
