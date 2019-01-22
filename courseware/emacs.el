@@ -451,3 +451,18 @@ Each problem is a list that describes the problem, entries in..."
 ;;
 ;; Write a function that checks SRC blocks and ensures that :file
 ;; parameters are unique.
+
+
+(easy-menu-define powercoders-menu nil
+  "Menu for Powercoders functions."
+  '("Powercoders"
+    ("Publishing"
+     ["Generate slide for this file" org-reveal-export-to-html]
+     ["Publish all files" (org-publish-all t)])
+    ("Cleanup"
+     ["Remove generated files" my/remove-generated-files]
+     ["Remove all generated files" my/remove-all-generated-files])))
+
+(define-key-after (lookup-key org-mode-map [menu-bar])
+  [mymenu]
+  (cons "Powercoders" powercoders-menu) 'tools)
