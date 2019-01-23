@@ -3628,7 +3628,7 @@ we can iterate over.
 
 #+BEGIN_SRC javascript
 let items = document.querySelectorAll('li');
-li.forEach(function(el) {
+items.forEach(function(el) {
   el.remove();
 });
 #+END_SRC
@@ -3800,7 +3800,7 @@ deleteButton.addEventListener('click', function(event) {
  #+BEGIN_SRC javascript
  let a = [1, 2, 3, 4, 5, 6, 7, 8];
 
- for (const i = 0; i < a.length; i = i + 1) {
+ for (let i = 0; i < a.length; i = i + 1) {
    console.log(a[i]);
  }
  #+END_SRC
@@ -3917,7 +3917,7 @@ deleteButton.addEventListener('click', function(event) {
 
 ** Restarting loops earlier than normal
 
- - Use =continue= to exit a loop sooner than normal
+ - Use =continue= to restart a loop sooner than normal
 
  #+BEGIN_SRC javascript
  let a = [1, 2, 3, 4, 'ignore', 5, 6, 7];
