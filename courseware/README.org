@@ -259,9 +259,22 @@ The syntax looks like:
 #+BEGIN_SRC dot :file dependency-1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
 digraph G {
   A -> B -> C;
+  B-> D;
 }
 #+END_SRC
 #+END_EXAMPLE
+
+and produces this result:
+
+#+BEGIN_SRC dot :file dependency-1.png :cmdline -Tpng -Gstylesheet=graphviz.css
+digraph G {
+  A -> B -> C;
+  B -> D;
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:dependency-1.png]]
 
 The additional settings on the =#+BEGIN_SRC= line are:
 
