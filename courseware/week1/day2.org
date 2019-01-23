@@ -144,7 +144,7 @@ correct screenshot?
 #+END_SRC
 
 #+RESULTS:
-[[file:cmdline.svg]]
+[[file:windows-cmdline.svg]]
 
 -----
 
