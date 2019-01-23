@@ -1,5 +1,12 @@
+/**
+ * HTML View for the ShoppingList.
+ */
 class View {
-  constructor(controller, model) {
+  /**
+   * @param model {Model} Data model
+   * @param controller {Controller} App controller
+   */
+  constructor(model, controller) {
     this.model = model;
     this.controller = controller;
 
@@ -72,6 +79,12 @@ class View {
   }
 }
 
+/**
+ * Shopping list model.
+ *
+ * The list is modelled as an array, accessible through the .items property.
+ * It should be treated as read-only.
+ */
 class Model {
   constructor() {
     this.items = [];
@@ -82,19 +95,25 @@ class Model {
   }
 
   /**
-   * Delete the i'th item.
-   * @param i
+   * Delete the i'th item from the list.
+   *
+   * @param i {number}
    */
   delete(i) {
     this.items.splice(i, 1);
   }
 
+  /**
+   * Clear the shopping list of all items.
+   */
   clear() {
     this.items = [];
   }
 }
 
-
+/**
+ * Controller for the shopping list application.
+ */
 class Controller {
   constructor() {
     this.model = new Model();
@@ -109,24 +128,31 @@ class Controller {
   }
 
   /**
-   * Delete the i'th item from the list
-   * @param i
+   * Delete the i'th item from the list.
+   *
+   * @param i {number}
    */
   delete(i) {
     this.model.delete(i);
     this.view.update();
   }
 
+  /**
+   * Clear the shopping list.
+   */
   clearList() {
     this.model.clear();
     this.view.update();
   }
 }
 
+/**
+ * Represents an item in the shopping list.
+ */
 class ShoppingListItem {
   /**
-   * @param {string} name Name of the item to append to the list
-   * @param {string} quantity Quantity of the item to append to the list
+   * @param {string} name Name of the item
+   * @param {string} quantity Quantity of the item
    */
   constructor(name, quantity) {
     this.name = name;
@@ -135,6 +161,7 @@ class ShoppingListItem {
 
   /**
    * Creates and returns an 'li' element for inclusion in the shopping list.
+   *
    * @returns {HTMLElement} li element
    */
   toListItem() {
@@ -164,6 +191,7 @@ class ShoppingListItem {
 
   /**
    * String representation of a ShoppingListItem.
+   *
    * @returns {string}
    */
   toString() {
@@ -171,6 +199,9 @@ class ShoppingListItem {
   }
 }
 
+/**
+ * Create the controller to run the application.
+ */
 function domContentLoaded() {
   new Controller();
 }
