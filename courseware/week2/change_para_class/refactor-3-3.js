@@ -3,7 +3,9 @@ function setClass(event, className) {
   el.className = className;
 }
 
-let makeWarning = document.getElementById('make-warning');
-makeWarning.addEventListener('click', function(event) {
-  setClass(event, 'warning');
+document.addEventListener('DOMContentLoaded', function(event) {
+  let makeWarning = document.getElementById('make-warning');
+  makeWarning.addEventListener('click', function(event) {
+    setClass(event, 'warning');
+  });
 });
