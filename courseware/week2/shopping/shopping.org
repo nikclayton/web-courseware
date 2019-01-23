@@ -4207,10 +4207,39 @@ Show shopping-18.html and shopping-18.js
 - Modify calls to =createNewListItem=
   - Pass a value for the new parameter
 
-** Solution
+** Solution: Pass param to =createNewListItem=
+
+#+INCLUDE: "shopping-19.js" :lines "1-9" src javascript
 
 #+BEGIN_NOTES
-Walk through shopping-19.js
+We change =createNewListItem= so that it takes a second parameter,
+the quantity string.
+
+Since we're changing the paramaters the function takes we have to
+change the JSDoc for the function as well.
+#+END_NOTES
+
+** Solution: Add quantity to list item
+
+#+INCLUDE: "shopping-19.js" :lines "26-36" src javascript
+
+#+BEGIN_NOTES
+This is later in the code.
+
+We start with the code that appends the text of the list item.
+
+And here, below, is the code that appends the delete button. These
+are exactly as before.
+
+The new code is here in the middle.
+
+We check to see if the quantity parameter is the empty string. If it
+is then there's nothing to do.
+
+If it contains text then we create a text node with that text and
+append it, and then create a span for the quantity value. The
+span's =innerText= property is updated to display the information,
+and then it's added to the DOM as normal.
 #+END_NOTES
 
 * Objects
@@ -4595,9 +4624,15 @@ chris.interests;  // ['Powercoders']
 chris.greet();    // 'Hello Chris'
 #+END_SRC
 
-** Using a constuctor in our code
+** Using a constructor in our code
+
+#+INCLUDE: "shopping-21.js" :lines "39-50" src javascript
 
 #+BEGIN_NOTES
+JSDoc, @constuctor tag.
+
+Remember, =this=, plus no =return= value.
+
 shopping-21.js
 
 Show the constructor function, + JSDoc
@@ -4607,6 +4642,32 @@ Using it, line 65 and 87
 Change to createNewListItem JSDoc.
 #+END_NOTES
 
+** Using a constructor in our code
+
+#+INCLUDE: "shopping-21.js" :lines "62-72" src javascript
+
+
+** Using a constructor in our code
+
+#+INCLUDE: "shopping-21.js" :lines "79-94" src javascript
+
+** Alternative code
+
+#+BEGIN_SRC javascript
+shoppingList.appendChild(createNewListItem(
+    new ShoppingListItem(trimmedValue, quantityBox.value)));
+#+END_SRC
+
+#+BEGIN_NOTES
+We don't need the =item= variable, since we only use it once.
+
+So a more concise way to write this code would be create the
+new =ShoppingListItem= object when we call =createNewListItem=,
+like this.
+
+As we've done before, you read this inside-out to understand
+what's going on.
+#+END_NOTES
 * Objects: That was old-style syntax
 
 - How objects in Javascript originally worked
@@ -4633,7 +4694,7 @@ The second is that this way of writing objects, using JSON, is
 that you get used to it.
 #+END_NOTES
 
-** New-style object syntax: Goal
+* New-style object syntax: Goal
 
 #+BEGIN_SRC javascript
 const itemInstance = new ShoppingListItem('Eggs', '6');
@@ -4712,16 +4773,29 @@ To define a class you use the =class= keyword, the name of the new class,
 and curly brackets.
 
 All the code that makes up the class will go inside those curly brackets.
+
+This helps keep all the code together.
+
+For example, in the current version of our code the constructor
+function for the =ShoppingListItem= is in with all the other code,
+making it difficult to see the relationships.
 #+END_NOTES
 
-** Making =new= work
+** New style constructors: Making =new= work
 
 #+BEGIN_SRC javascript
 let itemInstance = new ShoppingListItem('Eggs', '6');
 #+END_SRC
 
 #+BEGIN_SRC javascript
+/**
+ * Represents an item in the shopping list.
+ */
 class ShoppingListItem {
+  /**
+   * @param name {string} Name of the item
+   * @param quantity {string} Quantity of the item
+   */
   constructor(name, quantity) {
     this.name = name;
     this.quantity = quantity;
@@ -4730,6 +4804,23 @@ class ShoppingListItem {
 #+END_SRC
 
 #+BEGIN_NOTES
+This is what a new-style constructor looks like.
+
+There are some similarities and differences to what we've already
+seen.
+
+To talk about the similarities first:
+
+- The constructor function still takes two parameters
+- The constructor body is identical.
+
+The differences:
+
+- The function is *always* called =constructor=
+- It's written inside the =class= block
+
+[Text below is old version, and can be moved to where old-style
+constructors are first introduced]
 When we use the =new= keyword we say we are *constructing* the object.
 
 We have to tell Javascript how our object should be constructed, and we
@@ -4793,10 +4884,180 @@ class ShoppingListItem {
 This is the start of our
 #+END_SRC
 
-
 * Refactoring -- split in to multiple files
 
 * Model - View - Controller
+
+** Problem
+
+- Goal: Functions should do one thing
+- Problem: Current functions do lots of things
+  - [View] Retrieves data from DOM
+  - [Controller] Act on key presses
+  - [Controller] Act on button clicks
+  - [Model] Creates new list item
+  - [Model] Remove item from list
+  - [View] Display the list / update the DOM
+- Also contain duplicate / similar code
+
+** Basic outline
+
+- 3 classes, =Model=, =View=, =Controller=
+- =Model= contains data, and methods to change it
+  - When data changes, tell's the =View= to update.
+- =View= displays the list, widgets, and calls =Controller=
+- =Controller= updates the model
+
+** Skeleton code
+
+*** Controller
+
+- Creates the model
+
+#+INCLUDE: "shopping-class-3.js" :lines "33-41" src javascript
+
+*** Model
+
+- Create a variable to contain the shopping list (array)
+- Create the view
+
+#+INCLUDE: "shopping-class-3.js" :lines "15-32" src javascript
+
+*** View
+
+- Save the model and controller in to variables
+
+#+INCLUDE: "shopping-class-3.js" :lines "1-14" src javascript
+
+*** Initialise the application
+
+#+INCLUDE: "shopping-class-3.js" :lines "95-101" src javascript
+
+** Now what?
+
+- Build the application back up bit by bit
+- Testing as we go
+
+** Steps
+
+- Displaying data
+- Adding items
+- Deleting items
+- Clearing the list
+
+** Displaying data
+
+- Want to make sure that the view can show information from the model
+- Model:
+  - Create some dummy data
+  - Provide a =getter= for the =items_= array
+- View:
+  - Provide a method to update the display
+
+*** Exercise: Create some dummy data
+
+- Find the code that creates the =items_= array
+- Populate the array with =ShoppingListItem= instances
+  - name: =First item=, quantity: =q1=
+  - name: =Second item=, quantity: =q2=
+  - name: =Third item=, quantity: =q3=
+
+*** Solution: Create some dummy data
+
+#+INCLUDE: "shopping-class-3.js" :lines "26-27" src javascript
+
+#+INCLUDE: "shopping-class-4.js" :lines "38-43" src javascript
+
+*** Provide a =getter= for the =items_= array
+
+- A what?
+
+*** =items_= is private
+
+- Conventionally, =items_= is private
+  - Not supposed to be accessed/changed outside =Model=
+  - Indicated by the underscore (=_=)
+  - Not enforced by Javascript
+
+*** Getter turns a function in to a property
+
+#+BEGIN_SRC javascript
+// In Model
+items() {
+  return this.items_.slice();
+}
+#+END_SRC
+
+#+BEGIN_SRC javascript
+// In View
+let length = this.model.items().length;
+#+END_SRC
+
+*** Getter turns a function in to a property
+
+#+BEGIN_SRC javascript
+// In Model
+get items() {
+  return this.items_.slice();
+}
+#+END_SRC
+
+#+BEGIN_SRC javascript
+// In View
+let length = this.model.items.length;
+#+END_SRC
+
+#+BEGIN_NOTES
+This is an example of what we call syntactic s
+#+END_NOTES
+** Adding items
+
+** Deleting items
+
+** Clearing the list
+
+** Benefits
+
+- Encapsulation
+- Decoupling
+
+#+BEGIN_NOTES
+There are some big benefits to this approach.
+
+Firstly, our code is now nicely separated in to different parts
+according to what they do.
+
+The code in the View class only deals with the things that the
+user can see.
+
+The code in the Model class only deals with the structure of the
+data.
+
+The code in the Controller is called in response to events and
+knows how to forward changes on to the Model.
+
+We call this Encapsulation -- each class knows about the things it
+needs to know about.
+
+Their responsibilities are also decoupled.  The Model has no idea
+how the data is going to be displayed -- it just tells the View
+to display it.
+
+We could have a completely different View class, that shows the
+data in a different way, and we wouldn't need to change the code
+in the Controller or the Model at all.
+
+Also, our View has no idea what the rules are for whether or not
+an item should be added to the list. The only logic it contains
+is the to decide if a button should be enabled or not. We could
+add additional logic in the Controller, and the View would not need
+to change.
+
+We say that everything is decoupled.
+#+END_NOTES
+
+** Problems
+
 
 * Parsing quantities
 * Re-order items in the list
