@@ -3657,7 +3657,7 @@ items.forEach(function(el) {
 
 #+INCLUDE: "shopping-15.js" :lines "32-37" src javascript
 
-#+INCLUDE: "shopping-15.js" :lines "70-77" src javascript
+#+INCLUDE: "shopping-15.js" :lines "70-78" src javascript
 
 *** Exercise: Enable the button when items are added
 
@@ -3674,11 +3674,11 @@ items.forEach(function(el) {
 
 *** Exercise: Disable the button when the page is loaded
 
-- Disable the button when =DOMContentReady= fires
+- Disable the button when =DOMContentLoaded= fires
 
 *** Solution: Disable the button when the page is loaded
 
-#+INCLUDE: "shopping-15.js" :lines "76-82" src javascript
+#+INCLUDE: "shopping-15.js" :lines "77-83" src javascript
 
 *** Conditionally disable the button when clicking delete item
 
