@@ -16,45 +16,26 @@ class View {
     this.addItemButton = document.querySelector('button#add');
     this.clearListButton = document.querySelector('button#clear');
 
-    // Hook up the event listeners
-    this.addItemButton.addEventListener('click', () => this.onAddItemClick());
-    this.inputBox.addEventListener('keyup', event => this.onInputKeyup(event));
-    this.clearListButton.addEventListener('click', event => this.onClearListClick());
-  }
-
-  onAddItemClick() {
-    const trimmedValue = this.inputBox.value.trim();
-
-    if (trimmedValue === '') {
-      return;
-    }
-
-    const item = new ShoppingListItem(trimmedValue, this.quantityBox.value);
-    this.controller.add(item);
+    // Connect the event listeners
+    this.addItemButton.addEventListener('click',
+        () => this.controller.maybeAddItem(
+            this.inputBox.value, this.quantityBox.value));
+    this.inputBox.addEventListener('keyup',
+            event => this.onInputKeyup(event));
+    this.clearListButton.addEventListener('click',
+        () => this.controller.clearList());
   }
 
   onInputKeyup(event) {
     const trimmedValue = this.inputBox.value.trim();
     this.addItemButton.disabled = trimmedValue === '';
 
-    if (trimmedValue === '') {
-      return;
-    }
-
     if (event.key !== 'Enter') {
       return;
     }
 
-    const item = new ShoppingListItem(trimmedValue, this.quantityBox.value);
-    this.controller.add(item);
-  }
-
-  onClearListClick() {
-    this.controller.clearList();
-  }
-
-  onDeleteItemClick(event, i) {
-    this.controller.delete(i);
+    this.controller.maybeAddItem(
+        trimmedValue, this.quantityBox.value);
   }
 
   update() {
@@ -67,12 +48,14 @@ class View {
       const listItem = item.toListItem();
 
       const deleteButton = listItem.querySelector('button');
-      deleteButton.addEventListener('click', (event) => this.onDeleteItemClick(event, i));
+      deleteButton.addEventListener('click',
+          () => this.controller.delete(i));
 
       this.shoppingList.appendChild(listItem);
     }
 
     this.inputBox.value = '';
+    this.quantityBox.value = '';
     this.addItemButton.disabled = true;
     this.clearListButton.disabled = this.model.items.length === 0;
     this.quantityBox.focus();
@@ -86,12 +69,32 @@ class View {
  * It should be treated as read-only.
  */
 class Model {
-  constructor() {
-    this.items = [];
+  /**
+   * @param controller
+   */
+  constructor(controller) {
+    /** {!Array<!ShoppingListItem>} Items in the list */
+    this.items_ = [];
+
+    /** {!View} View for this model. */
+    this.view = new View(this, controller);
   }
 
+  /**
+   * @returns {ShoppingListItem[]} Read-only array of items
+   */
+  get items() {
+    return this.items_.slice();
+  }
+
+  /**
+   * Appends a new item to the list.
+   *
+   * @param item {!ShoppingListItem}
+   */
   append(item) {
-    this.items.push(item);
+    this.items_.push(item);
+    this.view.update();
   }
 
   /**
@@ -100,14 +103,16 @@ class Model {
    * @param i {number}
    */
   delete(i) {
-    this.items.splice(i, 1);
+    this.items_.splice(i, 1);
+    this.view.update();
   }
 
   /**
    * Clear the shopping list of all items.
    */
   clear() {
-    this.items = [];
+    this.items_ = [];
+    this.view.update();
   }
 }
 
@@ -116,15 +121,25 @@ class Model {
  */
 class Controller {
   constructor() {
-    this.model = new Model();
-    this.view = new View(this, this.model);
-    this.view.update();
+    this.model = new Model(this);
   }
 
-  add(item) {
-    console.log('controller: append ' + item);
+  /**
+   * Maybe add an item to the shopping list. The item's name must not be
+   * the empty string for this to happen.
+   *
+   * @param name {string} Name of the item to add, may be empty
+   * @param quantity {string} The quantity of the item to add
+   */
+  maybeAddItem(name, quantity) {
+    const trimmedName = name.trim();
+
+    if (trimmedName === '') {
+      return;
+    }
+
+    const item = new ShoppingListItem(trimmedName, quantity);
     this.model.append(item);
-    this.view.update();
   }
 
   /**
@@ -134,7 +149,6 @@ class Controller {
    */
   delete(i) {
     this.model.delete(i);
-    this.view.update();
   }
 
   /**
@@ -142,7 +156,6 @@ class Controller {
    */
   clearList() {
     this.model.clear();
-    this.view.update();
   }
 }
 
