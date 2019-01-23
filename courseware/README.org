@@ -102,7 +102,7 @@ to the repository that you checked out.
 
 #+BEGIN_SRC
 % cd $REPO
-% /path/to/emacs -Q --batch
+% /path/to/emacs -Q --batch \
   courseware/week1/day1.org \
   -l $REPO/courseware/emacs.el \
   -f org-reveal-export-to-html
@@ -376,7 +376,7 @@ as lecture notes.
 *** Batch generation of output files
 
 #+BEGIN_SRC
-% emacs -Q --batch
+% emacs -Q --batch \
    path/to/file.org \
   -l /path/to/emacs.el \
   -f org-reveal-export-to-html
