@@ -1,7 +1,10 @@
+/**
+ * Represents an item in the shopping list.
+ */
 class ShoppingListItem {
   /**
-   * @param {string} name Name of the item to append to the list
-   * @param {string} quantity Quantity of the item to append to the list
+   * @param {string} name Name of the item
+   * @param {string} quantity Quantity of the item
    */
   constructor(name, quantity) {
     this.name = name;
