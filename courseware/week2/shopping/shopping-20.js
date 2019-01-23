@@ -27,7 +27,7 @@ function createNewListItem(item) {
   if (item.quantity !== '') {
     listItem.appendChild(document.createTextNode(' '));
     const quantityText = document.createElement('span');
-    quantityText.textContent = '(' + item.quantity + ')';
+    quantityText.textContent = `(${item.quantity})`;
     listItem.appendChild(quantityText);
   }
 
