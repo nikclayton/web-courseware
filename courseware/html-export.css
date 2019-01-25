@@ -1,24 +1,69 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+body {
+  background-color: #ddd;
+  max-width: 960px;
+  margin: 0 auto;
+  color: #333;
+  font-family: 'Lato', sans-serif;
+  line-height: 1.5;
+}
+
+h2, h3, h4 {
+  text-align: center;
+}
+
+div.outline-2, div.outline-3, div.outline-4 {
+  border-top: 1px solid #ccc;
+}
+
 div.NOTES {
   border: 1px solid #ccc;
-  box-shadow: 3px 3px 3px #eee;
+  box-shadow: 3px 3px 3px #bbb;
   padding: 8pt;
   margin: 1.2em;
+  margin-top: 2em;
+  background-color: #eee;
 }
 
 div.NOTES:before {
+  background-color: #ddd;
   position: relative;
-  background-color: white;
   top: -20px;
   left: -20px;
   padding-left: 1em;
   padding-right: 1em;
   padding-top: 3px;
   padding-bottom:3px;
-  border: 1px solid black;
+  border: 1px solid #ccc;
   content: "Speaker notes";
 }
 
-span.section-number-2, span.section-number-3 {
+span.section-number-2, span.section-number-3, span.section-number-4 {
   display: none;
 }
 
+img {
+  max-width: 800px;
+  border: 1px solid #ccc;
+  box-shadow: 3px 3px 3px #eee;
+}
+
+P {
+  margin-block-start: 0;
+}
+
+/* Copied from org.css */
+pre, code {
+  background-color: rgb(63, 63, 63);
+  border-radius: .25em;
+  color: #93a1a1;
+  font-size: 125%;
+}
+
+code {
+  padding: 0 .4em;
+  border-radius: 4px;
+}
+
+/* End of copy */

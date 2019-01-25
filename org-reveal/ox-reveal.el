@@ -1132,11 +1132,11 @@ info is a plist holding export options."
    (if-format "<meta name=\"author\" content=\"%s\"/>\n" (plist-get info :author))
    (if-format "<meta name=\"description\" content=\"%s\"/>\n" (plist-get info :description))
    (if-format "<meta name=\"keywords\" content=\"%s\"/>\n" (plist-get info :keywords))
-   (org-reveal-stylesheets info)
    (org-reveal-mathjax-scripts info)
    (org-reveal--build-pre/postamble 'head-preamble info)
    (org-element-normalize-string (plist-get info :html-head))
    (org-element-normalize-string (plist-get info :html-head-extra))
+   (org-reveal-stylesheets info)
    "</head>
 <body>\n"
    (org-reveal--build-pre/postamble 'preamble info)

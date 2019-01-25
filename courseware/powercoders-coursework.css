@@ -1,3 +1,17 @@
+/* html-export.css is loaded before this one, we have to undo some of
+   the changes it makes. */
+body {
+  max-width: none;
+}
+
+code {
+  /* Required, otherwise the bottom of characters are cut off */
+  background-color: initial;
+  color: currentcolor;
+}
+
+/** End of fixing changes made by html-export.css */
+
 /* Left align slide content, instead of centered. */
 .reveal p {
   text-align: left;
@@ -242,7 +256,7 @@ div.leftcol pre.src, div.rightcol pre.src {
 }
 
 /** Keep heading size the same regardless of level */
-.reveal h3, .reveal h4 {
+.reveal h3, .reveal h4, .reveal h5 {
   font-size: 2.11em;
 }
 
