@@ -56,7 +56,7 @@ function domContentLoaded() {
     }
 
     shoppingList.appendChild(createNewListItem(trimmedValue,
-        quantityBox.value));
+        quantityBox.value.trim()));
     quantityBox.value = '';
     inputBox.value = '';
     addItemButton.disabled = true;
@@ -77,7 +77,7 @@ function domContentLoaded() {
     }
 
     shoppingList.appendChild(createNewListItem(trimmedValue,
-        quantityBox.value));
+        quantityBox.value.trim()));
     inputBox.value = '';
     addItemButton.disabled = true;
     clearListButton.disabled = false;
