@@ -4170,26 +4170,17 @@ you expect.
   - 6 eggs
   - 1 litre milk
   - 500g flour
+- This is an *optional* value
+  - It's OK if the user doesn't type anything in
+- Quantity should be added to the item description in the list
 
 ** Quantity: HTML changes
 
 - Add a new =input= element for quantity
-- What problems do you see?
 
-*** Problems
+** Extract the value of the quantity widget
 
-- Focus is wrong
-  - How do you fix this?
-- Input widget is very wide
-  - How do you fix this ([MDN input size])
-- Quantity is not cleared when adding items
-  - How do you fix this?
-
-*** Fixes
-
-#+BEGIN_NOTES
-Show shopping-18.html and shopping-18.js
-#+END_NOTES
+- In the same way we extract the value of the item widget
 
 ** Quantity: Using the new quantity
 
@@ -4205,6 +4196,25 @@ Show shopping-18.html and shopping-18.js
 - Modify calls to =createNewListItem=
   - Pass a value for the new parameter
 
+** Solution: HTML changes
+
+#+BEGIN_SRC html
+<input type="text" id="quantity" placeholder="Quantity">
+#+END_SRC
+
+** Solution: Extract the value of the quantity widget
+
+#+INCLUDE: "shopping-19.js" :lines "45-46" src javascript
+
+#+INCLUDE: "shopping-19.js" :lines "51-60" src javascript
+
+#+BEGIN_NOTES
+Here's the code that finds the quantity widget.
+
+In the click listener I pass the trimmed value to =createNewListItem=. I don't bother saving the result in to a variable, since I don't need to test the value.
+
+I've made the same change in the =keyup= handler as well.
+#+END_NOTES
 ** Solution: Pass param to =createNewListItem=
 
 #+INCLUDE: "shopping-19.js" :lines "1-9" src javascript
@@ -4240,8 +4250,42 @@ span's =innerText= property is updated to display the information,
 and then it's added to the DOM as normal.
 #+END_NOTES
 
-* Objects
+** Problems?
 
+#+BEGIN_NOTES
+What problems do you see with the UI at this point?
+
+[Wait]
+#+END_NOTES
+** Problems
+
+- Input widget is very wide
+  - How do you fix this ([MDN input size])
+- Focus mght be wrong
+- Quantity is not cleared when adding items
+  - How do you fix this?
+
+#+BEGIN_NOTES
+Here are some problems that I saw when I was trying this.
+
+1. The default width for an =input= widget is quite wide. How do you go about fixing this?
+
+2. The focus might be wrong -- I put my "quantity" widget first, so it should get the focus first instead of the item widget.
+
+3. The value in the quantity widget is not cleared after adding an item.
+
+This we know how to fix, it's just a case of putting the right code in the right place...
+
+[Have them go and do that]
+#+END_NOTES
+
+** Fixes
+
+#+BEGIN_NOTES
+Show shopping-18.html and shopping-18.js
+#+END_NOTES
+
+* Objects
 ** Problem: Loosely-coupled data
 
 - Each list item has two values
@@ -5645,6 +5689,15 @@ class Person {
   - When data changes, tell's the =View= to update.
 - =View= displays the list, widgets, and calls =Controller=
 - =Controller= updates the model
+
+** Setup
+
+- Create directories
+  - =shopping-mvc=
+  - =shopping-mvc/src=
+  - =shopping-mvc/src/css=
+  - =shopping-mvc/src/html=
+  - =shopping-mvc/src/js=
 
 ** Skeleton code
 
