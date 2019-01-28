@@ -5682,6 +5682,43 @@ class Person {
 
 * Refactoring -- split in to multiple files
 
+- =shopping.js= is starting to get large
+- Also has multiple responsibilites
+  - Code for =ShoppingListItem=
+  - Code for the user interface
+- Good idea to split in to two
+
+** Split in to two files
+
+- =shopping-list-item.js=
+  - Put =class ShoppingListItem { ... }= in here
+- =ui.js=
+  - Everything else in here
+- Update the HTML
+
+#+INCLUDE: "shopping-multiple/shopping.html" :lines "8-10" src html
+
+** Problem
+
+- Each file the browser has to load slows things down
+- We want things to be fast
+- Tension
+  - Multiple files -- easier for us
+  - Single file -- better for the browser
+- We'll fix this later on
+
+#+BEGIN_NOTES
+We might not realise it yet, but we've just introduced a problem in to the site.
+
+Every extra file that the browser needs to load will slow loading our site down a little bit. There's an unavoidable delay that happens when the browser needs to start download and processing a new file. It's small, but it's there, and it adds up. If we had a larger application with lots of files this would become a real problem.
+
+This penalty is the same irrespective of how large the file is.
+
+So there's a tension here between doing something that makes things easier for us -- having small files -- and doing something that makes things better for the browser.
+
+Later we'll look at how to fix that so that we get the best of both worlds -- sort of. For the moment I just want you to be aware that this is a problem.
+#+END_NOTES
+
 * Model - View - Controller
 
 ** Problem
