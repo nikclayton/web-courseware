@@ -3781,8 +3781,7 @@ deleteButton.addEventListener('click', function(event) {
 
  Then adds one to i.
 
- The =i= variable's visibility, or scope, is limited to the body
- of the =for= loop.
+ The =i= variable's visibility, or scope, is limited to the body  of the =for= loop.
  #+END_NOTES
 
 *** =i++= syntax
@@ -3810,7 +3809,7 @@ deleteButton.addEventListener('click', function(event) {
  #+BEGIN_SRC javascript
  let a = [1, 2, 3, 4, 5, 6, 7, 8];
 
- for (let i = i; i < a.length; i = i + 2) {
+ for (let i = 1; i < a.length; i = i + 2) {
    console.log(a[i]);
  }
  #+END_SRC
