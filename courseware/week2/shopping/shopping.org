@@ -4236,18 +4236,13 @@ This is later in the code.
 
 We start with the code that appends the text of the list item.
 
-And here, below, is the code that appends the delete button. These
-are exactly as before.
+And here, below, is the code that appends the delete button. These are exactly as before.
 
 The new code is here in the middle.
 
-We check to see if the quantity parameter is the empty string. If it
-is then there's nothing to do.
+We check to see if the quantity parameter is the empty string. If it is then there's nothing to do.
 
-If it contains text then we create a text node with that text and
-append it, and then create a span for the quantity value. The
-span's =innerText= property is updated to display the information,
-and then it's added to the DOM as normal.
+If it contains text then we create a text node with that text and append it, and then create a span for the quantity value. The span's =innerText= property is updated to display the information, and then it's added to the DOM as normal.
 #+END_NOTES
 
 ** Problems?
