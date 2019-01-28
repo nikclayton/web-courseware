@@ -60,7 +60,7 @@ function domContentLoaded() {
   const quantityBox = document.getElementById('quantity');
   const inputBox = document.getElementById('item');
   const shoppingList = document.querySelector('ul');
-  const addItemButton = document.querySelector('button#add');
+  const addItemButton = document.querySelector('button#append');
   const clearListButton = document.querySelector('button#clear');
 
   addItemButton.addEventListener('click', function (event) {
