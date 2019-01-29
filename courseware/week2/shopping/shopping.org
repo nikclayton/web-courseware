@@ -3862,7 +3862,7 @@ deleteButton.addEventListener('click', function(event) {
  #+END_SRC
 
  #+BEGIN_NOTES
- Here's how we could delete elements with a =for= loop, just as
+ Here's how we could delete elements with a =while= loop, just as
  a reminder.
  #+END_NOTES
 
@@ -3911,6 +3911,7 @@ deleteButton.addEventListener('click', function(event) {
      break;
    }
    console.log(a[i])
+   i++;
  }
  #+END_SRC
 
@@ -3938,6 +3939,7 @@ deleteButton.addEventListener('click', function(event) {
      continue;
    }
    console.log(a[i])
+   i++;
  }
  #+END_SRC
 
