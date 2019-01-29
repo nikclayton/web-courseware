@@ -711,11 +711,13 @@ Go ahead and draw out the tree for these elements.
 digraph G {
   node [shape="hexagon"];
 
-  li -> span
-  li -> button
+  li -> span;
+  li -> space;
+  li -> button;
 
   span -> span_content;
   span_content [label="Eggs" shape=none];
+  space [label="' '" shape=none];
   button -> button_content;
   button_content [label="Delete" shape=none];
 }
@@ -734,14 +736,13 @@ For anyone's that didn't.
 
 We start with the =li= element -- that's the first node.
 
-We see that this has a child element called =span=, so we add
-that to the tree.
+We see that this has a child element called =span=, so we add that to the tree.
 
 Then we see that it has some content, so we add that as well.
 
-Then the =span= ends, and a new =button= element starts. This is
-also a child of the =li= element. And that has some text content
-too, so we add that as its own node.
+Then the =span= ends, and there's a space.
+
+After the space a new =button= element starts. This is also a child of the =li= element. And that has some text content too, so we add that as its own node.
 #+END_NOTES
 
 ** Exercise: Write a function that creates this tree
