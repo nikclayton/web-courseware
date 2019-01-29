@@ -4177,6 +4177,43 @@ you expect.
   - It's OK if the user doesn't type anything in
 - Quantity should be added to the item description in the list
 
+** New DOM fragment
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC html
+<li><span>Eggs</span> <span>(6)<span>
+  <button>Delete</button>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file list-item-quantity-graph.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+digraph G {
+  node [shape="hexagon"];
+
+  li -> span1
+  li -> space1
+  li -> span2
+  li -> space2
+  li -> button
+
+  span1 [label="span"];
+  span1 -> span1_content;
+  span1_content [label="Eggs" shape=none];
+  space1 [label="' '" shape=none];
+  span2 [label="span"];
+  span2 -> span2_content;
+  span2_content [label="(6)" shape=none];
+  space2 [label="' '" shape="none"];
+  button -> button_content;
+  button_content [label="Delete" shape=none];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:list-item-quantity-graph.svg]]
+#+REVEAL_HTML: </div>
+
 ** Quantity: HTML changes
 
 - Add a new =input= element for quantity
