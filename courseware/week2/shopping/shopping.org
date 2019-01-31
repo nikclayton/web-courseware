@@ -5684,6 +5684,13 @@ Inside the function, the =this= keyword refers to the object we're constructing.
 Let's take a look.
 #+END_NOTES
 
+*** Setup
+
+ - Create =scratch/objects= directory
+ - Create =scratch/objects/index.html=
+ - Create =scratch/objects/objects.js=
+ - Link them together with =<script>=
+
 *** Writing a constructor
 
 #+BEGIN_SRC javascript
