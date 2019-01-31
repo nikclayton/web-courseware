@@ -5170,6 +5170,7 @@ The technical term for these things, whether they are properties or methods, is 
 
 *** Values
 
+#+NAME: object-values-example
 #+BEGIN_SRC javascript
 const person = {
   name: 'Nik',
@@ -5202,14 +5203,8 @@ And if the value is a function then we can call it by using parentheses exactly 
 
 *** =this=
 
-#+BEGIN_SRC javascript
-const person = {
-  name: 'Nik',
-  interests: ['Teaching', 'Skiing'],
-  greet: function() {
-    console.log(`Hello ${this.name}`);
-  }
-};
+#+BEGIN_SRC javascript :noweb yes
+<<object-values-example>>
 #+END_SRC
 
 - Inside an object, =this= refers to the object
