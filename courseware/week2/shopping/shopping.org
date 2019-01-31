@@ -5272,13 +5272,33 @@ We use the same dotted notation to access them.
 Notice how the code in the =greet= method has had to be changed because of this.
 #+END_NOTES
 
+**** Nested objects
+
+#+BEGIN_SRC javascript
+const person = {
+  name: {
+    first: 'Nik',
+    last: 'Clayton'
+  },
+  interests: ['Teaching', 'Skiing'],
+  greet: function() {
+    console.log(`Hello ${this.name.first}`);
+  }
+};
+
+person.name.first = 'Nicholas';
+person.interests[0] = 'Programming';
+person.interests.push('Teaching');
+person.name = {first: 'Nik', last: 'Clayton'};
+#+END_SRC
+
 *** Bracket syntax
 
 #+BEGIN_SRC javascript
 const person = {
   name: {
     first: 'Nik',
-    last: 'Clayton',
+    last: 'Clayton'
   },
   interests: ['Teaching', 'Skiing'],
   greet: function() {
