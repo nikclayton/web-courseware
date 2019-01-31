@@ -6535,30 +6535,60 @@ Later we'll look at how to fix that so that we get the best of both worlds -- so
   - =shopping-mvc/src/html=
   - =shopping-mvc/src/js=
 
+#+BEGIN_NOTES
+We're going to start structuring the code in our application more like how you would see it in a real app.
+
+There's no one correct way to do this -- different organisations or projects will have different standards.
+
+Here we're creating a top-level directory, =shopping-mvc=, and a =src= directory inside it. This is, in turn, going to have directories for the different parts of the source code that make up our app.
+
+As I say, this will work for us, but you will definitely see other ways to organise code in your future projects.
+#+END_NOTES
+
 ** Skeleton code
+
+#+BEGIN_NOTES
+We're going to start by putting in place the bare minimum code for our app.
+
+It's not going to do anything useful yet, but it is going to show the structure, and wire together everything for us.
+#+END_NOTES
 
 *** Controller
 
 - Creates the model
+- =src/js/controller.js=
 
-#+INCLUDE: "shopping-class-3.js" :lines "33-41" src javascript
+#+INCLUDE: "shopping-mvc/skeleton/src/js/controller.js" src javascript
 
 *** Model
 
-- Create a variable to contain the shopping list (array)
-- Create the view
+- Creates the =items_= array, and view
+- =src/js/model.js=
 
-#+INCLUDE: "shopping-class-3.js" :lines "15-32" src javascript
+#+INCLUDE: "shopping-mvc/skeleton/src/js/model.js" src javascript
 
 *** View
 
 - Save the model and controller in to variables
+- =src/js/view.js=
 
-#+INCLUDE: "shopping-class-3.js" :lines "1-14" src javascript
+#+INCLUDE: "shopping-mvc/skeleton/src/js/view.js" src javascript
 
 *** Initialise the application
 
-#+INCLUDE: "shopping-class-3.js" :lines "95-101" src javascript
+- =src/js/ui.js=
+
+#+INCLUDE: "shopping-mvc/skeleton/src/js/ui.js" src javascript
+
+*** Control flow
+
+- Page is loaded
+  - =ui.js:domContentLoaded()= is run, =new Controller()=
+  - =controller.js:constructor()= is run, =new Model(this)=
+  - =model.js:constructor()= is run, =new View(this, controller)=
+  - =view.js:constructor()= constructor is run
+- Constructed a lot of objects
+- No actual functionality yet
 
 ** Now what?
 
@@ -6577,7 +6607,9 @@ Later we'll look at how to fix that so that we get the best of both worlds -- so
 - Want to make sure that the view can show information from the model
 - Model:
   - Create some dummy data
-  - Provide a =getter= for the =items_= array
+  - Create a method to retrieve the =items_= array
+    - Prevent changes to the =items_= array
+    - Make the method a get'er
 - View:
   - Provide a method to update the display
 
@@ -6594,6 +6626,289 @@ Later we'll look at how to fix that so that we get the best of both worlds -- so
 #+INCLUDE: "shopping-class-3.js" :lines "26-27" src javascript
 
 #+INCLUDE: "shopping-class-4.js" :lines "38-43" src javascript
+
+*** Create a method to retrieve the =items_= array
+
+- The =View= needs to retrieve data from the model
+- The model stores the data in the array =items_=
+- Model should provide a method that returns this array
+  - We'll call this method =items()=
+
+**** =items()= method, first attempt
+
+#+BEGIN_SRC javascript
+class Model {
+  // ...
+
+  /** @return {!ShoppingListItem[]} Array of items */
+  items() {
+    return this.items_;
+  }
+}
+#+END_SRC
+
+**** Problems with this approach
+
+- Complex values are returned differently than simple values
+- Simple values: Return a copy
+- Complex values: Return the real thing
+  - Arrays (and objects) are complex values
+
+**** Example with parameter passing
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript -n
+function foo(x) {
+  x = x + 10;
+  return x;
+}
+
+let a = 5;
+let b = foo(a);
+
+a;   // 5 (unchanged)
+b;   // 15 (a + 10)
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC javascript -n
+function bar(x) {
+  x.push(10);
+  return x;
+}
+
+let a = [1, 2, 3];
+let b = bar(x);
+
+a;   // [1, 2, 3, 10]
+b;   // [1, 2, 3, 10]
+
+a.push(20);
+
+a;   // [1, 2, 3, 10, 20]
+b;   // [1, 2, 3, 10, 20]
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Let's look at how simple values and complex values behave differently.
+
+In the example on the left we have a function that takes a single parameter, adds 10 to it, and returns it.
+
+On line 6 we create a variable called =a= and give it a value. On the next line we create a new variable =b=, and set its value by calling =foo= passing =a= as the parameter.
+
+Inside the function the parameter has the name =x=. The function changes the value of =x=, and then returns the value.
+
+When we call =foo=, it receives a *copy* of the value in =a=. So when the =foo= function changes the value, it's changing the copy. The original value inside =a= is not changed.
+
+We can see this by checking the value of =a= and =b= after the function has returned. As we can see, =a= has its original value, and =b= has the new value.
+
+That's how simple values, like numbers and strings work.
+
+This is super important, so I'll repeat it -- in the example on the left, the function receives a *copy* of the value in the variable.
+
+When functions receive or return arrays or objects, they behave differently. In this example I've used an array, but objects are the same.
+
+Instead of receiving a *copy* of the array, the function on the right receives the actual array.
+
+So if the function changes that array in any way, the original array is modified as well.
+
+In our function, on line 2, we use the =push= method to add the value =10= to the end of the array.
+
+*This changes the original array*
+
+On line 6 and 7 we do effectively the same thing as we did with the function on the left. However, we're doing this with arrays instead.
+
+Line 6 creates the array with three values. Line 7 calls the function, and saves the result in a new variable.
+
+However, when we print the values in the variables, on lines 9 and 10, we see that =a= has been modified.
+
+Compare this with the example on the left, also line 9 -- there, the value in =a= was not changed.
+
+This is why you have to be careful with functions that handle arrays and objects. If you're not careful they can end up making changes that you don't want.
+
+It gets worse.
+
+By returning the array from the =bar= function, our =a= and =b= variables now refer to the *same* array. If we change one of them, we change the other.
+
+On line 12 we push a value on to the array in =a=. But because =a= and =b= both refer to the same array, this also changes the value in =b=.
+#+END_NOTES
+
+**** Changing how we think about variables
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC javascript -n
+function bar(x) {
+  x.push(10);
+  return x;
+}
+
+let a = [1, 2, 3];
+let b = bar(x);
+
+a;   // [1, 2, 3, 10]
+b;   // [1, 2, 3, 10]
+
+a.push(20);
+
+a;   // [1, 2, 3, 10, 20]
+b;   // [1, 2, 3, 10, 20]
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This means we should change how we think about variables.
+
+So far we've been thinking about variables as being a box with a label on the side and a value inside them.
+
+And arrays are a collection of boxes, where we refer to each box by it's main name, and then the number.
+
+One box (containing the value), and one label (the variable name).
+
+However, what we've seen in this example is that we can we have two variables that refer to the same variable.
+
+So the way to think about this is that our box that contains the value has two (or more) labels on it. You can refer to the value using any of the labels on the side of the box.
+#+END_NOTES
+
+**** Why is this a problem?
+
+#+REVEAL_HTML: <div class="leftcol">
+- Model is responsible for the data
+- All changes to the data should go through the model
+- But this breaks that
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC javascript
+class Model {
+  constructor(...) {
+    // ...
+    this.items_ = [];
+  }
+
+  items() {
+    return this.items_;
+  }
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+**** Why is this a problem?
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript
+class Model {
+  constructor(...) {
+    // ...
+    this.items_ = [];
+  }
+
+  items() {
+    return this.items_;
+  }
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC javascript
+let model = new Model(...);
+let items = model.items();
+items.push(10);   // <-- PROBLEM
+                  //     Model's this.items_ is now
+                  //     changed
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+On the left is our hypothetical code in the Model. It ceates an array and assigns it to =items_=.
+
+Then the =items()= method returns this array.
+
+However, it doesn't return a copy of the array, it returns the actual array.
+
+On the right is code that shows how this breaks.
+
+On the first line we create a new model object, and save it in to a variable. Then we call the =items()= method and save the result in to a variable as well.
+
+Then we call the =push= method on this array. But now we haven't just changed our copy of the items, we've changed the master copy in the model as well.
+
+*We should not do this* -- all changes to data managed by the model should be made by calling methods that the model provides.
+#+END_NOTES
+
+**** Solution: Model returns a copy of =items_=
+
+- =Model= needs to return a *copy* of the =items_= array
+- How?
+
+#+BEGIN_NOTES
+In order to solve this, the =Model= needs to return a copy of the =items_= array. Then any code that uses it can modify the copy, and the original in the Model will be unchanged.
+
+Does that make sense?
+
+[Wait]
+
+How do we do this?
+#+END_NOTES
+
+**** Solution: =Array.prototype.slice()=
+
+- Arrays have a =slice= method
+- Returns a copy of some or all of an array
+
+**** =Array.prototype.slice()= examples
+
+#+BEGIN_SRC javascript
+let cities = ['Basel', 'Bern', 'Lausanne', 'Zurich'];
+
+let b = cities.slice(0, 2);
+b;                 // ['Basel', 'Bern'];
+b.push('London');
+b;                 // ['Basel', 'Bern', 'London']
+cities;            // ['Basel', 'Bern', 'Lausanne', 'Zurich'];
+#+END_SRC
+
+#+BEGIN_NOTES
+In this example we create an array called =cities= with four string values.
+
+Then we create a new array, =b=, by taking a *slice* of =cities=. The slice starts at element index 0, up to, but not including, the element at index 2. So this takes the elements at index 0, and 1 -- the first two elements.
+
+This slice in =b= is *copy* of what was in =cities=. So if we modify =b= by pushing values on to it, as we do here, the values in the =cities= array are not changed.
+
+This is exactly what we want.
+#+END_NOTES
+
+**** =Array.prototype.slice()= examples
+
+#+BEGIN_SRC javascript
+// let cities = ['Basel', 'Bern', 'Lausanne', 'Zurich'];
+
+let c = cities.slice();  // Complete copy of cities
+c;                 // ['Basel', 'Bern', 'Lausanne', 'Zurich']
+c.push('London');
+c;                 // ['Basel', 'Bern', 'Lausanne', 'Zurich', 'London'];
+cities;            // ['Basel', 'Bern', 'Lausanne', 'Zurich'];
+#+END_SRC
+
+#+BEGIN_NOTES
+If we call =slice= with no parameters then we get back a complete copy of the array. Because this is a copy we can modify it and the original array is not changed.
+#+END_NOTES
+
+**** Returning a slice
+
+#+BEGIN_SRC javascript
+class Model {
+  constructor(...) {
+    // ...
+    this.items_ = [];
+  }
+
+  items() {
+    return this.items_.slice();
+  }
+}
+#+END_SRC
 
 *** Provide a =getter= for the =items_= array
 
