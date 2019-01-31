@@ -4299,6 +4299,7 @@ What problems do you see with the UI at this point?
 - Focus mght be wrong
 - Quantity is not cleared when adding items
   - How do you fix this?
+- Pressing =Enter= in quantity widget doesn't add the item
 
 #+BEGIN_NOTES
 Here are some problems that I saw when I was trying this.
@@ -4310,6 +4311,8 @@ Here are some problems that I saw when I was trying this.
 3. The value in the quantity widget is not cleared after adding an item.
 
 This we know how to fix, it's just a case of putting the right code in the right place...
+
+4. Pressing the =Enter= key in the quantity widget doesn't do anything
 
 [Have them go and do that]
 #+END_NOTES
@@ -4339,6 +4342,723 @@ quantityBox.value = '';
 - In the =click= handler
 - In the =keyup= handler
 
+*** Using the =Enter= key
+
+- Problem: Our =keyup= handler only listens for =inputBox= events
+- =quantityBox= is a different element
+- Four possible solutions
+  - In increasing level of quality
+
+**** Solution 1: Duplicate the event handler
+
+#+BEGIN_SRC javascript
+inputBox.addEventListener('keyup', function (event) {
+  // ... code that handles the click
+});
+
+quantityBox.addEventListener('keyup', function(event) {
+  // ... Copy of the code from the other listener
+});
+#+END_SRC
+
+#+BEGIN_NOTES
+We could just -- literally -- copy and paste the code from the first input handler, and add it as an event listener for the =quantityBox=.
+
+This will work, and it can be a good first step just to ensure that this fixes the problem.
+
+But it's a terrible long term solution, as any time we have significant amounts of repeated code it indicates a problem with our design.
+#+END_NOTES
+
+**** Solution 2: Move the event handler in to a top-level function
+
+#+BEGIN_SRC javascript
+function onKeyup(event) {
+  const trimmedValue = inputBox.value.trim();
+  // ...
+}
+
+function domContentLoaded() {
+  // ...
+
+  inputBox.addEventListener('keyup', onKeyup);
+  quantityBox.addEventListener('keyup', onKeyup);
+
+  // ...
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+This is a better approach.
+
+Here, we take the keyup handler code and move it in to its own function, separate from everything else.
+
+We call this =onKeyup= -- it's a convention that if you have a function that's acting as an event handler (i.e., it takes an =event= parameter, and is called as an event handler) that you call it =on= plus the name of the event it handles.
+
+Since this handles the =keyup= event we call it =onKeyup= (note the lowerCamelCase name).
+
+However, if you actually do this it won't work as witten on this slide.
+
+This is because the =onKeyup= function needs access to all the variables defined at the start of =domContentLoaded()=. Since =onKeyup= is it's own function this doesn't work.
+#+END_NOTES
+
+**** Solution 2: With variables
+
+#+NAME: solution-with-variables
+#+BEGIN_SRC javascript
+function onKeyup(event) {
+  const quantityBox = document.getElementById('quantity');
+  const inputBox = document.getElementById('item');
+  const shoppingList = document.querySelector('ul');
+  // ...
+}
+
+function domContentLoaded() {
+  const quantityBox = document.getElementById('quantity');
+  const inputBox = document.getElementById('item');
+  const shoppingList = document.querySelector('ul');
+  // ...
+
+  inputBox.addEventListener('keyup', onKeyup);
+  quantityBox.addEventListener('keyup', onKeyup);
+
+  // ...
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+So we could duplicate all the variable declarations at the start of =domContentLoaded()= and put them at the start of =onKeyup()= as well.
+
+This works. But again, it's code duplication, which we want to avoid.
+
+Lets put =onKeyup= somewhere it can see all those variables.
+
+But first, a refresher on scope.
+#+END_NOTES
+
+* Scope
+
+** Global scope
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: scope-js
+#+BEGIN_SRC javascript
+let a = 10;
+
+function foo() {
+  let b = 20;
+  console.log(`${a} ${b}`);
+}
+
+function bar(msg) {
+  let b = 15;
+
+  for (let i = 0; i < 3; i++) {
+    console.log(i);
+  }
+
+  if (true) {
+    let x = 10;
+    console.log(`${a} ${b} ${x} ${msg}`);
+  }
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope-global.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:scope-global.svg]]
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+In the diagram on the right each box has three sections.
+
+The first section is the name of the scope. In this case, this is the global scope.
+
+The second section is the code that's run.
+
+The third section shows the names of things that Javascript knows about at this point, and the value that that thing has.
+
+In this case, Javascript knows that there is a thing called =a= that exists, and it has the value =10=.
+
+Javascript also knows that there are two other things that exist. These have the names =foo=, and =bar=, and they are both functions.
+
+Remember, functions are values too.
+
+This third section -- the space that contains the names -- the technical term for that is a *namespace*.
+#+END_NOTES
+** Function scope
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript :noweb yes
+<<scope-js>>
+#+END_SRC
+
+#+BEGIN_SRC javascript
+foo();
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope-function-1.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+
+    global -> foo;
+    foo [label="{Function scope|<b>function foo() \{\l&nbsp;&nbsp;let b = 20;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\}`);\l\}\l|Name : Value\nb : 20}"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:scope-function-1.svg]]
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This is what happens when we run the =foo= function.
+
+We type =foo()= in to the console, and press return. In the console, any code we type in is running in the global scope. Javascript looks in the global scope to see if a thing called =foo= exists, and what its value is.
+
+=foo= does exist in the global scope, and is a function. Because we used the =()= after the name Javascript knows to call the function in =foo=, so it does, and the function starts.
+
+The function creates a new scope, which is a child of the global scope.
+
+This scope contains one extra thing, =b=, which has the value =20=.
+
+When the =console.log= statement executes, Javascript has to print the values of =a= and =b=.
+
+Javascript starts by trying to find =a= in the current scope -- the function scope.  As you can see, it's not there.
+
+So Javascript looks in the parent scope for =a=. It finds it, and its value, so it can print =10=.
+
+Then it has to find the thing called =b=. Again, it starts looking in the function scope. It finds it, so it doesn't have to look anywhere else.
+#+END_NOTES
+** Function scope
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript :noweb yes
+<<scope-js>>
+#+END_SRC
+
+#+BEGIN_SRC javascript
+bar('hello');
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope-function.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+
+  global -> bar;
+  bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:scope-function.svg]]
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This is what happens if we type =bar()= in to the console.
+
+Again, Javascript has to find out if =bar= exists. In the console we're in the global scope, so it checks, and =bar= does exist, and is a function, so Javascript calls it.
+
+The =bar= function starts running, and creates its own scope, just like =foo= did.
+
+Importantly, the =foo= scope no longer exists -- it disappears when the =foo= function stops running. This is why the =bar= function can't see any variables from =foo=, they don't exist at this point.
+
+In the scope for =bar= there are two things. The first is the parameter value -- =bar= takes a parameter called =msg=, and when we called the function we gave it a string value of 'hello'.
+
+This is why the things in this section of the diagram are not just variables -- any value we can give a name to goes in here -- variables, constants, functions, and parameters.
+
+The second thing in here is the variable =b=, which has the value =15.
+#+END_NOTES
+
+** Block scope
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript :noweb yes
+<<scope-js>>
+#+END_SRC
+
+#+BEGIN_SRC javascript
+bar('hello');
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file block-scope.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+
+    global -> bar;
+    bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
+
+    bar -> for;
+    for [label="{Block scope|for (let i = 0; i \< 3; i++) \{\l&nbsp;&nbsp;console.log(i);\l\}\l|Name : Value\n - i : 0..3\l}"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:block-scope.svg]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+When the =for= loop starts running it creates its own scope, a block scope.
+
+In here, any variables we define either in the block, or in the parentheses, are visible. We only have one, the variable =i=, which is why we can log the value.
+#+END_NOTES
+** Block scope
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript :noweb yes
+<<scope-js>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+
+    global -> bar;
+    bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
+
+    bar -> if;    if [label="{Block scope|if (true) \{\l&nbsp;&nbsp;let x = 10;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\} $\{x\} $\{msg\}`);\l\}\l|Name : Value\n- x : 10\l}"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:scope.svg]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Now the =if= block starts running.
+
+The scope from the =for= loop has disappeared. This is why the =i= variable in the loop is no longer accessible -- the scope it was in no longer exists.
+
+The =if= block creates its own scope, and creates a new variable in that scope, =x=.
+
+Then it logs the string.
+
+To find the value of =a=, Javascript starts looking in the block scope. There's nothing in that scope with the name =a=, so it moves up one scope, looking in the function scope. There's nothing with that name there either, so it moves up to the global scope, and finds it.
+
+It does the same thing with =b=, finding it one scope up (in the function scope).
+
+=x= is in the current scope. And =msg= is the parameter passed to the function, so is found in the function scope.
+#+END_NOTES
+
+** All the scopes
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript :noweb yes
+<<scope-js>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope-all.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+
+    global -> foo;
+    foo [label="{Function scope|<b>function foo() \{\l&nbsp;&nbsp;let b = 20;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\}`);\l\}\l|Name : Value\nb : 20}"];
+
+    global -> bar;
+    bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
+
+    bar -> for;
+    for [label="{Block scope|for (let i = 0; i \< 3; i++) \{\l&nbsp;&nbsp;console.log(i);\l\}\l|Name : Value\n - i : 0..3\l}"];
+
+    bar -> if;    if [label="{Block scope|if (true) \{\l&nbsp;&nbsp;let x = 10;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\} $\{x\} $\{msg\}`);\l\}\l|Name : Value\n- x : 10\l}"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:scope-all.svg]]
+#+REVEAL_HTML: </div>
+
+** Functions inside functions
+
+- We can put a function inside another function
+- The inner function
+  - Has access to the variables in the outer function
+  - Can *only* be called by the outer function
+
+** Functions inside functions
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: scope-function-js
+#+BEGIN_SRC javascript
+  let a = 10;
+
+  function foo() {
+    let b = 15;
+
+    function bar() {
+      console.log(`${a} ${b}`);
+    }
+
+    bar();
+  }
+#+END_SRC
+
+#+BEGIN_SRC javascript
+foo();
+bar();  // <-- DOES NOT WORK
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope-func-in-func.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+    global [label="{Global scope|let a = 10;|Name : Value\n- a \ \ : 10\l- foo : function() \{ ... \}\l}"];
+
+    global -> foo;
+    foo [label="{Function scope|function foo() \{\l\ \ let b = 15;\l\l\ \ function bar() \{\l\ \ \ \ console.log(`$\{a\} $\{b\}`);\l\ \ \}\l\l\ \ bar();\l\}\l|Name : Value\n \ - bar : function() \{ ... \}\l \ - b \ \ : 15\l}"];
+
+  foo -> bar;
+  bar [label="{Function scope|function bar() \{\l\ \ console.log(`$\{a\} $\{b\}`);\l\}\l|Name : Value}"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:scope-func-in-func.svg]]
+
+#+BEGIN_NOTES
+Here's different code from earlier. Our =foo= function now also contains a =bar= function.
+
+Here are the scopes when we call =foo=.
+
+As before, the global scope contains the names =a= and =foo=, where =a= has the value =10= and =foo= contains a function.
+
+When we call =foo= it creates a function scope that contains =b= and =bar=. When -- at the bottom of the =foo= function -- it calls the =bar= function this works, because it can see the name.
+
+The =bar= function creates its own scope, but does not create any new names of its own. The =console.log= line that references the names =a= and =b= works because =b= is in the parent scope (the function scope) and =a= is in the grandparent scope (the global scope).
+
+However -- the =bar= function is *not* visible from the global scope. The global scope can only see the names =a= and =foo=. This is why, if we try and call the =bar= function ourselves, we can't, it won't work.
+
+We have effectively hidden the =bar= function from everything except the =foo= function.
+#+END_NOTES
+
+* Our event handler problem
+
+#+BEGIN_SRC javascript :noweb yes
+<<solution-with-variables>>
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's our problem again -- if we put our =onKeyup= function outside the =domContentLoaded= function then we need to duplicate the variables that =domContentLoaded= has.
+
+But based on what we've just learned about scopes, we can put the =onKeyup= function *inside* the =domContentLoaded= function. It will have access to all the variables inside =domContentLoaded= (because it will create a child scope).
+
+In addition, =onKeyup= only needs to be called from =domContentLoaded=. So if we put it inside that function then it will only be visible there, meaning there are fewer things cluttering up the global scope.
+#+END_NOTES
+
+** Solution 3: =onKeyup= inside =domContentLoaded=
+
+#+BEGIN_SRC javascript
+function domContentLoaded() {
+  const quantityBox = document.getElementById('quantity');
+  const inputBox = document.getElementById('item');
+  const shoppingList = document.querySelector('ul');
+  // ...
+
+  function onKeyup(event) {
+    const trimmedValue = inputBox.value.trim();
+    // ...
+  }
+
+  inputBox.addEventListener('keyup', onKeyup);
+  quantityBox.addEventListener('keyup', onKeyup);
+
+  // ...
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+So our code would look like this.
+#+END_NOTES
+
+** Solution 4: Event bubbling
+
+- What if we added more =input= elements?
+  - We'd have to duplicate this code again
+- Can we avoid that?
+- Yes!
+
+*** Events "bubble" up
+
+#+BEGIN_SRC html
+<html>
+  <body>
+    <div>
+      <label ...>
+      <input ... id="item">
+      <input ... id="quantity">
+      <button id="add">Add item</button>
+      <button id="clear">Clear list</button>
+    </div>
+
+    <!-- More HTML -->
+  </body>
+</html>
+#+END_SRC
+
+#+BEGIN_NOTES
+Here is a simplified version of the HTML for our app. I've omitted the =head= and the stuff that deals with the =ul= element.
+
+Focus on the =div= that contains the =label=, the =input= elements, and the =button= elements for the moment.
+#+END_NOTES
+
+*** Events "bubble" up
+
+#+BEGIN_SRC dot :file bubble-dom.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G {
+    node [shape="hexagon" fontname="Consolas" fontsize=16];
+
+    html -> body -> div;
+    div -> label;
+    input_item [label="input id=\"item\""];
+    input_quantity [label="input id=\"quantity\""];
+
+    div -> input_item;
+    div -> input_quantity;
+
+    button_add [label="button id=\"add\""];
+    button_clear [label="button id=\"clear\""];
+
+    div -> button_add;
+    div -> button_clear;
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:bubble-dom.svg]]
+
+#+BEGIN_NOTES
+Here is the DOM tree for that part of page.
+
+Notice that these elements are all children of the =div=.
+
+How does this help us with events?
+
+Lets look at what happens at the moment when the user releases a key in the =input= element with the =id= set to =item= (the second element from the left in the bottom row of the tree).
+
+The event is sent to the input element. The browser checks to see if there is an event listener for this event, and there is -- the one we added.
+
+So the browser calls our =onKeyup= function, which adds the item to the list.
+
+However, the browser does not stop there. Instead, it also checks to see if there is a =keyup= event handler on the =div=. There isn't, so nothing happens.
+
+But it continues to check up the DOM tree. So it looks to see if there is a =keyup= event handler on the =body=, and on the =html= element.
+
+Again, there aren't. But it checks anyway.
+
+We say that the event "bubbles" up the DOM tree. Think of a bubble in a fizzy drink. It starts at the bottom, and floats up to the top of the glass. Events in the DOM are the same -- the start at element that they originally happened for, and then they "bubble" up the DOM tree until they reach the very top.
+
+Every event handler in the path of the "bubble" that's listening for this type of event gets called along the way.
+
+So -- imagine what happens if, instead of having two event handlers, one for each =input= element, we have one event handler that's listening on the =div=.
+
+In this scenario, the user releases a key in an =input= element. The =keyup= event fires, but there's no listener on the element. The event bubbles up the tree, and then fires on the =div=. This time there is an event listener, so that gets called, and can process the event.
+
+The event continues to bubble up the tree, but there are no handlers on the =body= or =html= element, so nothing more happens.
+
+There is a problem with this approach though -- specifically, the =input= elements are not the only element that can fire the =keyup= event.
+
+If a =button= has the focus then the user can press the =Space= bar. This has the same effect as clicking on the button, but it also fires the =keyup= event.
+
+We don't want to respond to this, we only want to respond to =keyup= events that were caused from the =input= elements. So how do we process only events that came from the =input= elements?
+
+Remember that our event handlers all receive a parameter that contains information about the event. This parameter is an object with many different properties. We use this in the =keyup= handler, by checking to see if =event.key= is =Enter= and deciding whether to add the item or not.
+
+One of the other properties that the =event= contains is called =target=. This event contains a reference to the element on which the event originally fired.
+
+So if our event handler is listening on the =div=, and an event bubbles up that originally came from one of its child elements, the =target= property  will refer to the exact element that the event was originally fired for.
+
+The value in the =target= property is an =Element=, which means that it has a =nodeName= property that contains the element's name, for example =INPUT=, or =LABEL=, or =BUTTON=.
+
+So we can change our =keyup= handler slightly to check to see if =event.target.nodeName= is =INPUT= -- if it is then this event originally came from one of the =input= elements, and should be processed. Otherwise, we should ignore the event.
+#+END_NOTES
+
+*** Event handler with bubbling
+
+- We can remove the =onKeyup= function
+  - And the =inputBox= / =quantityBox= event listeners
+- Create an event listener on the =div=
+- Check =event.target.nodeName=
+  - Return early if not =INPUT=
+  - Otherwise process the event as normal
+
+*** Event handler with bubbling
+
+#+BEGIN_SRC javascript
+function domContentLoaded() {
+  // Other consts
+  const div = document.querySelector('div');
+
+  // Other event listeners
+  // ...
+
+  div.addEventListener('keyup', function(event) {
+    if (event.target.nodeName !== 'INPUT') {
+      return;
+    }
+
+    const trimedValue = inputBox.value.trim();
+    // Rest of code goes here
+  }
+
+  // ...
+}
+#+END_SRC
+
+* TODO Bubbling and deleting list items                            :noexport:
+
+#+BEGIN_NOTES
+Note to self: This is incomplete. The code (see shopping-19-4.js) doesn't work quite as intended, because if you have e.g., <button><img...></button> it's likely that the click hits the img element and not the button element, and the test doesn't work. Need to see if I can come up with a more elegant way of explaining that / solving the code issue]
+
+We can use this new knowledge to also simplify how we delete items from the list.
+
+At the moment, each list item gets a delete button, and we attach a handler to that button to remove the element from the list.
+
+This is OK, but it makes our =createNewListItem= function a bit more complicated than it needs to be.
+
+But know we know about event bubbling we can simplify them.
+#+END_NOTES
+
+** List with three items
+
+#+BEGIN_SRC html
+  <ul>
+    <li><span>Eggs</span> <span>6</span> <button>Delete</button></li>
+    <li><span>Milk</span> <span>1L</span> <button>Delete</button></li>
+    <li><span>Flour</span> <span>500g</span> <button>Delete</button><li>
+  </ul>
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's what our shopping list looks like with three items.
+
+I've ignored most of the page -- this is just the HTML for the list and the items.
+#+END_NOTES
+
+** DOM of list with three items
+
+#+BEGIN_SRC dot :file bubble-dom-ul.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G {
+    node [shape="hexagon"];
+
+    ul -> li1;
+    ul -> li2;
+    ul -> li3;
+
+    li1 [label="li"];
+    nameSpan1 [label="span"];
+    quantitySpan1 [label="span"];
+    delete1 [label="button"]
+    li1 -> nameSpan1;
+    li1 -> quantitySpan1;
+    li1 -> delete1;
+    nameSpan1 -> eggs;
+    quantitySpan1 -> six;
+    delete1 -> delete1Text;
+
+    eggs [shape=none label="Eggs"];
+    six [shape=none label="6"];
+    delete1Text [shape=none label="Delete"];
+
+    li2 [label="li"];
+    nameSpan2 [label="span"];
+    quantitySpan2 [label="span"];
+    delete2 [label="button"]
+    li2 -> nameSpan2;
+    li2 -> quantitySpan2;
+    li2 -> delete2;
+
+    nameSpan2 -> milk;
+    quantitySpan2 -> litre;
+    delete2 -> delete2Text;
+
+    milk [shape=none label="Milk"];
+    litre [shape=none label="1L"];
+    delete2Text [shape=none label="Delete"];
+
+    li3 [label="li"];
+    nameSpan3 [label="span"];
+    quantitySpan3 [label="span"];
+    delete3 [label="button"]
+    li3 -> nameSpan3;
+    li3 -> quantitySpan3;
+    li3 -> delete3;
+    nameSpan3 -> flour;
+    quantitySpan3 -> 500;
+    delete3 -> delete3Text;
+
+    flour [shape=none label="Flour"];
+    500 [shape=none label="500g"];
+    delete3Text [shape=none label="Delete"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:bubble-dom-ul.svg]]
+
+#+BEGIN_NOTES
+And here's the DOM tree.
+
+Right now, every delete =button= on that page has an event listener attached, waiting for the click event to fire. When it's fired, it removes the =li= element, which removes everything below it.
+
+However, we could do this differently.
+
+We could listen for click events on the =ul= element.
+
+When the event fires, we can use the =target= property to find the element that was clicked.
+
+If it wasn't a button then we ignore the click.
+
+If it was a button then we know it was a delete button. If we know a delete button was clicked, how do we find out which =li= to remove?
+#+END_NOTES
+
+** =element.parentElement=
+
+- Each element has a =parentElement= property
+- Returns the parent element for this node in the DOM
+- For our buttons, =parentNode= will return the =li= element
+
+#+BEGIN_NOTES
+Each element has various properties and methods available to it.
+
+We're already familiar with some of them -- for example, the =remove()= method, or the =localName= property.
+
+One of the properties we haven't seen yet is the =parentElement= property.
+
+As the name implies, this property contains the element that is the parent of this one, in the DOM tree (or =null=, if we're looking at the root node).
+
+So, if we've found a button then its parent element  is the =li= that it's associated with.
+
+The =parentElement= property is the complete element for the parent. Which means it has a =remove()= method that will remove it, and all of its children.
+
+#+END_NOTES
 * Objects
 ** Problem: Loosely-coupled data
 
