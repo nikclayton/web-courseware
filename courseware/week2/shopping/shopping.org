@@ -5157,9 +5157,9 @@ Inside the object we write the name of each property, a colon, and the value tha
 
 #+BEGIN_SRC javascript
 const objectName = {
-  memberName1: memberValue1;
-  memberName2: memberValue2;
-  memberName3: memberValue3;
+  memberName1: memberValue1,
+  memberName2: memberValue2,
+  memberName3: memberValue3
   // ...
 };
 #+END_SRC
@@ -5230,7 +5230,7 @@ const person = {
   name: 'Nik',
   interests: ['Teaching', 'Skiing'],
   greet: function() {
-    console.log(`Hello ${this.name.first}`);
+    console.log(`Hello ${this.name}`);
   }
 };
 
@@ -5251,7 +5251,7 @@ In the example here the =greet()= function uses it to ensure that when the =name
 const person = {
   name: {
     first: 'Nik',
-    last: 'Clayton',
+    last: 'Clayton'
   },
   interests: ['Teaching', 'Skiing'],
   greet: function() {
@@ -5309,7 +5309,7 @@ Can anyone suggest why we would want to do this?
 const person = {
   name: {
     first: 'Nik',
-    last: 'Clayton',
+    last: 'Clayton'
   },
   interests: ['Teaching', 'Skiing'],
   greet: function() {
@@ -5338,7 +5338,7 @@ You can't use the dotted syntax with a variable, it won't work.
 const person = {
   name: {
     first: 'Nik',
-    last: 'Clayton',
+    last: 'Clayton'
   },
   interests: ['Teaching', 'Skiing'],
   greet: function() {
@@ -5364,7 +5364,7 @@ In this example we mix and match the square-bracket and dotted notation just to 
 const person = {
   name: {
     first: 'Nik',
-    last: 'Clayton',
+    last: 'Clayton'
   },
   interests: ['Teaching', 'Skiing'],
   greet: function() {
@@ -5395,7 +5395,7 @@ It does mean that after we have declared =person= to contain one object, we can 
 const person = {
   name: {
     first: 'Nik',
-    last: 'Clayton',
+    last: 'Clayton'
   },
   interests: ['Teaching', 'Skiing'],
   greet: function() {
@@ -5616,6 +5616,7 @@ const person = {
 person.about();  // 'Nik likes:'
                  // 'Teaching, Skiing'
 #+END_SRC
+
 * Constructors
 ** Constructing objects, object literals
 
@@ -5681,10 +5682,12 @@ function Person(first, last, interests) {
     console.log(`Hello ${this.name.first}`);
   };
 }
+#+END_SRC
 
+#+BEGIN_SRC javascript
 const nik = new Person('Nik', 'Clayton', ['Teaching', 'Skiing']);
 
-nik.first.name;   // 'Nik'
+nik.name.first;   // 'Nik'
 nik.greet();      // 'Hello Nik'
 
 const chris = new Person('Christian', 'Hirsig', ['Powercoders']);
