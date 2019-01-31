@@ -4182,7 +4182,7 @@ you expect.
 #+REVEAL_HTML: <div class="leftcol">
 #+BEGIN_SRC html
 <li><span>Eggs</span> <span>(6)<span>
-  <button>Delete</button>
+  <button>Delete</button></li>
 #+END_SRC
 #+REVEAL_HTML: </div>
 
