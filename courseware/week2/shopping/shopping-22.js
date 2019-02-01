@@ -56,8 +56,8 @@ function domContentLoaded() {
   const quantityBox = document.getElementById('quantity');
   const inputBox = document.getElementById('item');
   const shoppingList = document.querySelector('ul');
-  const addItemButton = document.querySelector('button#append');
-  const clearListButton = document.querySelector('button#clear');
+  const addItemButton = document.querySelector('#add');
+  const clearListButton = document.querySelector('#clear');
 
   addItemButton.addEventListener('click', function (event) {
     const trimmedValue = inputBox.value.trim();
