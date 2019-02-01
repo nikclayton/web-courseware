@@ -68,7 +68,7 @@ function domContentLoaded() {
 
     const item = new ShoppingListItem(trimmedValue, quantityBox.value);
 
-    shoppingList.appendChild(item.asListItem());
+    shoppingList.appendChild(item.toListItem());
     quantityBox.value = '';
     inputBox.value = '';
     addItemButton.disabled = true;
@@ -90,7 +90,7 @@ function domContentLoaded() {
 
     const item = new ShoppingListItem(trimmedValue, quantityBox.value);
 
-    shoppingList.appendChild(item.asListItem());
+    shoppingList.appendChild(item.toListItem());
     inputBox.value = '';
     addItemButton.disabled = true;
     clearListButton.disabled = false;
