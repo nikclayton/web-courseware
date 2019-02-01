@@ -6103,7 +6103,7 @@ Methods are just functions that are attached to the prototype, so they can take 
 #+BEGIN_SRC javascript -n
 ShoppingListItem.prototype.details = function() {
   return `There are ${this.quantity} ${this.name}`;
-}
+};
 
 const item1 = new ShoppingListItem('apples', '6');
 const item2 = new ShoppingListItem('bananas', '10');
@@ -6131,7 +6131,7 @@ We've seen this before in earlier examples, so this is just to repeat the concep
 #+BEGIN_SRC javascript -n
 ShoppingListItem.prototype.details = function() {
   return `There are ${this.quantity} ${this.name}`;
-}
+};
 
 const item1 = new ShoppingListItem('apples', '6');
 
@@ -6141,7 +6141,7 @@ item1.details();  // "There are 6 apples"
 #+BEGIN_SRC javascript -n
 ShoppingListItem.prototype.details = function(this) {
   return `There are ${this.quantity} ${this.name}`;
-}
+};
 
 const item1 = new ShoppingListItem('apples', '6');
 
