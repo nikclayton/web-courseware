@@ -315,7 +315,7 @@ For example:
 
 #+BEGIN_EXAMPLE
 #+NAME: html-test
-#+BEGIN_SRC html
+#+BEGIN_SRC html-chrome
 <p>A paragraph</p>
 #+END_SRC
 #+END_EXAMPLE
