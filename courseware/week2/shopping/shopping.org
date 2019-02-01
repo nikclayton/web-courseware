@@ -5666,9 +5666,12 @@ To fix that we use special functions, called *constructors*.
 ** Constructor functions
 
 - *Constructor* is any function that creates ("constructs") an  object
-- Name starts with a capital letter, by convention
-- Called using the =new= keyword
-- Inside constructor, =this= means the object being created
+- 4 differences from regular functions
+  - Name starts with a capital letter, by convention
+  - Called using the =new= keyword
+  - Inside constructor, =this= means the object being created
+  - Always returns the object being constructed
+    - You don't use =return=
 
 #+BEGIN_NOTES
 When we create an object, the technical term for it is *constructing* the object.
@@ -5680,6 +5683,8 @@ By convention, these function names always start with a capital letter, and the 
 We call these functions slightly differently, using the =new= keyword.
 
 Inside the function, the =this= keyword refers to the object we're constructing.
+
+And you don't need to =return= a value explicitly, the new object is always returned for you.
 
 Let's take a look.
 #+END_NOTES
