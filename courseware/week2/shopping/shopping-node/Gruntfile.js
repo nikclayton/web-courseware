@@ -17,11 +17,22 @@ module.exports = function (grunt) {
         src: 'src/html/index.prod.html',
         dest: 'build/index.html'
       }
+    },
+    watch: {
+      scripts: {
+        files: 'src/js/*.js',
+        tasks: ['uglify']
+      },
+      html: {
+        files: 'src/html/index.prod.html',
+        tasks: ['copy']
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify-es');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
   grunt.registerTask('default', ['uglify', 'copy']);
