@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -11,12 +11,18 @@ module.exports = function(grunt) {
         src: 'src/js/*.js',
         dest: 'build/<%= pkg.name %>.min.js'
       }
+    },
+    copy: {
+      html: {
+        src: 'src/html/index.prod.html',
+        dest: 'build/index.html'
+      }
     }
   });
 
-  // Load the plugin that provides the "uglify" task.
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify-es');
 
   // Default task(s).
-  grunt.registerTask('default', ['uglify']);
+  grunt.registerTask('default', ['uglify', 'copy']);
 };
