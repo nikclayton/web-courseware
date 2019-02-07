@@ -6443,11 +6443,19 @@ The only difference is that you don't need to use the =function= keyword.
 The JSDoc goes before the method in exactly the same way that it went before the function with the old-style classes.
 
 It's worth saying that these two ways of writing the code have exactly the same effect -- the =prototype= is still modified using the second example. But the new style class syntax is cleaner and easier to follow. So that's what we use now.
-
-Go ahead and change your code in =shopping-class= to use the new style syntax, and make sure it works.
 #+END_NOTES
 
-** Commit!
+** Use new style classes
+
+- Update your code
+  - Replace current constructor with new style
+  - Replace =toListItem= with new style
+  - Check everything still works
+  - Commit
+
+#+BEGIN_NOTES
+Go ahead and change your code in =shopping-class= to use the new style syntax, and make sure it works.
+#+END_NOTES
 
 ** Recap: New-style class syntax
 
