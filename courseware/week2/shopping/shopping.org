@@ -6693,6 +6693,13 @@ It's not going to do anything useful yet, but it is going to show the structure,
 - Model should provide a method that returns this array
   - We'll call this method =items()=
 
+**** =items_= is private
+
+ - Conventionally, =items_= is private
+   - Not supposed to be accessed/changed outside =Model=
+   - Indicated by the underscore (=_=)
+   - Not enforced by Javascript
+
 **** =items()= method, first attempt
 
 #+BEGIN_SRC javascript
