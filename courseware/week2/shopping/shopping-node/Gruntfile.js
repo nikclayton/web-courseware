@@ -32,6 +32,14 @@ module.exports = function (grunt) {
       html: {
         src: 'src/html/index.prod.html',
         dest: 'build/index.html'
+      },
+      static: {
+        files: [{
+          expand: true,
+          cwd: 'src/static',
+          src: '*.*',
+          dest: 'build/static',
+        }]
       }
     },
     watch: {
@@ -45,7 +53,11 @@ module.exports = function (grunt) {
       },
       html: {
         files: 'src/html/index.prod.html',
-        tasks: ['copy']
+        tasks: ['copy:html']
+      },
+      static: {
+        files: 'src/static/*.*',
+        tasks: ['copy:static']
       }
     }
   });
