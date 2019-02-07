@@ -12,6 +12,22 @@ module.exports = function (grunt) {
         dest: 'build/<%= pkg.name %>.min.js'
       }
     },
+    cssmin: {
+      target: {
+        // Minimise everything in to one
+//        files: {
+//          'build/css/style.min.css': ['src/css/*.css']
+//        }
+        // Minimise each file separately
+        files: [{
+          expand: true,
+          cwd: 'src/css',
+          src: ['*.css'],
+          dest: 'build/css',
+          ext: '.min.css'
+        }]
+      }
+    },
     copy: {
       html: {
         src: 'src/html/index.prod.html',
@@ -19,6 +35,10 @@ module.exports = function (grunt) {
       }
     },
     watch: {
+      css: {
+        files: 'src/css/*.css',
+        tasks: ['cssmin']
+      },
       scripts: {
         files: 'src/js/*.js',
         tasks: ['uglify']
@@ -31,9 +51,10 @@ module.exports = function (grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify-es');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
-  grunt.registerTask('default', ['uglify', 'copy']);
+  grunt.registerTask('default', ['cssmin', 'uglify', 'copy']);
 };
