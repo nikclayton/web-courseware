@@ -6980,14 +6980,7 @@ class Model {
 
 - A what?
 
-*** =items_= is private
-
-- Conventionally, =items_= is private
-  - Not supposed to be accessed/changed outside =Model=
-  - Indicated by the underscore (=_=)
-  - Not enforced by Javascript
-
-*** Getter turns a function in to a property
+*** Getter turns a method in to a property
 
 #+BEGIN_SRC javascript
 // In Model
@@ -7018,16 +7011,186 @@ let length = this.model_.items.length;
 #+BEGIN_NOTES
 This is an example of what we call syntactic s
 #+END_NOTES
+*** Exercise: =View.update()=
+
+- Find the shopping list element (=ul=)
+- Remove all its children
+- Iterate over the =items=
+  - Convert it to a listitem (=li=, use the =toListItem= method)
+  - Append it as a child to the list
+
+*** Solution: =View.update()=
+
+#+INCLUDE: "shopping-mvc/dummy-data/src/js/view.js" :lines "9-19" src javascript
+
+#+REVEAL: split
+
+#+INCLUDE: "shopping-mvc/dummy-data/src/js/view.js" :lines "20-34" src javascript
+
+*** Exercise: =Model= needs to call View's =update=
+
+- The display won't update until the =Model= tells the =View= to update
+- Model's constructor should call =update= after creating the view
+
+*** Solution: =Model= needs to call View's =update=
+
+#+INCLUDE: "shopping-mvc/dummy-data/src/js/model.js" :lines "8-21" src javascript
+
+*** Recap: Updating the display
+
+- =Model= contains some dummy data
+- =View= has an =update()= method that:
+  - Deletes existing list
+  - Creates new list using content from the model
+- =Model= constructor updates the =View=
+  - =this.view_.update()=
+
 ** Adding items
+
+- User types in to input widgets, clicks button
+- =View=
+  - Receives the click, calls method in =Controller=
+  - =update()= method resets values, focus
+- =Controller=:
+  - Performs any checks
+  - Creates a new =ShoppingListItem=
+  - Calls method in =Model= to add item
+- =Model=
+  - Adds item to internal array
+  - Calls =View.update()=
+
+*** =View=
+
+#+INCLUDE: "shopping-mvc/add-item-button/src/js/view.js" :lines "9-32" src javascript
+
+#+REVEAL: split
+
+#+INCLUDE: "shopping-mvc/add-item-button/src/js/view.js" :lines "31-40" src javascript
+
+#+REVEAL: split
+
+#+INCLUDE: "shopping-mvc/add-item-button/src/js/view.js" :lines "44-59" src javascript
+
+*** =Controller=
+
+#+INCLUDE: "shopping-mvc/add-item-button/src/js/controller.js" src javascript
+
+*** =Model=
+
+#+INCLUDE: "shopping-mvc/add-item-button/src/js/model.js" :lines "25-34" src javascript
+
+- Don't forget to remove the dummy data!
 
 ** Deleting items
 
+*** Changing how we delete items
+
+- Previously
+  - Set event listener when creating the list item
+  - Mixed code responsibilities
+    - =ShoppingListItem= object shouldn't know how to delete itself
+
+#+REVEAL: split
+
+- Now:
+  - =View= creates list item
+    - Will find the delete button
+    - Forwards delete requests to the =Controller=
+  - =Controller= forwards request to the =Model=
+  - =Model= deletes the item from =items_=
+    - Tells the =View= to update
+
+*** =ShoppingListItem.toListItem()=
+
+- Remove the code that adds the =click= listener
+- We're going to listen in the =View=
+
+*** =View=
+
+- When adding items, find the delete button...
+  - ... add a click listener that calls the controller
+
+#+INCLUDE: "shopping-mvc/delete-item-button/src/js/view.js" :lines "45-61" src javascript
+
+*** =Controller=
+
+#+INCLUDE: "shopping-mvc/delete-item-button/src/js/controller.js" :lines "21-29" src javascript
+
+*** =Model=
+
+#+INCLUDE: "shopping-mvc/delete-item-button/src/js/model.js" :lines "35-44" src javascript
+
 ** Clearing the list
 
-** Benefits
+- =View=
+  - Listen for clicks, call =Controller.clearList()=
+  - Maybe disable the button in =update()=
+- =Controller=
+  - Implement =clearList()=, call =Model.clear()=
+- =Model=
+  - Implement =clear=
+  - Empty the list
+  - Update the =View=
 
-- Encapsulation
-- Decoupling
+*** =View=
+
+- In the =constructor=
+
+#+INCLUDE: "shopping-mvc/clear-list-button/src/js/view.js" :lines "28-33" src javascript
+
+- In =update=
+
+#+INCLUDE: "shopping-mvc/clear-list-button/src/js/view.js" :lines "61-65" src javascript
+
+*** =Controller=
+
+#+INCLUDE: "shopping-mvc/clear-list-button/src/js/controller.js" :lines "30-36" src javascript
+
+*** =Model=
+
+#+INCLUDE: "shopping-mvc/clear-list-button/src/js/model.js" :lines "45-52" src javascript
+
+** The =Enter= key
+
+- =View=
+  - Listen for =keyup= events on both =input= elements
+  - In handler:
+    - Maybe enable/disable =addItemButton_=
+    - Maybe call =addItem()=
+  - Disable =addItemButton= in =update()=
+- =Controller=
+  - No change
+- =Model=
+  - No change
+
+*** =View=
+
+#+INCLUDE: "shopping-mvc/keyup/src/js/view.js" :lines "31-35" src javascript
+
+#+REVEAL: split
+
+#+INCLUDE: "shopping-mvc/keyup/src/js/view.js" :lines "44-66" src javascript
+
+#+REVEAL: split
+
+#+INCLUDE: "shopping-mvc/keyup/src/js/view.js" :lines "86-91" src javascript
+
+** Stats and benefits
+
+#+REVEAL_HTML: <div class="leftcol">
+- =Model=
+  - 4 methods, 1-2 lines long
+- =View=
+  - 3 methods, 4-20 lines long
+- =Controller=
+  - 3 methods, 1-2 lines long
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Only one method to update the display
+- Only one method to respond to keypresses
+
+#+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 There are some big benefits to this approach.
@@ -7055,24 +7218,15 @@ We could have a completely different View class, that shows the
 data in a different way, and we wouldn't need to change the code
 in the Controller or the Model at all.
 
-Also, our View has no idea what the rules are for whether or not
-an item should be added to the list. The only logic it contains
-is the to decide if a button should be enabled or not. We could
-add additional logic in the Controller, and the View would not need
-to change.
-
 We say that everything is decoupled.
 #+END_NOTES
 
-** Problems
-
-
-* Parsing quantities
-* Re-order items in the list
-* Drag-drop items in the list
-* Javascript syntax followup work
-* Event listeners and =this=
-* Advanced: Using validity check to prevent invalid input
+* Parsing quantities                                               :noexport:
+* Re-order items in the list                                       :noexport:
+* Drag-drop items in the list                                      :noexport:
+* Javascript syntax followup work                                  :noexport:
+* Event listeners and =this=                                       :noexport:
+* Advanced: Using validity check to prevent invalid input          :noexport:
 ** TODO: Problem
 ** Things to check
 - Should have a value (=required=)
