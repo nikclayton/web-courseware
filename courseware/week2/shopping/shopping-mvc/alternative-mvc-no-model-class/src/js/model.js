@@ -1,19 +1,18 @@
 /**
  * Shopping list model.
  *
- * The list is modelled as an array, accessible through the .items property.
- * It should be treated as read-only.
+ * The list is modelled as an array.
  */
 class Model {
-  /**
-   * @param controller
-   */
+  /** @param controller {!Controller} App controller*/
   constructor(controller) {
-    /** {!Array<!ShoppingListItem>} Items in the list */
+    /** @private {!ShoppingListItem[]} Items in the list */
     this.items_ = [];
 
-    /** {!View} View for this model. */
-    this.view = new View(this, controller);
+    /** @private {!View} View for this model. */
+    this.view_ = new View(this, controller);
+
+    this.view_.update();
   }
 
   /**
@@ -30,7 +29,7 @@ class Model {
    */
   append(item) {
     this.items_.push(item);
-    this.view.update();
+    this.view_.update();
   }
 
   /**
@@ -40,7 +39,7 @@ class Model {
    */
   delete(i) {
     this.items_.splice(i, 1);
-    this.view.update();
+    this.view_.update();
   }
 
   /**
@@ -48,6 +47,6 @@ class Model {
    */
   clear() {
     this.items_ = [];
-    this.view.update();
+    this.view_.update();
   }
 }

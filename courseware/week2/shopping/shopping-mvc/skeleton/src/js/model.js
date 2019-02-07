@@ -4,12 +4,14 @@
  * The list is modelled as an array.
  */
 class Model {
-  /** @param controller {Controller} */
+  /** @param controller {!Controller} App controller */
   constructor(controller) {
-    /** @private {!Array<!ShoppingListItem>} Items in the list */
+    console.log('Model initialised');
+
+    /** @private {!ShoppingListItem[]} Items in the list */
     this.items_ = [];
 
-    /** {!View} View for this model. */
+    /** @private {!View} View for this model. */
     this.view_ = new View(this, controller);
   }
 }

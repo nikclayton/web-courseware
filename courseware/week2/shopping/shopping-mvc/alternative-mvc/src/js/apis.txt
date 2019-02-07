@@ -1,0 +1,42 @@
+Application Programming Interface (API)
+
+function average(a) {
+  let sum = 0;
+  for (i = 0; i < a.length; i++) {
+    sum = sum + a[i];
+  }
+  return sum / a.length;
+}
+
+API for average():
+  - First parameter (and only parameter) must be an array...
+  - ... containing only numbers ...
+  - ... and at least one number.
+
+Good: average([1, 2, 3, 4, 5]);
+Bad: average('hello', 'world');  // Contains strings
+Bad: average([]);                // Must contain at least one number
+
+
+API for Model class:
+ - Must be created with 'new'
+ - Must be given only one parameter
+   - Parameter must be an array of Views...
+   - ... which *must* have a method called update()
+
+
+Interfaces:
+
+View
+ - update()
+
+Controller
+ - clearList()
+ - addItem()
+ - deleteItem()
+
+Model
+ - append()
+ - delete()
+ - clear()
+

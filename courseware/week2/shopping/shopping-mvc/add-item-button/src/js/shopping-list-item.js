@@ -14,7 +14,7 @@ class ShoppingListItem {
   /**
    * Creates and returns an 'li' element for inclusion in the shopping list.
    *
-   * @returns {HTMLElement} li element
+   * @returns {!HTMLElement} li element
    */
   toListItem() {
     const listItem = document.createElement('li');
@@ -35,6 +35,8 @@ class ShoppingListItem {
       quantityText.textContent = `(${this.quantity})`;
       listItem.appendChild(quantityText);
     }
+
+    listItem.appendChild(document.createTextNode(' '));
 
     listItem.appendChild(deleteButton);
 
