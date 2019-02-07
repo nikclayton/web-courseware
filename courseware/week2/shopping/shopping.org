@@ -6523,7 +6523,36 @@ Later we'll look at how to fix that so that we get the best of both worlds -- so
   - [View] Display the list / update the DOM
 - Also contain duplicate / similar code
 
-** Basic outline
+** Model - View - Controller                                       :noexport:
+
+- Not exporting until I get the diagram right
+
+#+BEGIN_SRC dot :file mvc.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G {
+    edge [fontsize=18];
+    node [shape=box fontsize=24];
+
+    model [label="Model"];
+    view [label="View"];
+    controller [label="Controller"];
+
+    model -> view [xlabel="Updates" tailport=w headport=n];
+    controller -> model [label="Manipulates" headport=e tailport=n];
+    view -> controller [label="Informs" tailport=s headport=s];
+
+    {rank=same; view; controller; }
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:mvc.svg]]
+** Model - View - Controller
+
+[[file:MVC-Process.svg]]
+
+#+REVEAL_HTML: <small>
+By RegisFrey - Own work, Public Domain, https://commons.wikimedia.org/w/index.php?curid=10298177
+#+REVEAL_HTML: </small>
 
 - 3 classes, =Model=, =View=, =Controller=
 - =Model= contains data, and methods to change it
