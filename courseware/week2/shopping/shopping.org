@@ -6562,9 +6562,11 @@ Later we'll look at how to fix that so that we get the best of both worlds -- so
 By RegisFrey - Own work, Public Domain, https://commons.wikimedia.org/w/index.php?curid=10298177
 #+REVEAL_HTML: </small>
 
+** MVC Classes
+
 - 3 classes, =Model=, =View=, =Controller=
 - =Model= contains data, and methods to change it
-  - When data changes, tell's the =View= to update.
+  - When data changes, tells the =View= to update.
 - =View= displays the list, widgets, and calls =Controller=
 - =Controller= updates the model
 
@@ -6604,7 +6606,7 @@ It's not going to do anything useful yet, but it is going to show the structure,
 
 *** Model
 
-- Creates the =items_= array, and view
+- Creates the =items_= array, and =view_=
 - =src/js/model.js=
 
 #+INCLUDE: "shopping-mvc/skeleton/src/js/model.js" src javascript
@@ -6628,7 +6630,7 @@ It's not going to do anything useful yet, but it is going to show the structure,
   - =ui.js:domContentLoaded()= is run, =new Controller()=
   - =controller.js:constructor()= is run, =new Model(this)=
   - =model.js:constructor()= is run, =new View(this, controller)=
-  - =view.js:constructor()= constructor is run
+  - =view.js:constructor()= is run
 - Constructed a lot of objects
 - No actual functionality yet
 
@@ -6721,7 +6723,7 @@ function bar(x) {
 }
 
 let a = [1, 2, 3];
-let b = bar(x);
+let b = bar(a);
 
 a;   // [1, 2, 3, 10]
 b;   // [1, 2, 3, 10]
@@ -6974,10 +6976,10 @@ items() {
 
 #+BEGIN_SRC javascript
 // In View
-let length = this.model.items().length;
+let length = this.model_.items().length;
 #+END_SRC
 
-*** Getter turns a function in to a property
+*** Getter turns a method in to a property
 
 #+BEGIN_SRC javascript
 // In Model
@@ -6988,7 +6990,7 @@ get items() {
 
 #+BEGIN_SRC javascript
 // In View
-let length = this.model.items.length;
+let length = this.model_.items.length;
 #+END_SRC
 
 #+BEGIN_NOTES
