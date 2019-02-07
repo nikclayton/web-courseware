@@ -6573,11 +6573,12 @@ By RegisFrey - Own work, Public Domain, https://commons.wikimedia.org/w/index.ph
 ** Setup
 
 - Create directories
-  - =shopping-mvc=
-  - =shopping-mvc/src=
-  - =shopping-mvc/src/css=
-  - =shopping-mvc/src/html=
-  - =shopping-mvc/src/js=
+  - =shopping-mvc/=
+  - =shopping-mvc/src/=
+  - =shopping-mvc/src/css/=
+  - =shopping-mvc/src/html/=
+  - =shopping-mvc/src/js/=
+  - =shopping-mvc/src/static/=
 
 #+BEGIN_NOTES
 We're going to start structuring the code in our application more like how you would see it in a real app.
@@ -6588,6 +6589,16 @@ Here we're creating a top-level directory, =shopping-mvc=, and a =src= directory
 
 As I say, this will work for us, but you will definitely see other ways to organise code in your future projects.
 #+END_NOTES
+
+** Copy over files from =shopping-class/=
+
+- =*.js= into =js/=
+- =shopping.html= into =html/=
+- =*.css= into =css/=
+- Images into =static/=
+- Update paths in the files
+  - E.g., to reference an image from a CSS file
+    - =../static/name-of-image.png=
 
 ** Skeleton code
 
@@ -6623,6 +6634,10 @@ It's not going to do anything useful yet, but it is going to show the structure,
 - =src/js/ui.js=
 
 #+INCLUDE: "shopping-mvc/skeleton/src/js/ui.js" src javascript
+
+#+REVEAL: split
+
+#+INCLUDE: "shopping-mvc/skeleton/src/html/index.html" :lines "8-13" src html
 
 *** Control flow
 
