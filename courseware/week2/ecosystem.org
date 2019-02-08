@@ -1,0 +1,610 @@
+#+Title: Javascript Ecosystem
+#+SETUPFILE: "../include/settings.org"
+
+#+BEGIN_NOTES
+So far we've been writing Javascript without relying on anyone else's
+code. For small projects this is absolutely fine.
+
+However, there is a wealth of code out there that other people have
+written and contributed for public use.
+
+Sometimes this code makes it easier to write your own Javascript
+applications, by providing reusable bits of code -- libraries -- that
+do something useful for you.
+
+Other time this code helps you manage all the code that you're writing.
+
+The tools that we're going to look at for the next few days all fall in
+to the latter category -- they help you manage your projects.
+
+These are -- generally -- tools that you run from the command line.
+Sometimes your IDE will know about them and might integrate them in some
+way.
+#+END_NOTES
+
+* Node
+
+- Non-browser Javascript *runtime*
+- https://nodejs.org/
+
+#+BEGIN_NOTES
+The first one we need to know about is called *Node*.
+
+Node is a *runtime*.
+
+*Runtime* is the technical word we use to mean "The environment in which
+your Javascript code is running".
+
+So far all the code that we've been writing has been running in the
+browser.
+
+We say that the browser provides the runtime environment.
+
+However, you can write Javascript code that runs outside the browser,
+and is like a normal program on your computer.
+
+We're not going to be doing much of that on the course, but we need to
+know about Node because of...
+#+END_NOTES
+
+* Node Package Manager - NPM
+
+#+BEGIN_NOTES
+Node includes a tool called npm, the Node Package Manager.
+
+We use this tool to install and manage software that other people have
+written and that we want to use in our projects.
+#+END_NOTES
+
+** Installing NPM
+
+#+REVEAL_HTML: <div class="leftcol">
+- Download from https://nodejs.org/
+- Choose the "LTS" version
+ - LTS == "Long Term Support"
+- Install
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Check the installation
+#+BEGIN_SRC shell
+  % node --version
+  v10.15.0
+
+  % npm --version
+  6.4.1
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+You're all going to install Node on your computers. If you go to this
+link you'll probably see two different versions you can install.
+
+Choose the one that's labelled "LTS" or "Long Term Support".
+
+*This might not be the highest version number available. That's OK.*
+
+When it's downloaded, install it.
+
+When that's done, open a terminal and run the =node= and =npm= commands,
+passing the =--version= flag to both. The slide shows what I saw when I
+was writing the slides, your version numbers might be slightly different.
+#+END_NOTES
+
+** =npm init=
+
+- Run =npm init= in the root of the project
+  - The =shopping-mvc= directory
+
+* Minimising Javascript code
+
+- We want our Javascript to be as small as possible
+- Smaller files means faster downloads
+- We also want it to be in one file
+- Fewer files means faster downloads
+- At the moment we have many files
+- Shrinking and bundling is often called *minimising*
+
+** Javascript minimisers
+
+- Various tools exist to do this
+- We're going to use =uglify-es=
+
+** Installing =uglify-es=
+
+#+BEGIN_SRC shell
+% npm install uglify-es -g
+#+END_SRC
+
+- https://www.npmjs.com/package/uglify-es
+
+** Running =uglify-es=
+
+- From the top of your project
+  - I.e. in the directory that contains =src/= directory
+
+#+BEGIN_SRC shell
+% uglifyjs src/js/*.js
+#+END_SRC
+
+#+BEGIN_NOTES
+This just strips out all the unnecessary whitespace and comments -- everything except the code.
+#+END_NOTES
+
+** Name mangling
+
+#+BEGIN_SRC shell
+% uglifyjs src/js/*.js --mangle
+#+END_SRC
+
+#+BEGIN_NOTES
+This goes a step further. We can shrink the code by renaming all our variables.
+#+END_NOTES
+** Property mangling                                               :noexport:
+
+#+BEGIN_SRC shell
+% uglifyjs src/js/*.js --mangle --mangle-props
+#+END_SRC
+
+#+BEGIN_NOTES
+Don't talk about this, it breaks class names and things, so no need to confuse them.
+#+END_NOTES
+
+** Saving the output
+
+#+BEGIN_SRC shell
+% mkdir build
+% uglifyjs src/js/*.js --mangle --output build/shopping.min.js
+#+END_SRC
+
+** Copy and edit =index.html=
+
+- Copy =src/html/index.html= to =src/html/index.prod.html=
+- Edit =index.prod.html=
+  - Delete the =script= elements
+  - Add a new =script= element that loads =shopping.min.js=
+- Copy =src/html/index.prod.html= to =build/index.html=
+- Check everything works
+  - Stylesheets and images won't work!
+  - We'll fix that later
+
+** Commit
+
+- We should commit this
+- But wait...!
+
+*** Ignoring some directories
+
+- Some of our directories should not be committed
+- They contain *build artifacts*
+  - Things that we can always reproduce from the source
+- Or they contain downloaded packages
+  - We can download them again if necessary
+- We want to ignore =build/= and =node_modules/= directories
+
+*** =.gitignore= file
+
+- Normally Git shows you changes to everything
+- =.gitignore= file changes that
+- Contains, line-by-line, lists of files, directories, or patterns to ignore
+
+*** Sample =.gitignore= file
+
+#+BEGIN_EXAMPLE
+build
+node_modules
+
+# WebStorm
+# User-specific stuff
+**/.idea/**/workspace.xml
+**/.idea/**/tasks.xml
+**/.idea/**/usage.statistics.xml
+**/.idea/**/dictionaries
+**/.idea/**/shelf
+
+# Generated files
+**/.idea/**/contentModel.xml
+
+**/.idea/**/dataSources/
+**/.idea/**/dataSources.ids
+**/.idea/**/dataSources.local.xml
+**/.idea/**/sqlDataSources.xml
+**/.idea/**/dynamic.xml
+**/.idea/**/uiDesigner.xml
+**/.idea/**/dbnavigator.xml
+#+END_EXAMPLE
+
+** Commit
+
+* Automation with Grunt
+
+- We don't want to do these tasks all the time
+- Various tools exist to help manage this
+- =Grunt= is one of those
+  - Others include =Gulp= and =WebPack=
+
+** Install
+
+- =npm install -g grunt-cli=
+- =npm install grunt --save-dev=
+
+* Using =uglify-es= with =Grunt=
+
+** Installing =uglify-es= for =Grunt=
+
+ - =uglify-es= can work with Grunt
+ - Installed as a =Grunt= plugin
+   - Managed with NPM
+
+ #+BEGIN_SRC shell
+ % npm install grunt-contrib-uglify-es --save-dev
+ #+END_SRC
+
+** Configuring =uglify-es= for =Grunt=
+
+- =Grunt= is configured by writing a small Javascript program
+- We have a =grunt= variable that contains a =Grunt= object
+- We set properties and call methods to configure =Grunt=
+- Program stored in =Gruntfile.js=
+
+** =Gruntfile.js=
+
+#+BEGIN_SRC javascript
+  module.exports = function(grunt) {
+    // Project configuration.
+    grunt.initConfig({
+      pkg: grunt.file.readJSON('package.json'),
+      uglify: {
+	options: {
+	  banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+	},
+	build: {
+          src: ['src/js/view.js', 'src/js/model.js', 'src/js/controller.js',
+	    'src/js/shopping-list-item.js', 'src/js/ui.js'],
+	  dest: 'build/<%= pkg.name %>.min.js'
+	}
+      }
+    });
+
+    // Load the plugin that provides the "uglify" task.
+    grunt.loadNpmTasks('grunt-contrib-uglify-es');
+
+    // Default task(s).
+    grunt.registerTask('default', ['uglify']);
+  };
+#+END_SRC
+
+** Running =grunt=
+
+#+BEGIN_SRC shell
+% grunt
+Running "uglify:build" (uglify) task
+>> 1 file created 6.19 kB -> 2.54 kB
+
+Done.
+#+END_SRC
+
+- Check that the file has been created in =build/=
+
+** Alternative =src= block
+
+#+BEGIN_SRC javascript
+src: ['src/js/*.js', '!src/js/ui.js', 'src/js/ui.js'],
+#+END_SRC
+
+** Delete the minimised Javscript                                  :noexport:
+
+#+BEGIN_SRC shell
+% del build\*.js
+#+END_SRC
+
+#+BEGIN_SRC shell
+% rm build/*.js
+#+END_SRC
+
+** Commit
+
+* Copy files
+
+- Grunt can copy files for us
+- =grunt-contrib-copy= task
+
+** Installing =grunt-contrib-copy=
+
+#+BEGIN_SRC shell
+% npm install grunt-contrib-copy --save-dev
+#+END_SRC
+
+** Configuring =grunt-contrib-copy=
+
+- Edit =Gruntfile.js=
+
+#+BEGIN_SRC javascript
+grunt.initConfig({
+  // ...
+  copy: {
+    html: {
+      src: 'src/html/index.prod.html',
+      dest: 'build/index.html'
+    },
+    static: {
+      files: [{
+        expand: true,
+        cwd: 'src/static',
+        src: '*.*',
+        dest: 'build/static'
+      }]
+    }
+  }
+});
+#+END_SRC
+
+#+REVEAL: split
+
+- Add:
+
+#+BEGIN_SRC javascript
+grunt.loadNpmTasks('grunt-contrib-copy');
+#+END_SRC
+
+- Edit:
+
+#+BEGIN_SRC javascript
+grunt.registerTask('default', ['uglify', 'copy']);
+#+END_SRC
+
+** Test
+
+#+BEGIN_SRC shell
+% grunt copy
+#+END_SRC
+
+** Commit
+
+* Minifying CSS
+
+- We also have lots of CSS files
+- Just like Javascript, we (generally) prefer one file
+- CSS minimisers exist, just like Javascript minimisers
+
+** Installing a CSS minimiser
+
+#+BEGIN_SRC shell
+% npm install clean-css-cli -g
+% npm install grunt-contrib-cssmin --save-dev
+#+END_SRC
+
+** Try it with your files
+
+#+BEGIN_SRC shell
+% cleancss src/css/*.css
+#+END_SRC
+
+** Configure =Gruntfile.js=
+
+#+BEGIN_SRC javascript
+grunt.initConfig({
+  // ...
+  cssmin: {
+    target: {
+      files: {
+        'build/css/style.min.css': ['src/css/*.css']
+      }
+    }
+  },
+  // ...
+});
+
+// ...
+
+grunt.loadNpmTasks('grunt-contrib-cssmin')
+
+// ...
+
+grunt.registerTask('default', ['cssmin', 'uglify', 'copy']);
+#+END_SRC
+
+** What about media queries?
+
+- Either:
+  - One file, embed the media queries
+- Or
+  - Minimise multiple files, but keep them separate
+
+*** Minimising multiple files and keeping them separate
+
+#+BEGIN_SRC javascript
+grunt.initConfig({
+  // ...
+  cssmin: {
+    target: {
+      files: [{
+        expand: true,
+        cwd: 'src/css',
+        src: ['*.css'],
+        dest: 'build/css',
+        ext: '.min.css'
+      }]
+    }
+  },
+  // ...
+});
+#+END_SRC
+
+** Update =index.prod.html=
+
+- Update the =link= elements
+
+** Test
+
+#+BEGIN_SRC
+% grunt cssmin
+% grunt
+#+END_SRC
+
+** Commit
+
+* Watch files
+
+- Remembering to run Grunt after every change is tedious
+- Grunt can *watch* for changes to our files
+  - And then re-run the right tasks automatically
+
+** Installing a file watcher
+
+#+BEGIN_SRC shell
+% npm install grunt-contrib-watch --save-dev
+#+END_SRC
+
+** Configure =Gruntfile.js=
+
+#+BEGIN_SRC javascript
+grunt.initConfig({
+  // ...
+  watch: {
+    css: {
+      files: 'src/css/*.css',
+      tasks: ['cssmin']
+    },
+    scripts: {
+      files: 'src/js/*.js',
+      tasks: ['uglify']
+    },
+    html: {
+      files: 'src/html/index.prod.html',
+      tasks: ['copy:html']
+    },
+    static: {
+      files: 'src/static/*.*',
+      tasks: ['copy:static']
+    }
+  },
+  // ...
+});
+#+END_SRC
+
+#+REVEAL: split
+
+#+BEGIN_SRC javascript
+// ...
+
+grunt.loadNpmTasks('grunt-contrib-watch');
+
+// ...
+#+END_SRC
+
+#+BEGIN_SRC shell
+% grunt watch
+#+END_SRC
+
+** Commit
+
+* Babel                                                            :noexport:
+
+Not talking about Babel yet, goes with Browserify, which means talking about modules.
+
+* SASS                                                             :noexport:
+
+Not sure, needs either Ruby, or libSass/SassC installed.
+
+* Less
+
+- A CSS pre-processor
+- You write "sort-of-CSS" files
+  - Features not found in CSS
+- The pre-processor processes these files...
+- ... and produces real CSS
+- https://lesscss.org/
+
+** Less: Variables
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC css
+a, .link {
+  color: #428bca;
+}
+
+.widget {
+  color: #fff;
+  background: #428bca;
+}
+
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC css
+@link-color: #428bca;
+
+a, .link {
+  color: @link-color;
+}
+
+.widget {
+  color: #fff;
+  background: @link-color;
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+** Less: Functions
+
+#+BEGIN_SRC css
+@link-color:       #428bca;
+@link-color-hover: darken(@link-color, 10%);
+
+a:hover, .link:hover {
+  color: @link-color-hover;
+}
+
+.widget:hover {
+  background: @link-color-hover;
+}
+#+END_SRC
+
+** Installing Less
+
+#+BEGIN_SRC shell
+% npm install less -g
+% npm install grunt-contrib-less --save-dev
+#+END_SRC
+
+** Running Less
+
+ - Create =style.less=, then
+
+#+BEGIN_SRC shell
+% lessc style.less
+#+END_SRC
+
+** Configure =Gruntfile.js=
+
+#+BEGIN_SRC javascript
+  grunt.initConfig({
+    // ...
+    less: {
+      build: {
+        files: {
+          'src/css/headings.css': 'src/css/headings.less'
+        }
+      }
+    },
+    // ...
+  });
+
+  // ...
+
+  grunt.loadNpmTasks('grunt-contrib-less')
+
+  // ...
+
+  grunt.registerTask('default', ['less', 'cssmin', 'uglify', 'copy']);
+#+END_SRC
+
+** Test
+** Commit
+
+* Bootstrap                                                        :noexport:
+* JQuery                                                           :noexport:
+* Jasmine                                                          :noexport:
+* React                                                            :noexport:
