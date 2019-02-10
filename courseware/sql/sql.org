@@ -1,0 +1,974 @@
+#+TITLE: Databases and SQL
+#+SETUPFILE: "../include/settings.org"
+#+PROPERTY: :header-args:sql-mode :product sqlite
+#+PROPERTY: :header-args:sql-mode+ :session powercoders
+
+* A database is...
+
+- Somewhere we can store data...
+  - ... and easily retrieve data...
+  - ... and add to the data...
+  - ... and delete data
+
+* That's very generic
+
+- For example, the filesytem is a database
+  - So that definition is not very helpful
+- In addition, databases normally have
+  - A special language used to search the data
+- Different programs to manage databases exist
+
+* Structured Query Language (SQL)
+
+- Most of the time that language is SQL
+  - General pronounced "sequel"
+- Other query languages do exist
+
+* Goals for this part of the course
+
+- Install a database program
+- Create a database with data in it
+- Learn how to query the data to answer questions
+
+* Introduction to SQLite
+
+- We're using *SQLite*
+- Small, fast, reliable, full-featured database
+- Easy to install and manage
+- Other databases include MySQL, Postgres, Oracle, SQL Server
+  - More complex to install and manage
+  - Very similar features to SQLite
+
+** Installation
+
+- https://sqlite.org/download.html
+- Find the "Precompiled binaries" section for your operating system
+  - FInd the =sqlite-tools-....zip= file
+  - Download that
+
+** Installation (Windows)
+
+#+BEGIN_NOTES
+[Demo this by projecting someone's laptop]
+#+END_NOTES
+
+** Installation (OS X)
+
+#+BEGIN_NOTES
+[Demo this by projecting someone's laptop]
+#+END_NOTES
+
+** Installation (Linux)
+
+#+BEGIN_NOTES
+[Demo this by projecting someone's laptop]
+#+END_NOTES
+
+* Using SQLite
+
+- We do everything in the shell
+- Run =sqlite3=
+
+#+BEGIN_SRC shell
+% sqlite3
+SQLite version 3.27.1 2019-02-08 13:17:39
+Enter ".help" for usage hints
+Connected to a transient in-memory database
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite>
+#+END_SRC
+
+#+BEGIN_NOTES
+When we run the =sqlite3= comand we get something that's similar to the shell, or the Chrome console. There's a prompt (=sqlite>=) and it's waiting for us to type commands.
+
+The message about the "transient in-memory database" is important. This means that anything we do will not be saved -- any data that we create will not be stored in to a database file.
+
+We'll fix that shortly.
+#+END_NOTES
+
+** SQL vs SQLIte commands
+
+- Two types of input to SQLite. Either:
+  - SQL statements
+  - Commands to SQLite
+- All SQLite commands start with a =.=
+  - =.help=
+  - =.open ...=
+  - =.exit= etc
+- SQL statements are everything else
+
+#+BEGIN_NOTES
+When we're typing things in to SQLite we're typing one of two different types of things.
+
+The first is commands that tell SQLite to do something -- for example, to show the help information, or to open a particular database, or to exit the programme.
+
+This commands are *not* SQL, and they are specific to SQLite. Other databases that you use will have equivalent commands, but they might be called something different.
+
+In SQLite all these commands start with a dot.
+
+Everything else is SQL.
+#+END_NOTES
+
+** Exit SQLite
+
+#+BEGIN_SRC sqlite
+sqlite> .exit
+#+END_SRC
+
+#+BEGIN_NOTES
+Right now, exit from SQLite by type =.exit=. You should be returned to your normal shell prompt.
+#+END_NOTES
+
+* Creating a database
+
+- We're going to use a sample database called *Chinook*
+- Represents a digital music store
+- Records information about
+  - Tracks
+  - Albums
+  - Artists
+  - Invoices
+  - Customers
+
+** Download the database
+
+- Open a shell
+- Make sure you are in your home directory
+  - *DO NOT* do this in the =poco= directory or any subdirectories
+- Download the database from GitHub
+
+#+BEGIN_SRC shell
+% git clone https://github.com/lerocha/chinook-database.git
+#+END_SRC
+
+** Open the database
+
+- Previous step created a directory called =chinook-database=
+- Change to the correct directory
+
+#+BEGIN_SRC shell
+% cd chinook-database
+% cd ChinookDatabase
+% cd DataSources
+#+END_SRC
+
+- Open the database
+
+#+BEGIN_SRC shell
+% sqlite3 Chinook_Sqlite.sqlite
+SQLite version 3.27.1 2019-02-08 13:17:19
+Enter ".help" for usage hints.
+sqlite>
+#+END_SRC
+
+* Database essentials
+
+- Data is stored in one or more *tables*
+  - Each table has a name
+- Each record in the database is a *row* in the table
+  - Each album, track, artist, customer, etc is a new row
+- Each piece of data is a *column*
+  - Each column has a *name*
+  - Each column has a *type*
+  - Different types of numbers and strings
+- Just like a spreadsheet
+  - Column names are A, B, C, D, etc
+
+* First SQL query
+
+#+BEGIN_EXAMPLE
+sqlite> SELECT name, milliseconds FROM track LIMIT 10;
+For Those About To Rock (We Salute You)|343719
+Balls to the Wall|342562
+Fast As a Shark|230619
+Restless and Wild|252051
+Princess of the Dawn|375418
+Put The Finger On You|205662
+Let's Get It Up|233926
+Inject The Venom|210834
+Snowballed|203102
+Evil Walks|263497
+#+END_EXAMPLE
+
+- You might get different results
+
+** Changing SQLite display defaults
+
+ - With the database open type:
+
+ #+BEGIN_SRC sqlite
+ sqlite> .mode column
+ sqlite> .header on
+ #+END_SRC
+
+** Re-run the previous query
+
+- Press the =Up= arrow to find the query
+
+#+BEGIN_EXAMPLE
+sqlite> SELECT name, milliseconds FROM track LIMIT 10;
+Name                                     Milliseconds
+---------------------------------------  ------------
+For Those About To Rock (We Salute You)  343719
+Balls to the Wall                        342562
+Fast As a Shark                          230619
+Restless and Wild                        252051
+Princess of the Dawn                     375418
+Put The Finger On You                    205662
+Let's Get It Up                          233926
+Inject The Venom                         210834
+Snowballed                               203102
+Evil Walks                               263497
+#+END_EXAMPLE
+
+** What have we done?
+
+- Entered and executed a SQL *statement*
+- SQL statements always end with a =;=
+- This is a =SELECT= statement
+  - Also called a *query*
+
+** =SELECT= statements
+
+#+BEGIN_EXAMPLE
+SELECT [columns] FROM [table];
+#+END_EXAMPLE
+
+- This is the simplest =SELECT=
+- =SELECT= lets us find information in the database
+- We list the columns we want, and the table we want them from
+
+** =SELECT= statements
+
+- The =track= table has columns called =name= and =milliseonds=
+
+#+BEGIN_EXAMPLE
+sqlite> SELECT name, milliseconds FROM track LIMIT 10;
+#+END_EXAMPLE
+
+- Normally =SELECT= returns everything
+- =track= table has thousands of rows
+- =LIMIT 10= says "Just return the first 10"
+
+** Exercise: Change the query to return the first 20 rows
+
+#+REVEAL: split
+
+#+BEGIN_SRC sql
+SELECT name, milliseconds FROM track LIMIT 20;
+#+END_SRC
+
+* Formatting queries
+
+#+BEGIN_SRC sql
+SELECT name, milliseconds
+  FROM track
+ LIMIT 10;
+#+END_SRC
+
+#+BEGIN_NOTES
+The database doesn't care how the query is written -- you can use newlines, any number of spaces, and so on.
+
+Also, you can write words like =SELECT= and =FROM= in upper or lower case.
+
+This is exactly the same query as last time, just formatted differently.
+
+I'm going to use this format from now on in the slides to make them easier to read, but you can continue to type them on one line if you want.
+
+This is also a very common way to write queries in online documentation, so you'll probably see this a lot.
+#+END_NOTES
+
+* Filtering data
+
+- SQL is about finding the specific information you want
+- So far, =SELECT= returns *everything*
+- We can ask for records (*rows*) with columns that contain specific data
+- We use a =WHERE= clause for this
+
+** Finding a specific row
+
+#+BEGIN_SRC sql
+SELECT name, milliseconds
+  FROM track
+ WHERE name = 'Let There Be Rock';
+#+END_SRC
+
+#+BEGIN_NOTES
+In this example we want to find the single row where the track has this specific name.
+
+This expression is similar to Javascript.
+
+However, Javascript uses triple- (or double-) equals to check for equality. SQL only uses a single equals sign.
+#+END_NOTES
+
+** What if  the same name exists more than once?
+
+#+BEGIN_SRC sql
+SELECT name, milliseconds
+  FROM track
+ WHERE name = 'Iron Maiden';
+#+END_SRC
+
+- Should return 5 rows with different =milliseconds= values
+
+** Text searching with wildcards
+
+#+BEGIN_SRC sql
+SELECT name, milliseconds
+  FROM track
+ WHERE name LIKE '%stairway%';
+#+END_SRC
+
+- =LIKE= is a comparison operator
+- Right hand side is a pattern
+- =%= is a like =*= for filenames
+  - Means "match anything"
+- So this is
+  1. Find all rows in the table called =track=...
+  2. ... with a name containing =stairway=...
+  3. ... and return the values of the =name= and =milliseconds= columns
+
+*** Exercise: Try searching for other tracks
+
+#+BEGIN_SRC sql
+SELECT name, milliseconds
+  FROM track
+ WHERE name LIKE '%PUT_SOMETHING_HERE%';
+#+END_SRC
+
+- What happens if you leave off the first =%=?
+- What happens if you leave off the second =%=?
+
+** Other comparisons work as you expect
+
+#+BEGIN_SRC sql
+SELECT name, milliseconds
+  FROM track
+ WHERE milliseconds > 500000
+ LIMIT 10;
+#+END_SRC
+
+- =<=, =>=, ~<=~, ~>=~,
+- =LIMIT= always comes last
+
+** Query structure
+
+#+BEGIN_SRC sql
+SELECT [columns]     -- What to return
+  FROM [table]       -- Where to find it
+ WHERE [expression]  -- (optional) How to filter it
+ LIMIT [number];     -- (optional) How many rows to return
+#+END_SRC
+
+- This is the structure we've learned so far
+- =--= is how you write comments in SQL
+
+** Complex expressions with =AND=
+
+#+BEGIN_SRC sql-mode
+SELECT name, milliseconds
+  FROM track
+ WHERE name LIKE '%stairway%'
+   AND milliseconds > 500000;
+#+END_SRC
+
+* Calculating new column values
+
+#+BEGIN_SRC sql-mode
+SELECT UPPER(name), milliseconds / 1000
+  FROM track
+ WHERE name LIKE '%stairway%'
+   AND milliseconds > 500000;
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+UPPER(name)         milliseconds / 1000
+------------------  -------------------
+STAIRWAY TO HEAVEN  529
+STAIRWAY TO HEAVEN  657
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+Values in columns can be operated on to create new columns.
+
+In this example we use the =UPPER= function to convert the value in the =name= column to uppercase, and we divide the value in the =milliseconds= column by 1,000 to get the value in seconds.
+
+Notice how, in the output, the column names show the operation that was performed.
+#+END_NOTES
+
+** Renaming columns with =AS=
+
+#+BEGIN_SRC sql-mode
+SELECT UPPER(name) AS name,
+       milliseconds / 1000 AS duration
+  FROM track
+ WHERE name LIKE '%stairway%'
+   AND milliseconds > 500000;
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+name                duration
+------------------  -------------------
+STAIRWAY TO HEAVEN  529
+STAIRWAY TO HEAVEN  657
+#+END_EXAMPLE
+
+** Using renamed columns in the =WHERE= clause
+
+#+BEGIN_SRC sql-mode
+SELECT UPPER(name) AS name,
+       milliseconds / 1000 AS duration
+  FROM track
+ WHERE name LIKE '%stairway%'
+   AND duration > 500;
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+name                duration
+------------------  -------------------
+STAIRWAY TO HEAVEN  529
+STAIRWAY TO HEAVEN  657
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+You can use the renamed column in the =WHERE= clause.
+
+This is identical to the example on the previous slide, except that instead of using =milliseconds= we use =duration=, and check to see if it's larger than 500 instead of 500,000.
+#+END_NOTES
+
+* Changing the sort order
+
+- The order in which results are returned is not guaranteed
+- If you want a particular order you must include it in the query
+- We use =ORDER BY=
+  - *Important:* This is two words
+  - *Not* =ORDER_BY=
+
+** Using =ORDER BY=
+
+#+BEGIN_SRC sql
+  SELECT name,
+         milliseconds / 1000 AS duration
+    FROM track
+ORDER BY duration
+   LIMIT 10;
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+Name                      duration
+------------------------  ----------
+É Uma Partida De Futebol  1
+Now Sports                4
+A Statistic               6
+Oprah                     6
+Commercial 1              7
+The Real Problem          11
+Commercial 2              21
+Bossa                     29
+Casinha Feliz             32
+Mateus Enter              33
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+This gives us the first 10 shortest songs. This is because the default behaviour for =ORDER BY= is to sort them in to ascending order, so the smallest comes first, then the next smallest, and so on.
+#+END_NOTES
+
+** Using =ORDER BY ... DESC=
+
+#+BEGIN_SRC sql
+  SELECT name,
+         milliseconds / 1000 AS duration
+    FROM track
+ORDER BY duration DESC
+   LIMIT 10;
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+Name                    duration
+----------------------  ----------
+Occupation / Precipice  5286
+Through a Looking Glas  5088
+Greetings from Earth,   2960
+Battlestar Galactica,   2956
+The Man With Nine Live  2956
+Battlestar Galactica,   2952
+Murder On the Rising S  2935
+Battlestar Galactica,   2927
+Take the Celestra       2927
+Fire In Space           2926
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+Here we've used the =DESC= keyword, so now we get the tracks sorted by duration in descending order, with the longest track first, then the next longest, and so on.
+#+END_NOTES
+
+** Using =ORDER BY= with =WHERE= clauses
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql-mode
+  SELECT name,
+         milliseconds / 1000 AS duration
+    FROM track
+   WHERE duration > 500
+     AND duration < 510
+ORDER BY duration DESC
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+Name           duration
+-------------  ----------
+The Alchemist  509
+Kashmir        508
+Paschendale    508
+How Many More  508
+The Thin Line  506
+Rain Song      505
+Some Kind Of   505
+Where The Riv  505
+Title Song     505
+Miserere mei,  501
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+** Using multiple =ORDER BY= clauses
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql-mode
+  SELECT name,
+         milliseconds / 1000 AS duration
+    FROM track
+   WHERE duration > 500
+     AND duration < 510
+ORDER BY duration DESC,
+         name ASC
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+Name           duration
+-------------  ----------
+The Alchemist  509
+How Many More  508
+Kashmir        508
+Paschendale    508
+The Thin Line  506
+Rain Song      505
+Some Kind Of   505
+Title Song     505
+Where The Riv  505
+Miserere mei,  501
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+We can order by multiple columns.
+
+Here, we find all the tracks we're interested in and sort them by duration order.
+
+When we have rows that have the same duration, like =508= or =505= in this example, we then sort them by name, in ascending order.
+
+The =ASC= for the name ordering is redundant, because that's the default, but including it can make it really obvious to the reader what's going on.
+#+END_NOTES
+
+** The order of =ORDER BY= clauses is important
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+  SELECT name,
+         milliseconds / 1000 AS duration
+    FROM track
+   WHERE duration > 500
+     AND duration < 510
+ORDER BY name ASC,
+         duration DESC
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+Name                 duration
+-------------------  ----------
+How Many More Times  508
+Kashmir              508
+Miserere mei, Deus   501
+Paschendale          508
+Rain Song            505
+Some Kind Of Monste  505
+The Alchemist        509
+The Thin Line Betwe  506
+Title Song           505
+Where The River Goe  505
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This is the same query, but we've swapped the order of =ORDER BY= clauses, so we sort by name first.
+
+If you look at the results you can see that they are now in name order. Since we don't have any songs that have the same name the duration sorting doesn't make any sense.
+#+END_NOTES
+
+** The order of =ORDER BY= clauses is important
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+  SELECT name,
+         milliseconds / 1000 AS duration
+    FROM track
+   WHERE name LIKE '%iron%'
+ORDER BY name ASC,
+         duration DESC
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+Name              duration
+----------------  ----------
+09 - Iron Maiden  216
+Iron Maiden       494
+Iron Maiden       351
+Iron Maiden       324
+Iron Maiden       261
+Iron Maiden       235
+Iron Man          172
+Iron Man/Childre  552
+Ironic            229
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+If we change the query to find songs with =iron= in the name we get a clearer view. Now all the songs called =Iron Maiden= are together, and within that they're sorted by duration, with the longest songs coming first.
+#+END_NOTES
+
+
+** Query structure
+
+#+BEGIN_SRC sql
+  SELECT [columns]     -- What to return
+    FROM [table]       -- Where to find it
+   WHERE [expression]  -- (optional) How to filter it
+ORDER BY [columns]     -- (optional) How to sort it
+   LIMIT [number];     -- (optional) How many rows to return
+#+END_SRC
+
+* Creating new data
+
+- All the queries so far show how to fetch existing data
+- We can also write queries that create new data for us
+
+* Counting rows with =COUNT=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+SELECT COUNT(name)
+  FROM track;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+count(name)
+-----------
+3503
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This is the =COUNT= function. Given a column it tells you how many rows exist
+where that column is not =NULL=.
+
+Here, we can see that our database contains information about 3,503 songs.
+#+END_NOTES
+
+** Renaming the count column
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+SELECT COUNT(name) AS cnt
+  FROM track;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+cnt
+-----------
+3503
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+We can rename this column in the output using =AS= the same way that we renamed other columns.
+#+END_NOTES
+
+** Finding duplicate names with =COUNT=
+
+- We know we have songs with duplicate names
+  - Earlier queries showed many songs called =Iron Maiden=
+- How do we find out the names of all the songs that are duplicated?
+
+*** First attempt, list the =name= column in the query
+
+#+BEGIN_SRC sql
+SELECT COUNT(name) AS cnt,
+       name
+  FROM track;
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+cnt          Name
+-----------  ---------------------------------------
+3503         For Those About To Rock (We Salute You)
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+OK, so that's not the right answer. We've only got one row back, but we want multiple rows, showing how many of each name we have.
+
+*Note*: In some database systems this query will show you an error instead of showing you result like this.
+#+END_NOTES
+
+*** Grouping columns
+
+- We say we want to *group* the results.
+- All the songs with the same name belong in the same group
+- Then count the songs in that group
+- Then repeat for the next name, and so on
+
+#+BEGIN_SRC sql
+.width 3 40
+#+END_SRC
+
+
+*** Using =GROUP BY=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+  SELECT COUNT(name) as cnt,
+         name
+    FROM track
+GROUP BY name
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+cnt  Name
+---  ----------------------------------------
+1    "40"
+1    "?"
+1    "Eine Kleine Nachtmusik" Serenade In G,
+1    #1 Zero
+1    #9 Dream
+1    'Round Midnight
+1    (Anesthesia) Pulling Teeth
+1    (Da Le) Yaleo
+1    (I Can't Help) Falling In Love With You
+1    (Oh) Pretty Woman
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Our new syntax is here, the =GROUP BY= just after the =FROM= keyword.
+
+This looks like it's working, it's just that the results happen to show all the tracks that only occur once.
+#+END_NOTES
+
+*** Exercise: Use =ORDER BY=
+
+- Use the =ORDER BY= clause in the last example
+- Try and show the =cnt= column in *descending* order
+
+*** Solution: Use =ORDER BY=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+  SELECT COUNT(name) as cnt,
+         name
+    FROM track
+GROUP BY name
+ORDER BY cnt DESC
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+cnt  Name
+---  ----------------------------------------
+5    2 Minutes To Midnight
+5    Hallowed Be Thy Name
+5    Iron Maiden
+5    The Number Of The Beast
+5    The Trooper
+5    Wrathchild
+4    Fear Of The Dark
+4    Running Free
+4    Sanctuary
+4    The Evil That Men Do
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+*** Exercise: Use =WHERE=
+
+- This shows all the songs
+- Is =Iron Maiden= the only song with =iron= in the title with multiple copies?
+- Use a =WHERE= clause in the query to only search for songs with =iron= in the title
+
+*** Solution: Use =WHERE=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+  SELECT COUNT(name) as cnt,
+         name
+    FROM track
+   WHERE name LIKE '%iron%'
+GROUP BY name
+ORDER BY cnt DESC
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+cnt  Name
+---  ----------------------------------------
+5    Iron Maiden
+1    09 - Iron Maiden
+1    Iron Man
+1    Iron Man/Children of the Grave
+1    Ironic
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Looks like we actually have six copies of =Iron Maiden=, it's just that one of them has a different title.
+#+END_NOTES
+
+*** Query structure
+
+#+BEGIN_SRC sql
+  SELECT [columns]     -- What to return
+    FROM [table]       -- Where to find it
+   WHERE [expression]  -- (optional) How to filter it
+GROUP BY [columns]     -- Grouping, required if using COUNT()
+ORDER BY [columns]     -- (optional) How to sort it
+   LIMIT [number];     -- (optional) How many rows to return
+#+END_SRC
+
+* Filtering duplicates with =COUNT=
+
+- Suppose we want to find all tracks that are duplicated three or more times
+- Change the last query, and adjust the =WHERE= clause
+  - Only find things where =cnt= is greater than 2
+- What happens?
+
+** Solution: Filtering duplicates with =COUNT=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+  SELECT COUNT(name) as cnt,
+         name
+    FROM track
+   WHERE cnt > 2
+GROUP BY name
+ORDER BY cnt DESC
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+Error: misuse of aggregate: count()
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+** Two types of filtering
+
+- First type: Choosing what to count
+  - E.g. =name LIKE '%iron%'=
+  - Uses a =WHERE= clause
+- Second type: Choosing what to include in the grouping
+  - E.g., =cnt > 2=
+  - Uses a =HAVING= clause
+
+** Using =HAVING=
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+  SELECT COUNT(name) as cnt,
+         name
+    FROM track
+GROUP BY name
+  HAVING cnt > 2
+ORDER BY cnt DESC
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+cnt  Name
+---  ----------------------------------------
+5    2 Minutes To Midnight
+5    Hallowed Be Thy Name
+5    Iron Maiden
+5    The Number Of The Beast
+5    The Trooper
+5    Wrathchild
+4    Fear Of The Dark
+4    Running Free
+4    Sanctuary
+4    The Evil That Men Do
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+** Using =WHERE= with =HAVING=
+
+- Find all tracks...
+- ... with the word 'the' in the title
+- ... count them all ...
+- ... group by the name ...
+- ... ignore any where the count is < 3
+- ... display count and name, most popular first
+
+** Using =WHERE= with =HAVING=
+
+#+REVEAL_HTML: <div class="leftcol">
+- Find all tracks...
+- ... with the word 'the' in the title
+- ... count them all ...
+- ... group by the name ...
+- ... ignore any where the count is < 3
+- ... display and and name, most popular first
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC sql
+  SELECT COUNT(name) AS cnt,
+         name
+    FROM track
+   WHERE name LIKE '%the%'
+GROUP BY name
+  HAVING cnt > 2
+ORDER BY cnt DESC
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+* Averages
+
+* Sums
+
+* Other tables
+
+* The relational model
+
+* Joins
