@@ -400,14 +400,14 @@ Notice how, in the output, the column names show the operation that was performe
 
 #+BEGIN_SRC sql-mode
 SELECT UPPER(name) AS name,
-       milliseconds / 1000 AS duration
+       milliseconds / 1000 AS seconds
   FROM track
  WHERE name LIKE '%stairway%'
    AND milliseconds > 500000;
 #+END_SRC
 
 #+BEGIN_EXAMPLE
-name                duration
+name                seconds
 ------------------  -------------------
 STAIRWAY TO HEAVEN  529
 STAIRWAY TO HEAVEN  657
@@ -417,14 +417,14 @@ STAIRWAY TO HEAVEN  657
 
 #+BEGIN_SRC sql-mode
 SELECT UPPER(name) AS name,
-       milliseconds / 1000 AS duration
+       milliseconds / 1000 AS seconds
   FROM track
  WHERE name LIKE '%stairway%'
-   AND duration > 500;
+   AND seconds > 500;
 #+END_SRC
 
 #+BEGIN_EXAMPLE
-name                duration
+name                seconds
 ------------------  -------------------
 STAIRWAY TO HEAVEN  529
 STAIRWAY TO HEAVEN  657
@@ -448,14 +448,14 @@ This is identical to the example on the previous slide, except that instead of u
 
 #+BEGIN_SRC sql
   SELECT name,
-         milliseconds / 1000 AS duration
+         milliseconds / 1000 AS seconds
     FROM track
-ORDER BY duration
+ORDER BY seconds
    LIMIT 10;
 #+END_SRC
 
 #+BEGIN_EXAMPLE
-Name                      duration
+Name                      seconds
 ------------------------  ----------
 É Uma Partida De Futebol  1
 Now Sports                4
@@ -477,14 +477,14 @@ This gives us the first 10 shortest songs. This is because the default behaviour
 
 #+BEGIN_SRC sql
   SELECT name,
-         milliseconds / 1000 AS duration
+         milliseconds / 1000 AS seconds
     FROM track
-ORDER BY duration DESC
+ORDER BY seconds DESC
    LIMIT 10;
 #+END_SRC
 
 #+BEGIN_EXAMPLE
-Name                    duration
+Name                    seconds
 ----------------------  ----------
 Occupation / Precipice  5286
 Through a Looking Glas  5088
@@ -499,7 +499,7 @@ Fire In Space           2926
 #+END_EXAMPLE
 
 #+BEGIN_NOTES
-Here we've used the =DESC= keyword, so now we get the tracks sorted by duration in descending order, with the longest track first, then the next longest, and so on.
+Here we've used the =DESC= keyword, so now we get the tracks sorted by seconds in descending order, with the longest track first, then the next longest, and so on.
 #+END_NOTES
 
 ** Using =ORDER BY= with =WHERE= clauses
@@ -507,18 +507,18 @@ Here we've used the =DESC= keyword, so now we get the tracks sorted by duration 
 #+REVEAL_HTML: <div class="leftcol">
 #+BEGIN_SRC sql-mode
   SELECT name,
-         milliseconds / 1000 AS duration
+         milliseconds / 1000 AS seconds
     FROM track
-   WHERE duration > 500
-     AND duration < 510
-ORDER BY duration DESC
+   WHERE seconds > 500
+     AND seconds < 510
+ORDER BY seconds DESC
    LIMIT 10;
 #+END_SRC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+BEGIN_EXAMPLE
-Name           duration
+Name           seconds
 -------------  ----------
 The Alchemist  509
 Kashmir        508
@@ -538,11 +538,11 @@ Miserere mei,  501
 #+REVEAL_HTML: <div class="leftcol">
 #+BEGIN_SRC sql-mode
   SELECT name,
-         milliseconds / 1000 AS duration
+         milliseconds / 1000 AS seconds
     FROM track
-   WHERE duration > 500
-     AND duration < 510
-ORDER BY duration DESC,
+   WHERE seconds > 500
+     AND seconds < 510
+ORDER BY seconds DESC,
          name ASC
    LIMIT 10;
 #+END_SRC
@@ -550,7 +550,7 @@ ORDER BY duration DESC,
 
 #+REVEAL_HTML: <div class="rightcol">
 #+BEGIN_EXAMPLE
-Name           duration
+Name           seconds
 -------------  ----------
 The Alchemist  509
 How Many More  508
@@ -568,9 +568,9 @@ Miserere mei,  501
 #+BEGIN_NOTES
 We can order by multiple columns.
 
-Here, we find all the tracks we're interested in and sort them by duration order.
+Here, we find all the tracks we're interested in and sort them by seconds order.
 
-When we have rows that have the same duration, like =508= or =505= in this example, we then sort them by name, in ascending order.
+When we have rows that have the same seconds, like =508= or =505= in this example, we then sort them by name, in ascending order.
 
 The =ASC= for the name ordering is redundant, because that's the default, but including it can make it really obvious to the reader what's going on.
 #+END_NOTES
@@ -580,19 +580,19 @@ The =ASC= for the name ordering is redundant, because that's the default, but in
 #+REVEAL_HTML: <div class="leftcol">
 #+BEGIN_SRC sql
   SELECT name,
-         milliseconds / 1000 AS duration
+         milliseconds / 1000 AS seconds
     FROM track
-   WHERE duration > 500
-     AND duration < 510
+   WHERE seconds > 500
+     AND seconds < 510
 ORDER BY name ASC,
-         duration DESC
+         seconds DESC
    LIMIT 10;
 #+END_SRC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+BEGIN_EXAMPLE
-Name                 duration
+Name                 seconds
 -------------------  ----------
 How Many More Times  508
 Kashmir              508
@@ -610,7 +610,7 @@ Where The River Goe  505
 #+BEGIN_NOTES
 This is the same query, but we've swapped the order of =ORDER BY= clauses, so we sort by name first.
 
-If you look at the results you can see that they are now in name order. Since we don't have any songs that have the same name the duration sorting doesn't make any sense.
+If you look at the results you can see that they are now in name order. Since we don't have any songs that have the same name the seconds sorting doesn't make any sense.
 #+END_NOTES
 
 ** The order of =ORDER BY= clauses is important
@@ -618,18 +618,18 @@ If you look at the results you can see that they are now in name order. Since we
 #+REVEAL_HTML: <div class="leftcol">
 #+BEGIN_SRC sql
   SELECT name,
-         milliseconds / 1000 AS duration
+         milliseconds / 1000 AS seconds
     FROM track
    WHERE name LIKE '%iron%'
 ORDER BY name ASC,
-         duration DESC
+         seconds DESC
    LIMIT 10;
 #+END_SRC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+BEGIN_EXAMPLE
-Name              duration
+Name              seconds
 ----------------  ----------
 09 - Iron Maiden  216
 Iron Maiden       494
@@ -644,7 +644,7 @@ Ironic            229
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
-If we change the query to find songs with =iron= in the name we get a clearer view. Now all the songs called =Iron Maiden= are together, and within that they're sorted by duration, with the longest songs coming first.
+If we change the query to find songs with =iron= in the name we get a clearer view. Now all the songs called =Iron Maiden= are together, and within that they're sorted by seconds, with the longest songs coming first.
 #+END_NOTES
 
 
