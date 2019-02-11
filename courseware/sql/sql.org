@@ -930,7 +930,7 @@ cnt  Name
 #+END_EXAMPLE
 #+REVEAL_HTML: </div>
 
-** Using =WHERE= with =HAVING=
+** Exercise: Using =WHERE= with =HAVING=                           :exercise:
 
 - Find all tracks...
 - ... with the word 'the' in the title
@@ -939,7 +939,7 @@ cnt  Name
 - ... ignore any where the count is < 3
 - ... display count and name, most popular first
 
-** Using =WHERE= with =HAVING=
+** Solution: Using =WHERE= with =HAVING=
 
 #+REVEAL_HTML: <div class="leftcol">
 - Find all tracks...
@@ -964,6 +964,144 @@ ORDER BY cnt DESC
 #+REVEAL_HTML: </div>
 
 * Averages
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+SELECT AVG(milliseconds) AS mean_duration
+  FROM track;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+mean_duration
+----------------
+393599.212103911
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+** Exercise: Group the results by composer
+
+- What's the average duration of all songs...
+  - ... by composer ...
+  - ... in seconds?
+- The =composer= column contains the name
+
+** Solution: Group the results by composer
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+  SELECT AVG(milliseconds) / 1000 AS mean_duration,
+         composer,
+    FROM track
+GROUP BY composer
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+----------------  ----------------------------
+711.493507157464
+235.179666666667  A. F. Iommi, W. Ward, T. But
+276.871           A. Jamal
+397.531           A.Bouchard/J.Bouchard/S.Pear
+206.994           A.Isbell/A.Jones/O.Redding
+306.657375        AC/DC
+198.064           Aaron Copland
+266.936           Aaron Goldberg
+244.767           Ace Frehley
+299.102           Acyi Marques/Arlindo Bruz/Br
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+That's interesting -- we have some tracks where the composer column is empty.
+#+END_NOTES
+
+** Exercise: List the first 10 track names with no composer
+
+- ?
+
+** Solution: List the first 10 track names with no composer
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+SELECT name
+  FROM track
+ WHERE composer IS NULL;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+Name
+-----------------
+Balls to the Wall
+Desafinado
+Garota De Ipanema
+Samba De Uma Nota
+Por Causa De Você
+Ligia
+Fotografia
+Dindi (Dindi)
+Se Todos Fossem I
+Falando De Amor
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+There's a couple of new things here.
+
+The first is that we don't need to list a column in the first part of the query in order to be able to use it in the =WHERE= clause.
+
+Here we check to see what the value of the =composer= column is, but we don't bother displaying it.
+
+In every example so far we've also shown the values in the columns we've filtered on -- but we don't have to if it's not necessary.
+
+The second is the idea of a column containing a NULL value. This is very similar to the idea of =null= in Javascript -- it's a special value that meaans "There is no value here".
+
+In Javascript we can use triple-equals to see if a value is null. In SQL you don't use the equals sign, you use the special phrase =IS NULL=, exactly as shown here.
+#+END_NOTES
+
+** =COUNT= and =NULL=
+
+- Some functions treat =NULL= values specially
+- For example, =COUNT= ignores =NULL= values
+
+#+REVEAL_HTML: <br clear=all>
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+SELECT COUNT(composer)
+  FROM track;
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+count(composer)
+---------------
+2525
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC sql
+SELECT COUNT(*)
+  FROM track;
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+count(*)
+----------
+3503
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+If we use =COUNT(composer) it returns a count of all the rows that have a non-NULL value in the =composer= column. There are 2,525.
+
+If we use the special =COUNT(*)= syntax then we count all the rows that have at least one non-NULL value in a column (any column). This gives us the total number of rows in the table.
+#+END_NOTES
 
 * Sums
 
