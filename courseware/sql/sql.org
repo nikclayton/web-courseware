@@ -467,6 +467,25 @@ STAIRWAY TO HEAVEN  529
 STAIRWAY TO HEAVEN  657
 #+END_EXAMPLE
 
+*** Using a column again
+
+#+BEGIN_SRC sql-mode
+SELECT UPPER(name) AS name,
+       milliseconds,
+       milliseconds / 1000 AS seconds
+  FROM track
+ WHERE name LIKE '%stairway%'
+   AND milliseconds > 500000;
+#+END_SRC
+
+
+#+BEGIN_EXAMPLE
+name                            Milliseconds  seconds
+------------------------------  ------------  ----------
+STAIRWAY TO HEAVEN              529658        529
+STAIRWAY TO HEAVEN              657293        657
+#+END_EXAMPLE
+
 ** Using renamed columns in the =WHERE= clause
 
 #+BEGIN_SRC sql-mode
