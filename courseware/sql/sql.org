@@ -1032,9 +1032,133 @@ cnt  Name
 GROUP BY name
   HAVING cnt > 2
 ORDER BY cnt DESC
-   LIMIT 10;
 #+END_SRC
 #+REVEAL_HTML: </div>
+
+* Query pipeline                                                   :noexport:
+
+#+BEGIN_NOTES
+Not exporting this because I prefer the query pipeline graph below. Might use it later though.
+#+END_NOTES
+
+#+BEGIN_SRC dot :file query-pipeline-1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+  digraph G {
+    rankdir = LR;
+    graph [compound=true];
+    node [shape=record, fontname="Consolas", fontsize=20];
+
+    subgraph col1 {
+      select [label="SELECT|SELECT COUNT(name) AS cnt,\l\ \ \ \ \ \ \  name\l \ \ FROM track\l"];
+      select_results [label="name|Balls to the Wall\lFast As a Shark\lRestless and Wild\lPrincess of the Dawn\l...\l|3,503 rows"];
+      where [label="WHERE|WHERE name LIKE '%the%'"];
+      where_results [label="name|Balls to the Wall\lPrincess of the Dawn\lPut The Finger On You\lInject The Venom\l...\l|543 rows"];
+      group_by [label="count/group|COUNT(name) AS cnt\l...\lGROUP BY name\l"];
+      having [label="HAVING|HAVING cnt &gt; 2"];
+    }
+
+    subgraph col2 {
+      group_by [label="count/group|COUNT(name) AS cnt\l...\lGROUP BY name\l"];
+      having [label="HAVING|HAVING cnt &gt; 2"];
+      group_by_results [label="cnt, name\l|5, The Number Of The Beast\l5, The Trooper\l4, Fear Of The Dark\l4, The Evil That Men Do\l...\l|506 rows"];
+      having_results [label="cnt, name\l|5, The Number Of The Beast\l5, The Trooper\l4, Fear Of The Dark\l4, The Evil That Men Do\l...\l|7 rows"];
+}
+    select -> select_results -> where -> where_results;
+    where_results -> group_by [constraint=false];
+    group_by -> group_by_results -> having -> having_results;
+
+    // Next edge is invisible, but pulls the count/group node to the top
+    // of its column.
+    select:n -> group_by:n [style=invis];
+
+    {rank=same; select, select_results, where, where_results }
+    {rank=same; group_by, group_by_results, having, having_results }
+
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:query-pipeline-1.svg]]
+
+* Query pipeline
+
+#+BEGIN_SRC dot :file query-pipeline-1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+  digraph G {
+    rankdir = LR;
+    graph [compound=true];
+    node [shape=record, fontname="Consolas", fontsize=20];
+
+    subgraph col1 {
+      select [label="SELECT|SELECT COUNT(name) AS cnt,\l\ \ \ \ \ \ \  name\l \ \ FROM track\l"];
+      select_results [label="name|Balls to the Wall\lFast As a Shark\lRestless and Wild\lPrincess of the Dawn\l...\l|3,503 rows"];
+    }
+
+    subgraph col2 {
+      where [label="WHERE|WHERE name LIKE '%the%'"];
+      where_results [label="name|Balls to the Wall\lPrincess of the Dawn\lPut The Finger On You\lInject The Venom\l...\l|543 rows"];
+    }
+    subgraph col3 {
+      group_by [label="count/group|COUNT(name) AS cnt\l...\lGROUP BY name\l"];
+      group_by_results [label="cnt, name\l|5, The Number Of The Beast\l5, The Trooper\l4, Fear Of The Dark\l4, The Evil That Men Do\l...\l|506 rows"];
+    }
+
+    subgraph col4 {
+      having [label="HAVING|HAVING cnt &gt; 2"];
+      having_results [label="cnt, name\l|5, The Number Of The Beast\l5, The Trooper\l4, Fear Of The Dark\l4, The Evil That Men Do\l...\l|7 rows"];
+    }
+
+    select -> select_results;
+    select_results:e -> where:w;
+
+    where -> where_results;
+    where_results:e -> group_by:w;
+    group_by -> group_by_results;
+    group_by_results:e -> having:w;
+    having -> having_results;
+
+    // Next edge is invisible, but pulls the count/group node to the top
+    // of its column.
+    select:n -> where:n [style=invis];
+    select:n -> having:n [style=invis];
+
+    {rank=same; select, select_results }
+    {rank=same; where, where_results }
+    {rank=same; group_by, group_by_results }
+    {rank=same; having, having_results }
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:query-pipeline-1.svg]]
+
+#+BEGIN_NOTES
+Here's a way to visualise what's going on that might help. This is *not* exactly what the database is doing when it runs our query, but it's a useful mental model to have.
+
+Think of our query as a pipe, with data flowing through the pipe. At various points in the pipe we apply filters or other controls to restrict the amount of data coming through the pipe, until eventually we get exactly the data we want at the end of the pipe.
+
+This idea of data flowing through a pipe with various stages is very common in computer science, so we generally refer to these things as pipelines.
+
+Here's the pipeline for the most recent query.
+
+Start at the top left box.
+
+This is the =SELECT= statement from our query. At this point any aggregation functions (like =COUNT=) are ignored, and the query gathers up the data from all the non-aggregated columns.
+
+This data goes in to the table that will hold the resuls. This is the box immediately below the =SELECT= query. At this point it contains 3,503 rows, because that's how many rows of tracks exist in the =track= table. The =SELECT= statement only asks for information about one non-aggregated column, =name=, so that's the single column in the =results= table.
+
+This data then flows to the =WHERE= box. Here, a filter is applied, and all the rows in the results table that do not contain the word =the= somewhere in the nae are removed.
+
+This changes our =results= table, which is now 543 rows long.
+
+The data flows to the count/group operation. This is the aggregation operation. This takes the data in the =results= table and groups it by the values in the =name= column. It creates a new column, =cnt=, and puts the number of times each name occurs in to the =cnt= column.
+
+This has the effect of reducing the number of rows -- any name that appeared more than once now only appears once. There are only a few of these, so the total number of rows is now 506.
+
+Then the data flows to the =HAVING= stage. This checks the value in the new =cnt= column, and filters out any rows that do not match. This removes many of the rows that previously existed, leaving just 7 rows remaining in the =results= table.
+
+And that's what's printed in the SQLite shell.
+
+Notice how this explains why we can't use a =WHERE= clause with an aggregated column (i.e., the =cnt= column created by the =COUNT()= function -- at the time the =WHERE= stage runs the =cnt= column doesn't exist yet, so it can't be filtered on.
+#+END_NOTES
 
 * Averages
 
