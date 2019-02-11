@@ -396,6 +396,60 @@ In this example we use the =UPPER= function to convert the value in the =name= c
 Notice how, in the output, the column names show the operation that was performed.
 #+END_NOTES
 
+** Why isn't this =529.658= ?
+
+- The original value for the first result is 529,658 milliseconds
+- Divided by 1,000 that's 529.658
+- Why do we get 529?
+
+*** Integer division
+
+- The =milliseconds= column has a type
+  - =INTEGER=
+- =1000= also has a type, =INTEGER=
+- If we divide one =INTEGER= by another =INTEGER=, the result is always an =INTEGER=
+- We have to force one of the values to be a floating point value
+
+*** Forcing a float, one way
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql-mode
+SELECT UPPER(name), milliseconds / 1000.0
+  FROM track
+ WHERE name LIKE '%stairway%'
+   AND milliseconds > 500000;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+UPPER(name)                     milliseconds / 1000.0
+------------------------------  ---------------------
+STAIRWAY TO HEAVEN              529.658
+STAIRWAY TO HEAVEN              657.293
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+*** Forcing a float, second way
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql-mode
+SELECT UPPER(name), CAST(milliseconds AS FLOAT) / 1000
+  FROM track
+ WHERE name LIKE '%stairway%'
+   AND milliseconds > 500000;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+UPPER(name)                     CAST(milliseconds AS FLOAT) / 1000
+------------------------------  ----------------------------------
+Stairway To Heaven              529.658
+Stairway To Heaven              657.293
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
 ** Renaming columns with =AS=
 
 #+BEGIN_SRC sql-mode
