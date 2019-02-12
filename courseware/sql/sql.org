@@ -1225,6 +1225,21 @@ Notice how this explains why we can't use a =WHERE= clause with an aggregated co
  That's interesting -- we have some tracks where the composer column is empty. We'll look at that again later.
  #+END_NOTES
 
+
+*** Incorrect: Average time by composer
+
+#+BEGIN_SRC sql
+  SELECT AVG(milliseconds / 1000) AS mean_duration,
+         composer
+    FROM track
+GROUP BY composer
+   LIMIT 10;
+#+END_SRC
+
+#+BEGIN_NOTES
+This is incorrect because it divides an integer by an integer (creating another integer result) and then computes the average of that. This means that the data is subtly wrong.
+#+END_NOTES
+
 ** Calculating totals with =SUM()=
 
 - Use =SUM()= to add up all the values in a column.
@@ -1236,7 +1251,7 @@ Notice how this explains why we can't use a =WHERE= clause with an aggregated co
 *** Solution: Total time
 
 #+BEGIN_SRC sql
-SELECT SUM(milliseconds) / 1000 as total_seconds
+SELECT SUM(milliseconds) / 1000.0 as total_seconds
   FROM track;
 #+END_SRC
 
@@ -1247,7 +1262,7 @@ SELECT SUM(milliseconds) / 1000 as total_seconds
 *** Solution: Total time by composer
 
 #+BEGIN_SRC sql
-  SELECT SUM(milliseconds) / 1000 as total_seconds,
+  SELECT SUM(milliseconds) / 1000.0 AS total_seconds,
          composer
     FROM track
 GROUP BY composer
