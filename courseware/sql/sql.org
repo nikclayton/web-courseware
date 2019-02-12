@@ -1197,7 +1197,7 @@ Notice how this explains why we can't use a =WHERE= clause with an aggregated co
  #+REVEAL_HTML: <div class="leftcol">
  #+BEGIN_SRC sql
    SELECT AVG(milliseconds) / 1000 AS mean_duration,
-          composer,
+          composer
      FROM track
  GROUP BY composer
     LIMIT 10;
