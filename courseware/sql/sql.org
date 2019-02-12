@@ -1289,6 +1289,14 @@ ORDER BY milliseconds
    LIMIT 10;
 #+END_SRC
 
+* Handling empty values
+
+- Recall that Javascript has the idea of the *empty* value
+  - Javascript calls it =null=
+- SQL has the same concept
+  - Column can not have no value
+  - If it's empty it contains the =NULL= value
+
 ** Exercise: List the first 10 track names with no composer
 
 - ?
