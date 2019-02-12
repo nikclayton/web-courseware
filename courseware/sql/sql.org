@@ -1160,61 +1160,134 @@ And that's what's printed in the SQLite shell.
 Notice how this explains why we can't use a =WHERE= clause with an aggregated column (i.e., the =cnt= column created by the =COUNT()= function -- at the time the =WHERE= stage runs the =cnt= column doesn't exist yet, so it can't be filtered on.
 #+END_NOTES
 
-* Averages
+* Other aggregation functions
 
-#+REVEAL_HTML: <div class="leftcol">
+- =COUNT()= is not the only aggregation function
+- Others include (not a complete list):
+  - =AVG()= for averages
+  - =SUM()= to calculate totals
+  - =MIN()= and =MAX()= to find smallest/largest values
+
+** Averages
+
+ #+REVEAL_HTML: <div class="leftcol">
+ #+BEGIN_SRC sql
+ SELECT AVG(milliseconds) AS mean_duration
+   FROM track;
+ #+END_SRC
+ #+REVEAL_HTML: </div>
+
+ #+REVEAL_HTML: <div class="rightcol">
+ #+BEGIN_EXAMPLE
+ mean_duration
+ ----------------
+ 393599.212103911
+ #+END_EXAMPLE
+ #+REVEAL_HTML: </div>
+
+*** Exercise: Group the results by composer
+
+ - What's the average duration of all songs...
+   - ... by composer ...
+   - ... in seconds?
+ - The =composer= column contains the name
+
+*** Solution: Group the results by composer
+
+ #+REVEAL_HTML: <div class="leftcol">
+ #+BEGIN_SRC sql
+   SELECT AVG(milliseconds) / 1000 AS mean_duration,
+          composer,
+     FROM track
+ GROUP BY composer
+    LIMIT 10;
+ #+END_SRC
+ #+REVEAL_HTML: </div>
+
+ #+REVEAL_HTML: <div class="rightcol">
+ #+BEGIN_EXAMPLE
+ mean_duration     composer
+ ----------------  ----------------------------
+ 711.493507157464
+ 235.179666666667  A. F. Iommi, W. Ward, T. But
+ 276.871           A. Jamal
+ 397.531           A.Bouchard/J.Bouchard/S.Pear
+ 206.994           A.Isbell/A.Jones/O.Redding
+ 306.657375        AC/DC
+ 198.064           Aaron Copland
+ 266.936           Aaron Goldberg
+ 244.767           Ace Frehley
+ 299.102           Acyi Marques/Arlindo Bruz/Br
+ #+END_EXAMPLE
+ #+REVEAL_HTML: </div>
+
+ #+BEGIN_NOTES
+ That's interesting -- we have some tracks where the composer column is empty. We'll look at that again later.
+ #+END_NOTES
+
+** Calculating totals with =SUM()=
+
+- Use =SUM()= to add up all the values in a column.
+
+*** Exercise: Total time
+
+- What's the total time taken up by all the tracks?
+
+*** Solution: Total time
+
 #+BEGIN_SRC sql
-SELECT AVG(milliseconds) AS mean_duration
+SELECT SUM(milliseconds) / 1000 as total_seconds
   FROM track;
 #+END_SRC
-#+REVEAL_HTML: </div>
 
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
-mean_duration
-----------------
-393599.212103911
-#+END_EXAMPLE
-#+REVEAL_HTML: </div>
+*** Exercise: Total time by composer
 
-** Exercise: Group the results by composer
+- Who are the top-ten composers by total duration in the database?
 
-- What's the average duration of all songs...
-  - ... by composer ...
-  - ... in seconds?
-- The =composer= column contains the name
+*** Solution: Total time by composer
 
-** Solution: Group the results by composer
-
-#+REVEAL_HTML: <div class="leftcol">
 #+BEGIN_SRC sql
-  SELECT AVG(milliseconds) / 1000 AS mean_duration,
-         composer,
+  SELECT SUM(milliseconds) / 1000 as total_seconds,
+         composer
     FROM track
 GROUP BY composer
    LIMIT 10;
 #+END_SRC
-#+REVEAL_HTML: </div>
 
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
-----------------  ----------------------------
-711.493507157464
-235.179666666667  A. F. Iommi, W. Ward, T. But
-276.871           A. Jamal
-397.531           A.Bouchard/J.Bouchard/S.Pear
-206.994           A.Isbell/A.Jones/O.Redding
-306.657375        AC/DC
-198.064           Aaron Copland
-266.936           Aaron Goldberg
-244.767           Ace Frehley
-299.102           Acyi Marques/Arlindo Bruz/Br
-#+END_EXAMPLE
-#+REVEAL_HTML: </div>
+** Finding the minimum and maximum values
 
-#+BEGIN_NOTES
-That's interesting -- we have some tracks where the composer column is empty.
-#+END_NOTES
+- Use =MIN()= and =MAX()= to find the smallest and largest values
+
+*** Exercise: Shortest songs
+
+- What are the names of the 10 shortest songs?
+
+*** Solution: Shortest songs
+
+#+BEGIN_SRC sql
+  SELECT MIN(milliseconds),
+         name
+    FROM track
+GROUP BY name
+ORDER BY milliseconds
+   LIMIT 10;
+#+END_SRC
+
+*** Exercise: Longest songs
+
+- What are the names of the 10 longest songs, and who wrote them?
+
+*** Solution: Longest songs
+
+#+BEGIN_SRC sql
+  SELECT MAX(milliseconds),
+         name,
+         composer
+    FROM track
+GROUP BY name
+ORDER BY milliseconds
+   LIMIT 10;
+#+END_SRC
 
 ** Exercise: List the first 10 track names with no composer
 
