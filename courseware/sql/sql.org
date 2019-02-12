@@ -1020,7 +1020,7 @@ cnt  Name
 - ... count them all ...
 - ... group by the name ...
 - ... ignore any where the count is < 3
-- ... display and and name, most popular first
+- ... display =cnt= and =name=, most popular first
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
