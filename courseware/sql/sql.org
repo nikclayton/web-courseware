@@ -1376,15 +1376,688 @@ count(*)
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
-If we use =COUNT(composer) it returns a count of all the rows that have a non-NULL value in the =composer= column. There are 2,525.
+If we use =COUNT(composer)= it returns a count of all the rows that have a non-NULL value in the =composer= column. There are 2,525.
 
 If we use the special =COUNT(*)= syntax then we count all the rows that have at least one non-NULL value in a column (any column). This gives us the total number of rows in the table.
 #+END_NOTES
 
-* Sums
-
-* Other tables
-
 * The relational model
 
-* Joins
+- Databases normally have more than one table
+- Power comes from being able to *relate* information in one table to information in another table
+- Hence *Relational Database*
+
+** Understanding relationships, the schema
+
+- Each table has a definition
+  - Name of each column
+  - The types
+  - How the data is related to other tables
+  - And more
+- This is called the table's *schema*
+
+** Investigating the schema for =track=
+
+#+BEGIN_SRC sql
+sqlite> .schema track
+#+END_SRC
+
+#+REVEAL: split
+
+#+BEGIN_SRC sql
+CREATE TABLE [Track]
+(
+    [TrackId] INTEGER  NOT NULL,
+    [Name] NVARCHAR(200)  NOT NULL,
+    [AlbumId] INTEGER,
+    [MediaTypeId] INTEGER  NOT NULL,
+    [GenreId] INTEGER,
+    [Composer] NVARCHAR(220),
+    [Milliseconds] INTEGER  NOT NULL,
+    [Bytes] INTEGER,
+    [UnitPrice] NUMERIC(10,2)  NOT NULL,
+    CONSTRAINT [PK_Track] PRIMARY KEY  ([TrackId]),
+    FOREIGN KEY ([AlbumId]) REFERENCES [Album] ([AlbumId])
+                ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY ([GenreId]) REFERENCES [Genre] ([GenreId])
+                ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY ([MediaTypeId]) REFERENCES [MediaType] ([MediaTypeId])
+                ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+CREATE UNIQUE INDEX [IPK_Track] ON [Track]([TrackId]);
+CREATE INDEX [IFK_TrackAlbumId] ON [Track] ([AlbumId]);
+CREATE INDEX [IFK_TrackGenreId] ON [Track] ([GenreId]);
+CREATE INDEX [IFK_TrackMediaTypeId] ON [Track] ([MediaTypeId]);
+#+END_SRC
+
+#+BEGIN_NOTES
+Here is the schema. Let's look at some things of note.
+
+First, the schema is shown using the syntax for creating a new table. So far we've only looked at the =SELECT= statement. As we can see, there is also a =CREATE= statement, and we can use that to create a table.
+
+Notice the names in square brackets? Those are the table and column names.
+
+The square brackets are how SQLite quotes these values -- it doesn't put them inside quotes, it uses the backets. It's incredibly bad practice to give a column or table a name with a space in it, but if you did, you'd write the name in square brackets. Here it's not necessary, but SQLite is being cautious.
+
+We can see all the columns in the table. We've been using =name= and =milliseconds= and =composer= so far. If we look at those we can see what their types are.
+
+=VARCHAR= and related terms is how a lot of databases say that something is a string. It's a "variable number of characters". The number in brackets is the maximum number of characters that can be stored in this column.
+
+See the =NOT NULL= in various places.  Some columns are allowed to have NULL as the value for their row -- for example, =Composer= is allowed to be NULL because there might not be one.
+
+Other columns are not allowed to be NULL, like =Name=, or =Milliseconds=.
+
+What's very interesting is these lines that say =FOREIGN KEY=. Lets dig in to that some more.
+#+END_NOTES
+
+* Database keys
+
+- Each row in a table must be unique
+- You can not have two rows that are identical
+- Typically, one row is the row's *key*
+  - A unique identifier for that row
+- We can't use the track name, since some songs have the same name
+- Very common to use a column called =id= or *tablename* + =Id= for this
+- The =track= table key is called =TrackId=
+
+** Checking the keys
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+SELECT trackid,
+  FROM track
+ WHERE name = 'Iron Maiden';
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+TrackId
+----------
+1222
+1297
+1320
+1366
+2148
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Here are the track IDs for the 5 songs called 'Iron Maiden'.
+#+END_NOTES
+
+** Querying a key
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+SELECT name,
+       composer,
+       milliseconds
+  FROM track
+ WHERE trackid = 1222;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+Name         Composer              Milliseconds
+-----------  --------------------  ------------
+Iron Maiden  Steve Harris          324623
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+** Keys are how we relate one table to another
+
+- Suppose we have a key value, e.g., 1222
+- If we put that value in another table...
+- ... we say that it is a *foreign key* in that table
+- This allows that table to know about our record
+
+** Keys are how we relate one table to another
+
+#+BEGIN_SRC sql
+CREATE TABLE [Track]
+(
+    [TrackId] INTEGER  NOT NULL,
+    ...
+    [AlbumId] INTEGER,
+    ...
+    FOREIGN KEY ([AlbumId]) REFERENCES [Album] ([AlbumId])
+                ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ...
+);
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's a snippet of the schema for the =track= table again.
+
+Notice how the =track= table contains a column called =AlbumId=.
+
+And later on this is referred to as a foreign key in the =Album= table.
+
+Lets go take a look at the =Album= table...
+#+END_NOTES
+
+** The =Album= table schema
+
+#+BEGIN_SRC sql
+sqlite> .schema Album
+CREATE TABLE [Album]
+(
+    [AlbumId] INTEGER  NOT NULL,
+    [Title] NVARCHAR(160)  NOT NULL,
+    [ArtistId] INTEGER  NOT NULL,
+    CONSTRAINT [PK_Album] PRIMARY KEY  ([AlbumId]),
+    FOREIGN KEY ([ArtistId]) REFERENCES [Artist] ([ArtistId])
+                ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+CREATE UNIQUE INDEX [IPK_Album] ON [Album]([AlbumId]);
+CREATE INDEX [IFK_AlbumArtistId] ON [Album] ([ArtistId]);
+#+END_SRC
+
+#+BEGIN_NOTES
+So, our Album table has some interesting things in it. Each album has a unique ID, in the column called =albumid=, and an album =title=. There's also a reference to the =artistid=, and we can see that that's a foreign key in the =artist= table.
+
+Let's put that to one side for a moment, and figure out how we can see which album track 1222 belongs to.
+#+END_NOTES
+
+** Querying a key
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+SELECT name,
+       composer,
+       milliseconds
+  FROM track
+ WHERE trackid = 1222;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+Name         Composer              Milliseconds
+-----------  --------------------  ------------
+Iron Maiden  Steve Harris          324623
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Remember, this some of the information from our =track= table, and we looked it up based on the track's ID.
+
+Lets find out the ID of the album that this track is part of.
+#+END_NOTES
+
+** Finding the album ID for a track
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+SELECT albumid
+  FROM track
+ WHERE trackid = 1222;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+AlbumId
+----------
+95
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Remenber, our track has the ID 1222, so we use that in this query.
+
+This tells us that information about the album that this track is part of is in the album with the ID 95.
+
+So lets go find some information about that album.
+#+END_NOTES
+
+** Finding album info from the key
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+SELECT title
+  FROM album
+ WHERE albumid = 95;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+Title
+---------------
+A Real Dead One
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <br clear="all">
+
+- Important -- the column is =title=, not =name=
+
+** Relationship diagram
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC dot :file query-diagram-1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+  digraph G {
+    rankdir = LR;
+    node [shape=record,
+	  fontname="Consolas",
+	  fontsize="20",
+	  labelfontname="Consolas",
+	  labelfontsize="24"];
+
+    subgraph cluster_track {
+      penwidth=0;  // style=invis hides the label
+      label="Table: Track";
+      track [label="TrackId|Name|<f0> AlbumId|Milliseconds|..."];
+    }
+
+    subgraph cluster_album {
+      penwidth=0;
+      label="Table: Album";
+      album [label="<f0> AlbumId|Title|ArtistId"];
+    }
+
+    track:f0 -> album:f0;
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:query-diagram-1.svg]]
+
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- Our tracks are related to albums
+- The =Album= column =AlbumId= *Primary Key* ...
+- ... is a *foreign key* in =Track=
+- With a many-to-one relationship
+  - *Many* tracks can be related *to*
+  - *One* album
+#+REVEAL_HTML: </div>
+
+** Find all the tracks on album 95
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+SELECT trackid,
+       name
+  FROM track
+ WHERE albumid = 95;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+TrackId     Name
+----------  -----------------------
+1212        The Number Of The Beast
+1213        The Trooper
+1214        Prowler
+1215        Transylvania
+1216        Remember Tomorrow
+1217        Where Eagles Dare
+1218        Sanctuary
+1219        Running Free
+1220        Run To The Hilss
+1221        2 Minutes To Midnight
+1222        Iron Maiden
+1223        Hallowed Be Thy Name
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+** Relationship diagram
+
+#+BEGIN_SRC dot :file query-diagram-2.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+  digraph G {
+    rankdir = LR;
+    node [shape=plaintext,
+	  fontname="Consolas",
+	  fontsize="20",
+	  labelfontname="Consolas",
+	  labelfontsize="24"];
+
+    track [label=<<table><TR><td><b>TrackId</b></td>
+<td><b>Name</b></td>
+<td><b>AlbumId</b></td>
+</TR>
+<TR><TD>1212</TD>
+<TD>The Number Of The Beast</TD>
+<TD PORT="p1">95</TD>
+</TR>
+<TR><TD>1213</TD>
+<TD>The Trooper</TD>
+<TD PORT="p2">95</TD>
+</TR>
+<TR><TD>1214</TD>
+<TD>Prowler</TD>
+<TD PORT="p3">95</TD>
+</TR>
+<TR><TD>1215</TD>
+<TD>Transylvania</TD>
+<TD PORT="p4">95</TD>
+</TR>
+<TR><TD>1216</TD>
+<TD>Remember Tomorrow</TD>
+<TD PORT="p5">95</TD>
+</TR>
+<TR><TD>1217</TD>
+<TD>Where Eagles Dare</TD>
+<TD PORT="p6">95</TD>
+</TR>
+<TR><TD>1218</TD>
+<TD>Sanctuary</TD>
+<TD PORT="p7">95</TD>
+</TR>
+<TR><TD>1219</TD>
+<TD>Running Free</TD>
+<TD PORT="p8">95</TD>
+</TR>
+<TR><TD>1220</TD>
+<TD>Run To The Hilss</TD>
+<TD PORT="p9">95</TD>
+</TR>
+<TR><TD>1221</TD>
+<TD>2 Minutes To Midnight</TD>
+<TD PORT="p10">95</TD>
+</TR>
+<TR><TD>1222</TD>
+<TD>Iron Maiden</TD>
+<TD PORT="p11">95</TD>
+</TR>
+<TR><TD>1223</TD>
+<TD>Hallowed Be Thy Name</TD>
+<TD PORT="p12">95</TD>
+</TR>
+</table>>];
+
+    album [label=<<table><TR><Td><b>AlbumId</b></Td>
+<Td><b>Title</b></Td>
+<Td><b>ArtistId</b></Td>
+</TR>
+<tr><td colspan="3">...</td></tr>
+<TR><TD PORT="t1">95</TD>
+<TD>A Real Dead One</TD>
+<TD>90</TD>
+</TR><tr><td colspan="3">...</td></tr></table>>];
+
+    track:p1 -> album:t1;
+    track:p2 -> album:t1;
+    track:p3 -> album:t1;
+    track:p4 -> album:t1;
+    track:p5 -> album:t1;
+    track:p6 -> album:t1;
+    track:p7 -> album:t1;
+    track:p8 -> album:t1;
+    track:p9 -> album:t1;
+    track:p10 -> album:t1;
+    track:p11 -> album:t1;
+    track:p12 -> album:t1;
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:query-diagram-2.svg]]
+
+#+BEGIN_NOTES
+Here's what the contents of the tables look like.
+
+On the left is the =track= table. This isn't all the columns, just =trackid=, =name=, and =albumid=.
+
+We can see that all of these tracks have the same =albumid= value. This points us to the row in =album= that has an =albumid= column with this value.
+
+We say that these tables are *related*, or *correlated*.
+
+Wouldn't it be great if we could somehow link these two tables in some way...?of
+
+#+END_NOTES
+
+* Joins: What we want
+
+#+BEGIN_EXAMPLE
+Name                     Title            Composer
+-----------------------  ---------------  --------------------
+The Number Of The Beast  A Real Dead One  Steve Harris
+The Trooper              A Real Dead One  Steve Harris
+Prowler                  A Real Dead One  Steve Harris
+Transylvania             A Real Dead One  Steve Harris
+Remember Tomorrow        A Real Dead One  Paul Di'Anno/Steve H
+Where Eagles Dare        A Real Dead One  Steve Harris
+Sanctuary                A Real Dead One  David Murray/Paul Di
+Running Free             A Real Dead One  Paul Di'Anno/Steve H
+Run To The Hilss         A Real Dead One  Steve Harris
+2 Minutes To Midnight    A Real Dead One  Adrian Smith/Bruce D
+Iron Maiden              A Real Dead One  Steve Harris
+Hallowed Be Thy Name     A Real Dead One  Steve Harris
+#+END_EXAMPLE
+
+#+BEGIN_NOTES
+Here's an example set of results.
+
+We've got three columns. The first one, =Name=, and the last one, =Composer=, contain information from the =track= table.
+
+But the middle column contains information from the =Album= table.
+
+The information is *related* to the track -- the track and the album both have a column called =AlbumId= that contains the same value.
+#+END_NOTES
+
+** Joins: What we want, explanation
+
+- Query two tables at once, =track= and =album=
+- Every time we have a row in =track=
+  - Find the equivalent row in =album=, based on =AlbumId=
+  - Look up the =Title= column
+  - Include its value in the output
+- We say we are *joining* the tables, on the =AlbumId= column
+
+#+BEGIN_NOTES
+So far all our queries have only queried one table at a time.
+
+This time we want to process two tables. One table
+#+END_NOTES
+
+** Joins: Left table and right table
+
+[[file:query-diagram-2.svg]]
+
+#+BEGIN_NOTES
+Going back to this diagram for a moment, notice how we have a table on the left, and a table on the right.
+
+We want *all* the rows from the table on the left, and the values of any matching rows from the table on the right.
+#+END_NOTES
+
+** Joins: SQL
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+     SELECT track.name,
+	    album.title,
+	    track.composer
+       FROM track
+  LEFT JOIN album ON track.albumid = album.albumid
+      WHERE track.albumid = 95;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- =SELECT= column names include the table name
+- =LEFT JOIN= specifies the table on the right
+- =ON= says how the left and right table are related
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Here's what the SQL looks like. The differences to what we're used to so far are:
+
+- In the =SELECT= columns we have to include the name of the table before the name of the column, separated by a dot (=.=)
+
+- After the =FROM= (which is unchanged) we have to include the name of the table we're joining against. This is a =LEFT JOIN=, so we have to specify that, followed by the name of the table (=album= in this case).
+
+- We have to say how the two table are related. Here, they are related through the =albumid= column in both tables. When the values in that column are the same then the rows are related.
+#+END_NOTES
+
+** Average length of song per album
+
+#+BEGIN_SRC sql
+   SELECT AVG(track.milliseconds) / 1000,
+          album.title
+     FROM track
+LEFT JOIN album ON track.albumid = album.albumid
+ GROUP BY album.title
+    LIMIT 10;
+#+END_SRC
+
+** Shortest song on an album
+
+#+BEGIN_SRC sql
+     SELECT MIN(track.milliseconds) / 1000 AS sec,
+	    track.name,
+	    album.albumid,
+	    album.title
+       FROM track
+  LEFT JOIN album ON track.albumid = album.albumid
+   GROUP BY track.albumid
+      LIMIT 10;
+#+END_SRC
+
+** Longest song on an album
+
+#+BEGIN_SRC sql
+select min(track.milliseconds) / 1000 as sec, track.name, album.albumid, album.title from track left join album on track.albumid = album.albumid group by track.albumid limit 10;
+#+END_SRC
+
+** How many tracks are on each album
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC sql
+     SELECT COUNT(track.name) AS cnt,
+	    album.title
+       FROM track
+  LEFT JOIN album ON track.albumid = album.albumid
+   GROUP BY album.title
+      LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_EXAMPLE
+cnt         Title
+----------  --------------------
+9           ...And Justice For A
+12          20th Century Masters
+1           A Copland Celebratio
+11          A Matter of Life and
+12          A Real Dead One
+11          A Real Live One
+1           A Soprano Inspired
+15          A TempestadeTempesta
+17          A-Sides
+15          Ace Of Spades
+#+END_EXAMPLE
+#+REVEAL_HTML: </div>
+
+* What else can we join on?
+
+#+BEGIN_SRC sql
+sqlite> .schema track
+CREATE TABLE [Track]
+(
+    [TrackId] INTEGER  NOT NULL,
+    [Name] NVARCHAR(200)  NOT NULL,
+    [AlbumId] INTEGER,
+    [MediaTypeId] INTEGER  NOT NULL,
+    [GenreId] INTEGER,
+    [Composer] NVARCHAR(220),
+    [Milliseconds] INTEGER  NOT NULL,
+    [Bytes] INTEGER,
+    [UnitPrice] NUMERIC(10,2)  NOT NULL,
+    CONSTRAINT [PK_Track] PRIMARY KEY  ([TrackId]),
+    FOREIGN KEY ([AlbumId]) REFERENCES [Album] ([AlbumId])
+                ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY ([GenreId]) REFERENCES [Genre] ([GenreId])
+                ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY ([MediaTypeId]) REFERENCES [MediaType] ([MediaTypeId])
+                ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+#+END_SRC
+
+#+BEGIN_NOTES
+As well as =AlbumId= we have two other foreign keys here, =GenreId= and =MediaTypeId=.
+
+Lets go and investigate those.
+
+#+BEGIN_EXAMPLE
+.schema genre
+select distinct name from genre;
+
+.schema mediatype
+select distinct name from mediatype;
+#+END_EXAMPLE
+#+END_NOTES
+
+** Joining on multiple tables
+
+#+BEGIN_SRC sql
+   SELECT track.name,
+          genre.name,
+          album.title
+     FROM track
+LEFT JOIN genre
+       ON track.genreid = genre.genreid
+LEFT JOIN album
+       ON track.albumid = album.albumid
+    LIMIT 10;
+#+END_SRC
+
+
+* Exercises
+
+- How many tracks do we have in each genre?
+  - Which genre do we have the most tracks of?
+  - Which genre do we have the least tracks of?
+- Which album has the largest number of genres?
+- Which album has the smallest number of genres?
+
+** How many tracks in each genre
+
+#+BEGIN_SRC sql
+     SELECT COUNT(genre.name) AS cnt,
+	    genre.name
+       FROM genre
+  LEFT JOIN track
+	 ON track.genreid = genre.genreid
+   GROUP BY genre.name
+   ORDER BY cnt desc
+      LIMIT 10;
+#+END_SRC
+
+** Which album has the largest number of genres
+
+*** Start with
+
+#+BEGIN_SRC sql
+     SELECT genre.name,
+	    album.albumid,
+	    album.title
+       FROM track
+  LEFT JOIN genre
+         ON track.genreid = genre.genreid
+  LEFT JOIN album
+         ON track.albumid = album.albumid
+      LIMIT 60;
+#+END_SRC
+
+*** Add counts / grouping
+
+#+BEGIN_SRC sql
+     SELECT COUNT(genre.name) AS cnt,
+	    genre.name,
+	    album.albumid,
+	    album.title
+       FROM track
+  LEFT JOIN genre ON track.genreid = genre.genreid
+  LEFT JOIN album ON track.albumid = album.albumid
+   GROUP BY album.title, genre.name
+   ORDER BY album.title
+      LIMIT 60;
+#+END_SRC
