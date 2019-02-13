@@ -2416,7 +2416,7 @@ LEFT JOIN album
 - Which album has the largest number of genres?
 - Which album has the smallest number of genres?
 
-** How many tracks in each genre
+** How many tracks in each genre                                   :noexport:
 
 #+BEGIN_SRC sql
      SELECT COUNT(genre.name) AS cnt,
@@ -2433,7 +2433,8 @@ LEFT JOIN album
 
 *** Start with
 
-#+BEGIN_SRC sql
+#+NAME: most-genres-1
+#+BEGIN_SRC sql-mode :results verbatim :exports both
      SELECT genre.name,
 	    album.albumid,
 	    album.title
@@ -2442,12 +2443,39 @@ LEFT JOIN album
          ON track.genreid = genre.genreid
   LEFT JOIN album
          ON track.albumid = album.albumid
-      LIMIT 60;
+      LIMIT 18;
 #+END_SRC
+
+#+REVEAL: split
+
+#+RESULTS: most-genres-1
+#+begin_example
+Name        AlbumId     Title
+----------  ----------  -------------------------------------
+Rock        1           For Those About To Rock We Salute You
+Rock        2           Balls to the Wall
+Rock        3           Restless and Wild
+Rock        3           Restless and Wild
+Rock        3           Restless and Wild
+Rock        1           For Those About To Rock We Salute You
+Rock        1           For Those About To Rock We Salute You
+Rock        1           For Those About To Rock We Salute You
+Rock        1           For Those About To Rock We Salute You
+Rock        1           For Those About To Rock We Salute You
+Rock        1           For Those About To Rock We Salute You
+Rock        1           For Those About To Rock We Salute You
+Rock        1           For Those About To Rock We Salute You
+Rock        1           For Those About To Rock We Salute You
+Rock        4           Let There Be Rock
+Rock        4           Let There Be Rock
+Rock        4           Let There Be Rock
+Rock        4           Let There Be Rock
+#+end_example
 
 *** Add counts / grouping
 
-#+BEGIN_SRC sql
+#+NAME: most-genres-2
+#+BEGIN_SRC sql-mode :results verbatim :exports both
      SELECT COUNT(genre.name) AS cnt,
 	    genre.name,
 	    album.albumid,
@@ -2457,5 +2485,25 @@ LEFT JOIN album
   LEFT JOIN album ON track.albumid = album.albumid
    GROUP BY album.title, genre.name
    ORDER BY album.title
-      LIMIT 60;
+      LIMIT 10;
 #+END_SRC
+
+#+REVEAL: split
+
+#+RESULTS: most-genres-2
+#+begin_example
+cnt         Name        AlbumId     Title
+----------  ----------  ----------  ----------------------
+9           Metal       156         ...And Justice For All
+12          Rock        257         20th Century Masters -
+1           Classical   296         A Copland Celebration,
+11          Rock        94          A Matter of Life and D
+12          Metal       95          A Real Dead One
+11          Metal       96          A Real Live One
+1           Classical   285         A Soprano Inspired
+15          Latin       139         A TempestadeTempestade
+17          Rock        203         A-Sides
+15          Metal       160         Ace Of Spades
+#+end_example
+
+
