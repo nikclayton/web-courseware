@@ -266,7 +266,8 @@ SELECT name, milliseconds FROM track LIMIT 20;
 * Formatting queries
 
 #+BEGIN_SRC sql
-SELECT name, milliseconds
+SELECT name,
+       milliseconds
   FROM track
  LIMIT 10;
 #+END_SRC
@@ -294,7 +295,8 @@ This is also a very common way to write queries in online documentation, so you'
 
 #+NAME: find-a-specific-row
 #+BEGIN_SRC sql-mode
-SELECT name, milliseconds
+SELECT name,
+       milliseconds
   FROM track
  WHERE name = 'Let There Be Rock';
 #+END_SRC
@@ -318,7 +320,8 @@ However, Javascript uses triple- (or double-) equals to check for equality. SQL 
 
 #+NAME: name-exists
 #+BEGIN_SRC sql-mode
-SELECT name, milliseconds
+SELECT name,
+       milliseconds
   FROM track
  WHERE name = 'Iron Maiden';
 #+END_SRC
@@ -340,7 +343,8 @@ SELECT name, milliseconds
 
 #+NAME: wildcard-stairway
 #+BEGIN_SRC sql-mode
-SELECT name, milliseconds
+SELECT name,
+       milliseconds
   FROM track
  WHERE name LIKE '%stairway%';
 #+END_SRC
@@ -366,7 +370,8 @@ SELECT name, milliseconds
 *** Exercise: Try searching for other tracks
 
 #+BEGIN_SRC sql
-SELECT name, milliseconds
+SELECT name,
+       milliseconds
   FROM track
  WHERE name LIKE '%PUT_SOMETHING_HERE%';
 #+END_SRC
@@ -379,7 +384,8 @@ SELECT name, milliseconds
 #+REVEAL_HTML: <div class="leftcol">
 #+NAME: comparison-operators
 #+BEGIN_SRC sql-mode
-SELECT name, milliseconds
+SELECT name,
+       milliseconds
   FROM track
  WHERE milliseconds > 500000
  LIMIT 10;
@@ -424,7 +430,8 @@ SELECT [columns]     -- What to return
 #+REVEAL_HTML: <div class="leftcol">
 #+NAME: complex-and
 #+BEGIN_SRC sql-mode
-SELECT name, milliseconds
+SELECT name,
+       milliseconds
   FROM track
  WHERE name LIKE '%stairway%'
    AND milliseconds > 500000;
@@ -487,7 +494,8 @@ Notice how, in the output, the column names show the operation that was performe
 #+REVEAL_HTML: <div class="leftcol">
 #+NAME: float-1
 #+BEGIN_SRC sql-mode
-SELECT UPPER(name), milliseconds / 1000.0
+SELECT UPPER(name),
+       milliseconds / 1000.0
   FROM track
  WHERE name LIKE '%stairway%'
    AND milliseconds > 500000;
@@ -507,7 +515,8 @@ SELECT UPPER(name), milliseconds / 1000.0
 #+REVEAL_HTML: <div class="leftcol">
 #+NAME: float-2
 #+BEGIN_SRC sql-mode
-SELECT UPPER(name), CAST(milliseconds AS FLOAT) / 1000
+SELECT UPPER(name),
+       CAST(milliseconds AS FLOAT) / 1000
   FROM track
  WHERE name LIKE '%stairway%'
    AND milliseconds > 500000;
