@@ -1,7 +1,8 @@
 #+TITLE: Databases and SQL
 #+SETUPFILE: "../include/settings.org"
-#+PROPERTY: :header-args:sql-mode :product sqlite
-#+PROPERTY: :header-args:sql-mode+ :session powercoders
+#+PROPERTY: header-args:sql-mode :product sqlite
+#+PROPERTY: header-args:sql-mode+ :results verbatim
+#+PROPERTY: header-args:sql-mode+ :exports both
 
 * A database is...
 
@@ -205,8 +206,12 @@ Evil Walks|263497
 
 - Press the =Up= arrow to find the query
 
-#+BEGIN_EXAMPLE
-sqlite> SELECT name, milliseconds FROM track LIMIT 10;
+#+BEGIN_SRC sql-mode
+SELECT name, milliseconds FROM track LIMIT 10
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
 Name                                     Milliseconds
 ---------------------------------------  ------------
 For Those About To Rock (We Salute You)  343719
@@ -219,7 +224,7 @@ Let's Get It Up                          233926
 Inject The Venom                         210834
 Snowballed                               203102
 Evil Walks                               263497
-#+END_EXAMPLE
+#+end_example
 
 ** What have we done?
 
@@ -287,11 +292,19 @@ This is also a very common way to write queries in online documentation, so you'
 
 ** Finding a specific row
 
-#+BEGIN_SRC sql
+#+NAME: find-a-specific-row
+#+BEGIN_SRC sql-mode
 SELECT name, milliseconds
   FROM track
  WHERE name = 'Let There Be Rock';
 #+END_SRC
+
+#+REVEAL: split
+
+#+RESULTS: find-a-specific-row
+: Name               Milliseconds
+: -----------------  ------------
+: Let There Be Rock  366654
 
 #+BEGIN_NOTES
 In this example we want to find the single row where the track has this specific name.
@@ -303,7 +316,8 @@ However, Javascript uses triple- (or double-) equals to check for equality. SQL 
 
 ** What if  the same name exists more than once?
 
-#+BEGIN_SRC sql
+#+NAME: name-exists
+#+BEGIN_SRC sql-mode
 SELECT name, milliseconds
   FROM track
  WHERE name = 'Iron Maiden';
@@ -311,9 +325,21 @@ SELECT name, milliseconds
 
 - Should return 5 rows with different =milliseconds= values
 
+#+REVEAL: split
+
+#+RESULTS: name-exists
+: Name         Milliseconds
+: -----------  ------------
+: Iron Maiden  324623
+: Iron Maiden  261955
+: Iron Maiden  494602
+: Iron Maiden  351869
+: Iron Maiden  235232
+
 ** Text searching with wildcards
 
-#+BEGIN_SRC sql
+#+NAME: wildcard-stairway
+#+BEGIN_SRC sql-mode
 SELECT name, milliseconds
   FROM track
  WHERE name LIKE '%stairway%';
@@ -328,6 +354,15 @@ SELECT name, milliseconds
   2. ... with a name containing =stairway=...
   3. ... and return the values of the =name= and =milliseconds= columns
 
+#+REVEAL: split
+
+#+RESULTS: wildcard-stairway
+: Name                Milliseconds
+: ------------------  ------------
+: Stairway To Heaven  529658
+: Stairway To Heaven  481619
+: Stairway To Heaven  657293
+
 *** Exercise: Try searching for other tracks
 
 #+BEGIN_SRC sql
@@ -341,7 +376,9 @@ SELECT name, milliseconds
 
 ** Other comparisons work as you expect
 
-#+BEGIN_SRC sql
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: comparison-operators
+#+BEGIN_SRC sql-mode
 SELECT name, milliseconds
   FROM track
  WHERE milliseconds > 500000
@@ -350,6 +387,25 @@ SELECT name, milliseconds
 
 - =<=, =>=, ~<=~, ~>=~,
 - =LIMIT= always comes last
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: comparison-operators
+#+begin_example
+Name        Milliseconds
+----------  ------------
+Stratus     582086
+No More Te  555075
+Sleeping V  644571
+The Alchem  509413
+Talkin' 'B  589531
+You Shook   619467
+How Many M  711836
+Advance Ro  677694
+Mercyful F  671712
+Tuesday's   545750
+#+end_example
+#+REVEAL_HTML: </div>
 
 ** Query structure
 
@@ -365,28 +421,44 @@ SELECT [columns]     -- What to return
 
 ** Complex expressions with =AND=
 
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: complex-and
 #+BEGIN_SRC sql-mode
 SELECT name, milliseconds
   FROM track
  WHERE name LIKE '%stairway%'
    AND milliseconds > 500000;
 #+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: complex-and
+: Name                Milliseconds
+: ------------------  ------------
+: Stairway To Heaven  529658
+: Stairway To Heaven  657293
+#+REVEAL_HTML: </div>
 
 * Calculating new column values
 
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: calculate-new-values
 #+BEGIN_SRC sql-mode
-SELECT UPPER(name), milliseconds / 1000
+SELECT UPPER(name),
+       milliseconds / 1000
   FROM track
  WHERE name LIKE '%stairway%'
    AND milliseconds > 500000;
 #+END_SRC
+#+REVEAL_HTML: </div>
 
-#+BEGIN_EXAMPLE
-UPPER(name)         milliseconds / 1000
-------------------  -------------------
-STAIRWAY TO HEAVEN  529
-STAIRWAY TO HEAVEN  657
-#+END_EXAMPLE
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: calculate-new-values
+: UPPER(name)         milliseconds / 1000
+: ------------------  -------------------
+: STAIRWAY TO HEAVEN  529
+: STAIRWAY TO HEAVEN  657
+#+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 Values in columns can be operated on to create new columns.
@@ -413,6 +485,7 @@ Notice how, in the output, the column names show the operation that was performe
 *** Forcing a float, one way
 
 #+REVEAL_HTML: <div class="leftcol">
+#+NAME: float-1
 #+BEGIN_SRC sql-mode
 SELECT UPPER(name), milliseconds / 1000.0
   FROM track
@@ -422,17 +495,17 @@ SELECT UPPER(name), milliseconds / 1000.0
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
-UPPER(name)                     milliseconds / 1000.0
-------------------------------  ---------------------
-STAIRWAY TO HEAVEN              529.658
-STAIRWAY TO HEAVEN              657.293
-#+END_EXAMPLE
+#+RESULTS: float-1
+: UPPER(name)         milliseconds / 1000.0
+: ------------------  ---------------------
+: STAIRWAY TO HEAVEN  529.658
+: STAIRWAY TO HEAVEN  657.293
 #+REVEAL_HTML: </div>
 
 *** Forcing a float, second way
 
 #+REVEAL_HTML: <div class="leftcol">
+#+NAME: float-2
 #+BEGIN_SRC sql-mode
 SELECT UPPER(name), CAST(milliseconds AS FLOAT) / 1000
   FROM track
@@ -442,16 +515,17 @@ SELECT UPPER(name), CAST(milliseconds AS FLOAT) / 1000
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
-UPPER(name)                     CAST(milliseconds AS FLOAT) / 1000
-------------------------------  ----------------------------------
-Stairway To Heaven              529.658
-Stairway To Heaven              657.293
-#+END_EXAMPLE
+#+RESULTS: float-2
+: UPPER(name)         CAST(milliseconds AS FLOAT) / 1000
+: ------------------  ----------------------------------
+: STAIRWAY TO HEAVEN  529.658
+: STAIRWAY TO HEAVEN  657.293
 #+REVEAL_HTML: </div>
 
 ** Renaming columns with =AS=
 
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: renaming-with-as
 #+BEGIN_SRC sql-mode
 SELECT UPPER(name) AS name,
        milliseconds / 1000 AS seconds
@@ -459,16 +533,20 @@ SELECT UPPER(name) AS name,
  WHERE name LIKE '%stairway%'
    AND milliseconds > 500000;
 #+END_SRC
+#+REVEAL_HTML: </div>
 
-#+BEGIN_EXAMPLE
-name                seconds
-------------------  -------------------
-STAIRWAY TO HEAVEN  529
-STAIRWAY TO HEAVEN  657
-#+END_EXAMPLE
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: renaming-with-as
+: name                seconds
+: ------------------  ----------
+: STAIRWAY TO HEAVEN  529
+: STAIRWAY TO HEAVEN  657
+#+REVEAL_HTML: </div>
 
 *** Using a column again
 
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: using-a-column-twice
 #+BEGIN_SRC sql-mode
 SELECT UPPER(name) AS name,
        milliseconds,
@@ -477,17 +555,20 @@ SELECT UPPER(name) AS name,
  WHERE name LIKE '%stairway%'
    AND milliseconds > 500000;
 #+END_SRC
+#+REVEAL_HTML: </div>
 
-
-#+BEGIN_EXAMPLE
-name                            Milliseconds  seconds
-------------------------------  ------------  ----------
-STAIRWAY TO HEAVEN              529658        529
-STAIRWAY TO HEAVEN              657293        657
-#+END_EXAMPLE
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: using-a-column-twice
+: name                Milliseconds  seconds
+: ------------------  ------------  ----------
+: STAIRWAY TO HEAVEN  529658        529
+: STAIRWAY TO HEAVEN  657293        657
+#+REVEAL_HTML: </div>
 
 ** Using renamed columns in the =WHERE= clause
 
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: using-renamed-column
 #+BEGIN_SRC sql-mode
 SELECT UPPER(name) AS name,
        milliseconds / 1000 AS seconds
@@ -495,13 +576,15 @@ SELECT UPPER(name) AS name,
  WHERE name LIKE '%stairway%'
    AND seconds > 500;
 #+END_SRC
+#+REVEAL_HTML: </div>
 
-#+BEGIN_EXAMPLE
-name                seconds
-------------------  -------------------
-STAIRWAY TO HEAVEN  529
-STAIRWAY TO HEAVEN  657
-#+END_EXAMPLE
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: using-renamed-column
+: name                seconds
+: ------------------  ----------
+: STAIRWAY TO HEAVEN  529
+: STAIRWAY TO HEAVEN  657
+#+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 You can use the renamed column in the =WHERE= clause.
@@ -519,15 +602,20 @@ This is identical to the example on the previous slide, except that instead of u
 
 ** Using =ORDER BY=
 
-#+BEGIN_SRC sql
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: order-by
+#+BEGIN_SRC sql-mode
   SELECT name,
          milliseconds / 1000 AS seconds
     FROM track
 ORDER BY seconds
    LIMIT 10;
 #+END_SRC
+#+REVEAL_HTML: </div>
 
-#+BEGIN_EXAMPLE
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: order-by
+#+begin_example
 Name                      seconds
 ------------------------  ----------
 É Uma Partida De Futebol  1
@@ -540,7 +628,8 @@ Commercial 2              21
 Bossa                     29
 Casinha Feliz             32
 Mateus Enter              33
-#+END_EXAMPLE
+#+end_example
+#+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 This gives us the first 10 shortest songs. This is because the default behaviour for =ORDER BY= is to sort them in to ascending order, so the smallest comes first, then the next smallest, and so on.
@@ -548,15 +637,20 @@ This gives us the first 10 shortest songs. This is because the default behaviour
 
 ** Using =ORDER BY ... DESC=
 
-#+BEGIN_SRC sql
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: order-by-desc
+#+BEGIN_SRC sql-mode
   SELECT name,
          milliseconds / 1000 AS seconds
     FROM track
 ORDER BY seconds DESC
    LIMIT 10;
 #+END_SRC
+#+REVEAL_HTML: </div>
 
-#+BEGIN_EXAMPLE
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: order-by-desc
+#+begin_example
 Name                    seconds
 ----------------------  ----------
 Occupation / Precipice  5286
@@ -569,7 +663,8 @@ Murder On the Rising S  2935
 Battlestar Galactica,   2927
 Take the Celestra       2927
 Fire In Space           2926
-#+END_EXAMPLE
+#+end_example
+#+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 Here we've used the =DESC= keyword, so now we get the tracks sorted by seconds in descending order, with the longest track first, then the next longest, and so on.
@@ -578,6 +673,7 @@ Here we've used the =DESC= keyword, so now we get the tracks sorted by seconds i
 ** Using =ORDER BY= with =WHERE= clauses
 
 #+REVEAL_HTML: <div class="leftcol">
+#+NAME: order-by-where
 #+BEGIN_SRC sql-mode
   SELECT name,
          milliseconds / 1000 AS seconds
@@ -590,7 +686,8 @@ ORDER BY seconds DESC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
+#+RESULTS: order-by-where
+#+begin_example
 Name           seconds
 -------------  ----------
 The Alchemist  509
@@ -603,12 +700,13 @@ Some Kind Of   505
 Where The Riv  505
 Title Song     505
 Miserere mei,  501
-#+END_EXAMPLE
+#+end_example
 #+REVEAL_HTML: </div>
 
 ** Using multiple =ORDER BY= clauses
 
 #+REVEAL_HTML: <div class="leftcol">
+#+NAME: order-by-multiple-1
 #+BEGIN_SRC sql-mode
   SELECT name,
          milliseconds / 1000 AS seconds
@@ -622,7 +720,8 @@ ORDER BY seconds DESC,
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
+#+RESULTS: order-by-multiple-1
+#+begin_example
 Name           seconds
 -------------  ----------
 The Alchemist  509
@@ -635,7 +734,7 @@ Some Kind Of   505
 Title Song     505
 Where The Riv  505
 Miserere mei,  501
-#+END_EXAMPLE
+#+end_example
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
@@ -651,7 +750,8 @@ The =ASC= for the name ordering is redundant, because that's the default, but in
 ** The order of =ORDER BY= clauses is important
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
+#+NAME: order-by-multiple-2
+#+BEGIN_SRC sql-mode
   SELECT name,
          milliseconds / 1000 AS seconds
     FROM track
@@ -664,7 +764,8 @@ ORDER BY name ASC,
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
+#+RESULTS: order-by-multiple-2
+#+begin_example
 Name                 seconds
 -------------------  ----------
 How Many More Times  508
@@ -677,7 +778,7 @@ The Alchemist        509
 The Thin Line Betwe  506
 Title Song           505
 Where The River Goe  505
-#+END_EXAMPLE
+#+end_example
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
@@ -689,7 +790,8 @@ If you look at the results you can see that they are now in name order. Since we
 ** The order of =ORDER BY= clauses is important
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
+#+NAME: order-by-multiple-3
+#+BEGIN_SRC sql-mode
   SELECT name,
          milliseconds / 1000 AS seconds
     FROM track
@@ -701,7 +803,8 @@ ORDER BY name ASC,
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
+#+RESULTS: order-by-multiple-3
+#+begin_example
 Name              seconds
 ----------------  ----------
 09 - Iron Maiden  216
@@ -713,13 +816,12 @@ Iron Maiden       235
 Iron Man          172
 Iron Man/Childre  552
 Ironic            229
-#+END_EXAMPLE
+#+end_example
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 If we change the query to find songs with =iron= in the name we get a clearer view. Now all the songs called =Iron Maiden= are together, and within that they're sorted by seconds, with the longest songs coming first.
 #+END_NOTES
-
 
 ** Query structure
 
@@ -739,18 +841,18 @@ ORDER BY [columns]     -- (optional) How to sort it
 * Counting rows with =COUNT=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
+#+NAME: count-1
+#+BEGIN_SRC sql-mode
 SELECT COUNT(name)
   FROM track;
 #+END_SRC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
-count(name)
------------
-3503
-#+END_EXAMPLE
+#+RESULTS: count-1
+: COUNT(name)
+: -----------
+: 3503
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
@@ -763,18 +865,18 @@ Here, we can see that our database contains information about 3,503 songs.
 ** Renaming the count column
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
+#+NAME: count-2
+#+BEGIN_SRC sql-mode
 SELECT COUNT(name) AS cnt
   FROM track;
 #+END_SRC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
-cnt
------------
-3503
-#+END_EXAMPLE
+#+RESULTS: count-2
+: cnt
+: ----------
+: 3503
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
@@ -789,17 +891,22 @@ We can rename this column in the output using =AS= the same way that we renamed 
 
 *** First attempt, list the =name= column in the query
 
-#+BEGIN_SRC sql
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: count-fails
+#+BEGIN_SRC sql-mode
 SELECT COUNT(name) AS cnt,
        name
   FROM track;
 #+END_SRC
+#+REVEAL_HTML: </div>
 
-#+BEGIN_EXAMPLE
-cnt          Name
------------  ---------------------------------------
-3503         For Those About To Rock (We Salute You)
-#+END_EXAMPLE
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: count-fails
+: cnt         Name
+: ----------  ---------------------------------------
+: 3503        For Those About To Rock (We Salute You)
+#+REVEAL_HTML: </div>
+
 
 #+BEGIN_NOTES
 OK, so that's not the right answer. We've only got one row back, but we want multiple rows, showing how many of each name we have.
@@ -818,11 +925,11 @@ OK, so that's not the right answer. We've only got one row back, but we want mul
 .width 3 40
 #+END_SRC
 
-
 *** Using =GROUP BY=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
+#+NAME: count-group-1
+#+BEGIN_SRC sql-mode
   SELECT COUNT(name) as cnt,
          name
     FROM track
@@ -832,20 +939,21 @@ GROUP BY name
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
-cnt  Name
----  ----------------------------------------
-1    "40"
-1    "?"
-1    "Eine Kleine Nachtmusik" Serenade In G,
-1    #1 Zero
-1    #9 Dream
-1    'Round Midnight
-1    (Anesthesia) Pulling Teeth
-1    (Da Le) Yaleo
-1    (I Can't Help) Falling In Love With You
-1    (Oh) Pretty Woman
-#+END_EXAMPLE
+#+RESULTS: count-group-1
+#+begin_example
+cnt         Name
+----------  ----------
+1           "40"
+1           "?"
+1           "Eine Klei
+1           #1 Zero
+1           #9 Dream
+1           'Round Mid
+1           (Anesthesi
+1           (Da Le) Ya
+1           (I Can't H
+1           (Oh) Prett
+#+end_example
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
@@ -862,7 +970,8 @@ This looks like it's working, it's just that the results happen to show all the 
 *** Solution: Use =ORDER BY=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
+#+NAME: count-group-order
+#+BEGIN_SRC sql-mode
   SELECT COUNT(name) as cnt,
          name
     FROM track
@@ -873,20 +982,21 @@ ORDER BY cnt DESC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
-cnt  Name
----  ----------------------------------------
-5    2 Minutes To Midnight
-5    Hallowed Be Thy Name
-5    Iron Maiden
-5    The Number Of The Beast
-5    The Trooper
-5    Wrathchild
-4    Fear Of The Dark
-4    Running Free
-4    Sanctuary
-4    The Evil That Men Do
-#+END_EXAMPLE
+#+RESULTS: count-group-order
+#+begin_example
+cnt         Name
+----------  ---------------------
+5           2 Minutes To Midnight
+5           Hallowed Be Thy Name
+5           Iron Maiden
+5           The Number Of The Bea
+5           The Trooper
+5           Wrathchild
+4           Fear Of The Dark
+4           Running Free
+4           Sanctuary
+4           The Evil That Men Do
+#+end_example
 #+REVEAL_HTML: </div>
 
 *** Exercise: Use =WHERE=
@@ -898,7 +1008,8 @@ cnt  Name
 *** Solution: Use =WHERE=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
+#+NAME: count-group-where
+#+BEGIN_SRC sql-mode
   SELECT COUNT(name) as cnt,
          name
     FROM track
@@ -910,15 +1021,14 @@ ORDER BY cnt DESC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
-cnt  Name
----  ----------------------------------------
-5    Iron Maiden
-1    09 - Iron Maiden
-1    Iron Man
-1    Iron Man/Children of the Grave
-1    Ironic
-#+END_EXAMPLE
+#+RESULTS: count-group-where
+: cnt         Name
+: ----------  -----------
+: 5           Iron Maiden
+: 1           09 - Iron M
+: 1           Iron Man
+: 1           Iron Man/Ch
+: 1           Ironic
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
@@ -946,7 +1056,8 @@ ORDER BY [columns]     -- (optional) How to sort it
 ** Solution: Filtering duplicates with =COUNT=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
+#+NAME: count-filter-dupes
+#+BEGIN_SRC sql-mode
   SELECT COUNT(name) as cnt,
          name
     FROM track
@@ -958,9 +1069,8 @@ ORDER BY cnt DESC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
-Error: misuse of aggregate: count()
-#+END_EXAMPLE
+#+RESULTS: count-filter-dupes
+: Error: misuse of aggregate: COUNT()
 #+REVEAL_HTML: </div>
 
 ** Two types of filtering
@@ -975,7 +1085,8 @@ Error: misuse of aggregate: count()
 ** Using =HAVING=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
+#+NAME: count-filter-having
+#+BEGIN_SRC sql-mode
   SELECT COUNT(name) as cnt,
          name
     FROM track
@@ -987,20 +1098,21 @@ ORDER BY cnt DESC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
-cnt  Name
----  ----------------------------------------
-5    2 Minutes To Midnight
-5    Hallowed Be Thy Name
-5    Iron Maiden
-5    The Number Of The Beast
-5    The Trooper
-5    Wrathchild
-4    Fear Of The Dark
-4    Running Free
-4    Sanctuary
-4    The Evil That Men Do
-#+END_EXAMPLE
+#+RESULTS: count-filter-having
+#+begin_example
+cnt         Name
+----------  ---------------------
+5           2 Minutes To Midnight
+5           Hallowed Be Thy Name
+5           Iron Maiden
+5           The Number Of The Bea
+5           The Trooper
+5           Wrathchild
+4           Fear Of The Dark
+4           Running Free
+4           Sanctuary
+4           The Evil That Men Do
+#+end_example
 #+REVEAL_HTML: </div>
 
 ** Exercise: Using =WHERE= with =HAVING=                           :exercise:
@@ -1024,7 +1136,8 @@ cnt  Name
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC sql
+#+NAME: where-and-having
+#+BEGIN_SRC sql-mode
   SELECT COUNT(name) AS cnt,
          name
     FROM track
@@ -1034,6 +1147,19 @@ GROUP BY name
 ORDER BY cnt DESC
 #+END_SRC
 #+REVEAL_HTML: </div>
+
+#+REVEAL: split
+
+#+RESULTS: where-and-having
+: cnt         Name
+: ----------  -----------------------
+: 5           The Number Of The Beast
+: 5           The Trooper
+: 4           Fear Of The Dark
+: 4           The Evil That Men Do
+: 3           Run To The Hills
+: 3           Smoke On The Water
+: 3           The Clairvoyant
 
 * Query pipeline                                                   :noexport:
 
@@ -1171,18 +1297,18 @@ Notice how this explains why we can't use a =WHERE= clause with an aggregated co
 ** Averages
 
  #+REVEAL_HTML: <div class="leftcol">
- #+BEGIN_SRC sql
+#+NAME: avg-1
+ #+BEGIN_SRC sql-mode
  SELECT AVG(milliseconds) AS mean_duration
    FROM track;
  #+END_SRC
  #+REVEAL_HTML: </div>
 
  #+REVEAL_HTML: <div class="rightcol">
- #+BEGIN_EXAMPLE
- mean_duration
- ----------------
- 393599.212103911
- #+END_EXAMPLE
+#+RESULTS: avg-1
+: mean_duration
+: ----------------
+: 393599.212103911
  #+REVEAL_HTML: </div>
 
 *** Exercise: Group the results by composer
@@ -1195,7 +1321,8 @@ Notice how this explains why we can't use a =WHERE= clause with an aggregated co
 *** Solution: Group the results by composer
 
  #+REVEAL_HTML: <div class="leftcol">
- #+BEGIN_SRC sql
+#+NAME: group-by-composer
+ #+BEGIN_SRC sql-mode
    SELECT AVG(milliseconds) / 1000 AS mean_duration,
           composer
      FROM track
@@ -1205,36 +1332,57 @@ Notice how this explains why we can't use a =WHERE= clause with an aggregated co
  #+REVEAL_HTML: </div>
 
  #+REVEAL_HTML: <div class="rightcol">
- #+BEGIN_EXAMPLE
- mean_duration     composer
- ----------------  ----------------------------
- 711.493507157464
- 235.179666666667  A. F. Iommi, W. Ward, T. But
- 276.871           A. Jamal
- 397.531           A.Bouchard/J.Bouchard/S.Pear
- 206.994           A.Isbell/A.Jones/O.Redding
- 306.657375        AC/DC
- 198.064           Aaron Copland
- 266.936           Aaron Goldberg
- 244.767           Ace Frehley
- 299.102           Acyi Marques/Arlindo Bruz/Br
- #+END_EXAMPLE
+#+RESULTS: group-by-composer
+#+begin_example
+mean_duration     Composer
+----------------  ----------
+711.493507157464
+235.179666666667  A. F. Iomm
+276.871           A. Jamal
+397.531           A.Bouchard
+206.994           A.Isbell/A
+306.657375        AC/DC
+198.064           Aaron Copl
+266.936           Aaron Gold
+244.767           Ace Frehle
+299.102           Acyi Marqu
+#+end_example
  #+REVEAL_HTML: </div>
 
  #+BEGIN_NOTES
- That's interesting -- we have some tracks where the composer column is empty. We'll look at that again later.
+That's interesting -- we have some tracks where the composer column is empty. We'll look at that again later.
  #+END_NOTES
-
 
 *** Incorrect: Average time by composer
 
-#+BEGIN_SRC sql
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: group-by-composer-wrong
+#+BEGIN_SRC sql-mode
   SELECT AVG(milliseconds / 1000) AS mean_duration,
          composer
     FROM track
 GROUP BY composer
    LIMIT 10;
 #+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: group-by-composer-wrong
+#+begin_example
+mean_duration    Composer
+---------------  ----------
+711.00408997955
+235.0            A. F. Iomm
+276.0            A. Jamal
+397.0            A.Bouchard
+206.0            A.Isbell/A
+306.25           AC/DC
+198.0            Aaron Copl
+266.0            Aaron Gold
+244.5            Ace Frehle
+299.0            Acyi Marqu
+#+end_example
+#+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
 This is incorrect because it divides an integer by an integer (creating another integer result) and then computes the average of that. This means that the data is subtly wrong.
@@ -1250,10 +1398,20 @@ This is incorrect because it divides an integer by an integer (creating another 
 
 *** Solution: Total time
 
-#+BEGIN_SRC sql
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: count-time
+#+BEGIN_SRC sql-mode
 SELECT SUM(milliseconds) / 1000.0 as total_seconds
   FROM track;
 #+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: count-time
+: total_seconds
+: -------------
+: 1378778.04
+#+REVEAL_HTML: </div>
 
 *** Exercise: Total time by composer
 
@@ -1261,13 +1419,36 @@ SELECT SUM(milliseconds) / 1000.0 as total_seconds
 
 *** Solution: Total time by composer
 
-#+BEGIN_SRC sql
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: count-time-by-composer
+#+BEGIN_SRC sql-mode
   SELECT SUM(milliseconds) / 1000.0 AS total_seconds,
          composer
     FROM track
 GROUP BY composer
+ORDER BY total_seconds DESC
    LIMIT 10;
 #+END_SRC
+#+end_example
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: count-time-by-composer
+#+begin_example
+total_seconds  Composer
+-------------  ----------
+695840.65
+27217.126      Steve Harr
+11271.816      U2
+8996.378       Miles Davi
+8667.178       Jagger/Ric
+7912.553       Billy Corg
+6579.763       The Tea Pa
+6395.13        Bill Berry
+6059.094       Chris Robi
+5866.463       Chris Corn
+#+end_example
+#+REVEAL_HTML: </div>
 
 ** Finding the minimum and maximum values
 
@@ -1277,9 +1458,11 @@ GROUP BY composer
 
 - What are the names of the 10 shortest songs?
 
-*** Solution: Shortest songs
+*** Solution: Shortest songs                                       :noexport:
 
-#+BEGIN_SRC sql
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: min-track
+#+BEGIN_SRC sql-mode
   SELECT MIN(milliseconds),
          name
     FROM track
@@ -1287,12 +1470,107 @@ GROUP BY name
 ORDER BY milliseconds
    LIMIT 10;
 #+END_SRC
+#+REVEAL_HTML: </div>
 
-*** Exercise: Longest songs
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: min-track
+#+begin_example
+MIN(milliseconds)  Name
+-----------------  ------------------------
+1071               É Uma Partida De Futebol
+4884               Now Sports
+6373               A Statistic
+6635               Oprah
+7941               Commercial 1
+11650              The Real Problem
+21211              Commercial 2
+29048              Bossa
+32287              Casinha Feliz
+33149              Mateus Enter
+#+end_example
+#+REVEAL_HTML: </div>
+
+*** Why not =ORDER BY=?
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: min-track-order-by
+#+BEGIN_SRC sql-mode
+  SELECT milliseconds,
+         name
+    FROM track
+ORDER BY milliseconds
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: min-track-order-by
+#+begin_example
+Milliseconds  Name
+------------  ------------------------
+1071          É Uma Partida De Futebol
+4884          Now Sports
+6373          A Statistic
+6635          Oprah
+7941          Commercial 1
+11650         The Real Problem
+21211         Commercial 2
+29048         Bossa
+32287         Casinha Feliz
+33149         Mateus Enter
+#+end_example
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Why not just use =ORDER BY=?
+
+In this example, you get exactly the same results, so =ORDER BY= is certainly simpler.
+
+The reason to use =MIN()= is when you want to find the minimum value in some group of things. For example, the next exercise...
+#+END_NOTES
+
+*** Exercise: Shortest song written by each composer
+
+- What's the shortest song written by each composer?
+
+*** Solution: Shortest song written by each composer
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: min-track-by-composer
+#+BEGIN_SRC sql-mode
+  SELECT MIN(milliseconds),
+         name,
+         composer
+    FROM track
+GROUP BY composer
+ORDER BY milliseconds
+   LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: min-track-by-composer
+#+begin_example
+MIN(milliseconds)  Name                      Composer
+-----------------  ------------------------  -----------
+1071               É Uma Partida De Futebol  Samuel Rosa
+4884               Now Sports
+7941               Commercial 1              L. Muggerud
+32287              Casinha Feliz             Gilberto Gi
+33149              Mateus Enter              Chico Scien
+34168              Homem Primata (Vinheta)   Titãs
+38164              Freedom For My People     Mabins, Mac
+39131              Demorou!                  Mônica Mari
+42240              Little Guitars (Intro)    Alex Van Ha
+43232              The Star Spangled Banner  Hendrix, Ji
+#+end_example
+#+REVEAL_HTML: </div>
+
+*** Exercise: Longest songs                                        :noexport:
 
 - What are the names of the 10 longest songs, and who wrote them?
 
-*** Solution: Longest songs
+*** Solution: Longest songs                                        :noexport:
 
 #+BEGIN_SRC sql
   SELECT MAX(milliseconds),
@@ -1319,15 +1597,18 @@ ORDER BY milliseconds
 ** Solution: List the first 10 track names with no composer
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
+#+NAME: is-null
+#+BEGIN_SRC sql-mode
 SELECT name
   FROM track
- WHERE composer IS NULL;
+ WHERE composer IS NULL
+ LIMIT 10;
 #+END_SRC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
+#+RESULTS: is-null
+#+begin_example
 Name
 -----------------
 Balls to the Wall
@@ -1340,7 +1621,7 @@ Fotografia
 Dindi (Dindi)
 Se Todos Fossem I
 Falando De Amor
-#+END_EXAMPLE
+#+end_example
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
@@ -1365,29 +1646,31 @@ In Javascript we can use triple-equals to see if a value is null. In SQL you don
 #+REVEAL_HTML: <br clear=all>
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
+#+NAME: count-composer
+#+BEGIN_SRC sql-mode
 SELECT COUNT(composer)
   FROM track;
 #+END_SRC
 
-#+BEGIN_EXAMPLE
-count(composer)
----------------
-2525
-#+END_EXAMPLE
+#+RESULTS: count-composer
+: COUNT(composer)
+: ---------------
+: 2525
+
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC sql
+#+NAME: count-star
+#+BEGIN_SRC sql-mode
 SELECT COUNT(*)
   FROM track;
 #+END_SRC
 
-#+BEGIN_EXAMPLE
-count(*)
-----------
-3503
-#+END_EXAMPLE
+#+RESULTS: count-star
+: COUNT(*)
+: ----------
+: 3503
+
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
@@ -1479,7 +1762,7 @@ What's very interesting is these lines that say =FOREIGN KEY=. Lets dig in to th
 
 #+REVEAL_HTML: <div class="leftcol">
 #+BEGIN_SRC sql
-SELECT trackid,
+SELECT trackid
   FROM track
  WHERE name = 'Iron Maiden';
 #+END_SRC
@@ -1913,62 +2196,153 @@ Here's what the SQL looks like. The differences to what we're used to so far are
 
 ** Average length of song per album
 
-#+BEGIN_SRC sql
-   SELECT AVG(track.milliseconds) / 1000,
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: avg-song-per-album
+#+BEGIN_SRC sql-mode
+   SELECT AVG(track.milliseconds) / 1000.0 AS sec,
           album.title
      FROM track
 LEFT JOIN album ON track.albumid = album.albumid
  GROUP BY album.title
     LIMIT 10;
 #+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: avg-song-per-album
+#+begin_example
+sec               Title
+----------------  ----------------------
+436.554777777778  ...And Justice For All
+287.370166666667  20th Century Masters -
+198.064           A Copland Celebration,
+432.294454545455  A Matter of Life and D
+298.931833333333  A Real Dead One
+321.635818181818  A Real Live One
+338.243           A Soprano Inspired
+268.167266666667  A TempestadeTempestade
+279.531117647059  A-Sides
+182.365533333333  Ace Of Spades
+#+end_example
+#+REVEAL_HTML: </div>
 
 ** Shortest song on an album
 
-#+BEGIN_SRC sql
-     SELECT MIN(track.milliseconds) / 1000 AS sec,
+- Show the shortest song on each album
+- 3 columns in the output
+  - Song duration, in seconds
+  - Song name
+  - Album name
+- Albums wth shortest songs first
+#+REVEAL: split
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: shortest-song-per-album
+#+BEGIN_SRC sql-mode
+     SELECT MIN(track.milliseconds) / 1000.0 AS sec,
 	    track.name,
-	    album.albumid,
 	    album.title
        FROM track
   LEFT JOIN album ON track.albumid = album.albumid
    GROUP BY track.albumid
-      LIMIT 10;
-#+END_SRC
-
-** Longest song on an album
-
-#+BEGIN_SRC sql
-select min(track.milliseconds) / 1000 as sec, track.name, album.albumid, album.title from track left join album on track.albumid = album.albumid group by track.albumid limit 10;
-#+END_SRC
-
-** How many tracks are on each album
-
-#+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC sql
-     SELECT COUNT(track.name) AS cnt,
-	    album.title
-       FROM track
-  LEFT JOIN album ON track.albumid = album.albumid
-   GROUP BY album.title
+   ORDER BY sec
       LIMIT 10;
 #+END_SRC
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_EXAMPLE
+#+RESULTS: shortest-song-per-album
+#+begin_example
+sec         Name                      Title
+----------  ------------------------  --------------
+1.071       É Uma Partida De Futebol  O Samba Poconé
+4.884       Now Sports                Body Count
+7.941       Commercial 1              House of Pain
+29.048      Bossa                     Os Cães Ladram
+32.287      Casinha Feliz             As Canções de
+33.149      Mateus Enter              Afrociberdelia
+33.619      Deixa Entrar              Deixa Entrar
+34.168      Homem Primata (Vinheta)   Acústico
+38.164      Freedom For My People     Rattle And Hum
+39.131      Demorou!                  Demorou...
+#+end_example
+#+REVEAL_HTML: </div>
+** Longest song on an album
+
+- Same thing, but now I want the longest song
+
+#+REVEAL: split
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: longest-song-per-album
+#+BEGIN_SRC sql-mode
+     SELECT MAX(track.milliseconds) / 1000 AS sec,
+	    track.name,
+	    album.title
+       FROM track
+  LEFT JOIN album ON track.albumid = album.albumid
+   GROUP BY track.albumid
+   ORDER BY sec DESC
+      LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: longest-song-per-album
+#+begin_example
+sec         Name                    Title
+----------  ----------------------  ------------------------------
+5286        Occupation / Precipice  Battlestar Galactica, Season 3
+5088        Through a Looking Glas  Lost, Season 3
+2960        Greetings from Earth,   Battlestar Galactica (Classic)
+2825        Dave                    Lost, Season 2
+2687        How to Stop an Explodi  Heroes, Season 1
+2631        The Moth                Lost, Season 1
+2622        Battlestar Galactica:   Battlestar Galactica: The Stor
+2612        Something Nice Back Ho  LOST, Season 4
+2541        The Job                 The Office, Season 3
+2484        Pilot                   Aquaman
+#+end_example
+#+REVEAL_HTML: </div>
+** How many tracks are on each album
+
+- Show the number of tracks on each album
+- 2 columns in the output
+  - A count of the number of songs
+  - The album name
+- Albums with most tracks first
+
+#+REVEAL: split
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: tracks-per-album
+#+BEGIN_SRC sql-mode
+     SELECT COUNT(track.name) AS cnt,
+	    album.title
+       FROM track
+  LEFT JOIN album ON track.albumid = album.albumid
+   GROUP BY album.title
+   ORDER BY cnt DESC
+      LIMIT 10;
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+RESULTS: tracks-per-album
+#+begin_example
 cnt         Title
-----------  --------------------
-9           ...And Justice For A
-12          20th Century Masters
-1           A Copland Celebratio
-11          A Matter of Life and
-12          A Real Dead One
-11          A Real Live One
-1           A Soprano Inspired
-15          A TempestadeTempesta
-17          A-Sides
-15          Ace Of Spades
-#+END_EXAMPLE
+----------  -------------
+57          Greatest Hits
+34          Minha Histori
+30          Unplugged
+26          Lost, Season
+25          Lost, Season
+25          The Office, S
+24          Battlestar Ga
+24          Lost, Season
+24          My Way: The B
+23          Afrociberdeli
+#+end_example
 #+REVEAL_HTML: </div>
 
 * What else can we join on?
@@ -2046,7 +2420,7 @@ LEFT JOIN album
       LIMIT 10;
 #+END_SRC
 
-** Which album has the largest number of genres
+** Which album has the largest number of genres                    :noexport:
 
 *** Start with
 
