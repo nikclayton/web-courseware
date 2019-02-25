@@ -1,0 +1,913 @@
+#+TITLE: React
+#+SETUPFILE: "../include/settings.org"
+
+
+* Building the shopping list with React
+
+* The application skeleton
+
+** Install =create-react-app=
+
+#+BEGIN_SRC shell
+% npm install -g create-react-app
+#+END_SRC
+
+#+BEGIN_NOTES
+React is very opinionated as to where our source code should go, what the directories should be called and things like that.
+
+Because of this there's a lot of set up work that has to be done first. Rather than do that ourselves we can use the =create-react-app= tool to do that for us.
+
+But first we need to install it.
+
+You only need to do this once -- it doesn't need to be done every time you want to create a new application using React.
+#+END_NOTES
+
+** Creating the skeleton
+
+- In the =poco= directory.
+
+#+BEGIN_SRC shell
+% create-react-app shopping-react
+#+END_SRC
+
+#+BEGIN_NOTES
+Now that we've installed =create-react-app= we can use it to create our intiial application.
+
+Run this command in your =poco= directory. It has to download and install quite a few things, so it might take a few minutes.
+#+END_NOTES
+
+** Trying the skeleton app
+
+#+BEGIN_SRC shell
+% cd shopping-react
+% npm start
+
+[... explore ...]
+
+^C
+#+END_SRC
+
+#+BEGIN_NOTES
+If the app starts properly it should automatically open in a browser window.
+
+Check that it works. Then, in the window where you ran =npm start= press =Ctrl-C= to shut down the application.
+#+END_NOTES
+
+** Commit the skeleton
+
+#+BEGIN_SRC shell
+% git add .gitignore *.json public src README.md
+% git commit -m "create-react-app shopping-react"
+#+END_SRC
+
+#+BEGIN_NOTES
+Whenever you do something like this it's very good practice to commit the code written by the tool immediately. That way it's very easy to later distinguish between code that was automatically written for you and code that you wrote.
+#+END_NOTES
+
+** Explore the skeleton
+
+- Open the =shopping-react= directory in Webstorm
+- Let's explore
+
+*** This is a Node / NPM project
+
+- =package.json=
+- =package-lock.json=
+- =node-modules/= directory
+
+#+BEGIN_NOTES
+One thing we can immediately tell is that this has created a Node / NPM project.
+
+We can tell this because of the presence of the =package.json= and =package-lock.json= files, as well as the =node-modules= directory.
+#+END_NOTES
+
+*** =node-modules=
+
+- 1,022 (!) directories
+
+#+BEGIN_NOTES
+By the way, if you look in the =node-modules= directory you'll see that =npm= has installed 1,022 (well, 1,022 the last time I updated this presentation, it may well be more by now) modules in order for React to work.
+
+There is an argument to be made that we're making software development overly complicated...
+#+END_NOTES
+
+*** =public/index.html=
+
+- ~<link rel="shortcut icon" ...>~
+- ~<link rel="manifest" ...>~
+- =<noscript>=
+- ~<div id="root">~
+
+#+BEGIN_NOTES
+Lets take a look at =public/index.html=. This is the web page that launches our application. This is mostly standard HTML with things we've seen before. There's a couple of pieces to call out.
+
+The link to =favicon.ico= is where the icon for our website is loaded from. The browser shows this in the tab, and might use it if you save the page to your phone's home screen.
+
+The link to =manifest.json= is also when the site is saved as an icon to a phone's home screen. The =manifest.json= file contains information that the phone can use when it creates an icon for the app -- a name, colours, and so on.
+
+The =noscript= element is used to show messages to users if their browser doesn't support Javascript. It's very rare that that's the case these days, but it's included here just in case.
+
+And that =div= with an =id= set to =root=? That's completely normal, but remember it, because it will be important soon.
+#+END_NOTES
+
+*** =src/index.js=
+
+#+BEGIN_SRC javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+#+END_SRC
+
+#+BEGIN_NOTES
+There's some weird stuff here that we haven't looked at yet.
+
+=import= is a way of pulling in parts of other files.
+
+If you remember when we were doing the MVC version of the app we had our Javascript in different files and had to make sure that we were loading them in the right order. Using =import= gives us a bit more control over this.
+
+Notice that we're importing =index.css= as well. That's weird.
+
+Lets look at this =ReactDOM.render= line, and figure out what's going on here.
+
+This looks like a method call, so we can assume that =ReactDOM= is an object of some sort. Looking up a few lines we can see it's referenced from an =import= statement.
+
+But that first parameter -- that looks like HTML, and it's not in quotes. And the second parameter is an element -- it's the =div= from the =index.html= file.
+
+=App= looks important, lets dig in to that.
+#+END_NOTES
+
+*** =src/App.js=
+
+#+BEGIN_SRC javascript
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>Edit <code>src/App.js</code> and save to reload.</p>
+          <a className="App-link" href="https://reactjs.org"
+            target="_blank" rel="noopener noreferrer">Learn React</a>
+        </header>
+      </div>
+    );
+  }
+}
+
+export default App;
+#+END_SRC
+
+#+BEGIN_NOTES
+More import lines.
+
+Then we have a =class=. We know what they are, but what's this =extends= word? That's new. For the moment we'll ignore it, but we'll come back to it later.
+
+Our class has a =render= method, but it appears to be returning HTML directly, not as a string.
+
+And then that =export= line at the bottom. If we can use =import= to load code from a file, we can guess that =export= is probably how a file says "This is some code that can be imported by another file".
+#+END_NOTES
+
+*** Missing stuff
+
+- Where's the =<script>= element?
+- How does our code start?
+
+#+BEGIN_NOTES
+There's a few things missing from this so far.
+
+We haven't seen a =<script>= element for our Javascript.
+
+We haven't seen anywhere that starts our code -- a call to create a controller object, or anything like that? What's going on.
+#+END_NOTES
+
+* React is a framework
+
+- Imagine a jigsaw puzzle
+  - We've been writing all the pieces
+- React provides (and puts together) a lot of pieces for us
+  - We have to provide the missing pieces
+  - As long as our pieces fit in to the puzzle everything works
+
+#+BEGIN_NOTES
+So far, we've been having to write everything for our code.
+
+As a framework, React provides a lot of that for us, as long as we do things exactly the way it expects us to.
+
+One way to think about is that our application is a bit like a jigsaw puzzle, with lots of different pieces. React provides a lot of those pieces for us, we just have to write the code for the missing pieces.
+
+As long as our code -- our missing pieces -- fits in to the puzzle the way that React expects then everything is fine.
+#+END_NOTES
+
+* Walkthrough of what's going on
+
+#+BEGIN_SRC html
+ReactDOM.render(<App />, document.getElementById('root'));
+#+END_SRC
+
+1. Create an object from the =App= class (from =App.js=)
+  - =const obj = new App()=
+2. Find the element with ~id="root"~
+3. Call =obj.render()= to generate some HTML
+4. Put that HTML inside the element found at step 2
+
+* What didn't we do?
+
+- Create any elements
+  - No calls to =document.createElement(...);=
+- Modify the DOM
+  - No calls to =el.appendChild(...);=
+- Construct any objects ourself
+  - No =const controller = new Controller();=
+
+* React and components
+
+- React builds user interfaces from reusable components
+- Each component contains
+  - What it should look like
+  - The data it should display
+  - Logic for interacting with the data
+
+** Sound familiar?
+
+- *View*: What it should look like
+- *Model*: The data it should display
+- *Controller*: Logic for interacting with the data
+
+#+BEGIN_NOTES
+Each component is basically a little model, view, and controller, dealing with just that part of our application.
+#+END_NOTES
+
+** Shopping list view
+
+- Input widget
+- Quantity widget
+- "Add item" button
+- "Clear list" button
+- The shopping list
+  - List item with text, and a delete button
+
+#+BEGIN_NOTES
+Here's our shopping list view. It contains all of these things.
+
+In React, these would typically be different components, or components that contain other components.
+#+END_NOTES
+
+** Shopping list components
+
+#+BEGIN_SRC dot :file shopping-list-components.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+digraph G {
+  app [label="App"];
+
+  input [label="Input Section"];
+  clear [label="Clear List"]
+
+  shopping_list [label="Shopping List"];
+  list_item1 [label="List item"];
+  list_item2 [label="List item"];
+  list_item3 [label="List item"];
+
+  app -> input;
+  app -> clear;
+  app -> shopping_list;
+  shopping_list -> list_item1;
+  shopping_list -> list_item2;
+  shopping_list -> list_item3;
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:shopping-list-components.svg]]
+
+* Building up the app, initial components
+
+** =ItemInput.js=
+
+#+BEGIN_SRC javascript
+import React, {Component} from 'react';
+
+class ItemInput extends Component {
+  render() {
+    return <p>ItemInput</p>
+  }
+}
+
+export default ItemInput;
+#+END_SRC
+
+** =ClearList.js=
+
+#+BEGIN_SRC javascript
+import React, {Component} from 'react';
+
+class ClearList extends Component {
+  render() {
+    return <p>ClearList</p>
+  }
+}
+
+export default ClearList;
+#+END_SRC
+
+** =ShoppingList.js=
+
+#+BEGIN_SRC javascript
+import React, {Component} from 'react';
+
+class ShoppingList extends Component {
+  render() {
+    return <p>ShoppingList</p>;
+  }
+}
+
+export default ShoppingList;
+#+END_SRC
+
+** =App.js=
+
+#+BEGIN_SRC javascript
+import React, {Component} from 'react';
+import './App.css';
+import ItemInput from './ItemInput';
+import ClearList from './ClearList';
+import ShoppingList from './ShoppingList'
+
+class App extends Component {
+  render() {
+    return (
+      <>
+        <ItemInput/> <ClearList/> <ShoppingList/>
+      </>
+    );
+  }
+}
+
+export default App;
+#+END_SRC
+
+* Displaying dummy data
+
+** Strategy
+
+- Model  is owned by =App=
+  - Stored in =this.state=
+  - Given to =ShoppingList= to display
+
+** =App.js=
+
+#+BEGIN_SRC javascript
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: ['First item', 'Second item', 'Third item'],
+    };
+  }
+
+  render() {
+    return (
+      <>
+        <ItemInput/>
+        <ClearList/>
+        <ShoppingList items={this.state.items}/>
+      </>
+    );
+  }
+}
+#+END_SRC
+
+** =ShoppingList.js=
+
+#+BEGIN_SRC javascript
+import React, {Component} from 'react';
+
+class ShoppingList extends Component {
+  render() {
+    return (
+      <ul>
+        {this.props.items.map((item) => <li>{item}</li>)}
+      </ul>
+    );
+  }
+}
+
+export default ShoppingList;
+#+END_SRC
+
+* Displaying the input widgets
+
+** =ItemInput.js=
+
+#+BEGIN_SRC javascript
+import React, {Component} from 'react';
+
+class ItemInput extends Component {
+  render() {
+    return (
+      <div>
+        <label htmlFor="item">Enter a new item:</label>
+        <input type="text" id="quantity" size="8" placeholder="quantity" />
+        <input type="text" id="item" placeholder="Type something to buy" />
+        <button id="add">Add item</button>
+      </div>
+    );
+  }
+}
+
+export default ItemInput;
+#+END_SRC
+
+** Check this works
+
+** Commit
+
+* Noticing when the user types something
+
+** Strategy in =ItemInput.js=
+
+- Store the current item and quantity in the state
+- When the user types, an =onChange= event fires
+- Listen for those events
+- Update the state with the new values
+
+** =ItemInput.js=
+
+#+BEGIN_SRC javascript
+  constructor(props) {
+    super(props);
+    this.state = {
+      item: '',
+      quantity: ''
+    };
+
+    this.onItemChange = this.onItemChange.bind(this);
+    this.onQuantityChange = this.onQuantityChange.bind(this);
+  }
+#+END_SRC
+
+#+REVEAL: split
+
+#+BEGIN_SRC javascript
+  onItemChange(event) {
+    this.setState({item: event.target.value.trim()}, () => console.log(this.state));
+  }
+
+  onQuantityChange(event) {
+    this.setState({quantity: event.target.value.trim()}, () => console.log(this.state));
+  }
+#+END_SRC
+
+#+REVEAL: split
+
+#+BEGIN_SRC javascript
+  render() {
+    return (
+      <div>
+        <label htmlFor="item">Enter a new item:</label>
+        <input onChange={this.onQuantityChange} type="text" id="quantity" size="8"
+            placeholder="quantity" />
+        <input onChange={this.onItemChange} type="text" id="item"
+            placeholder="Type something to buy" />
+        <button id="add">Add item</button>
+      </div>
+    );
+  }
+#+END_SRC
+
+** Commit
+
+* Adding an item
+
+** Strategy
+
+- =App= will provide a method that adds an item
+  - Will call =this.setState(...)= to set the new list
+  - Pass this method as a property to =ItemInput=
+- =ItemInput= listens for the button to be clicked
+  - When the button is clicked, call the method to pass the data
+
+** =App.js=
+
+#+BEGIN_SRC javascript
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: ['First item', 'Second item', 'Third item'],
+    };
+
+    this.onAddItem = this.onAddItem.bind(this);
+  }
+
+  onAddItem(name, quantity) {
+    let item = name;
+    if (quantity !== '') {
+      item = item + ` (${quantity})`;
+    }
+    this.setState({items: [...this.state.items, item});
+  }
+
+  render() {
+    return (
+      <>
+        <ItemInput onAddItem={this.onAddItem}/> <ClearList/> <ShoppingList items={this.state.items}/>
+      </>
+    );
+  }
+#+END_SRC
+
+** =ItemInput.js=
+
+#+BEGIN_SRC javascript
+  render() {
+    return (
+      <div>
+        <label htmlFor="item">Enter a new item:</label>
+        <input onChange={this.onQuantityChange} type="text" id="quantity" size="8"
+               placeholder="quantity" />
+        <input onChange={this.onItemChange} type="text" id="item"
+               placeholder="Type something to buy" />
+        <button
+          onClick={() => this.props.onAddItem(this.state.item, this.state.quantity)}
+          id="add">Add item</button>
+      </div>
+    );
+#+END_SRC
+
+** Check this works
+
+** Remove the dummy list in =App.js=
+
+#+BEGIN_SRC javascript
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [],
+    };
+
+    this.onAddItem = this.onAddItem.bind(this);
+  }
+#+END_SRC
+
+** Commit
+
+* Clearing the list
+
+** Strategy
+
+- =App.js=
+  - Provide a =onClearList= that empties the list
+  - Pass this as a property to =ClearList=
+- =ClearList.js=
+  - Accept the property
+  - Create a button that calls the method when clicked
+
+** =App.js=
+
+#+BEGIN_SRC javascript
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [],
+    };
+
+    this.onAddItem = this.onAddItem.bind(this);
+    this.onClearList = this.onClearList.bind(this);
+  }
+
+  onClearList() {
+    this.setState({items: []});
+  }
+
+  render() {
+    return (
+      <>
+        <ItemInput onAddItem={this.onAddItem}/>
+        <ClearList onClearList={this.onClearList}/>
+        <ShoppingList items={this.state.items}/>
+      </>
+    );
+  }
+#+END_SRC
+
+** =ClearList.js=
+
+#+BEGIN_SRC javascript
+class ClearList extends Component {
+  render() {
+    return (
+      <button onClick={this.props.onClearList}>Clear list</button>
+    )
+  }
+}
+#+END_SRC
+
+** Commit
+
+* Deleting items from the list
+
+** Strategy
+
+- =App.js=
+  - Provide =onDeleteItem(index)= that deletes the item at =index=
+  - Pass =onDeleteItem= as a prop to =ShoppingList=
+- =ShoppingList.js=
+  - Store each item's array index in a =key= attribute
+  - Add a button to each item
+    - Button's =onClick= will call =onDeleteItem= with the correct index
+
+** =App.js=
+
+#+BEGIN_SRC javascript
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [],
+    };
+
+    this.onAddItem = this.onAddItem.bind(this);
+    this.onClearList = this.onClearList.bind(this);
+    this.onDeleteItem = this.onDeleteItem.bind(this);
+  }
+
+  onDeleteItem(index) {
+    this.state.items.splice(index, 1);
+    this.setState({items: this.state.items});
+  }
+#+END_SRC
+
+#+REVEAL: split
+
+#+BEGIN_SRC javascript
+  render() {
+    return (
+      <>
+        <ItemInput onAddItem={this.onAddItem}/>
+        <ClearList onClearList={this.onClearList}/>
+        <ShoppingList items={this.state.items}
+                      onDeleteItem={this.onDeleteItem}/>
+      </>
+    );
+  }
+#+END_SRC
+
+** =ShoppingList.js=
+
+#+BEGIN_SRC javascript
+class ShoppingList extends Component {
+  render() {
+    return (
+      <ul>
+        {this.props.items.map((item, index) => <li key={index}>{item}
+          <button onClick={() => this.props.onDeleteItem(index)}>Delete</button> </li>)}
+      </ul>
+    );
+  }
+}
+#+END_SRC
+
+** Commit
+
+* Enabling / disabling UI components
+
+** Enabling / disabling the clear list button
+
+*** Strategy
+
+- =App.js= knows how many items are in the list
+- Pass a =disabled= property to =ClearList=
+- =ClearList= uses that property to set the button's =disabled= attribute
+
+*** - =App.js=
+
+#+BEGIN_SRC javascript
+  render() {
+    return (
+      <>
+        <ItemInput onAddItem={this.onAddItem}/>
+        <ClearList onClearList={this.onClearList}
+                   disabled={this.state.items.length === 0}/>
+        <ShoppingList items={this.state.items}
+                      onDeleteItem={this.onDeleteItem}/>
+      </>
+    );
+  }
+#+END_SRC
+
+*** =ClearList.js=
+
+#+BEGIN_SRC javascript
+class ClearList extends Component {
+  render() {
+    return (
+      <button disabled={this.props.disabled}
+              onClick={this.props.onClearList}>Clear list</button>
+    )
+  }
+}
+#+END_SRC
+
+*** Commit
+
+** Enabling / disabling the 'Add item' button
+
+*** Strategy
+
+- =ItemInput= can check =this.state.item=
+- If it's the empty string then set the button's =disabled= property
+
+*** =ItemInput.js=
+
+#+BEGIN_SRC javascript
+  render() {
+    return (
+      <div>
+        <label htmlFor="item">Enter a new item:</label>
+        <input onChange={this.onQuantityChange} type="text" id="quantity" size="8"
+               placeholder="quantity" />
+        <input onChange={this.onItemChange} type="text" id="item"
+               placeholder="Type something to buy" />
+        <button
+          onClick={() => this.props.onAddItem(this.state.item, this.state.quantity)}
+          disabled={this.state.item === ''}
+          id="add">Add item</button>
+      </div>
+    );
+  }
+#+END_SRC
+
+*** Commit
+
+* Pressing =Enter= to add items
+
+** Strategy
+
+- =ItemInput= implements an =onKeyUp= handler
+- If the item is not empty, and the key is =Enter=, call =onAddItem=
+
+** =ItemInput.js=
+
+#+BEGIN_SRC javascript
+  constructor(props) {
+    super(props);
+    this.state = {
+      item: '',
+      quantity: ''
+    };
+
+    this.onItemChange = this.onItemChange.bind(this);
+    this.onQuantityChange = this.onQuantityChange.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
+  }
+#+END_SRC
+
+#+REVEAL: split
+
+#+BEGIN_SRC javascript
+  onKeyUp(event) {
+    if (this.state.item === '') {
+      return;
+    }
+
+    if (event.key !== 'Enter') {
+      return;
+    }
+
+    this.props.onAddItem(this.state.item, this.state.quantity);
+  }
+#+END_SRC
+
+#+REVEAL: split
+
+#+BEGIN_SRC javascript
+  render() {
+    return (
+      <div>
+        <label htmlFor="item">Enter a new item:</label>
+        <input onChange={this.onQuantityChange}
+               onKeyUp={this.onKeyUp}
+               type="text" id="quantity" size="8" placeholder="quantity"/>
+        <input onChange={this.onItemChange}
+               onKeyUp={this.onKeyUp}
+               type="text" id="item" placeholder="Type something to buy" />
+        <button
+          onClick={() => this.props.onAddItem(this.state.item, this.state.quantity)}
+          disabled={this.state.item === ''}
+          id="add">Add item</button>
+      </div>
+    );
+  }
+#+END_SRC
+
+** Commit
+
+* Clear input elements after adding items
+
+** Strategy
+
+- Create an =onAddItem= method in =ItemInput=
+- Call this method to add an item
+- This method should:
+  - Call =this.props.onAddItem(...)=
+  - Clear the state for =item= and =name=
+- Bind the values of the input widgets to the state
+
+** =ItemInput.js=
+
+#+BEGIN_SRC javascript
+  constructor(props) {
+    super(props);
+    this.state = {
+      item: '',
+      quantity: ''
+    };
+
+    this.onAddItem = this.onAddItem.bind(this);
+    this.onItemChange = this.onItemChange.bind(this);
+    this.onQuantityChange = this.onQuantityChange.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
+  }
+
+  onAddItem() {
+    this.props.onAddItem(this.state.item, this.state.quantity);
+    this.setState({item: '', name: ''});
+  }
+#+END_SRC
+
+#+REVEAL: split
+
+#+BEGIN_SRC javascript
+  onKeyUp(event) {
+    if (this.state.item === '') {
+      return;
+    }
+
+    if (event.key !== 'Enter') {
+      return;
+    }
+
+    this.onAddItem();
+  }
+#+END_SRC
+
+#+REVEAL: split
+
+#+BEGIN_SRC javascript
+  render() {
+    return (
+      <div>
+        <label htmlFor="item">Enter a new item:</label>
+        <input onChange={this.onQuantityChange}
+               onKeyUp={this.onKeyUp}
+               value={this.state.quantity}
+               type="text" ref="quantity" size="8" placeholder="quantity"/>
+        <input onChange={this.onItemChange}
+               onKeyUp={this.onKeyUp}
+               value={this.state.item}
+               type="text" ref="item" placeholder="Type something to buy" />
+        <button
+          onClick={this.onAddItem}
+          disabled={this.state.item === ''}
+          id="add">Add item</button>
+      </div>
+    );
+  }
+#+END_SRC
+
+** Commit
+
+* TODO Set the focus
+
+- =ItemInput.js= (I think)
+
+#+BEGIN_SRC javascript
+componentDidUpdate() {
+  this.props.inputElement.current.focus();
+}
+#+END_SRC
+
+#+BEGIN_SRC html
+<input ref="{this.props.inputElement}>
+#+END_SRC
+
+- Explain how =ref= replaces the use of =id=
+
+* Cleanup
+
+- =id= attributes can be removed
+- CSS can be put in per-component files
+
+* Parting thoughts
+
+- Compare this with our MVC version
