@@ -348,7 +348,9 @@ class App extends Component {
   render() {
     return (
       <>
-        <ItemInput/> <ClearList/> <ShoppingList/>
+        <ItemInput />
+        <ClearList />
+        <ShoppingList />
       </>
     );
   }
@@ -387,9 +389,9 @@ class App extends Component {
   render() {
     return (
       <>
-        <ItemInput/>
-        <ClearList/>
-        <ShoppingList items={this.state.items}/>
+        <ItemInput />
+        <ClearList />
+        <ShoppingList items={this.state.items} />
       </>
     );
   }
@@ -529,7 +531,9 @@ export default ItemInput;
   render() {
     return (
       <>
-        <ItemInput onAddItem={this.onAddItem}/> <ClearList/> <ShoppingList items={this.state.items}/>
+        <ItemInput onAddItem={this.onAddItem}/>
+        <ClearList/>
+        <ShoppingList items={this.state.items}/>
       </>
     );
   }
