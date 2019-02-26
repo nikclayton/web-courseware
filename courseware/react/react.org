@@ -213,15 +213,31 @@ As long as our code -- our missing pieces -- fits in to the puzzle the way that 
 
 * Walkthrough of what's going on
 
-#+BEGIN_SRC html
+#+BEGIN_SRC javascript
+import App from './App';
+
+// ...
+
 ReactDOM.render(<App />, document.getElementById('root'));
 #+END_SRC
 
 1. Create an object from the =App= class (from =App.js=)
-  - =const obj = new App()=
-2. Find the element with ~id="root"~
-3. Call =obj.render()= to generate some HTML
-4. Put that HTML inside the element found at step 2
+   - =const app = new App()=
+2. Call =app.render()= to generate some HTML
+3. Find the element with ~id="root"~
+4. Put that HTML inside the element found at step 3
+
+#+BEGIN_NOTES
+Here's a way to think about what's happening. Like most of these, it's not *exactly* what's going on, but it's a useful lie to tell yourself.
+
+When we call =ReactDOM.render()= the first parameter is the name of a component, written as though it was an HTML element.
+
+React goes and finds this component. For this to work we must have imported it earlier in the file.
+
+This component provides a class, also called =App=. React creates a new instance of this class, just as though we'd written ~const app = new App();~. React then call's that object's =render()= method to generate some HTML.
+
+The second argument to the =render()= method is an element. In this case it's whatever element has the =id= set to =root=. React takes the HTML we've just generated, and inserts it as a child of this element in the DOM.
+#+END_NOTES
 
 * What didn't we do?
 
@@ -231,6 +247,14 @@ ReactDOM.render(<App />, document.getElementById('root'));
   - No calls to =el.appendChild(...);=
 - Construct any objects ourself
   - No =const controller = new Controller();=
+
+#+BEGIN_NOTES
+It's important to notice what we *haven't* had to do to get this to work.
+
+No where in our code have we created elements using any of the DOM method -- there's no calls to =createElement= or =appendChild= in our code.
+
+And we haven't had to create any elements ourselves either. We provide the classes, but React figures out when to actually create the objects, which methods to call on those objects, when to call these methods, and so on.
+#+END_NOTES
 
 * React and components
 
@@ -293,6 +317,22 @@ digraph G {
 
 * Building up the app, initial components
 
+- Simplest thing that could possibly work
+- Three components, will just display some text to show they work
+  - =ItemInput= -> =<p>ItemInput</p>
+  - =ClearList= -> <p>ClearList</p>
+  - =ShoppingList= -> <p>ShoppingList</p>=
+
+#+BEGIN_NOTES
+We're going to build up our app again, and again, we follow the principle of trying to do the simplest thing that could possibly work at each step of the process.
+
+Once we have something that works we'll commit, and move on to the next problem.
+
+We need three components that our =App= class can create. Each one is going to be responisble for a different part of the user interface, but for now we'll just have each one display a different paragraph.
+
+If we load our application and we see all three paragraphs then we'll know things have worked. If we don't see these then something has gone wrong and we'll need to fix it before we move on to the next step.
+#+END_NOTES
+
 ** =ItemInput.js=
 
 #+BEGIN_SRC javascript
@@ -306,6 +346,18 @@ class ItemInput extends Component {
 
 export default ItemInput;
 #+END_SRC
+
+#+BEGIN_NOTES
+This is pretty much the simplest component.
+
+We have to start each component by importing =React= and the =Component= class. This is mandatory for each component, so you'll always see this.
+
+Then we have our class. The class name is also the name of the component we're creating. You don't have to name it the same as the file, but it's very common practice.
+
+Our class has a single =render()= method that returns the HTML that we want.
+
+Finally, we ensure that this class is the only thing exported by this file, so we can import it later inside =App.js=.
+#+END_NOTES
 
 ** =ClearList.js=
 
@@ -321,6 +373,12 @@ class ClearList extends Component {
 export default ClearList;
 #+END_SRC
 
+#+BEGIN_NOTES
+This very similar to =ItemInput.js=, so you can copy and paste the content and make a few changes.
+
+They are to the class name, the text that is returned from the =render()= method, and the name of the class we export at the bottom.
+#+END_NOTES
+
 ** =ShoppingList.js=
 
 #+BEGIN_SRC javascript
@@ -334,6 +392,10 @@ class ShoppingList extends Component {
 
 export default ShoppingList;
 #+END_SRC
+
+#+BEGIN_NOTES
+This is also very similar, and again, only those three things change.
+#+END_NOTES
 
 ** =App.js=
 
@@ -358,6 +420,20 @@ class App extends Component {
 
 export default App;
 #+END_SRC
+
+#+BEGIN_NOTES
+To use our components we modify =App.js= to import them, and then reference them from our HTML.
+
+Here we've modified =App.js= quite heavily.
+
+Our =App= class is also a component, so we have to import =React= and =Component= just like the other components do.
+
+Then we can import the three components we've just written, =ItemInput=, =ClearList=, and =ShoppingList=.
+
+And we modify our =render()= method to use those three components.
+
+Notice how what we've done is effectively create new HTML elements that we can use anywhere we would normally use an element.
+#+END_NOTES
 
 * Inheritance
 
