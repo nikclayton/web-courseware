@@ -319,9 +319,9 @@ digraph G {
 
 - Simplest thing that could possibly work
 - Three components, will just display some text to show they work
-  - =ItemInput= -> =<p>ItemInput</p>
-  - =ClearList= -> <p>ClearList</p>
-  - =ShoppingList= -> <p>ShoppingList</p>=
+  - =ItemInput= -> =<p>ItemInput</p>=
+  - =ClearList= -> =<p>ClearList</p>=
+  - =ShoppingList= -> =<p>ShoppingList</p>=
 
 #+BEGIN_NOTES
 We're going to build up our app again, and again, we follow the principle of trying to do the simplest thing that could possibly work at each step of the process.
