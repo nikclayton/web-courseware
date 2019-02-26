@@ -527,9 +527,13 @@ export default ItemInput;
     if (quantity !== '') {
       item = item + ` (${quantity})`;
     }
-    this.setState({items: [...this.state.items, item});
+    this.setState((prevState) => ({items: prevState.items.concat(item)}));
   }
+#+END_SRC
 
+#+REVEAL: split
+
+#+BEGIN_SRC javascript
   render() {
     return (
       <>
@@ -603,7 +607,11 @@ export default ItemInput;
   onClearList() {
     this.setState({items: []});
   }
+#+END_SRC
 
+#+REVEAL: split
+
+#+BEGIN_SRC javascript
   render() {
     return (
       <>
