@@ -473,11 +473,11 @@ export default ItemInput;
 
 #+BEGIN_SRC javascript
   onItemChange(event) {
-    this.setState({item: event.target.value.trim()}, () => console.log(this.state));
+    this.setState({item: event.target.value}, () => console.log(this.state));
   }
 
   onQuantityChange(event) {
-    this.setState({quantity: event.target.value.trim()}, () => console.log(this.state));
+    this.setState({quantity: event.target.value}, () => console.log(this.state));
   }
 #+END_SRC
 
@@ -557,7 +557,7 @@ export default ItemInput;
         <input onChange={this.onItemChange} type="text" id="item"
                placeholder="Type something to buy" />
         <button
-          onClick={() => this.props.onAddItem(this.state.item, this.state.quantity)}
+          onClick={() => this.props.onAddItem(this.state.item.trim(), this.state.quantity.trim())}
           id="add">Add item</button>
       </div>
     );
@@ -762,7 +762,7 @@ class ClearList extends Component {
                placeholder="Type something to buy" />
         <button
           onClick={() => this.props.onAddItem(this.state.item, this.state.quantity)}
-          disabled={this.state.item === ''}
+          disabled={this.state.item.trim() === ''}
           id="add">Add item</button>
       </div>
     );
@@ -798,7 +798,7 @@ class ClearList extends Component {
 
 #+BEGIN_SRC javascript
   onKeyUp(event) {
-    if (this.state.item === '') {
+    if (this.state.item.trim() === '') {
       return;
     }
 
@@ -806,7 +806,7 @@ class ClearList extends Component {
       return;
     }
 
-    this.props.onAddItem(this.state.item, this.state.quantity);
+    this.props.onAddItem(this.state.item.trim(), this.state.quantity.trim());
   }
 #+END_SRC
 
@@ -824,8 +824,8 @@ class ClearList extends Component {
                onKeyUp={this.onKeyUp}
                type="text" id="item" placeholder="Type something to buy" />
         <button
-          onClick={() => this.props.onAddItem(this.state.item, this.state.quantity)}
-          disabled={this.state.item === ''}
+          onClick={() => this.props.onAddItem(this.state.item.trim(), this.state.quantity.trim())}
+          disabled={this.state.item.trim() === ''}
           id="add">Add item</button>
       </div>
     );
@@ -862,8 +862,8 @@ class ClearList extends Component {
   }
 
   onAddItem() {
-    this.props.onAddItem(this.state.item, this.state.quantity);
-    this.setState({item: '', name: ''});
+    this.props.onAddItem(this.state.item.trim(), this.state.quantity.trim());
+    this.setState({item: '', quantity: ''});
   }
 #+END_SRC
 
@@ -871,7 +871,7 @@ class ClearList extends Component {
 
 #+BEGIN_SRC javascript
   onKeyUp(event) {
-    if (this.state.item === '') {
+    if (this.state.item.trim() === '') {
       return;
     }
 
@@ -900,7 +900,7 @@ class ClearList extends Component {
                type="text" ref="item" placeholder="Type something to buy" />
         <button
           onClick={this.onAddItem}
-          disabled={this.state.item === ''}
+          disabled={this.state.item.trim() === ''}
           id="add">Add item</button>
       </div>
     );
