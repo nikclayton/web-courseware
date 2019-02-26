@@ -347,11 +347,11 @@ import ShoppingList from './ShoppingList'
 class App extends Component {
   render() {
     return (
-      <>
+      <div>
         <ItemInput />
         <ClearList />
         <ShoppingList />
-      </>
+      </div>
     );
   }
 }
@@ -388,11 +388,11 @@ class App extends Component {
 
   render() {
     return (
-      <>
+      <div>
         <ItemInput />
         <ClearList />
         <ShoppingList items={this.state.items} />
-      </>
+      </div>
     );
   }
 }
@@ -536,11 +536,11 @@ export default ItemInput;
 #+BEGIN_SRC javascript
   render() {
     return (
-      <>
+      <div>
         <ItemInput onAddItem={this.onAddItem}/>
         <ClearList/>
         <ShoppingList items={this.state.items}/>
-      </>
+      </div>
     );
   }
 #+END_SRC
@@ -614,11 +614,11 @@ export default ItemInput;
 #+BEGIN_SRC javascript
   render() {
     return (
-      <>
+      <div>
         <ItemInput onAddItem={this.onAddItem}/>
         <ClearList onClearList={this.onClearList}/>
         <ShoppingList items={this.state.items}/>
-      </>
+      </div>
     );
   }
 #+END_SRC
@@ -676,12 +676,12 @@ class ClearList extends Component {
 #+BEGIN_SRC javascript
   render() {
     return (
-      <>
+      <div>
         <ItemInput onAddItem={this.onAddItem}/>
         <ClearList onClearList={this.onClearList}/>
         <ShoppingList items={this.state.items}
                       onDeleteItem={this.onDeleteItem}/>
-      </>
+      </div>
     );
   }
 #+END_SRC
@@ -718,13 +718,13 @@ class ShoppingList extends Component {
 #+BEGIN_SRC javascript
   render() {
     return (
-      <>
+      <div>
         <ItemInput onAddItem={this.onAddItem}/>
         <ClearList onClearList={this.onClearList}
                    disabled={this.state.items.length === 0}/>
         <ShoppingList items={this.state.items}
                       onDeleteItem={this.onDeleteItem}/>
-      </>
+      </div>
     );
   }
 #+END_SRC
