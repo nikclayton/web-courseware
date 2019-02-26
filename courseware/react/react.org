@@ -839,7 +839,7 @@ class ClearList extends Component {
         <input onChange={this.onItemChange} type="text" id="item"
                placeholder="Type something to buy" />
         <button
-          onClick={() => this.props.onAddItem(this.state.item, this.state.quantity)}
+          onClick={() => this.props.onAddItem(this.state.item.trim(), this.state.quantity.trim())}
           disabled={this.state.item.trim() === ''}
           id="add">Add item</button>
       </div>
@@ -971,11 +971,11 @@ class ClearList extends Component {
         <input onChange={this.onQuantityChange}
                onKeyUp={this.onKeyUp}
                value={this.state.quantity}
-               type="text" ref="quantity" size="8" placeholder="quantity"/>
+               type="text" id="quantity" size="8" placeholder="quantity"/>
         <input onChange={this.onItemChange}
                onKeyUp={this.onKeyUp}
                value={this.state.item}
-               type="text" ref="item" placeholder="Type something to buy" />
+               type="text" id="item" placeholder="Type something to buy" />
         <button
           onClick={this.onAddItem}
           disabled={this.state.item.trim() === ''}
