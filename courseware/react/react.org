@@ -416,6 +416,8 @@ class ShoppingList extends Component {
 export default ShoppingList;
 #+END_SRC
 
+** Commit!
+
 * Displaying the input widgets
 
 ** =ItemInput.js=
