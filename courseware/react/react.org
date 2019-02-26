@@ -1011,3 +1011,19 @@ componentDidUpdate() {
 * Parting thoughts
 
 - Compare this with our MVC version
+- And the previous version
+- What's...
+  - Easier to understand? Clearer?
+  - More difficult?
+  - About the same?
+- Go through the code with the debugger
+  - Make sure you understand how data is flowing
+
+#+REVEAL: split
+
+- Think about each feature
+  - Click button to add, delete single item, clear list, press ENTER to add, etc
+  - Where is the code for those features?
+  - Is related code close together?
+  - Is the code easy to understand?
+  - Is the code mixed in with other code?
