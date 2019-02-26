@@ -920,7 +920,7 @@ class ClearList extends Component {
 - Call this method to add an item
 - This method should:
   - Call =this.props.onAddItem(...)=
-  - Clear the state for =item= and =name=
+  - Clear the state for =item= and =quantity=
 - Bind the values of the input widgets to the state
 
 ** =ItemInput.js=
