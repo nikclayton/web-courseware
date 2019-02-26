@@ -911,7 +911,7 @@ class ClearList extends Component {
 
 ** Commit
 
-* TODO Set the focus
+* TODO Set the focus                                               :noexport:
 
 - =ItemInput.js= (I think)
 
