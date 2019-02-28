@@ -1,0 +1,280 @@
+#+Title: Coding tradeoffs
+#+SETUPFILE: "../include/settings.org"
+
+#+BEGIN_NOTES
+This was used in one of the last community meetups.
+
+I had four students present variations on code that they'd done.The idea was to demonstrate that coding is about making tradeoffs, and that a benefit in one dimension might be a problem in another dimension.
+
+The DNA to RNA transcription is one of the Exercism exercises that can be solved in multiple ways.
+
+"Absolute sum" is from Edabit, and demostrates iterating on a solution to find the "best" solution.
+
+The speaker notes for each code block are my assessment of the code, not necessarily the students'.
+#+END_NOTES
+
+* DNA to RNA transcription
+
+- Receive a string of DNA, eg "GATTACA"
+- Convert it to RNA
+- To convert to RNA
+  - G -> C
+  - C -> G
+  - T -> A
+  - A -> U
+- Result would be "CUAAUGU"
+
+** The tests
+
+ #+BEGIN_SRC javascript
+ test('empty rna sequence', () => {
+   expect(toRna('')).toEqual('');
+ });
+
+ test('transcribes cytosine to guanine', () => {
+   expect(toRna('C')).toEqual('G');
+ });
+
+ test('transcribes guanine to cytosine', () => {
+   expect(toRna('G')).toEqual('C');
+ });
+
+ test('transcribes all dna nucleotides to their rna complements', () => {
+   expect(toRna('ACGTGGTCTTAA'))
+     .toEqual('UGCACCAGAAUU');
+ });
+
+ test('correctly handles invalid input', () => {
+   expect(() => toRna('U')).toThrow(new Error('Invalid input DNA.'));
+ });
+ #+END_SRC
+
+ #+BEGIN_NOTES
+ Here are some of the automated tests for this exercise. In order for their code to work correctly it has to pass all of these tests.
+
+ Progrmaming involves making trade-offs -- one approach for another, aiming for code that is easy to read and understand, efficient for the computer to execute, straightforward to test, and using features of the language in a natural way.
+
+ We're going to look at three solutions to this exercise from three students, who will talk briefly about their approach, and the pros and cons of each.
+ #+END_NOTES
+
+** Dawit Ghebremedhin
+
+ #+REVEAL: split
+
+ #+BEGIN_SRC javascript
+ export const toRna = (dna) => {
+   const rna = [];
+
+   for (let i = 0; i < dna.length; i++) {
+     const symbol = dna[i];
+     if (symbol === 'G') {
+       rna.push('C');
+     } else if (symbol === 'C') {
+       rna.push('G');
+     } else if (symbol === 'T') {
+       rna.push('A');
+     } else if (symbol === 'A') {
+       rna.push('U');
+     } else {
+       throw new Error('Invalid input DNA.');
+     }
+   }
+
+   return rna.join('');
+ };
+ #+END_SRC
+
+#+BEGIN_NOTES
+Pro:
+- Easy to read.
+- Doesn't use any advanced features or structures.
+- Easy to extend to new requirements (e.g., count the number of each DNA letter that occur).
+
+Con:
+- Could be =for ... of= since we don't need the index variable
+- The repeated =if= tests bury what we're actually doing in lengthy code
+- Code almost vertically lines up, which would make it easier to 'pattern match' on its visual appearance to get a sense of what it's doing
+- Each =else= block could be testing a different variable, so there's more mental overhead in understanding what's going on
+
+Arguable:
+- Is it better to push to an array and then join, or just append to a string, as the next example does?
+#+END_NOTES
+
+** Sodaba Bashiri
+
+ #+REVEAL: split
+
+ #+REVEAL_HTML: <div class="leftcol">
+ #+BEGIN_SRC javascript
+ export const toRna = (text) => {
+   const guanine = 'G';
+   const cytosine = 'C';
+   const thymine = 'T';
+   const adenine = 'A';
+   const uracil = 'U';
+ #+END_SRC
+ #+REVEAL_HTML: </div>
+
+ #+REVEAL_HTML: <div class="rightcol">
+ #+BEGIN_SRC javascript
+   let complement = '';
+   for (let i = 0; i < text.length; i++) {
+     switch (text.charAt(i)) {
+       case guanine:
+         complement = complement + cytosine;
+         break;
+       case cytosine:
+         complement = complement + guanine;
+         break;
+       case thymine:
+         complement = complement + adenine;
+         break;
+       case adenine:
+         complement = complement + uracil;
+         break;
+       default:
+         throw 'Invalid input DNA.';
+     }
+   }
+   return complement;
+ };
+ #+END_SRC
+ #+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Pro:
+- Use of variables (might) make the code easier to read.
+- Sensible use of =switch=
+- Also easy to extend to new requirements
+- =default= block makes the failure case very obvious
+
+Con:
+- Using =switch= means you must remember to use =break=.
+- =for ... of= could be used
+- =text.charAt= works, but could also treat the string as an array
+#+END_NOTES
+** Bismillah Frothan
+
+ #+REVEAL: split
+
+ #+BEGIN_SRC javascript
+   const dnaToRnaMapping = {
+     'C': 'G',
+     'G': 'C',
+     'A': 'U',
+     'T': 'A',
+   };
+
+   let output = '';
+
+   for (let i = 0; i < text.length; i++) {
+     const dnaLetter = text[i];
+     const rnaLetter = dnaToRnaMapping[dnaLetter];
+     if (rnaLetter === undefined) {
+       throw new Error('Invalid input DNA.');
+     }
+     output = output + rnaLetter;
+   }
+
+   return output;
+ };
+ #+END_SRC
+
+#+BEGIN_NOTES
+Pro:
+- Probably the most idiomatic solution, using an object to map input to output
+- Easiest to extend for new DNA letters (which can happen).
+
+Con:
+- =for ... of= again. Or =map= would also be idiomatic.
+- Hardest to extend for new use cases (e.g., counts of each letter)
+#+END_NOTES
+* Absolute sum
+
+- Take an array of integers (positive or negative or both)
+- Return the sum of the absolute value of each element
+
+  - =getAbsSum([2, -1, 4, 8, 10])= ➞ 25
+
+  - =getAbsSum([-3, -4, -10, -2, -3])= ➞ 22
+
+  - =getAbsSum([2, 4, 6, 8, 10])= ➞ 30
+
+  - =getAbsSum([-1])= ➞ 1
+
+#+BEGIN_NOTES
+Introduced the apocrophyl quote about sculpting David -- start with a block of marble and chip away everything that isn't David (see https://quoteinvestigator.com/2014/06/22/chip-away/).
+
+Could also have used "It seems that perfection is attained not when there is nothing more to add, but when there is nothing more to remove." (https://en.wikiquote.org/wiki/Antoine_de_Saint_Exup%C3%A9ry)
+
+Goal was to demonstrate that we can start with a solution that works and chip away at it to get closer to the "true" solution. Again, talking about tradeoffs in the process.
+
+#+END_NOTES
+** Rami Daoud
+
+*** A =for= loop
+
+#+BEGIN_SRC javascript
+function getAbsSum(arr) {
+  let total = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    total = total + Math.abs(arr[i]);
+  }
+
+  return total;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+Simple, straightforward. 1 param, 2 variables, one of which (=i=) is used so that we can get another value and isn't germane to the problem itself.
+#+END_NOTES
+
+*** A =for ... of= loop
+
+#+BEGIN_SRC javascript
+function getAbsSum(arr) {
+  let total = 0;
+
+  for (let val of arr) {
+    total += Math.abs(val);
+  }
+
+  return total;
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+A bit better. Now all the variables contain information directly relevant to the problem. But we still have an explicit loop that's obscuring what our code does.
+#+END_NOTES
+
+*** =reduce= with a named function
+
+#+BEGIN_SRC javascript
+function getAbsSum(arr) {
+  function sum(total, val) {
+    return total + Math.abs(val);
+  }
+
+  return arr.reduce(sum, 0);
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+Getting better. The explicit loop is now implicit, and the lines of code are all directly connected to the problem.
+
+The second param to reduce, =0=, is subtle. WIthout it you have a bug with one-element arrays where the value is negative.
+#+END_NOTES
+*** =reduce= with an arrow function
+
+#+BEGIN_SRC javascript
+function getAbsSum(arr) {
+  return arr.reduce((total, val) => total + Math.abs(val), 0);
+}
+#+END_SRC
+
+#+BEGIN_NOTES
+Most pristine form. No more marble to chip away.
+#+END_NOTES
+
+* Fin
