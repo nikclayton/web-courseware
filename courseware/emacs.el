@@ -526,17 +526,19 @@ the file is present."
   (save-excursion
     ;; Find the results block, and go to the first non-whitespace
     ;; content on the following line.
-    (goto-char (org-babel-where-is-src-block-result))
-    (forward-line)
-    (skip-chars-forward " ")
-    ;; If the context is a link to a local file check to see if the
-    ;; file exists. If it does proceed to org-babel-current-result-hash
-    ;; as normal, if it doesn't return nil, and force the file to be
-    ;; generated.
-    (let ((ctx (org-element-context)))
-      (if (and ctx (listp ctx) (eq 'link (car ctx)) (string= "file" (org-element-property :type ctx)))
-	  (f-exists? (f-join (f-dirname buffer-file-name) (org-element-property :path ctx)))
-	t))))
+    (let ((results-point (org-babel-where-is-src-block-result)))
+      (when results-point
+	(goto-char results-point)
+	(forward-line)
+	(skip-chars-forward " ")
+	;; If the context is a link to a local file check to see if the
+	;; file exists. If it does proceed to org-babel-current-result-hash
+	;; as normal, if it doesn't return nil, and force the file to be
+	;; generated.
+	(let ((ctx (org-element-context)))
+	  (if (and ctx (listp ctx) (eq 'link (car ctx)) (string= "file" (org-element-property :type ctx)))
+	      (f-exists? (f-join (f-dirname buffer-file-name) (org-element-property :path ctx)))
+	    t))))))
 
 (advice-add #'org-babel-current-result-hash
 	    :before-while
