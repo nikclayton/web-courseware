@@ -620,6 +620,19 @@ a:hover, .link:hover {
   grunt.registerTask('default', ['less', 'cssmin', 'uglify', 'copy']);
 #+END_SRC
 
+
+** Steps
+
+- Rename a file, =git mv file.css file.less=
+- Check it works, =lessc file.less=
+- Add the =less= block to =Gruntfile.js=
+- Check it works, =grunt less=
+- Add ='less'= to the default block
+- Check it works, =grunt=
+- Add it to the =watch= block
+- Check it works, =grunt watch=
+- Try using =@variables=
+
 ** Test
 ** Commit
 
