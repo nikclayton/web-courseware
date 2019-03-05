@@ -154,7 +154,7 @@ Don't talk about this, it breaks class names and things, so no need to confuse t
 
 #+BEGIN_SRC shell
 % mkdir build
-% uglifyjs src/js/*.js --mangle --output build/shopping.min.js
+% uglifyjs src/js/*.js --mangle --output build/shopping-mvc.min.js
 #+END_SRC
 
 ** Copy and edit =index.html=
@@ -162,7 +162,7 @@ Don't talk about this, it breaks class names and things, so no need to confuse t
 - Copy =src/html/index.html= to =src/html/index.prod.html=
 - Edit =index.prod.html=
   - Delete the =script= elements
-  - Add a new =script= element that loads =shopping.min.js=
+  - Add a new =script= element that loads =shopping-mvc.min.js=
 - Copy =src/html/index.prod.html= to =build/index.html=
 - Check everything works
   - Stylesheets and images won't work!
