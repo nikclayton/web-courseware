@@ -21,7 +21,7 @@ class App extends Component {
     if (quantity !== '') {
       item = item + ` (${quantity})`;
     }
-    this.setState({items: [...this.state.items, item]});
+    this.setState((prevState) => ({items: prevState.items.concat(item)}));
   }
 
   onClearList() {
