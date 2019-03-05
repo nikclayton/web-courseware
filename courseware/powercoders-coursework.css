@@ -140,6 +140,10 @@ span[class|=section-number] {
   content: "Shell";
 }
 
+.src-sql:after {
+  content: "SQL";
+}
+
 /** Code blocks in list items get a grey background. */
 /** Ditto for in table cells */
 /** And paras (e.g., in center blocks) */
