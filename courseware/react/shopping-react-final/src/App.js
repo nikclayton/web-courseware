@@ -29,8 +29,10 @@ class App extends Component {
   }
 
   onDeleteItem(index) {
-    this.state.items.splice(index, 1);
-    this.setState({items: this.state.items});
+    this.setState((prevState) => {
+      prevState.items.splice(index, 1);
+      return {items: prevState.items};
+    });
   }
 
   render() {
