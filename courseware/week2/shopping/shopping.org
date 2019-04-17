@@ -3953,7 +3953,7 @@ deleteButton.addEventListener('click', function(event) {
  - =for=, knowing the loop index is important
    - You won't need the index variable elsewhere
  - =while=, everything else
-* Speed, and =document.readyState=
+* Speed, and =document.readyState=                                 :noexport:
 
 - Websites need to be fast
  - Fast to load
