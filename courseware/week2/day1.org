@@ -1492,7 +1492,6 @@ Finally, we bind our event listener to the event using the =onclick=
 attribute. This is OK, but there is another way to do it, which I want
 to show you. For code as simple as this it's really not necessary, but
 it is a good way to show the technique.
-
 #+END_NOTES
 
 * TODO Refactoring: Inline Javascript
@@ -1500,16 +1499,14 @@ it is a good way to show the technique.
 - Place the Javascript in a separate file
 
 #+BEGIN_SRC html
-<head>
   ...
-  <script src="..."></script>
-  ...
-</head>
+  <script src="setClass.js"></script>
+</body>
 #+END_SRC
 
 #+BEGIN_NOTES
 To refactor the inline Javascript we have to put the contents in a
-separate file, and then use the =script= element in the HTML =head=
+separate file, and then use the =script= element in the HTML
 to load the file.
 #+END_NOTES
 
@@ -1561,11 +1558,12 @@ last small change you made, or review it to see what went wrong.
 ** TODO Create the =script= element, and check
 
 #+BEGIN_SRC html
-<head>
   ...
+  <script>
+    // Existing code here
+  </script>
   <script src="setClass.js"></script>
-  ...
-</head>
+</body>
 #+END_SRC
 
 ** TODO Move the Javascript code to =setClass.js=, and check
@@ -1599,19 +1597,19 @@ the class that we set.
 
 ** Exercise: Take the class name as a parameter
 
- #+BEGIN_SRC javascript
- setClass(event, "tip");    // <-- goal
- #+END_SRC
+#+BEGIN_SRC javascript
+  setClass(event, 'tip');    // <-- goal
+#+END_SRC
 
- #+BEGIN_SRC javascript
- function setClass(event, /* ... */) {
-   // You write the function body.
+#+BEGIN_SRC javascript
+function setClass(event, /* ... */) {
+  // You write the function body.
 
-   // Add a named parameter for the class name.
+  // Add a named parameter for the class name.
 
-   // Use the named parameter as the new class name.
- }
- #+END_SRC
+  // Use the named parameter as the new class name.
+}
+#+END_SRC
 
 #+BEGIN_NOTES
 So we could replace these three with one function that will take
@@ -1645,7 +1643,7 @@ anywhere yet.
 
 ** Replace one function call with a call to =setClass=
 
-#+INCLUDE: "change_para_class/refactor-2-1.html" :lines "12-17" src html
+#+INCLUDE: "change_para_class/refactor-2-1.html" :lines "11-16" src html
 
 #+BEGIN_NOTES
 To use the function we replace the code in the =onclick= attribute that calls
@@ -1662,7 +1660,7 @@ Double check that.
 
 ** TODO Solution: Replace all function calls
 
-#+INCLUDE: "change_para_class/refactor-2-2.html" :lines "12-17" src html
+#+INCLUDE: "change_para_class/refactor-2-2.html" :lines "11-16" src html
 
 #+BEGIN_NOTES
 Check it still works.
@@ -2006,35 +2004,31 @@ your attention to.
 It's this usage of =listenForClick= on line 6, without any parentheses.
 #+END_NOTES
 
-** Calling vs. using a function
-
-- =functionName= followed by =()= means "Call the function"
-- =functionName= on its own means "Use the function"
-- This is going to come up a lot
-
-#+BEGIN_SRC javascript
-el.addEventListener('click', listenForClick);
-#+END_SRC
-
-#+BEGIN_NOTES
-In this case we're not *calling* the =listenForClick= function in
-=addEventListener= because there are no parenthese after its name.
-
-Instead, we're telling =addEventListener= "When the click event,
-call the =listenForClick= function".
-#+END_NOTES
-
 ** Solution...?
 
-#+INCLUDE: "change_para_class/refactor-3.html" :lines "12-17" src html
+#+BEGIN_SRC html
+  <ul>
+    <li id="make-warning">Make it a warning</li>
+    <li onclick="setClass(event, 'tip');">Make it a tip</li>
+    <li onclick="setClass(event, '');">Make it normal</li>
+  </ul>
+#+END_SRC
 
-#+INCLUDE: "change_para_class/refactor-3-1.js" src javascript
+#+BEGIN_SRC javascript
+  function setClass(event, className) {
+    let el = document.getElementById('mypara');
+    el.className = className;
+  }
+
+  let makeWarning = document.getElementById('make-warning');
+  makeWarning.addEventListener('click', setClass);
+#+END_SRC
 
 #+BEGIN_NOTES
 So here's the beginning of a solution.
 
-We've added =id= attributes to the three =li= elements so we can
-refer back to them in the code.
+We've added =id= attributes to an =li= element so we can refer back
+to it in the code.
 
 On the first one we've removed the =onclick= attribute.
 
@@ -2060,116 +2054,21 @@ the text of the new class.
 Are we going to have to go back to having three different functions?
 
 We could, but there's another way.
-
-And for that we need to make a detour and talk a bit more about
-Javascript *values*.
 #+END_NOTES
 
-** Values in Javascript
-
-- =4=
-- ="hello"=
-- =undefined=
-
-#+BEGIN_NOTES
-We're familiar with the idea of values in Javascript. These are things
-like numbers, or a string, or the special value =undefined=.
-#+END_NOTES
-
-** Assigning values to variables
+** Solution
 
 #+BEGIN_SRC javascript
-let x = 4;
-let y = "hello";
-let z = undefined;
+  let makeWarning = document.getElementById('make-warning');
+  makeWarning.addEventListener('click', setClass);
 #+END_SRC
-
-#+BEGIN_NOTES
-And we can create variables, and assign values to them.
-#+END_NOTES
-
-** Using variables
 
 #+BEGIN_SRC javascript
-x;    // 4
-y;    // "hello"
-z;    // undefined
+  let makeWarning = document.getElementById('make-warning');
+  makeWarning.addEventListener('click', function(event) {
+    setClass(event, 'warning');
+  });
 #+END_SRC
-
-#+BEGIN_NOTES
-And when we use the variable, we get back the value that was put in.
-#+END_NOTES
-
-** Function names are also values
-
-#+BEGIN_SRC javascript
-function greet() {
-  return 'hello';
-}
-
-let f = greet;  // Notice: no "()" at the end
-
-f;              // What does this print?
-
-f();            // What does this do?
-#+END_SRC
-
-#+BEGIN_NOTES
-Function names are also values.
-
-This is incredibly powerful. It means we can assign them to variables.
-
-If we use the variable in the normal way and look at the value... well,
-try it, and let me know what you see.
-
-And if you take the variable-that-contains-a-function, and put
-parentheses after the name then the function inside the variable is
-called.
-
-[Wait]
-
-#+END_NOTES
-
-** Anonymous functions
-
-#+BEGIN_SRC javascript
-let p = function() {
-  return 'hello, Powercoders!';
-};
-
-p;     // What does this print?
-
-p();   // What does this do?
-#+END_SRC
-
-#+BEGIN_NOTES
-We can take this a step further, and assign a function to a variable
-without having to give the function a name first.
-
-We call these *anonymous functions*, and they come up all the time in
-Javascript.
-
-We still have the =function= *keyword*, and the parentheses. And the
-body of the function is still in curly brackets. The only thing missing
-is the function name.
-
-Notice, also, that we need to end this with a semi-colon, because it's
-the =let= expression.
-#+END_NOTES
-
-** Back to our problem
-
-#+INCLUDE: "change_para_class/refactor-3-1.js" :lines "6-8" src javascript
-
-- Create an anonymous function
-- ... that calls =setClass=
-- ... with the correct second parameter
-
-** Solution, almost
-
-#+INCLUDE: "change_para_class/refactor-3-1.js" :lines "6-8" src javascript
-
-#+INCLUDE: "change_para_class/refactor-3-2.js" :lines "6-10" src javascript
 
 - Create an anonymous function
 - ... that calls =setClass=
@@ -2178,236 +2077,44 @@ the =let= expression.
 #+BEGIN_NOTES
 Try this, and reload the page in the browser, and then click the
 green listitem.
-
-What happens?
-
-[Wait for answers -- they should all say it doesn't work]
-
-OK. So when this happens -- you've written some Javascript, you think
-it should work, but it doesn't, what do you do?
-
-[Wait]
-
-Check in the console! Every time. I still have to remind myself to do
-this. If there are any errors in your Javascript they will show up in
-the console.
-
 #+END_NOTES
 
-** Expected error
-
-#+BEGIN_EXAMPLE
-Uncaught TypeError: Cannot read property 'addEventListener' of null
-  at ...
-#+END_EXAMPLE
-
-#+BEGIN_NOTES
-If things worked you should see this error in the console. What's
-it telling us?
-#+END_NOTES
-
-** Error explanation
-
-#+BEGIN_EXAMPLE
-Uncaught TypeError: Cannot read property 'addEventListener' of null
-  at ...
-#+END_EXAMPLE
-
-- =at ...= is the file and line with the problem
-- =Cannot read property <x> of <y>= means you tried to do
-  - =y.x()=
-  - Expecting =y= to be a valid value, but =of null= means =y= was
-    unexpectedly =null=
-
-#+INCLUDE: "change_para_class/refactor-3-2.js" :lines "6-10" src javascript
-
-** Why is =makeWarning= null
-
-- [[https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById][MDN getElementById]]
-- Pay attention to the "Return value" section
-
-#+BEGIN_NOTES
-Search for this page, and read the documentation. You'll see a section
-in the document called "Return value". What does that say?
-#+END_NOTES
-
-** =getElementById()= return value
-
-#+BEGIN_QUOTE
-Return Value
-
-A =Element= object describing the DOM element object matching the
-specified ID, *or =null= if no matching element was found in the document.*
-#+END_QUOTE
-
-#+BEGIN_NOTES
-Possible cause -- we've mis-spelled the name of the ID in the call to
-=getElementById()=
-
-Double check -- have we done that?
-
-[Get them to check]
-
-OK -- so our ID values are definitely the same, and the element definitely
-exists in the document, so why can't =getElementById= find it?
-#+END_NOTES
-
-** Why is the element not in the document?
-
-1. Browser loads HTML page
-2. Reads it line by line
-3. Gets to =script= element
-  - Stops reading HTML
-  - Loads script
-  - Executes script
-4. Goes back to processing HTML
-
-#+BEGIN_NOTES
-Our problem is caused by the order in which the browser does things when
-it loads a page.
-
-[Run through the order in the slide]
-
-Can anyone see the problem?
-
-[Wait]
-#+END_NOTES
-
-** Why is the element not in the document?
-
-#+REVEAL_HTML: <div class="leftcol">
-1. Browser loads HTML page
-2. Reads it line by line
-3. Gets to the =script= element
-  - Stops reading HTML
-  - Loads script
-  - Executes script
-4. Goes back to processing HTML
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC html
-<html>
-  <head>
-    ...
-    <script src="..."></script>
-#+END_SRC
-
-#+BEGIN_SRC javascript
-...
-let makeWarning = document.getElementById("make-warning");
-  // makeWarning is null
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+BEGIN_NOTES
-The problem is that, at step 3, when the browser loads and runs or
-Javascript code, the browser hasn't seen the =li= elements with the IDs.
-They're later on in the HTML.
-
-So when our Javascript runs the =li= elements don't exist.
-
-So =getElementById= returns =null=, and we get this error
-
-How do we fix this?
-
-Any ideas?
-#+END_NOTES
-
-** The =DOMContentLoaded= event
-
-- =DOMContentLoaded= fires when the browser has loaded and parsed
-  the HTML
-- Other content, like stylesheets and images, might not be loaded yet
-
-#+BEGIN_NOTES
-The solution is the =DOMContentLoaded= event.
-
-So far the events that we've been looking at, like =click=, or
-=mouseover=, all fire because the user did something, like click
-the page, or move the mouse.
-
-There are other events that fire when interesting things happen that the
-user did not do, and this is one of them.
-
-=DOMContentLoaded= fires when the browser has finished loading and
-parsing the HTML.
-
-#+END_NOTES
-
-** The =DOMContentLoaded= event
-
-1. Browser loads HTML page
-2. Reads it line by line
-3. Gets to =script= element
-  - Stops reading HTML
-  - Loads script
-  - Executes script
-4. Processes the rest of the HTML
-5. Fires =DOMContentLoaded= event
-
-#+BEGIN_NOTES
-Looking back to the timeline of things that happen when the page loads,
-I've added =DOMContentLoaded= here at the bottom.
-#+END_NOTES
-
-** Listening for =DOMContentLoaded=
-
-#+BEGIN_SRC javascript
-document.addEventListener("DOMContentLoaded", function(event) {
-  // Do something when the DOM content has loaded
-});
-#+END_SRC
-
-#+BEGIN_NOTES
-Because this is an event like any other, we can listen for it in exactly
-the same way. And we can provide an anonymous function that will run
-when the DOM content is ready.
-
-Inside this function it's safe to do anything that requires the DOM to
-be complete, including adding other event listeners.
-#+END_NOTES
-
-** Exercise: Add the listener
-
-#+BEGIN_SRC javascript
-document.addEventListener("DOMContentLoaded", function(event) {
-  // Do something when the DOM content has loaded
-});
-#+END_SRC
-
-- Add this listener to your code
-- Move the code that finds =make-warning= and sets the click event
-  listener inside this anonymous function.
-
-#+BEGIN_NOTES
-You do that now -- add a listener for the =DOMContentLoaded event,
-and move the code that finds the =make-warning= element and sets its
-click handler inside this anonymous function.
-#+END_NOTES
-
-** Solution
-
-#+INCLUDE: "change_para_class/refactor-3-3.js" src javascript
-
-#+BEGIN_NOTES
-So here's the almost complete code -- this handles a click on just
-one of the elements.
-#+END_NOTES
-
-** TODO Exercise: Add the other listeners
-
-#+INCLUDE: "change_para_class/refactor-3-3.js" src javascript
+** Exercise: Add the other listeners
 
 - Don't forget to remove the =onclick= attributes from the HTML
 
-** TODO Solution: Add the other listeners
+** Solution: Add the other listeners
 
-#+INCLUDE: "change_para_class/refactor-3-4.js" src javascript
+#+BEGIN_SRC javascript
+  function setClass(event, className) {
+    let el = document.getElementById('mypara');
+    el.className = className;
+  }
+
+  let makeWarning = document.getElementById('make-warning');
+  makeWarning.addEventListener('click', function(event) {
+    setClass(event, 'warning');
+  });
+
+  let makeTip = document.getElementById('make-tip');
+  makeTip.addEventListener('click', function(event) {
+    setClass(event, 'tip');
+  });
+
+  let makeNormal = document.getElementById('make-normal');
+  makeNormal.addEventListener('click', function(event) {
+    setClass(event, '');
+  });
+#+END_SRC
 
 * Refactoring: Cleaning up =setClass()=
 
-#+INCLUDE: "change_para_class/refactor-3-4.js" :lines "1-5" src javascript
+#+BEGIN_SRC javascript
+  function setClass(event, className) {
+    let el = document.getElementById('mypara');
+    el.className = className;
+  }
+#+END_SRC
 
 #+BEGIN_NOTES
 Here's our code for =setClass= again. Can anyone suggest any way that
@@ -2516,7 +2223,6 @@ Make this change and commit.
   - Avoids mixing languages in a file
 - Replaced similar functions with a single function
 - Removed =onclick= attributes, =addEventListener=
-- =DOMContentLoaded= listener
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -2538,10 +2244,7 @@ with one function -- =setClass= -- that took a parameter that it used to
 make the change.
 
 And we removed the =onclick= attributes entirely, replacing them with calls
-to =addEventListener= to install our own event listeners. Doing this we
-discovered how there are timing issues that affect how the browser loads
-Javascript and HTML, and we fixed the problem by listening for the
-=DOMContentLoaded= event.
+to =addEventListener= to install our own event listeners.
 
 With all of that done we discovered a couple of other simplifications
 that allowed us to remove an unused paremter, and employed property
