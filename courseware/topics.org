@@ -1,5 +1,72 @@
 #+COLUMNS: %35ITEM %TODO %TOPICS %REQUIREMENTS %TAGS
 
+* Second half of the course
+
+** Week 1
+
+*** Shopping app
+
+**** Loops
+**** Quantities
+**** MVC
+**** Separate files
+
+** Week 2
+** Week 3
+** Week 4
+** Week 5
+** Week 6
+
+** Topics to assign
+
+*** DONE Node
+**** DONE NPM
+**** DONE Grunt
+
+- Introduce Grunt first, as a task runner
+- Simple concatentation of files
+- Mention Gulp as an alternative
+  - Mention it as a more complicated version of Grunt
+  - Code instead of configuration
+  - See https://deliciousbrains.com/grunt-vs-gulp-battle-build-tools/
+**** DONE Browserify
+- No, too complicated
+- Requires discussion of modules first
+- Bundles JS using modules in to a single file
+**** DONE Babel
+- No, too complicated
+- Converts modern code to code old browsers understand
+- Use in conjunction with Browserify
+- See https://stackoverflow.com/questions/41067220/using-babel-grunt-to-work-with-es6-how-to-transform-require-statements
+
+**** DONE WebPack
+
+- No
+- More complicated than Gulp or Grunt
+
+**** DONE Less (CSS)
+**** DONE JS Minimisation (Uglify)
+**** DONE CSS Minimisation
+**** DONE Copying files around
+*** Javascript modules
+*** Testing
+*** Making API requests
+**** HTTP GET vs. POST
+*** Writing a Python backend
+**** Introduction to Python
+**** Backend terminology
+- Routing requests
+
+*** DONE SQL databases
+
+See sql/sql.org
+
+*** Javascript, the bad parts
+**** =var=
+**** Other object syntax (prototype, etc)
+*** Javascript frameworks (Vue, or React)
+
+
 * Other HTML elements
 
 - =header=
@@ -99,23 +166,13 @@ https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Floats
 ** TODO object-fit
 
  https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-03/fri-may-11
-* document.readyState
 
-After introducing =if= statements, check document.readyState before
-installing the DOMContentLoaded handler.
+* DONE document.readyState
 
-See
-https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded
-for details.
+Covered in the shopping tutorial
+
 
 * Shopping example
-
-** Follow up exercises
- - Set validity checks on the input box, selectively
-   disable the add button
- - Add "quantity" spinners
- - Allow the user to type "\d+ something" and parse out the quantity
-
 ** Final goal?
 - Front end and backend?
 - Save shopping list?
@@ -130,12 +187,7 @@ for details.
  - Introduce this earlier on so it's the default
  - [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode][MDN strict mode reference]]
 
-*** =this= value
-
-** Add a "Delete all" button
-*** TODO Arrays and loops
-
- Introduce when deleting multiple elements from a page
+*** DONE =this= value
 
 * Introduction to HTTP
 Do this now, because the next bit talks about the difference
@@ -177,20 +229,6 @@ way, but without saving it?
 Is this the right point to introduce it? We're going to have
 enough functions by this point.
 
-* Other Backends
-
-* TODO Conditionals
-  :PROPERTIES:
-  :TOPICS:   js-if
-  :END:
-
-Table, even/odd example
-
-Maybe a function that zebra-stripes tables should be
-in a module?
-
-In CSS that's =tr:nth-child(even) { ... }=
-
 * TODO More complicated data structures
   :PROPERTIES:
   :TOPICS:   data-structures
@@ -209,18 +247,6 @@ presentation.
   :END:
 
 Maybe mix this with data-structures as visualisation?
-* Javascript classes, objects
-  :PROPERTIES:
-  :REQUIREMENTS: data-structures
-  :END:
-- Shopping list is an object
-  - Methods:
-    - Add item
-    - Remove item
-    - Save list
-  - With item objects
-    - Quantity
-    - Description
 * Non-HTML / DOM functionality
 
 - Time (ex: [[https://sites.google.com/powercoders.org/resources/curriculum-003-lausanne/week-05/tue-may-22][time exercise]])
@@ -356,10 +382,12 @@ those tasks should be run.
 ** TODO SCRUM / Agile
 ** TODO How to work with a project manager
 ** TODO Kanban boards
-* Databases
+* DONE Databases
   :PROPERTIES:
   :TOPICS:   database
   :END:
+
+See sql/sql.org
 ** Install SQLite                                                  :software:
 ** Tablular data
    - Use spreadsheets as an example
