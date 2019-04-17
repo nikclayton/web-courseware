@@ -2256,8 +2256,6 @@ didn't (with the event listeners) it was easy to know exactly which
 change was causing the problem.
 #+END_NOTES
 
-* BREAK
-
 * TODO The DOM tree
 
 - An HTML page is a tree of elements
