@@ -23,26 +23,24 @@ function createNewListItem(itemName) {
   return listItem;
 }
 
-document.addEventListener('DOMContentLoaded', function(event) {
-  let inputBox = document.getElementById('item');
-  let shoppingList = document.querySelector('ul');
+let inputBox = document.getElementById('item');
+let shoppingList = document.querySelector('ul');
 
-  document.querySelector('button').addEventListener('click', function(event) {
-    if (inputBox.value.trim() !== '') {
+document.querySelector('button').addEventListener('click', function(event) {
+  if (inputBox.value.trim() !== '') {
+    shoppingList.appendChild(createNewListItem(inputBox.value.trim()));
+    inputBox.value = '';
+  }
+  inputBox.focus();
+});
+
+inputBox.addEventListener('keyup', function(event) {
+  if (inputBox.value.trim() !== '') {
+    if (event.key === 'Enter') {
       shoppingList.appendChild(createNewListItem(inputBox.value.trim()));
       inputBox.value = '';
     }
-    inputBox.focus();
-  });
-
-  inputBox.addEventListener('keyup', function(event) {
-    if (inputBox.value.trim() !== '') {
-      if (event.key === 'Enter') {
-        shoppingList.appendChild(createNewListItem(inputBox.value.trim()));
-        inputBox.value = '';
-      }
-    }
-  });
-
-  inputBox.focus();
+  }
 });
+
+inputBox.focus();

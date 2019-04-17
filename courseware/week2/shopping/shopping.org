@@ -502,10 +502,8 @@ You'll see these terms come up a lot in documentation as well.
 - Use an event listener, exactly as before
 
 #+BEGIN_SRC javascript
-document.addEventListener('DOMContentLoaded', function(event) {
-  document.querySelector('button').addEventListener('click', function(event) {
-      console.log('The button was clicked');
-  });
+document.querySelector('button').addEventListener('click', function(event) {
+    console.log('The button was clicked');
 });
 #+END_SRC
 
@@ -631,20 +629,16 @@ correctly before moving on to the next part of the problem.
 
 #+BEGIN_SRC javascript
   // With a variable.
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      let inputBox = document.getElementById('item');
-      console.log(inputBox.value);
-    });
+  document.querySelector('button').addEventListener('click', function(event) {
+    let inputBox = document.getElementById('item');
+    console.log(inputBox.value);
   });
 #+END_SRC
 
 #+BEGIN_SRC javascript
   // With chaining.
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      console.log(document.getElementById('item').value);
-    });
+  document.querySelector('button').addEventListener('click', function(event) {
+    console.log(document.getElementById('item').value);
   });
 #+END_SRC
 
@@ -893,12 +887,10 @@ This is our current click listener
 #+END_CENTER
 
 #+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
     document.querySelector('button').addEventListener('click', function(event) {
       let inputBox = document.getElementById('item');
       console.log(inputBox.value);
     });
-  });
 #+END_SRC
 
 - Call =createNewListItem= to generate the =li= node
@@ -920,22 +912,18 @@ Then find the =ul= element and use =appendChild= to add the =li= node.
 *** TODO Solution: Adding list items when the button is clicked
 #+BEGIN_SRC javascript
   // Variables
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      let inputBox = document.getElementById('item');
-      let li = createNewListItem(inputBox.value);
-      document.querySelector('ul').appendChild(li);
-    });
+  document.querySelector('button').addEventListener('click', function(event) {
+    let inputBox = document.getElementById('item');
+    let li = createNewListItem(inputBox.value);
+    document.querySelector('ul').appendChild(li);
   });
 #+END_SRC
 
 #+BEGIN_SRC javascript
   // Chaining
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      document.querySelector('ul').appendChild(
-        createNewListItem(document.getElementById('item').value));
-    });
+  document.querySelector('button').addEventListener('click', function(event) {
+    document.querySelector('ul').appendChild(
+      createNewListItem(document.getElementById('item').value));
   });
 #+END_SRC
 
@@ -1420,7 +1408,7 @@ What did you find?
 #+END_CENTER
 
 #+BEGIN_SRC javascript
-document.addEventListener('DOMContentLoaded', function(event) {
+el.addEventListener('click', function(event) {
   ...
 });
 #+END_SRC
@@ -1482,14 +1470,12 @@ quotes.
 
 ** Exercise: Listening for =keyup= and inspecting =event.key=      :exercise:
 #+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      // ...
-    });
-
-    // Add code here that listen for 'keyup' on the 'input' element
-    // and logs the event.key property.
+  document.querySelector('button').addEventListener('click', function(event) {
+    // ...
   });
+
+  // Add code here that listen for 'keyup' on the 'input' element
+  // and logs the event.key property.
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -1506,14 +1492,12 @@ which string is used to repesent the ENTER key.
 ** Solution: Listening for =keyup= and inspecting =event.key=
 #+NAME: EventKeyLog
 #+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      // ...
-    });
+  document.querySelector('button').addEventListener('click', function(event) {
+    // ...
+  });
 
-    document.querySelector('input').addEventListener('keyup', function(event) {
-      console.log(event.key);
-    });
+  document.querySelector('input').addEventListener('keyup', function(event) {
+    console.log(event.key);
   });
 #+END_SRC
 
@@ -1775,16 +1759,14 @@ Change this so that the key is only logged if it's =Enter=
 *** Exercise (hint): Only log the key if it's =Enter=
 
 #+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      // ...
-    });
+  document.querySelector('button').addEventListener('click', function(event) {
+    // ...
+  });
 
-    document.querySelector('input').addEventListener('keyup', function(event) {
-      if (/* What goes here? */) {
-        console.log(event.key);
-      }
-    });
+  document.querySelector('input').addEventListener('keyup', function(event) {
+    if (/* What goes here? */) {
+      console.log(event.key);
+    }
   });
 #+END_SRC
 
@@ -1795,16 +1777,14 @@ Change this so that the key is only logged if it's =Enter=
 
 #+NAME: EnterKeyLog
 #+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      // ...
-    });
+  document.querySelector('button').addEventListener('click', function(event) {
+    // ...
+  });
 
-    document.querySelector('input').addEventListener('keyup', function(event) {
-      if (event.key === 'Enter') {
-        console.log(event.key);
-      }
-    });
+  document.querySelector('input').addEventListener('keyup', function(event) {
+    if (event.key === 'Enter') {
+      console.log(event.key);
+    }
   });
 #+END_SRC
 
@@ -1833,18 +1813,16 @@ Off you go.
 #+END_NOTES
 ** Solution: Adding the item if the ENTER key is released
 #+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      // ...
-    });
+  document.querySelector('button').addEventListener('click', function(event) {
+    // ...
+  });
 
-    document.querySelector('input').addEventListener('keyup', function(event) {
-      if (event.key === 'Enter') {
-        let inputBox = document.getElementById('item');
-        let li = createNewListItem(inputBox.value);
-        document.querySelector('ul').appendChild(li);
-      }
-    });
+  document.querySelector('input').addEventListener('keyup', function(event) {
+    if (event.key === 'Enter') {
+      let inputBox = document.getElementById('item');
+      let li = createNewListItem(inputBox.value);
+      document.querySelector('ul').appendChild(li);
+    }
   });
 #+END_SRC
 
@@ -1885,36 +1863,32 @@ used to create a new list item and add it to the list.
 ** Exercise: Clear the input widget                                :exercise:
 
 #+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      // Existing code that adds to the list
+  document.querySelector('button').addEventListener('click', function(event) {
+    // Existing code that adds to the list
 
-      // <-- new code goes here
-    });
+    // <-- new code goes here
+  });
 
-    document.querySelector('input').addEventListener('keyup', function(event) {
-      // Existing code that adds to the list
+  document.querySelector('input').addEventListener('keyup', function(event) {
+    // Existing code that adds to the list
 
-      // <-- new code goes here
-    });
+    // <-- new code goes here
   });
 #+END_SRC
 
 ** Solution: Clear the input widget
 
 #+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      // Existing code that adds to the list
+  document.querySelector('button').addEventListener('click', function(event) {
+    // Existing code that adds to the list
 
-      inputBox.value = '';
-    });
+    inputBox.value = '';
+  });
 
-    document.querySelector('input').addEventListener('keyup', function(event) {
-      // Existing code that adds to the list
+  document.querySelector('input').addEventListener('keyup', function(event) {
+    // Existing code that adds to the list
 
-      inputBox.value = '';
-    });
+    inputBox.value = '';
   });
 #+END_SRC
 
@@ -1976,20 +1950,18 @@ Do this search to read up on how to do it.
 ** Solution: Give the input widget the focus
 
 #+BEGIN_SRC javascript
-  document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('button').addEventListener('click', function(event) {
-      // Existing code that adds to the list and clears the box.
+  document.querySelector('button').addEventListener('click', function(event) {
+    // Existing code that adds to the list and clears the box.
 
-      inputBox.focus();
-    });
-
-    document.querySelector('input').addEventListener('keyup', function(event) {
-      // Existing code that adds to the list
-    });
-
-    let inputBox = document.getElementById('item');
     inputBox.focus();
   });
+
+  document.querySelector('input').addEventListener('keyup', function(event) {
+    // Existing code that adds to the list
+  });
+
+  let inputBox = document.getElementById('item');
+  inputBox.focus();
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -2018,7 +1990,7 @@ had loaded as well.
 
 * A quick refactoring
 
-#+INCLUDE: "shopping-3.js" :lines "26-45" src javascript
+#+INCLUDE: "shopping-3.js" :lines "26-43" src javascript
 
 #+BEGIN_NOTES
 This is my code at this point (just for the event listeners, this
@@ -2230,7 +2202,7 @@ If you haven't already done that, do that, and make sure it works.
 
 ** Solution: Using =if= to require input
 
-#+INCLUDE: "shopping-5.js" :lines "26-49" src javascript -n
+#+INCLUDE: "shopping-5.js" :lines "26-47" src javascript -n
 
 #+BEGIN_NOTES
 Here's the new code, with the additional =if= statements starting
@@ -2320,7 +2292,7 @@ added to the list any more.
 
 ** Solution: Using =if= and =trim= to require input
 
-#+INCLUDE: "shopping-6.js" :lines "26-49" src javascript -n
+#+INCLUDE: "shopping-6.js" :lines "26-47" src javascript -n
 
 #+BEGIN_NOTES
 Here's what I came up with.
@@ -2394,7 +2366,7 @@ again.
 
 ** Where should we put this code?
 
-#+INCLUDE: "shopping-6.js" :lines "26-49" src javascript -n
+#+INCLUDE: "shopping-6.js" :lines "26-47" src javascript -n
 
 #+BEGIN_NOTES
 Now that we know how to disable the button, we need to think about
@@ -2433,12 +2405,10 @@ And you'll need a variable for the button.
 
 ** Solution: Disabling the button, variables
 
-#+INCLUDE: "shopping-7.js" :lines "26-30" src javascript -n 26
+#+INCLUDE: "shopping-7.js" :lines "26-29" src javascript -n 26
 
 #+BEGIN_NOTES
 I've had to split the code over three slides to show it all.
-
-The first part is the top of the =DOMContentLoaded= listener.
 
 All I've done here is added a third variable, =addItemButton=,
 and found the first button in the DOM.
@@ -2450,7 +2420,7 @@ Make sense?
 
 ** Solution: Disabling the button, input widget
 
-#+INCLUDE: "shopping-7.js" :lines "40-56" src javascript -n 40
+#+INCLUDE: "shopping-7.js" :lines "39-52" src javascript -n 40
 
 #+BEGIN_NOTES
 Jumping ahead to my line 40, and the =keyup= listener for the input
@@ -2474,7 +2444,7 @@ don't worry.
 
 ** Solution: Disabling the button, button widget
 
-#+INCLUDE: "shopping-7.js" :lines "31-39" src javascript -n 31
+#+INCLUDE: "shopping-7.js" :lines "30-38" src javascript -n 31
 
 #+BEGIN_NOTES
 Finally, and jumping back up the code, I've been a bit sneaky.
@@ -2592,11 +2562,11 @@ the first place.
 
 *** Replacing =let= with =const=
 
-#+INCLUDE: "shopping-8.js" :lines "7-25" src javascript
+#+INCLUDE: "shopping-8.js" :lines "7-28" src javascript
 
 *** Replacing =let= with =const=
 
-#+INCLUDE: "shopping-8.js" :lines "26-30" src javascript
+#+INCLUDE: "shopping-8.js" :lines "29-32" src javascript
 
 * Refactoring: =else=
 
@@ -3075,7 +3045,7 @@ case.
 
 ** Solution: Returning early from a function
 
-#+INCLUDE: "shopping-13.js" :lines "40-56" src javascript -n 40
+#+INCLUDE: "shopping-13.js" :lines "48-64" src javascript -n 40
 
 #+BEGIN_NOTES
 Here's what our function looks like using =if= statements and
@@ -3114,7 +3084,7 @@ handler, test it, add and commit.
 
 ** Solution: Returning early from a function
 
-#+INCLUDE: "shopping-13.js" :lines "31-39" src javascript -n 31
+#+INCLUDE: "shopping-13.js" :lines "35-47" src javascript -n 31
 
 #+BEGIN_NOTES
 And we can make a very similar change to the click handler for
@@ -3138,11 +3108,11 @@ handler, test it, add and commit.
   :HTML_CONTAINER_CLASS: smaller
   :END:
 
-#+INCLUDE: "shopping-7.js" :lines "31-55" src javascript
+#+INCLUDE: "shopping-7.js" :lines "26-54" src javascript
 
 #+REVEAL: split
 
-#+INCLUDE: "shopping-13.js" :lines "31-56" src javascript
+#+INCLUDE: "shopping-13.js" :lines "31-66" src javascript
 
 * Refactoring: Recap
 
@@ -3690,7 +3660,7 @@ items.forEach(function(el) {
 
 #+INCLUDE: "shopping-15.js" :lines "32-37" src javascript
 
-#+INCLUDE: "shopping-15.js" :lines "70-78" src javascript
+#+INCLUDE: "shopping-15.js" :lines "69-77" src javascript
 
 *** Exercise: Enable the button when items are added
 
@@ -3699,11 +3669,11 @@ items.forEach(function(el) {
 
 *** Solution: Enable the button when items are added
 
-#+INCLUDE: "shopping-15.js" :lines "38-51" src javascript
+#+INCLUDE: "shopping-15.js" :lines "37-50" src javascript
 
 *** Solution: Enable the button when items are added
 
-#+INCLUDE: "shopping-15.js" :lines "52-69" src javascript
+#+INCLUDE: "shopping-15.js" :lines "51-68" src javascript
 
 *** Exercise: Disable the button when the page is loaded
 
@@ -4363,7 +4333,7 @@ quantityBox.focus();
 
 - In the =click= handler
 - In the =keyup= handler
-- In the =DOMContentLoaded= handler
+- In the global scope
 
 *** Clearing the widget
 
@@ -4409,14 +4379,12 @@ function onKeyup(event) {
   // ...
 }
 
-function domContentLoaded() {
-  // ...
+// ...
 
-  inputBox.addEventListener('keyup', onKeyup);
-  quantityBox.addEventListener('keyup', onKeyup);
+inputBox.addEventListener('keyup', onKeyup);
+quantityBox.addEventListener('keyup', onKeyup);
 
-  // ...
-}
+// ...
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -6526,7 +6494,7 @@ class Person {
   - Everything else in here
 - Update the HTML
 
-#+INCLUDE: "shopping-multiple/shopping.html" :lines "8-10" src html
+#+INCLUDE: "shopping-multiple/shopping.html" :lines "27-29" src html
 
 ** Problem
 
@@ -6669,12 +6637,12 @@ It's not going to do anything useful yet, but it is going to show the structure,
 
 #+REVEAL: split
 
-#+INCLUDE: "shopping-mvc/skeleton/src/html/index.html" :lines "8-13" src html
+#+INCLUDE: "shopping-mvc/skeleton/src/html/index.html" :lines "27-32" src html
 
 *** Control flow
 
 - Page is loaded
-  - =ui.js:domContentLoaded()= is run, =new Controller()=
+  - =ui.js= is run, =new Controller()=
   - =controller.js:constructor()= is run, =new Model(this)=
   - =model.js:constructor()= is run, =new View(this, controller)=
   - =view.js:constructor()= is run

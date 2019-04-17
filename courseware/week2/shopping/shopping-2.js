@@ -19,20 +19,18 @@ function createNewListItem(itemName) {
   return listItem;
 }
 
-document.addEventListener('DOMContentLoaded', function (event) {
-  document.querySelector('button').addEventListener('click', function (event) {
-    let inputBox = document.getElementById('item');
-    console.log(inputBox.value);
+document.querySelector('button').addEventListener('click', function (event) {
+  let inputBox = document.getElementById('item');
+  console.log(inputBox.value);
 
-    // Call createNewListItem with the contents of the input widget and save
-    // the result in a variable.
+  // Call createNewListItem with the contents of the input widget and save
+  // the result in a variable.
 
-    // Use document.querySelector to find the ul element and save the result
-    // in a variable.
+  // Use document.querySelector to find the ul element and save the result
+  // in a variable.
 
-    // Append the li element returned by createNewListItem to the ul element
-    // returned by document.querySelector.
-  });
+  // Append the li element returned by createNewListItem to the ul element
+  // returned by document.querySelector.
 });
 
 function elseTest(num) {
