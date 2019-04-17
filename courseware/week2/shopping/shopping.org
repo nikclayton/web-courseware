@@ -2012,103 +2012,8 @@ It also gives me the chance to explain *scope* to you, so let's do
 that.
 #+END_NOTES
 
-** Refactored: variables at higher scopes
 
-#+INCLUDE: "shopping-4.js" :lines "26-47" src javascript -n
-
-#+BEGIN_NOTES
-This is the refactored code.
-
-On lines two and three I declare and initialise two variables, one
-for the inputBox, one for the shopping list.
-
-Then I use these throughout the rest of function.
-
-So lets talk about *scope* for a second.
-
-When we declare variables in Javascript we say that they have a
-*scope* (you might also hear the word *visibility* used).
-
-Very roughly, Javascript uses these curly brackets to indicate where
-scopes start and end.
-
-And because we can have curly bracket sections inside curly bracket
-sections, we say that they are nested inside each other.
-
-This is very similar to the way that HTML elements are nested inside
-one another.
-
-You can think of this as creating different *levels* of scope. Each
-new curly bracket pair in the nested set increases the scope level by
-one.
-
-The rule is that a variable is visible in its scope, and any scopes
-that are nested inside it.
-
-I'll use this code to explain, and then we'll do a couple more examples.
-
-At the very top level is the outermost, or *global* scope. Anything at
-this scope is visible to everything else.
-
-In this code example we don't have any variables at the global scope.
-
-Line 1 introduces a curly bracket, so we know a new scope has been
-created. Let's call this the L1 scope.
-
-We define two variables in the L1 scope.
-
-Line 5 uses the =inputBox= variable. We're in L2 scope and the
-variable was defined in L1, so this is fine.
-
-Line 5 also introduces a curly bracket, so everything from there on in
-is at L2 scope.
-
-Line 6 has another one -- the if() body -- so L3 scope starts there.
-That uses =shoppingList= and =inputBox=, both L1 scope, so visible.
-
-Line 9 has a closing curly brace, so we jump up one scope level, and
-we're back to L2 scope.
-
-On line 11 I can use the =inputBox= variable instead of calling
-=querySelector= again.
-
-Lines 13 through 18 are very similar. Importantly, when the L2 scope
-is created in line 13, and the L3 scope in line 14, these are
-*different* from the L2 and L3 scopes from earlier
-
-This is one of the reasons why we're careful to indent code -- the
-indentation also helps to show the scopes, and prevent mistakes.
-#+END_NOTES
-
-** Refactored: variables at higher scopes
-
-#+INCLUDE: "scope.html" src javascript -n
-
-#+BEGIN_NOTES
-Here's a somewhat contrived example that maybe helps.
-
-In our script element we start in global scope. That's where
-the =a= variable is defined, so it's in global scope.
-
-Our =scope= function creates an L1 scope. The =b= and =c=
-variables are in this scope.
-
-The =if= statement creates an L2 scope. Crucially, inside
-this scope we create a new =c= variable. This means that that
-=c= variable from line 6 is temporarily hidden, and replaced with
-this new =c= variable.
-
-We exit the L2 scope on line 12, back to the L1 scope.
-
-The log on line 14 shows the *original* version of =c=, not the
-one from line 10.
-
-Finally, the log statement on line 17 generates an error. We're
-back in global scope here, and =b= was defined in an L1 scope,
-so it's not visible.
-
-Is that -- somewhat -- clear?
-#+END_NOTES
+* Scope
 
 ** Quick note on the backticks, =`=
    :PROPERTIES:
@@ -2116,12 +2021,12 @@ Is that -- somewhat -- clear?
    :END:
 
 #+BEGIN_SRC javascript
-let a = '[a:g]';
-let b = '[b:1]';
-let c = '[c:1]';
+  let a = 'Hello';
+  let b = 'Powercoders';
+  let c = 'students';
 
-console.log(a + ' ' + b + ' ' + c); // "[a:g] [b:1] [c:1]"
-console.log(`${a} ${b} ${c}`);      // "[a:g] [b:1] [c:1]"
+  console.log(a + ' ' + b + ' ' + c); // "Hello Powercoders students"
+  console.log(`${a} ${b} ${c}`);      // "Hello Powercoders students"
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -2135,6 +2040,372 @@ dollar sign, an opening curly, the name of the variabe, and a
 closign curly.
 
 As you can see, it can be quite a bit easier to read.
+#+END_NOTES
+
+** Global scope
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: scope-js
+#+BEGIN_SRC javascript
+let a = 10;
+
+function foo() {
+  let b = 20;
+  console.log(`${a} ${b}`);
+}
+
+function bar(msg) {
+  let b = 15;
+
+  for (let i = 0; i < 3; i++) {
+    console.log(i);
+  }
+
+  if (true) {
+    let x = 10;
+    console.log(`${a} ${b} ${x} ${msg}`);
+  }
+}
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope-global.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:scope-global.svg]]
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+In the diagram on the right each box has three sections.
+
+The first section is the name of the scope. In this case, this is the global scope.
+
+The second section is the code that's run.
+
+The third section shows the names of things that Javascript knows about at this point, and the value that that thing has.
+
+In this case, Javascript knows that there is a thing called =a= that exists, and it has the value =10=.
+
+Javascript also knows that there are two other things that exist. These have the names =foo=, and =bar=, and they are both functions.
+
+Remember, functions are values too.
+
+This third section -- the space that contains the names -- the technical term for that is a *namespace*.
+#+END_NOTES
+** Function scope
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript :noweb yes
+<<scope-js>>
+#+END_SRC
+
+#+BEGIN_SRC javascript
+foo();
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope-function-1.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+
+    global -> foo;
+    foo [label="{Function scope|<b>function foo() \{\l&nbsp;&nbsp;let b = 20;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\}`);\l\}\l|Name : Value\nb : 20}"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:scope-function-1.svg]]
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This is what happens when we run the =foo= function.
+
+We type =foo()= in to the console, and press return. In the console, any code we type in is running in the global scope. Javascript looks in the global scope to see if a thing called =foo= exists, and what its value is.
+
+=foo= does exist in the global scope, and is a function. Because we used the =()= after the name Javascript knows to call the function in =foo=, so it does, and the function starts.
+
+The function creates a new scope, which is a child of the global scope.
+
+This scope contains one extra thing, =b=, which has the value =20=.
+
+When the =console.log= statement executes, Javascript has to print the values of =a= and =b=.
+
+Javascript starts by trying to find =a= in the current scope -- the function scope.  As you can see, it's not there.
+
+So Javascript looks in the parent scope for =a=. It finds it, and its value, so it can print =10=.
+
+Then it has to find the thing called =b=. Again, it starts looking in the function scope. It finds it, so it doesn't have to look anywhere else.
+#+END_NOTES
+** Function scope
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript :noweb yes
+<<scope-js>>
+#+END_SRC
+
+#+BEGIN_SRC javascript
+bar('hello');
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope-function.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+
+  global -> bar;
+  bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:scope-function.svg]]
+
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+This is what happens if we type =bar()= in to the console.
+
+Again, Javascript has to find out if =bar= exists. In the console we're in the global scope, so it checks, and =bar= does exist, and is a function, so Javascript calls it.
+
+The =bar= function starts running, and creates its own scope, just like =foo= did.
+
+Importantly, the =foo= scope no longer exists -- it disappears when the =foo= function stops running. This is why the =bar= function can't see any variables from =foo=, they don't exist at this point.
+
+In the scope for =bar= there are two things. The first is the parameter value -- =bar= takes a parameter called =msg=, and when we called the function we gave it a string value of 'hello'.
+
+This is why the things in this section of the diagram are not just variables -- any value we can give a name to goes in here -- variables, constants, functions, and parameters.
+
+The second thing in here is the variable =b=, which has the value =15.
+#+END_NOTES
+
+** Block scope
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript :noweb yes
+<<scope-js>>
+#+END_SRC
+
+#+BEGIN_SRC javascript
+bar('hello');
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file block-scope.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+
+    global -> bar;
+    bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
+
+    bar -> for;
+    for [label="{Block scope|for (let i = 0; i \< 3; i++) \{\l&nbsp;&nbsp;console.log(i);\l\}\l|Name : Value\n - i : 0..3\l}"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:block-scope.svg]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+When the =for= loop starts running it creates its own scope, a block scope.
+
+In here, any variables we define either in the block, or in the parentheses, are visible. We only have one, the variable =i=, which is why we can log the value.
+#+END_NOTES
+** Block scope
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript :noweb yes
+<<scope-js>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+
+    global -> bar;
+    bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
+
+    bar -> if;    if [label="{Block scope|if (true) \{\l&nbsp;&nbsp;let x = 10;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\} $\{x\} $\{msg\}`);\l\}\l|Name : Value\n- x : 10\l}"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:scope.svg]]
+#+REVEAL_HTML: </div>
+
+#+BEGIN_NOTES
+Now the =if= block starts running.
+
+The scope from the =for= loop has disappeared. This is why the =i= variable in the loop is no longer accessible -- the scope it was in no longer exists.
+
+The =if= block creates its own scope, and creates a new variable in that scope, =x=.
+
+Then it logs the string.
+
+To find the value of =a=, Javascript starts looking in the block scope. There's nothing in that scope with the name =a=, so it moves up one scope, looking in the function scope. There's nothing with that name there either, so it moves up to the global scope, and finds it.
+
+It does the same thing with =b=, finding it one scope up (in the function scope).
+
+=x= is in the current scope. And =msg= is the parameter passed to the function, so is found in the function scope.
+#+END_NOTES
+
+** All the scopes
+
+#+REVEAL_HTML: <div class="leftcol">
+#+BEGIN_SRC javascript :noweb yes
+<<scope-js>>
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope-all.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+
+    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
+
+    global -> foo;
+    foo [label="{Function scope|<b>function foo() \{\l&nbsp;&nbsp;let b = 20;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\}`);\l\}\l|Name : Value\nb : 20}"];
+
+    global -> bar;
+    bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
+
+    bar -> for;
+    for [label="{Block scope|for (let i = 0; i \< 3; i++) \{\l&nbsp;&nbsp;console.log(i);\l\}\l|Name : Value\n - i : 0..3\l}"];
+
+    bar -> if;    if [label="{Block scope|if (true) \{\l&nbsp;&nbsp;let x = 10;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\} $\{x\} $\{msg\}`);\l\}\l|Name : Value\n- x : 10\l}"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:scope-all.svg]]
+#+REVEAL_HTML: </div>
+
+** Functions inside functions
+
+- We can put a function inside another function
+- The inner function
+  - Has access to the variables in the outer function
+  - Can *only* be called by the outer function
+
+** Functions inside functions
+
+#+REVEAL_HTML: <div class="leftcol">
+#+NAME: scope-function-js
+#+BEGIN_SRC javascript
+  let a = 10;
+
+  function foo() {
+    let b = 15;
+
+    function bar() {
+      console.log(`${a} ${b}`);
+    }
+
+    bar();
+  }
+#+END_SRC
+
+#+BEGIN_SRC javascript
+foo();
+bar();  // <-- DOES NOT WORK
+#+END_SRC
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+#+BEGIN_SRC dot :file scope-func-in-func.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
+  digraph G{
+    node [shape=record, fontname="Consolas" fontsize=16];
+    global [label="{Global scope|let a = 10;|Name : Value\n- a \ \ : 10\l- foo : function() \{ ... \}\l}"];
+
+    global -> foo;
+    foo [label="{Function scope|function foo() \{\l\ \ let b = 15;\l\l\ \ function bar() \{\l\ \ \ \ console.log(`$\{a\} $\{b\}`);\l\ \ \}\l\l\ \ bar();\l\}\l|Name : Value\n \ - bar : function() \{ ... \}\l \ - b \ \ : 15\l}"];
+
+  foo -> bar;
+  bar [label="{Function scope|function bar() \{\l\ \ console.log(`$\{a\} $\{b\}`);\l\}\l|Name : Value}"];
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:scope-func-in-func.svg]]
+
+#+BEGIN_NOTES
+Here's different code from earlier. Our =foo= function now also contains a =bar= function.
+
+Here are the scopes when we call =foo=.
+
+As before, the global scope contains the names =a= and =foo=, where =a= has the value =10= and =foo= contains a function.
+
+When we call =foo= it creates a function scope that contains =b= and =bar=. When -- at the bottom of the =foo= function -- it calls the =bar= function this works, because it can see the name.
+
+The =bar= function creates its own scope, but does not create any new names of its own. The =console.log= line that references the names =a= and =b= works because =b= is in the parent scope (the function scope) and =a= is in the grandparent scope (the global scope).
+
+However -- the =bar= function is *not* visible from the global scope. The global scope can only see the names =a= and =foo=. This is why, if we try and call the =bar= function ourselves, we can't, it won't work.
+
+We have effectively hidden the =bar= function from everything except the =foo= function.
+#+END_NOTES
+
+
+** Code before refactoring
+
+#+INCLUDE: "shopping-3.js" :lines "26-43" src javascript
+
+** Refactored: variables at higher scopes
+
+#+INCLUDE: "shopping-4.js" :lines "26-43" src javascript -n
+
+#+BEGIN_NOTES
+This is the refactored code.
+
+On lines two and three I declare and initialise two variables, one
+for the inputBox, one for the shopping list.
+
+Then I use these throughout the rest of function.
+
+I'll use this code to explain, and then we'll do a couple more examples.
+
+At the very top level is the outermost, or *global* scope. Anything at
+this scope is visible to everything else.
+
+We define two variables in the global scope.
+
+Line 4 also introduces a curly bracket, so everything from there on in
+is at L1 scope.
+
+Line 5 uses the =inputBox= variable. We're in L1 scope and the
+variable was defined in global, so this is fine.
+
+Line 8 has a closing curly brace, so we jump up one scope level, and
+we're back to global scope.
+
+On line 10 I can use the =inputBox= variable instead of calling
+=querySelector= again.
+
+Lines 10 through 15 are very similar. Importantly, when the L1 scope
+is created in line 10, and the L2 scope in line 11, these are
+*different* from the scopes from earlier.
+
+This is one of the reasons why we're careful to indent code -- the
+indentation also helps to show the scopes, and prevent mistakes.
 #+END_NOTES
 
 * Prevent empty items from being added
@@ -4348,8 +4619,7 @@ quantityBox.value = '';
 
 - Problem: Our =keyup= handler only listens for =inputBox= events
 - =quantityBox= is a different element
-- Four possible solutions
-  - In increasing level of quality
+- Three possible solutions
 
 **** Solution 1: Duplicate the event handler
 
@@ -4395,410 +4665,9 @@ Here, we take the keyup handler code and move it in to its own function, separat
 We call this =onKeyup= -- it's a convention that if you have a function that's acting as an event handler (i.e., it takes an =event= parameter, and is called as an event handler) that you call it =on= plus the name of the event it handles.
 
 Since this handles the =keyup= event we call it =onKeyup= (note the lowerCamelCase name).
-
-However, if you actually do this it won't work as witten on this slide.
-
-This is because the =onKeyup= function needs access to all the variables defined at the start of =domContentLoaded()=. Since =onKeyup= is it's own function this doesn't work.
 #+END_NOTES
 
-**** Solution 2: With variables
-
-#+NAME: solution-with-variables
-#+BEGIN_SRC javascript
-function onKeyup(event) {
-  const quantityBox = document.getElementById('quantity');
-  const inputBox = document.getElementById('item');
-  const shoppingList = document.querySelector('ul');
-  // ...
-}
-
-function domContentLoaded() {
-  const quantityBox = document.getElementById('quantity');
-  const inputBox = document.getElementById('item');
-  const shoppingList = document.querySelector('ul');
-  // ...
-
-  inputBox.addEventListener('keyup', onKeyup);
-  quantityBox.addEventListener('keyup', onKeyup);
-
-  // ...
-}
-#+END_SRC
-
-#+BEGIN_NOTES
-So we could duplicate all the variable declarations at the start of =domContentLoaded()= and put them at the start of =onKeyup()= as well.
-
-This works. But again, it's code duplication, which we want to avoid.
-
-Lets put =onKeyup= somewhere it can see all those variables.
-
-But first, a refresher on scope.
-#+END_NOTES
-
-* Scope
-
-** Global scope
-
-#+REVEAL_HTML: <div class="leftcol">
-#+NAME: scope-js
-#+BEGIN_SRC javascript
-let a = 10;
-
-function foo() {
-  let b = 20;
-  console.log(`${a} ${b}`);
-}
-
-function bar(msg) {
-  let b = 15;
-
-  for (let i = 0; i < 3; i++) {
-    console.log(i);
-  }
-
-  if (true) {
-    let x = 10;
-    console.log(`${a} ${b} ${x} ${msg}`);
-  }
-}
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file scope-global.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
-  digraph G{
-    node [shape=record, fontname="Consolas" fontsize=16];
-    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
-}
-#+END_SRC
-
-#+RESULTS:
-[[file:scope-global.svg]]
-
-#+REVEAL_HTML: </div>
-
-#+BEGIN_NOTES
-In the diagram on the right each box has three sections.
-
-The first section is the name of the scope. In this case, this is the global scope.
-
-The second section is the code that's run.
-
-The third section shows the names of things that Javascript knows about at this point, and the value that that thing has.
-
-In this case, Javascript knows that there is a thing called =a= that exists, and it has the value =10=.
-
-Javascript also knows that there are two other things that exist. These have the names =foo=, and =bar=, and they are both functions.
-
-Remember, functions are values too.
-
-This third section -- the space that contains the names -- the technical term for that is a *namespace*.
-#+END_NOTES
-** Function scope
-
-#+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC javascript :noweb yes
-<<scope-js>>
-#+END_SRC
-
-#+BEGIN_SRC javascript
-foo();
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file scope-function-1.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
-  digraph G{
-    node [shape=record, fontname="Consolas" fontsize=16];
-    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
-
-    global -> foo;
-    foo [label="{Function scope|<b>function foo() \{\l&nbsp;&nbsp;let b = 20;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\}`);\l\}\l|Name : Value\nb : 20}"];
-  }
-#+END_SRC
-
-#+RESULTS:
-[[file:scope-function-1.svg]]
-
-#+REVEAL_HTML: </div>
-
-#+BEGIN_NOTES
-This is what happens when we run the =foo= function.
-
-We type =foo()= in to the console, and press return. In the console, any code we type in is running in the global scope. Javascript looks in the global scope to see if a thing called =foo= exists, and what its value is.
-
-=foo= does exist in the global scope, and is a function. Because we used the =()= after the name Javascript knows to call the function in =foo=, so it does, and the function starts.
-
-The function creates a new scope, which is a child of the global scope.
-
-This scope contains one extra thing, =b=, which has the value =20=.
-
-When the =console.log= statement executes, Javascript has to print the values of =a= and =b=.
-
-Javascript starts by trying to find =a= in the current scope -- the function scope.  As you can see, it's not there.
-
-So Javascript looks in the parent scope for =a=. It finds it, and its value, so it can print =10=.
-
-Then it has to find the thing called =b=. Again, it starts looking in the function scope. It finds it, so it doesn't have to look anywhere else.
-#+END_NOTES
-** Function scope
-
-#+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC javascript :noweb yes
-<<scope-js>>
-#+END_SRC
-
-#+BEGIN_SRC javascript
-bar('hello');
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file scope-function.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
-  digraph G{
-    node [shape=record, fontname="Consolas" fontsize=16];
-    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
-
-  global -> bar;
-  bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
-}
-#+END_SRC
-
-#+RESULTS:
-[[file:scope-function.svg]]
-
-#+REVEAL_HTML: </div>
-
-#+BEGIN_NOTES
-This is what happens if we type =bar()= in to the console.
-
-Again, Javascript has to find out if =bar= exists. In the console we're in the global scope, so it checks, and =bar= does exist, and is a function, so Javascript calls it.
-
-The =bar= function starts running, and creates its own scope, just like =foo= did.
-
-Importantly, the =foo= scope no longer exists -- it disappears when the =foo= function stops running. This is why the =bar= function can't see any variables from =foo=, they don't exist at this point.
-
-In the scope for =bar= there are two things. The first is the parameter value -- =bar= takes a parameter called =msg=, and when we called the function we gave it a string value of 'hello'.
-
-This is why the things in this section of the diagram are not just variables -- any value we can give a name to goes in here -- variables, constants, functions, and parameters.
-
-The second thing in here is the variable =b=, which has the value =15.
-#+END_NOTES
-
-** Block scope
-
-#+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC javascript :noweb yes
-<<scope-js>>
-#+END_SRC
-
-#+BEGIN_SRC javascript
-bar('hello');
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file block-scope.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
-  digraph G{
-    node [shape=record, fontname="Consolas" fontsize=16];
-
-    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
-
-    global -> bar;
-    bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
-
-    bar -> for;
-    for [label="{Block scope|for (let i = 0; i \< 3; i++) \{\l&nbsp;&nbsp;console.log(i);\l\}\l|Name : Value\n - i : 0..3\l}"];
-  }
-#+END_SRC
-
-#+RESULTS:
-[[file:block-scope.svg]]
-#+REVEAL_HTML: </div>
-
-#+BEGIN_NOTES
-When the =for= loop starts running it creates its own scope, a block scope.
-
-In here, any variables we define either in the block, or in the parentheses, are visible. We only have one, the variable =i=, which is why we can log the value.
-#+END_NOTES
-** Block scope
-
-#+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC javascript :noweb yes
-<<scope-js>>
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file scope.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
-  digraph G{
-    node [shape=record, fontname="Consolas" fontsize=16];
-
-    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
-
-    global -> bar;
-    bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
-
-    bar -> if;    if [label="{Block scope|if (true) \{\l&nbsp;&nbsp;let x = 10;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\} $\{x\} $\{msg\}`);\l\}\l|Name : Value\n- x : 10\l}"];
-  }
-#+END_SRC
-
-#+RESULTS:
-[[file:scope.svg]]
-#+REVEAL_HTML: </div>
-
-#+BEGIN_NOTES
-Now the =if= block starts running.
-
-The scope from the =for= loop has disappeared. This is why the =i= variable in the loop is no longer accessible -- the scope it was in no longer exists.
-
-The =if= block creates its own scope, and creates a new variable in that scope, =x=.
-
-Then it logs the string.
-
-To find the value of =a=, Javascript starts looking in the block scope. There's nothing in that scope with the name =a=, so it moves up one scope, looking in the function scope. There's nothing with that name there either, so it moves up to the global scope, and finds it.
-
-It does the same thing with =b=, finding it one scope up (in the function scope).
-
-=x= is in the current scope. And =msg= is the parameter passed to the function, so is found in the function scope.
-#+END_NOTES
-
-** All the scopes
-
-#+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC javascript :noweb yes
-<<scope-js>>
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file scope-all.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
-  digraph G{
-    node [shape=record, fontname="Consolas" fontsize=16];
-
-    global [label="{Global scope|let a = 10;|Name : Value\n - a \ \ : 10\l - foo : function() \{ ... \}\l- bar : function() \{ ... \}\l}"];
-
-    global -> foo;
-    foo [label="{Function scope|<b>function foo() \{\l&nbsp;&nbsp;let b = 20;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\}`);\l\}\l|Name : Value\nb : 20}"];
-
-    global -> bar;
-    bar [label="{Function scope|function bar(msg) \{\l&nbsp;&nbsp;let b = 15;\l\l&nbsp;&nbsp;for (...) \{ ... \}\l\l&nbsp;&nbsp;if (true) \{... \}\l\}\l|Name : Value\n - msg: 'hello'\l - b : 15\l}"];
-
-    bar -> for;
-    for [label="{Block scope|for (let i = 0; i \< 3; i++) \{\l&nbsp;&nbsp;console.log(i);\l\}\l|Name : Value\n - i : 0..3\l}"];
-
-    bar -> if;    if [label="{Block scope|if (true) \{\l&nbsp;&nbsp;let x = 10;\l&nbsp;&nbsp;console.log(`$\{a\} $\{b\} $\{x\} $\{msg\}`);\l\}\l|Name : Value\n- x : 10\l}"];
-  }
-#+END_SRC
-
-#+RESULTS:
-[[file:scope-all.svg]]
-#+REVEAL_HTML: </div>
-
-** Functions inside functions
-
-- We can put a function inside another function
-- The inner function
-  - Has access to the variables in the outer function
-  - Can *only* be called by the outer function
-
-** Functions inside functions
-
-#+REVEAL_HTML: <div class="leftcol">
-#+NAME: scope-function-js
-#+BEGIN_SRC javascript
-  let a = 10;
-
-  function foo() {
-    let b = 15;
-
-    function bar() {
-      console.log(`${a} ${b}`);
-    }
-
-    bar();
-  }
-#+END_SRC
-
-#+BEGIN_SRC javascript
-foo();
-bar();  // <-- DOES NOT WORK
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file scope-func-in-func.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
-  digraph G{
-    node [shape=record, fontname="Consolas" fontsize=16];
-    global [label="{Global scope|let a = 10;|Name : Value\n- a \ \ : 10\l- foo : function() \{ ... \}\l}"];
-
-    global -> foo;
-    foo [label="{Function scope|function foo() \{\l\ \ let b = 15;\l\l\ \ function bar() \{\l\ \ \ \ console.log(`$\{a\} $\{b\}`);\l\ \ \}\l\l\ \ bar();\l\}\l|Name : Value\n \ - bar : function() \{ ... \}\l \ - b \ \ : 15\l}"];
-
-  foo -> bar;
-  bar [label="{Function scope|function bar() \{\l\ \ console.log(`$\{a\} $\{b\}`);\l\}\l|Name : Value}"];
-  }
-#+END_SRC
-
-#+RESULTS:
-[[file:scope-func-in-func.svg]]
-
-#+BEGIN_NOTES
-Here's different code from earlier. Our =foo= function now also contains a =bar= function.
-
-Here are the scopes when we call =foo=.
-
-As before, the global scope contains the names =a= and =foo=, where =a= has the value =10= and =foo= contains a function.
-
-When we call =foo= it creates a function scope that contains =b= and =bar=. When -- at the bottom of the =foo= function -- it calls the =bar= function this works, because it can see the name.
-
-The =bar= function creates its own scope, but does not create any new names of its own. The =console.log= line that references the names =a= and =b= works because =b= is in the parent scope (the function scope) and =a= is in the grandparent scope (the global scope).
-
-However -- the =bar= function is *not* visible from the global scope. The global scope can only see the names =a= and =foo=. This is why, if we try and call the =bar= function ourselves, we can't, it won't work.
-
-We have effectively hidden the =bar= function from everything except the =foo= function.
-#+END_NOTES
-
-* Our event handler problem
-
-#+BEGIN_SRC javascript :noweb yes
-<<solution-with-variables>>
-#+END_SRC
-
-#+BEGIN_NOTES
-Here's our problem again -- if we put our =onKeyup= function outside the =domContentLoaded= function then we need to duplicate the variables that =domContentLoaded= has.
-
-But based on what we've just learned about scopes, we can put the =onKeyup= function *inside* the =domContentLoaded= function. It will have access to all the variables inside =domContentLoaded= (because it will create a child scope).
-
-In addition, =onKeyup= only needs to be called from =domContentLoaded=. So if we put it inside that function then it will only be visible there, meaning there are fewer things cluttering up the global scope.
-#+END_NOTES
-
-** Solution 3: =onKeyup= inside =domContentLoaded=
-
-#+BEGIN_SRC javascript
-function domContentLoaded() {
-  const quantityBox = document.getElementById('quantity');
-  const inputBox = document.getElementById('item');
-  const shoppingList = document.querySelector('ul');
-  // ...
-
-  function onKeyup(event) {
-    const trimmedValue = inputBox.value.trim();
-    // ...
-  }
-
-  inputBox.addEventListener('keyup', onKeyup);
-  quantityBox.addEventListener('keyup', onKeyup);
-
-  // ...
-}
-#+END_SRC
-
-#+BEGIN_NOTES
-So our code would look like this.
-#+END_NOTES
-
-** Solution 4: Event bubbling
+** Solution 3p: Event bubbling
 
 - What if we added more =input= elements?
   - We'd have to duplicate this code again
