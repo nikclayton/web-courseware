@@ -12,6 +12,8 @@ function createNewListItem(itemName) {
   const listText = document.createElement('span');
   listText.textContent = itemName;
 
+  const space = document.createTextNode(' ');
+
   const deleteButton = document.createElement('button');
   deleteButton.textContent = 'Delete';
 
@@ -20,6 +22,7 @@ function createNewListItem(itemName) {
   });
 
   listItem.appendChild(listText);
+  listItem.appendChild(space);
   listItem.appendChild(deleteButton);
 
   return listItem;

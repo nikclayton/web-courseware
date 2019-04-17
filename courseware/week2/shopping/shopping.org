@@ -799,10 +799,13 @@ function createNewListItem(itemName) {
   let listText = document.createElement('span');
   listText.textContent = itemName;
 
+  let space = document.createTextNode(' ');
+
   let deleteButton = document.createElement('button');
   deleteButton.textContent = 'Delete';
 
   listItem.appendChild(listText);
+  listItem.appendChild(space);
   listItem.appendChild(deleteButton);
 
   return listItem;
@@ -831,12 +834,14 @@ I'm going to show you some variations of this function.
 function createNewListItem(itemName) {
   let listItem = document.createElement('li');
   let listText = document.createElement('span');
+  let space = document.createTextNode(' ');
   let deleteButton = document.createElement('button');
 
   listText.textContent = itemName;
   deleteButton.textContent = 'Delete';
 
   listItem.appendChild(listText);
+  listItem.appendChild(space);
   listItem.appendChild(deleteButton);
 
   return listItem;
@@ -862,6 +867,9 @@ but different people have different opinions about this.
     let listText = document.createElement('span');
     listText.textContent = itemName;
     listItem.appendChild(listText);
+
+    let space = document.createTextNode(' ');
+    listItem.appendChild(space);
 
     let deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
@@ -1029,6 +1037,8 @@ This click listener is going to be just like the one we made for the
     let listText = document.createElement('span');
     listText.textContent = itemName;
 
+    let space = document.createTextNode(' ');
+
     let deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
 
@@ -1037,6 +1047,7 @@ This click listener is going to be just like the one we made for the
     });
 
     listItem.appendChild(listText);
+    listitem.appendChild(space);
     listItem.appendChild(deleteButton);
 
     return listItem;
@@ -1112,33 +1123,39 @@ and "Bread", like this.
    ul -> {li1, li2, li3};
    li1 [label="li"];
    li1 -> span1
+   li1 -> space1
    li1 -> button1
 
    span1 [label="span"];
    span1 -> span_content1;
    span_content1 [label="Eggs" shape=none];
+   space1 [label="' '" shape=none];
    button1 [label="button"];
    button1 -> button_content1;
    button_content1 [label="Delete" shape=none];
 
    li2 [label="li"];
    li2 -> span2
+   li2 -> space2
    li2 -> button2
 
    span2 [label="span"];
    span2 -> span_content2;
    span_content2 [label="Milk" shape=none];
+   space2 [label="' '" shape=none];
    button2 [label="button"];
    button2 -> button_content2;
    button_content2 [label="Delete" shape=none];
 
    li3 [label="li"];
    li3 -> span3
+   li3 -> space3
    li3 -> button3
 
    span3 [label="span"];
    span3 -> span_content3;
    span_content3 [label="Bread" shape=none];
+   space3 [label="' '" shape=none];
    button3 [label="button"];
    button3 -> button_content3;
    button_content3 [label="Delete" shape=none];
@@ -1169,11 +1186,13 @@ let secondLi = document.querySelector('li:nth-child(2)');
    ul -> {li1, li2, li3};
    li1 [label="li"];
    li1 -> span1
+   li1 -> space1
    li1 -> button1
 
    span1 [label="span"];
    span1 -> span_content1;
    span_content1 [label="Eggs" shape=none];
+   space1 [label="' '" shape=none];
    button1 [label="button"];
    button1 -> button_content1;
    button_content1 [label="Delete" shape=none];
@@ -1182,22 +1201,26 @@ let secondLi = document.querySelector('li:nth-child(2)');
      li2 [label="li"];
    }
    li2 -> span2
+   li2 -> space2
    li2 -> button2
 
    span2 [label="span"];
    span2 -> span_content2;
    span_content2 [label="Milk" shape=none];
+   space2 [label="' '" shape=none];
    button2 [label="button"];
    button2 -> button_content2;
    button_content2 [label="Delete" shape=none];
 
    li3 [label="li"];
    li3 -> span3
+   li3 -> space3
    li3 -> button3
 
    span3 [label="span"];
    span3 -> span_content3;
    span_content3 [label="Bread" shape=none];
+   space3 [label="' '" shape=none]
    button3 [label="button"];
    button3 -> button_content3;
    button_content3 [label="Delete" shape=none];
@@ -1224,11 +1247,13 @@ secondLi.remove();
 
    li1 [label="li"];
    li1 -> span1;
+   li1 -> space1;
    li1 -> button1;
 
    span1 [label="span"];
    span1 -> span_content1;
    span_content1 [label="Eggs" shape=none];
+   space1 [label="' '" shape=none]
    button1 [label="button"];
    button1 -> button_content1;
    button_content1 [label="Delete" shape=none];
@@ -1236,22 +1261,26 @@ secondLi.remove();
    li2 [label="li" style=invis];
 
    li2 -> span2 [style=invis];
+   li2 -> space2 [style=invis];
    li2 -> button2 [style=invis];
 
    span2 [label="span" style=invis];
    span2 -> span_content2 [style=invis];
    span_content2 [label="Milk" style=invis shape=none];
+   space2 [label="' '" style=invis shape=none];
    button2 [label="button" style=invis];
    button2 -> button_content2 [style=invis];
    button_content2 [label="Delete" style=invis shape=none];
 
    li3 [label="li"];
    li3 -> span3
+   li3 -> space3
    li3 -> button3
 
    span3 [label="span"];
    span3 -> span_content3;
    span_content3 [label="Bread" shape=none];
+   space3 [label="' '" shape=none];
    button3 [label="button"];
    button3 -> button_content3;
    button_content3 [label="Delete" shape=none];
@@ -1280,6 +1309,8 @@ secondLi.remove();
     let listText = document.createElement('span');
     listText.textContent = itemName;
 
+    let space = document.createTextNode(' ');
+
     let deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
 
@@ -1288,6 +1319,7 @@ secondLi.remove();
     });
 
     listItem.appendChild(listText);
+    listItem.appendChild(space);
     listItem.appendChild(deleteButton);
 
     return listItem;
