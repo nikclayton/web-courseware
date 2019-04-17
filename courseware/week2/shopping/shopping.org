@@ -115,7 +115,7 @@ with the text =My shopping list=, and an empty unordered list -- the =ul=
 element should be there, but it shouldn't have an listitems.
 
 Make sure this HTML file links to two empty files, =style.css= and
-=shopping.hs=.
+=shopping.js=.
 #+END_NOTES
 
 * TODO Set up HTML
