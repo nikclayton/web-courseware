@@ -2,7 +2,7 @@
  * Creates and returns an 'li' element for inclusion in the shopping list.
  *
  * @param {string} itemName Name of the item to append to the list
- * @returns {HTMLElement} li element
+ * @returns {HTMLLIElement} li element
  */
 function createNewListItem(itemName) {
   let listItem = document.createElement('li');
