@@ -747,7 +747,7 @@ the variable?
 
 #+BEGIN_SRC javascript
 el.id;           // "myheading"
-el.tagName;    // "h1"
+el.tagName;      // "h1"
 el.clientWidth;  // 883
 el.innerHTML;    // "Hello, Powercoders"
 #+END_SRC
@@ -978,9 +978,9 @@ methods, like =getElementById()=, which are very similar.
 ** Declaring / defining a function                                 :exercise:
 
 #+BEGIN_SRC javascript
-function greet() {
-  return 'hello';
-}
+  let greet = function() {
+    return 'hello';
+  };
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -990,8 +990,8 @@ the same thing.
 
 A function definition, like this example here, consists of:
 
+- The name of the variable
 - The *keyword* =function=
-- The name of the function, in this case =greet=
 - A list of any function parameters, surrouned by parentheses. In this
   example there are no parameters
 - The Javascript statements that define the function, surrounded by
@@ -1007,11 +1007,27 @@ special =return= keyword.
 Type this in to the REPL, and let me know when you've done that.
 #+END_NOTES
 
+** Declaring / defining a function
+
+#+BEGIN_SRC javascript
+  function greet() {
+    return 'hello';
+  }
+#+END_SRC
+
+#+BEGIN_NOTES
+Defining functions is so common that there's a shorthand for it that doesn't need the =let= keyword
+
+These two examples are identical.
+
+This way is more common.
+#+END_NOTES
+
 ** Calling functions
 
 #+BEGIN_SRC javascript
-> greet();
-< "hello"
+  > greet();
+  < "hello"
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -1033,9 +1049,9 @@ Remember this, it's going to come up a lot.
 ** Functions with parameters                                       :exercise:
 
 #+BEGIN_SRC javascript
-  function double(num) {
+  let double = function(num) {
     return num * 2;
-  }
+  };
 #+END_SRC
 
 #+BEGIN_SRC javascript
@@ -1057,21 +1073,21 @@ Try this, and make sure you see the same result.
 
 *** Functions with parameters
 
- #+BEGIN_SRC javascript
- function greet(name) {
-   return 'hello, ' + name;
- }
- #+END_SRC
+#+BEGIN_SRC javascript
+  greet = function(name) {
+    return 'hello, ' + name;
+  }
+#+END_SRC
 
- #+BEGIN_SRC javascript
- > greet('Nik');
- < "hello, Nik"
- #+END_SRC
+#+BEGIN_SRC javascript
+  > greet('Nik');
+  < "hello, Nik"
+#+END_SRC
 
- #+BEGIN_SRC javascript
- > greet();
- < // What does this show?
- #+END_SRC
+#+BEGIN_SRC javascript
+  > greet();
+  < // What does this show?
+#+END_SRC
 
 * Including Javascript in the HTML
 
@@ -1201,7 +1217,7 @@ setClassTip();   // <-- goal (in the console)
 #+END_SRC
 
 #+BEGIN_SRC javascript
-function setClassTip() {
+let setClassTip = function() {
   // You write the function in the <script> element
 
   // 1. Get the <p id="mypara"> element in to a variable.
@@ -1228,7 +1244,7 @@ and call =setClassTip()= in the console.
 ** Solution: A function that changes the class
 
 #+BEGIN_SRC javascript
-function setClassTip() {
+let setClassTip = function() {
   let el = document.getElementById('mypara');
   el.className = 'tip';
 }
