@@ -9,7 +9,12 @@ class Person {
     console.log(`Hello ${this.firstname} ${this.lastname}.`);
     console.log(`You like: ${this.interests.join(', ')}.`);
   }
+
+  toString() {
+    return `${this.firstname} ${this.lastname} Has ${this.interests.length} interests`;
+  }
 }
+
 
 class Student extends Person {
   constructor(firstname, lastname, interests, canton) {
@@ -17,15 +22,22 @@ class Student extends Person {
     this.canton = canton;
   }
 
-  home() {
-    console.log(`You live in ${this.canton}.`)
+  greet() {
+    super.greet();
+    console.log(`I know where you live! ${this.canton}`);
   }
 }
+
 
 class Teacher extends Person {
   constructor(firstname, lastname, interests, skills) {
     super(firstname, lastname, interests);
     this.skills = skills;
+  }
+
+  greet() {
+    super.greet();
+    this.can_do();
   }
 
   can_do() {
