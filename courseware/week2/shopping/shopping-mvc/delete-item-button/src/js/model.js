@@ -39,6 +39,6 @@ class Model {
    */
   delete(i) {
     this.items_.splice(i, 1);
-    this.view_.update();
+    this.view_.update(this.items_.splice());
   }
 }

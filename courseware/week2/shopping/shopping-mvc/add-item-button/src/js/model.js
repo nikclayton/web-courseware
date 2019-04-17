@@ -16,19 +16,12 @@ class Model {
   }
 
   /**
-   * @returns {!ShoppingListItem[]} Read-only array of items
-   */
-  get items() {
-    return this.items_.slice();
-  }
-
-  /**
    * Appends a new item to the list.
    *
    * @param item {!ShoppingListItem}
    */
   append(item) {
     this.items_.push(item);
-    this.view_.update();
+    this.view_.update(this.items_.slice());
   }
 }

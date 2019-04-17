@@ -47,6 +47,6 @@ class Model {
    */
   clear() {
     this.items_ = [];
-    this.view_.update();
+    this.view_.update(this.items_.splice());
   }
 }

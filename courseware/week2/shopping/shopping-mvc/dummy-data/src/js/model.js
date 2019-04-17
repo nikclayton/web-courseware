@@ -16,13 +16,6 @@ class Model {
     /** @private {!View} View for this model. */
     this.view_ = new View(this, controller);
 
-    this.view_.update();
-  }
-
-  /**
-   * @returns {!ShoppingListItem[]} Read-only array of items
-   */
-  get items() {
-    return this.items_.slice();
+    this.view_.update(this.items_.slice());
   }
 }
