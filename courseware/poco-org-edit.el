@@ -1,176 +1,28 @@
-;; Emacs config file for the slides
+;;; poco-org-edit.el --- Configuration to edit content.
 
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+;;; Commentary:
+;;; Code to edit Powercoders content.
 
-(package-initialize)
+;;; Code:
 
-;; Bootstrap use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(use-package f
-  :ensure t)
-
-;; Full path to the root of the repository.
-(setq my/poco-repo-root
-      "c:/Users/Nik Clayton/Powercoders/004.powercoders")
-
-;; Full path to the directory that contains exported files.
-(setq my/poco-export-root
-      "c:/Users/Nik Clayton/exports")
-
-(require 'org)
-
-;; ox-reveal on Melpa has compatability problems with Org (it's
-;; set to an older version). Load the local version to avoid
-;; version number problems.
-(load-file (f-join my/poco-repo-root "org-reveal/ox-reveal.el"))
-
-(require 'org-id)
-
-;; Murhaf's system reports the error:
-;; "Symbol's function definition is void: org-strip-quotes" when
-;; exporting the files. Suspect an Org version mismatch between our
-;; systems. This is a temporary fix until I figure out the real
-;; problem.
-(defun org-strip-quotes (string)
-  "Strip double quotes from around STRING, if applicable.
-If STRING is nil, return nil."
-  (org-unbracket-string "\"" "\"" string))
-
-;; Properties supported for all entries
-
-(setq org-global-properties nil)
-      ;; '(("TOPICS_ALL" . "html css javascript dom")
-      ;; 	("REQUIREMENTS_ALL" . "html css javascript dom")))
-
-;; Use Zenburn theme so that the colours of the exported HTML and
-;; other SRC blocks are as expected.
-(use-package zenburn-theme
-  :ensure t
-  :config
-  (load-theme 'zenburn t))
-
-;; The htmlize package is used to export syntax-highlighed HTML.
-(use-package htmlize
-  :ensure t)
-
-;; Remove default attributes from tables so that styling is done
-;; with CSS.
-(setq org-html-table-default-attributes ())
-
-(setq org-support-shift-select t)
-
-(setq css-indent-offset 2)
-(setq graphviz-dot-indent-width 2)
-
-(setq html-tag-face-alist
-      '(("b" . bold)
-	("big" . bold)
-	("blink" . highlight)
-	("cite" . italic)
-	("em" . italic)
-	("h1" bold)
-	("h2" bold-italic)
-	("h3" italic)
-	("h4" default)
-	("h5" default)
-	("h6" default)
-	("i" . italic)
-	("rev" . mode-line)
-	("s" . default)
-	("small" . default)
-	("strong" . bold)
-	("title" bold)
-	("tt" . default)
-	("u" . default)
-	("var" . italic)))
-
-
-;; See https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
-(require 'ox-publish)
-(setq org-publish-project-alist
-      `(("bsl-slides-reveal"
-	 :base-directory ,my/poco-repo-root
-	 :base-extension "org"
-	 :publishing-directory ,(f-join my/poco-export-root "slides")
-	 :recursive t
-	 :publishing-function org-reveal-publish-to-reveal)
-	("bsl-slides-static"
-	 :base-directory ,my/poco-repo-root
-	 :base-extension "css\\|png\\|svg"
-	 :publishing-directory ,(f-join my/poco-export-root "slides")
-	 :recursive t
-	 :publishing-function org-publish-attachment)
-	("bsl-notes-html"
-	 :base-directory ,my/poco-repo-root
-	 :base-extension "org"
-	 :publishing-directory ,(f-join my/poco-export-root "notes")
-	 :recursive t
-	 :publishing-function org-html-publish-to-html)
-	("bsl-notes-static"
-	 :base-directory ,my/poco-repo-root
-	 :base-extension "css\\|png\\|svg"
-	 :publishing-directory ,(f-join my/poco-export-root "notes")
-	 :recursive t
-	 :publishing-function org-publish-attachment)
-	("bsl-org"
-	 :base-directory ,my/poco-repo-root
-	 :base-extension "org"
-	 :publishing-directory ,(f-join my/poco-export-root "org")
-	 :recursive t
-	 :publishing-function org-org-publish-to-org)
-	("bsl-slides" :components ("bsl-slides-reveal" "bsl-slides-static"))
-	("bsl-notes" :components ("bsl-notes-html" "bsl-notes-static"))
-	("bsl-all" :components ("bsl-slides" "bsl-notes" "bsl-org"))))
-
-;; Render HTML to PNG using Chrome
-(use-package ob-html-chrome
-  :ensure t)
-
-(setq org-babel-html-chrome-chrome-executable
-      "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe")
-
-(setq org-reveal-title-slide
-      "<h1 class='title'>%t</h1><h2 class='email'>%e</h2>")
-
-;; (setq org-babel-asciitosvg-asciitosvg-executable
-;;       "c:/Users/Nik Clayton/go/bin/a2s.exe")
+(require 'poco-config)
+(require 'poco-org-export)
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
-  ;; Otherwise it's very slow on Windows
-  :config (setq inhibit-compacting-font-caches t)
+  :config (setq inhibit-compacting-font-caches t) ; Speed up Windows
   :ensure t)
 
-;; Graphviz support
-(use-package graphviz-dot-mode
-  :ensure t)
-
-;; org-babel: Graphviz diagrams.
-(add-to-list 'org-src-lang-modes (quote ("dot" . graphviz-dot)))
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((dot . t)
-   (ditaa .t)
-					;(asciitosvg. t)))
-   ))
+(setq org-support-shift-select t)
+(setq css-indent-offset 2)
+(setq graphviz-dot-indent-width 2)
+(setq js-indent-level 2)
 
 ;; org-babel: Redisplay inline images after evaluation.
 (add-hook 'org-babel-after-execute-hook
-	  'org-redisplay-inline-images)
-
-;; org-babel: No need to confirm execution of dot
-(defun my/org-confirm-babel-evaluate (lang body)
-  (not (member lang '("dot" "html-chrome" "emacs-lisp")))) ; "asciitosvg"))))
-(setq org-confirm-babel-evaluate 'my/org-confirm-babel-evaluate)
+          'org-redisplay-inline-images)
 
 ;; Easy snippets to make code insertion easier
-
 (add-to-list 'org-structure-template-alist
 	     '("h" "#+BEGIN_SRC html
 ?
@@ -206,6 +58,8 @@ digraph G {
 	     '("\\.x?html?\\'" . emacs))
 
 
+
+;;; Completion
 (use-package company
   :ensure t
   :hook (org-mode . company-mode))
@@ -216,10 +70,10 @@ digraph G {
 ;; Company support for built-in org-mode completions.
 ;; https://emacs.stackexchange.com/questions/21171/company-mode-completion-for-org-keywords
 
-(defun my/org-keyword-backend (command &optional arg &rest ignored)
+(defun poco/org-keyword-backend (command &optional arg &rest ignored)
   (interactive (list 'interactive))
   (cl-case command
-    (interactive (company-begin-backend 'my/org-keyword-backend))
+    (interactive (company-begin-backend 'poco/org-keyword-backend))
     (prefix (and (eq major-mode 'org-mode)
                  (cons (company-grab-line "^#\\+\\(\\w*\\)" 1)
                        t)))
@@ -230,13 +84,13 @@ digraph G {
     (ignore-case t)
     (duplicates t)))
 
-(add-to-list 'company-backends 'my/org-keyword-backend)
+(add-to-list 'company-backends 'poco/org-keyword-backend)
 
-(defun my/org-src-block-name-backend (command &optional arg &rest ignored)
+(defun poco/org-src-block-name-backend (command &optional arg &rest ignored)
   "Complete `<<' with the names of defined SRC blocks."
   (interactive (list 'interactive))
   (cl-case command
-    (interactive (company-begin-backend 'my/org-src-block-name-backend))
+    (interactive (company-begin-backend 'poco/org-src-block-name-backend))
     (init (require 'org-element))
     (prefix (and (eq major-mode 'org-mode)
 		 (eq 'src-block (car (org-element-at-point)))
@@ -260,14 +114,9 @@ digraph G {
     (doc-buffer (company-doc-buffer (get-text-property 0 :value arg)))
     (annotation (format " [%s]" (get-text-property 0 :annotation arg)))))
 
-(add-to-list 'company-backends 'my/org-src-block-name-backend)
+(add-to-list 'company-backends 'poco/org-src-block-name-backend)
 
-;; Font-awesome characters
-(setq org-entities-user
-      '(("faWin" "\\faWin" nil "<i class=\"fab fa-windows\"></i>" "=win=" "=win=" "")))
-
-
-(defun my/remove-generated-files (&optional bfn)
+(defun poco/remove-generated-files (&optional bfn)
   "Remove files that generated by the export process.
 
 Optional BFN is the value that should be used instead of the
@@ -300,18 +149,18 @@ the files to be removed."
 	(message "Removing %s" filepath)
 	(f-delete filepath)))))
 
-(defun my/remove-all-generated-files ()
-  "Call my/remove-generated-files for all .org files."
+(defun poco/remove-all-generated-files ()
+  "Call poco/remove-generated-files for all .org files."
   (interactive)
-  (dolist (filename (my/poco-presentation-targets))
+  (dolist (filename (poco/presentation-targets))
     (with-temp-buffer
       (message "Removing generated files from %s" filename)
       (insert-file-contents filename)
-      (my/remove-generated-files filename)
+      (poco/remove-generated-files filename)
       (message "Done with %s" filename))))
 
 
-(defun my/find-referenced-images (&optional bfn)
+(defun poco/find-referenced-images (&optional bfn)
   "Find referenced images that should be added to Git.
 
 Optional BFN is the value that should be used instead of the
@@ -331,33 +180,29 @@ the files to be added."
 	  (add-to-list 'filenames (f-join (f-dirname (or bfn buffer-file-name)) path))))))
     filenames))
 
-(defun my/show-all-referenced-images ()
+(defun poco/show-all-referenced-images ()
   "Write a list of references images to the *Messages* buffer."
   (interactive)
-  (dolist (filename (my/poco-presentation-targets))
+  (dolist (filename (poco/presentation-targets))
     (with-temp-buffer
       (insert-file-contents filename)
-      (dolist (link (my/find-referenced-images filename))
+      (dolist (link (poco/find-referenced-images filename))
 	(let ((inhibit-message t))
 	  (message "%s" link))))))
 
-(defun my/git-add-all-referenced-images ()
+(defun poco/git-add-all-referenced-images ()
   "Call `git add' to add all referenced images to Git."
  (interactive)
-  (dolist (filename (my/poco-presentation-targets))
+  (dolist (filename (poco/presentation-targets))
     (with-temp-buffer
       (insert-file-contents filename)
-      (dolist (link (my/find-referenced-images filename))
+      (dolist (link (poco/find-referenced-images filename))
 	(call-process "git" nil 0 nil "add" link)))))
-
-
-;; Javascript stype
-(setq js-indent-level 2)
 
 ;;; Checks for the file
 
 ;; Headings should not end with a '.'
-(defun my/org-check-headings ()
+(defun poco/org-check-headings ()
   "Check for problems with headings in the current buffer."
   (interactive)
   (let ((filename (buffer-file-name))
@@ -375,7 +220,7 @@ the files to be added."
       (pop-to-buffer "*headline problems*"))))
 
 
-(defun my/org-get-requirements-problems ()
+(defun poco/org-get-requirements-problems ()
   "Return a list of requirements problems with the current file.
 
 Each problem is a list that describes the problem, entries in..."
@@ -398,9 +243,9 @@ Each problem is a list that describes the problem, entries in..."
 	      (push `(,filename ,title ,req) problems))))))
     problems))
 
-(defun my/org-check-requirements ()
+(defun poco/org-check-requirements ()
   (interactive)
-  (let ((problems (my/org-get-requirements-problems)))
+  (let ((problems (poco/org-get-requirements-problems)))
     (if problems
 	(progn
 	  (with-current-buffer (get-buffer-create "*Requirements Problems*")
@@ -449,9 +294,9 @@ Each problem is a list that describes the problem, entries in..."
 (setq org-refile-use-outline-path t)
 (setq org-outline-path-complete-in-steps nil)
 
-(defun my/poco-presentation-targets ()
+(defun poco/presentation-targets ()
   "Return a list of all .org files in the courseware/ tree."
-  (f-files (f-join my/poco-repo-root "courseware")
+  (f-files (f-join poco/repo-root "courseware")
 	   (lambda (file)
 	     (and (equal (f-ext file) "org")
 		  (not (string-prefix-p "." (f-filename file)))))
@@ -459,7 +304,7 @@ Each problem is a list that describes the problem, entries in..."
 
 (setq org-refile-targets
       (quote ((nil :maxlevel . 9)
-	      (my/poco-presentation-targets :maxlevel . 9))))
+	      (poco/presentation-targets :maxlevel . 9))))
 
 ;; Better completion for "#+" at the start of a line.
 ;;
@@ -470,7 +315,7 @@ Each problem is a list that describes the problem, entries in..."
 ;; This should replace pcomplete/org-mode/file-option.
 
 ;; Use as :filter-return advice
-(defun my/filter-org-mode-file-option (completions)
+(defun poco/filter-org-mode-file-option (completions)
   "Complete against all valid file options."
   (save-match-data
     (let* ((heading-start ((lambda ()
@@ -507,39 +352,13 @@ Each problem is a list that describes the problem, entries in..."
      ["Generate slide for this file" org-reveal-export-to-html]
      ["Publish all files" (org-publish-all t)])
     ("Cleanup"
-     ["Remove generated files" my/remove-generated-files]
-     ["Remove all generated files" my/remove-all-generated-files])))
+     ["Remove generated files" poco/remove-generated-files]
+     ["Remove all generated files" poco/remove-all-generated-files])))
 
 (define-key-after (lookup-key org-mode-map [menu-bar])
   [mymenu]
   (cons "Powercoders" powercoders-menu) 'tools)
 
-
-
-(defun my/org-babel-current-result-hash ()
-  "Alter org-babel caching behaviour.
-
-If you have `:cache yes' set the cached result is used even if
-the file doesn't exist.  Fix this by advising the function that
-computes the hash of the current content, and check to see if
-the file is present."
-  (save-excursion
-    ;; Find the results block, and go to the first non-whitespace
-    ;; content on the following line.
-    (let ((results-point (org-babel-where-is-src-block-result)))
-      (when results-point
-	(goto-char results-point)
-	(forward-line)
-	(skip-chars-forward " ")
-	;; If the context is a link to a local file check to see if the
-	;; file exists. If it does proceed to org-babel-current-result-hash
-	;; as normal, if it doesn't return nil, and force the file to be
-	;; generated.
-	(let ((ctx (org-element-context)))
-	  (if (and ctx (listp ctx) (eq 'link (car ctx)) (string= "file" (org-element-property :type ctx)))
-	      (f-exists? (f-join (f-dirname buffer-file-name) (org-element-property :path ctx)))
-	    t))))))
-
-(advice-add #'org-babel-current-result-hash
-	    :before-while
-	    #'my/org-babel-current-result-hash)
+
+(provide 'poco-org-edit)
+;;; poco-org-edit.el ends here

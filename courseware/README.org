@@ -64,18 +64,18 @@ Create a branch to work on for your course. For example:
 git checkout -b 005-istanbul
 #+END_SRC
 
-*** Change output pathnames in =courseware/emacs.el=
+*** Change output pathnames in =courseware/poco-config.el=
 
-Edit =courseware/emacs.el= and change the definitions for the entries:
+Edit =courseware/poco-config.el= and change the definitions for the entries:
 
-- =my/poco-repo-root=
+- =poco/repo-root=
   - Full path to the checked out repository (i.e., the path to the
     =004.powercoders= directory, including the =004.powercoders=
     directory).
-- =my/poco-export-root=
+- =poco/export-root=
   - Full path to the directory where exported HTML files will be
     saved.
-- =org-babel-html-chrome-chrome-executable=
+- =poco/chrome-path=
   - Path to Google Chrome
 
 to reflect the correct paths for your system. If you use backslash
@@ -104,7 +104,8 @@ to the repository that you checked out.
 % cd $REPO
 % /path/to/emacs -Q --batch \
   courseware/week1/day1.org \
-  -l $REPO/courseware/emacs.el \
+  -L $REPO/courseware \
+  -l poco-org-export \
   -f org-reveal-export-to-html
 #+END_SRC
 
@@ -114,7 +115,8 @@ to the repository that you checked out.
 % cd $REPO
 % path\to\emacs.exe -Q --batch \
   courseware\week1\day1.org \
-  -l $REPO\courseware\emacs.el \
+  -L $REPO\courseware \
+  -l poco-org-export
   -f org-reveal-export-to-html
 #+END_SRC
 
@@ -353,19 +355,26 @@ The slides are written assuming they will projected on an HD (1920x1080)
 display. Image dimensions, the number of lines of text on each slide, etc
 are based on that.
 
-** Generating the slides, speaker notes, etc.
+** Editing content, generating the slides, speaker notes, etc.
 
-*** Prerequisites
+*** Configuring Emacs
 
-The =emacs.el= file in the repository configures Emacs to
-load all the necessary packages and configures them
-appropriately.
+The =poco-org-edit.el= file in the repository configures Emacs to load
+all the necessary packages and configures them appropriately.
 
-Any third-party software that needs to be installed is
-described in more detail in =emacs.el=.
+Any third-party software that needs to be installed is described in
+more detail in =poco-org-edit.el=.
 
-Installing the software, loading =emacs.el=, and running
-=M-x eval-buffer= should be sufficient to configure Emacs.
+To configure Emacs to load this modify =load-path= and then =require=
+the file.
+
+#+BEGIN_EXAMPLE
+(add-to-list 'load-path
+  "/full/path/to/repo/courseware")
+(require 'poco-org-edit)
+#+END_EXAMPLE
+
+Evaluate that (or restart Emacs) and everything should work.
 
 *** Interactively generating slides
 
@@ -390,8 +399,9 @@ as lecture notes.
 
 #+BEGIN_SRC
 % emacs -Q --batch \
-   path/to/file.org \
-  -l /path/to/emacs.el \
+  path/to/file.org \
+  -L /path/to/courseware
+  -l poco-org-export \
   -f org-reveal-export-to-html
 #+END_SRC
 
@@ -399,8 +409,8 @@ as lecture notes.
 - =--batch= -- run Emacs in batch mode, no UI
 - =/path/to/file.org= -- path to the file that contains the content
   you want to convert to slides
-- =-l /path/to/emacs.el= -- path to the =emacs.el= file in the
-   =courseware/= directory of this repository
+- =-L /path/to/courseware= -- path to the =courseware= directory
+- =-l poco-org-export= -- file with export code
 - =-f org-reveal-export-to-html= -- run the function that generates
   the HTML
 
