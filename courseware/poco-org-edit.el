@@ -23,40 +23,49 @@
           'org-redisplay-inline-images)
 
 ;; Easy snippets to make code insertion easier
+(require 'org-tempo)
+(setq org-structure-template-alist      ; h is already bound, unbind it
+      (delq (assoc "h" org-structure-template-alist)
+            org-structure-template-alist))
 (add-to-list 'org-structure-template-alist
-	     '("h" "#+BEGIN_SRC html
-?
-#+END_SRC"))
+	     '("h" . "src html"))
 (add-to-list 'org-structure-template-alist
-	     '("j" "#+BEGIN_SRC javascript
-?
-#+END_SRC"))
+             '("j" . "src javascript"))
 (add-to-list 'org-structure-template-alist
-	     '("d" "#+BEGIN_SRC dot :file ?.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
-digraph G {
+             '("css" . "src css"))
 
-}
-#+END_SRC"))
+(tempo-define-template "org-src-dot"
+                       '("#+begin_src dot :file "
+                         (P "Output file: ")
+                         ".svg :cmdline -Tsvg -Gstylesheet=../graphvic.css" n
+                         "digraph G {" n
+                         "  " p n
+                         "}" n
+                         "#+end_src")
+                       "<d"
+                       "DOT graph"
+                       'org-tempo-tags)
 
-(add-to-list 'org-structure-template-alist
-	     '("css" "#+BEGIN_SRC css
-?
-#+END_SRC"))
+(tempo-define-template "ox-reveal-left"
+                       '("#+reveal_html: <div class=\"leftcol\">" n
+                         r n
+                         "#+reveal_html: </div>")
+                       "<left"
+                       "Left column"
+                       'org-tempo-tags)
 
-(add-to-list 'org-structure-template-alist
-	     '("left" "#+REVEAL_HTML: <div class=\"leftcol\">
-?
-#+REVEAL_HTML: </div>"))
-(add-to-list 'org-structure-template-alist
-	     '("right" "#+REVEAL_HTML: <div class=\"rightcol\">
-?
-#+REVEAL_HTML: </div>"))
+(tempo-define-template "ox-reveal-right"
+                       '("#+reveal_html: <div class=\"rightcol\">" n
+                         r n
+                         "#+reveal_html: </div>")
+                       "<right"
+                       "Right column"
+                       'org-tempo-tags)
 
 ;; Open .html files (e.g., from hitting C-' on a #+INCLUDE block) in
 ;; Emacs instead of the default (which opens them in a browser).
 (add-to-list 'org-file-apps
 	     '("\\.x?html?\\'" . emacs))
-
 
 
 ;;; Completion

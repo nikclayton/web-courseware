@@ -349,6 +349,87 @@ It would be possible to create more complex slide layouts using
 CSS (e.g., =flex= or =grid= layouts) but I haven't found it
 necessary so far.
 
+** Template shortcuts
+
+Loading =poco-org-edit.el= enables some template shorcuts in Emacs.
+
+To activate the template type a =<=, the name of the shortcut, and
+press =TAB=. The shortcut will be replaced with the template.
+
+The current shortcuts are:
+
+*** =css=
+
+Inserts:
+
+#+begin_example
+#+begin_src css
+
+#+end_src
+#+end_example
+
+*** =d=
+
+Inserts:
+
+#+begin_example
+#+begin_src dot :file .svg :cmdline -Tcsv -Gstylesheet=../graphvic.css
+digraph G {
+
+}
+#+end_src
+#+end_example
+
+You will be promped for the name of the file to insert.
+
+*** =e=
+
+Inserts:
+
+: #+begin_example
+:
+: #+end_example
+
+*** =h=
+
+Inserts:
+
+#+begin_example
+#+begin_src html
+
+#+end_src
+#+end_example
+
+*** =j=
+
+Inserts:
+
+#+begin_example
+#+begin_src javascript
+
+#+end_src
+#+end_example
+
+*** =left=
+
+Inserts:
+
+#+begin_example
+#+reveal_html <div class="leftcol">
+
+#+reveal_html </div>
+#+end_example
+
+*** =right=
+
+Inserts:
+
+#+begin_example
+#+reveal_html <div class="rightcol">
+
+#+reveal_html </div>
+#+end_example
+
 ** Visual concerns
 
 The slides are written assuming they will projected on an HD (1920x1080)
