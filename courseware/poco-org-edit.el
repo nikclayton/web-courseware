@@ -13,6 +13,10 @@
   :config (setq inhibit-compacting-font-caches t) ; Speed up Windows
   :ensure t)
 
+(use-package org-variable-pitch
+  :hook (org-mode . org-variable-pitch-minor-mode)
+  :ensure t)
+
 (setq org-support-shift-select t)
 (setq css-indent-offset 2)
 (setq graphviz-dot-indent-width 2)
