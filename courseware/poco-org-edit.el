@@ -72,6 +72,60 @@
 	     '("\\.x?html?\\'" . emacs))
 
 
+;;; SQL
+
+;; SQL mode treats "name" as an ANSI SQL keyword, and highlights it when
+;; it's a column in a query.
+;;
+;; To work around this, write column names in lower case. This code
+;; advises the sql-mode highlighter to only look at keywords in upper
+;; case.
+
+(require 'sql)
+
+;; If sql-font-lock-keywords-builder was called outside compilation then
+;; this advice process would probably work.
+;;
+;; Keeping it here for the moment in case I want to revisit it, or an
+;; official way to do this materialises
+;;
+
+;; (defun poco/sql-font-lock-keywords-builder(r)
+;;   "Return R converting elements after the second to upper case."
+;;   (let ((face (car r))
+;; 	(boundaries (cadr r))
+;; 	(keywords (cddr r)))
+;;     `(,face ,boundaries ,@(mapcar #'upcase keywords))))
+
+;; ;; Remove this advice with:
+;; ;; (advice-remove #'sql-font-lock-keywords-builder
+;; ;;   #'poco/sql-font-lock-keywords-builder)
+;; (advice-add 'sql-font-lock-keywords-builder :filter-args
+;;             #'poco/sql-font-lock-keywords-builder)
+
+;; Hack - sql-mode-ansi-font-lock-keywords is a list of lists of
+;; regexps and the faces to use. At the time of writing there's an
+;; entry for "name" / "number" / "nullable" in the regexp that can be
+;; updated to just be "number" / "nullable".
+(use-package s
+  :ensure t)
+
+(setf (car (car sql-mode-ansi-font-lock-keywords))
+      (s-replace "n\\(?:ame\\|u\\(?:llable\\|mber\\)\\))"
+                 "nu\\(?:llable\\|mber\\))"
+                 (car (car sql-mode-ansi-font-lock-keywords))))
+
+;; Automatically convert SQL keywords to uppercase when typed.
+(use-package sqlup-mode
+  :ensure t
+  :config (add-to-list 'sqlup-blacklist "name"))
+
+;; Automatically indent SQL keywords
+(use-package sql-indent
+  :ensure t
+  :hook (sql-mode . sqlind-minor-mode))
+
+
 ;;; Completion
 (use-package company
   :ensure t
