@@ -17,6 +17,12 @@
   :hook (org-mode . org-variable-pitch-minor-mode)
   :ensure t)
 
+(defun poco/enable-visual-line-mode ()
+  "Enable visual line mode (for use in a hook)."
+  (visual-line-mode 1))
+
+(add-hook 'org-mode-hook #'poco/enable-visual-line-mode)
+
 (setq org-support-shift-select t)
 (setq css-indent-offset 2)
 (setq graphviz-dot-indent-width 2)
