@@ -9,21 +9,10 @@
 
 ;;; Code:
 
+(add-to-list 'load-path default-directory)
+
+(require 'poco-package)
 (require 'poco-config)
-
-
-;;; Ensure that Org is loaded
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-
-(package-initialize)
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(require 'org)
 
 
 ;;; General dependencies
@@ -39,12 +28,13 @@
   :ensure t)
 
 
-;;; Temporary fixes
+;;; org-re-reveal
 
-;; ox-reveal on Melpa has compatability problems with Org (it's
-;; set to an older version). Load the local version to avoid
-;; version number problems.
-(load-file (f-join poco/repo-root "org-reveal/ox-reveal.el"))
+(use-package org-re-reveal
+  :ensure t)
+
+
+;;; Temporary fixes
 
 (require 'org-id)
 
@@ -161,7 +151,7 @@ the file is present."
 	 :base-extension "org"
 	 :publishing-directory ,(f-join poco/export-root "slides")
 	 :recursive t
-	 :publishing-function org-reveal-publish-to-reveal)
+	 :publishing-function org-re-reveal-publish-to-reveal)
 	("bsl-slides-static"
 	 :base-directory ,poco/repo-root
 	 :base-extension "css\\|png\\|svg"

@@ -5,6 +5,8 @@
 
 ;;; Code:
 
+(add-to-list 'load-path default-directory)
+
 (require 'poco-config)
 (require 'poco-org-export)
 
@@ -422,7 +424,7 @@ Each problem is a list that describes the problem, entries in..."
   "Menu for Powercoders functions."
   '("Powercoders"
     ("Publishing"
-     ["Generate slide for this file" org-reveal-export-to-html]
+     ["Generate slide for this file" org-re-reveal-export-to-html]
      ["Publish all files" (org-publish-all t)])
     ("Cleanup"
      ["Remove generated files" poco/remove-generated-files]
