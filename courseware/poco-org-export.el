@@ -33,6 +33,8 @@
 (use-package org-re-reveal
   :ensure t)
 
+(setq org-re-reveal-body-attrs "class='preso'")
+
 
 ;;; Temporary fixes
 

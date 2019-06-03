@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
-body {
+body:not(.preso) {
   background-color: #ddd;
   max-width: 960px;
   margin: 0 auto;
@@ -9,11 +9,11 @@ body {
   line-height: 1.5;
 }
 
-h2, h3, h4 {
+body:not(.preso) h2, body:not(.preso) h3, body:not(.preso) h4 {
   text-align: center;
 }
 
-div.outline-2, div.outline-3, div.outline-4 {
+body:not(.preso) div.outline-2, body:not(.preso) div.outline-3, body:not(.preso) div.outline-4 {
   border-top: 1px solid #ccc;
 }
 
