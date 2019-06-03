@@ -106,7 +106,7 @@ to the repository that you checked out.
   courseware/week1/day1.org \
   -L $REPO/courseware \
   -l poco-org-export \
-  -f org-reveal-export-to-html
+  -f org-re-reveal-export-to-html
 #+END_SRC
 
 *** Windows
@@ -117,12 +117,12 @@ to the repository that you checked out.
   courseware\week1\day1.org \
   -L $REPO\courseware \
   -l poco-org-export
-  -f org-reveal-export-to-html
+  -f org-re-reveal-export-to-html
 #+END_SRC
 
 *** Check
 
-This should have created =courseware/day1.html=. Load this in to
+This should have created =courseware/week1/day1.html=. Load this in to
 your browser and verify that everything works.
 
 * Content and structure
