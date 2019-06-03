@@ -183,9 +183,9 @@ svg > text {
   fill: #eee8d5 !important;
 }
 
-/** Make slies a bit taller */
+/** Make slides a bit taller */
 .slides {
-  height: 900px !important;
+  min-height: 900px !important;
 }
 
 
@@ -272,7 +272,7 @@ section.no-heading h2, section.no-heading h3 {
 .reveal div.slide-header {
   position: fixed;
   left: 2em;
-  top: -1em;
+  top: -10rem;
   color: rgba(238, 232, 213, .5);
   font-size: 70%;
   font-variant: small-caps;
