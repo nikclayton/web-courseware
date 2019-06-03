@@ -462,7 +462,7 @@ Evaluate that (or restart Emacs) and everything should work.
 Open one of the =.org= files corresponding to a day, week, or
 topic.
 
-Then run =C-c C-e R R= to run the =ox-reveal= export process.
+Then run =C-c C-e v v= to run the =org-re-reveal= export process.
 This will write a RevealJS presentation to the same directory
 as the =.org= file. Any graphics or screenshots needed by
 the presentation will be generated automatically.
