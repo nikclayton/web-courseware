@@ -250,7 +250,7 @@ svg > text {
   margin-left: auto;
   margin-right: auto;
   width: fit-content;
-  min-width: 60em;
+  min-width: 78ch;
   padding-right: 2em;
 }
 
