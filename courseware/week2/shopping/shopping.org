@@ -3316,7 +3316,7 @@ case.
 
 ** Solution: Returning early from a function
 
-#+INCLUDE: "shopping-13.js" :lines "48-64" src javascript -n 40
+#+INCLUDE: "shopping-13.js" :lines "44-60" src javascript -n 40
 
 #+BEGIN_NOTES
 Here's what our function looks like using =if= statements and
@@ -3355,7 +3355,7 @@ handler, test it, add and commit.
 
 ** Solution: Returning early from a function
 
-#+INCLUDE: "shopping-13.js" :lines "35-47" src javascript -n 31
+#+INCLUDE: "shopping-13.js" :lines "35-43" src javascript -n 31
 
 #+BEGIN_NOTES
 And we can make a very similar change to the click handler for
@@ -3363,6 +3363,22 @@ the button.
 
 Again, we save the trimmed value in to a constant, and perform
 an early return if the value is empty.
+
+Notice how this code does not need to check to see if =trimmedValue= is empty. Why is that?
+
+[Wait]
+
+We have to think about how the user can interact with the button.
+
+Remember that the button can either be disabled or enabled.
+
+It starts off being disabled, so the user can't click on it. This means our code here will never run when the button is disabled.
+
+And when does the button become enabled?
+
+It's enabled in the =keyup= listener. In that code we check to see if the =trimmedValue= is the empty string. If it is we never enable the button.
+
+This means we can be certain that the click handler will only run *if* the user has entered a valid value. Because if they haven't then the button won't be enabled, and the click handler won't run.
 
 Any questions on this?
 

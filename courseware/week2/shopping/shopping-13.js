@@ -35,10 +35,6 @@ const addItemButton = document.querySelector('button');
 addItemButton.addEventListener('click', function (event) {
   const trimmedValue = inputBox.value.trim();
 
-  if (trimmedValue === '') {
-    return;
-  }
-
   shoppingList.appendChild(createNewListItem(trimmedValue));
   inputBox.value = '';
   addItemButton.disabled = true;
