@@ -16,7 +16,7 @@
 #+REVEAL_INIT_SCRIPT: width: "100%"
 #+PROPERTY: header-args:html-chrome :cache yes :flags --window-size=320,240 --force-device-scale-factor=2
 #+OPTIONS: toc:nil num:t tags:nil H:4 todo:nil
-#+OPTIONS: reveal_history:t reveal_global_headers:t
+#+OPTIONS: reveal_history:t reveal_global_headers:t reveal_center:nil
 #+TAGS: exercise software
 #+COLUMNS: %35ITEM %TODO %TOPICS %REQUIREMENTS %TAGS
 #+AUTHOR: Nik Clayton
