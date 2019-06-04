@@ -37,10 +37,6 @@ const clearListButton = document.querySelector('#clear');
 addItemButton.addEventListener('click', function (event) {
   const trimmedValue = inputBox.value.trim();
 
-  if (trimmedValue === '') {
-    return;
-  }
-
   shoppingList.appendChild(createNewListItem(trimmedValue));
   inputBox.value = '';
   addItemButton.disabled = true;
@@ -62,7 +58,6 @@ inputBox.addEventListener('keyup', function (event) {
 
   shoppingList.appendChild(createNewListItem(trimmedValue));
   inputBox.value = '';
-  addItemButton.disabled = true;
   clearListButton.disabled = false;
 });
 

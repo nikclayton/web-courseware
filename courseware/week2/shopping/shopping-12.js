@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
   document.querySelector('input').addEventListener('keyup', function(event) {
     const trimmedValue = inputBox.value.trim();
+    addItemButton.disabled = trimmedValue === '';
 
     if (trimmedValue !== '') {
       if (event.key === 'Enter') {
@@ -46,8 +47,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
         inputBox.value = '';
       }
     }
-
-    addItemButton.disabled = inputBox.value.trim() === '';
   });
 
   inputBox.focus();

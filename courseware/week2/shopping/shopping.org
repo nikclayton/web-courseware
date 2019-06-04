@@ -2839,7 +2839,7 @@ the first place.
 
 #+INCLUDE: "shopping-8.js" :lines "29-32" src javascript
 
-* Refactoring: =else=
+* Refactoring: =else=                                              :noexport:
 
 #+BEGIN_SRC javascript
 if (expression) {
@@ -2973,7 +2973,300 @@ Try this.
 [Wait]
 #+END_NOTES
 
-** Exercise: Refactoring with the =else= keyword                   :exercise:
+* Exercise: Keeping our code DRY
+
+#+INCLUDE: "shopping-8.js" :lines "42-55" src javascript -n 42
+
+- Don't Repeat Yourself (DRY)
+
+#+begin_notes
+Generally, it's good coding practice to have code that doesn't do the
+same thing twice. A common term for that is DRY code -- as in "Don't
+repeat yourself".
+
+Sometimes the way we avoid repetition is by putting common code in to
+functions that we can call -- we might call the function multiple
+times, and that's absolutely fine -- but we only need to write the
+code once.
+
+Sometimes, though, we get repetition even within a function. There's
+two particular pieces of repetition I want to focus on here.
+
+The first is where =inputbox.value.trim()= is called repeatedly. Now,
+it's only done twice, which is not a huge problem in this case. This
+is not a particulaly *expensive* method to call -- by which I mean it
+runs very quickly -- so calling it twice isn't going to result in code
+that is meaningfully slower.
+
+However, if we can reduce duplication we should try to -- it can make
+our code clearer and our intentions easier to understand.
+
+The second piece of repetition is the two =if= statements. There are
+two glaring red flags here which we'll go in to more detail shortly.
+#+end_notes
+
+** Exercise: Put duplicated code in to a variable
+
+#+INCLUDE: "shopping-8.js" :lines "42-55" src javascript -n 42
+
+- Create a variable called =trimmedValue=
+- It's value should be the result of calling =.trim()=
+- Use =trimmedValue= in both =if= expressions
+
+** Solution: Hoisting duplicate code in to a variable
+
+ #+INCLUDE: "shopping-9.js" :lines "40-55" src javascript -n 40
+
+ #+BEGIN_NOTES
+ Here I've created a new constant variable called =trimmedValue= and
+ set it to the trimmed copy of whatever's in the input widget.
+
+ Then I use this constant in two places, once in the =if= statement,
+ and once in the call to =createNewListItem=.
+
+ Does this make sense to everyone?
+
+ [Wait]
+
+ Who didn't write code like this?
+
+ [Wait, and investigate]
+
+ Now, lets look at these =true= and =false= values inside the
+ =if= block.
+ #+END_NOTES
+
+** Refactoring: =false= and =true= inside the =if= block
+
+ #+INCLUDE: "shopping-9.js" :lines "40-55" src javascript -n 40
+
+ - Assigning =true= or =false= inside an =if= block is a big red flag
+ - Especially if there are paired =if= statements
+
+ #+begin_notes
+ Earlier I mentioned that the repetition of the two =if= statements
+ was a big red flag for me, so lets walk through why that is.
+
+ And to be really clear, I'm specifically talking about the code on
+ lines 44 and 52.
+
+ Lets look at why this.
+ #+end_notes
+
+** =true= and =false= expressions with =if=
+
+ #+REVEAL_HTML: <div class="leftcol">
+ #+BEGIN_SRC javascript
+ if (expression) {
+   // Body
+ }
+ #+END_SRC
+ #+REVEAL_HTML: </div>
+
+ #+REVEAL_HTML: <div class="rightcol">
+ #+BEGIN_SRC javascript
+ let x = 10;
+ let y = x === 9;
+ y;                  // false
+ y = x < 20;
+ y;                  // true
+ #+END_SRC
+ #+REVEAL_HTML: </div>
+
+ #+BEGIN_NOTES
+ Remember the structure of an =if= block, here on the left.
+
+ In particular, the code inside the parentheses immediately after the
+ =if= keyword is an expression that must evaluate to either a true or
+ a false value.
+
+This can be any expression that evaluates to =true= or =false=. Like
+the examples here on the right.
+ #+END_NOTES
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+BEGIN_SRC javascript
+const trimmedValue = inputBox.value.trim();
+const isEmpty = trimmedValue === ''; // true or false
+#+END_SRC
+
+#+BEGIN_NOTES
+This means we could write something like this. If the trimmed value is
+the empty string then =isEmpty= will be true.
+
+And if the trimmedValue is not empty then =isEmpty= will be false.
+
+Does that make sense?
+
+[Wait]
+#+END_NOTES
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+BEGIN_SRC javascript
+const trimmedValue = inputBox.value.trim();
+const isEmpty = trimmedValue === ''; // true or false
+#+END_SRC
+
+| =inputBox.value= | =.trim=   | =isEmpty= |
+|------------------+-----------+-----------|
+| ='hello   '=     | ='hello'= | =false=   |
+| ='hello'=        | ='hello'= | =false=   |
+| ='    '=         | =''=      | =true=    |
+| =''=             | =''=      | =true=    |
+
+#+begin_notes
+Here's what this looks like if we throw in some sample values.
+
+The first column represents the value that the user has typed in. The
+second column is the trimmed version of that value, and the last
+column is what the value of the =isEmpty= variable would be.
+
+On the first row the user has typed in some text and there are some
+spaces at the end. The trimmed version of that is in the second
+column, and because this is not equal to the empty string =isEmpty= is
+=false=.
+
+Does that make sense?
+
+[Wait]
+
+The second row is very similar -- the user's typed in a string with
+nothing to trim, so =isEmpty= is also =false=.
+
+On rows three and four the user has typed in something that does trim
+to the empty string, so in these cases =isEmpty= is =true=.
+
+Everyone good with that?
+#+end_notes
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+BEGIN_SRC javascript
+const trimmedValue = inputBox.value.trim();
+const isEmpty = trimmedValue === ''; // true or false
+#+END_SRC
+
+| =inputBox.value= | =.trim=   | =isEmpty= | =addItemButton.disabled= |
+|------------------+-----------+-----------+------------------------|
+| ='hello   '=     | ='hello'= | =false=   | ?                      |
+| ='hello'=        | ='hello'= | =false=   | ?                      |
+| ='    '=         | =''=      | =true=    | ?                      |
+| =''=             | =''=      | =true=    | ?                      |
+
+#+begin_notes
+Lets extend the table and add a fourth column. This column contains
+the value that =addItemButton.disabled= should have in each of these
+scenarios.
+
+So for the first row -- if the user has typed in the value in the
+first column, what value should =addItemButton.disabled= have?
+
+[Wait for "false"]
+
+[Repeat with the other rows]
+
+#+end_notes
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+BEGIN_SRC javascript
+const trimmedValue = inputBox.value.trim();
+const isEmpty = trimmedValue === ''; // true or false
+#+END_SRC
+
+| =inputBox.value= | =.trim=   | =isEmpty= | =addItemButton.disabled= |
+|------------------+-----------+-----------+--------------------------|
+| ='hello   '=     | ='hello'= | =false=   | =false=                  |
+| ='hello'=        | ='hello'= | =false=   | =false=                  |
+| ='    '=         | =''=      | =true=    | =true=                   |
+| =''=             | =''=      | =true=    | =true=                   |
+
+#+begin_notes
+So here's the complete table.
+
+Everyone OK with this?
+#+end_notes
+
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+BEGIN_SRC javascript
+addItemButton.disabled = trimmedValue === '';
+#+END_SRC
+
+| =inputBox.value= | =.trim=   | =addItemButton.disabled= |
+|------------------+-----------+--------------------------|
+| ='hello   '=     | ='hello'= | =false=                  |
+| ='hello'=        | ='hello'= | =false=                  |
+| ='    '=         | =''=      | =true=                   |
+| =''=             | =''=      | =true=                   |
+
+#+begin_notes
+Since this is exactly how we want the value for the =disabled=
+property to be calculated there's no need to create an intermediate
+variable, so we can use =trimmedValue= directly when assigning to the
+=disabled= property.
+#+end_notes
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+INCLUDE: "shopping-9.js" :lines "40-55" src javascript -n 40
+
+#+BEGIN_SRC javascript
+addItemButton.disabled = trimmedValue === '';
+#+END_SRC
+
+#+begin_notes
+Just as a reminder, here's what our code currently looks like. Lets
+change those hardcoded =true= and =false= values on lines 44 and 52 to
+use the new assignment.
+#+end_notes
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+INCLUDE: "shopping-10.js" :lines "40-55" src javascript -n 40
+
+#+begin_notes
+Here's what that looks like.
+
+Notice anything special about lines 44 and 52?
+
+[Wait]
+
+They're identical.
+
+And since =if= expressions are exactly the opposite of each other --
+if we don't do one of them then we definitely take the other -- we
+know that line 44 or line 52 will *always* be run.
+
+Since they'll always be run we can put those lines outside of the =if=
+block entirely.
+
+This will make the body of the second =if= block be empty, so we can
+delete it too.
+#+end_notes
+
+** Refactoring: =false= and =true= inside the =if= block
+
+#+INCLUDE: "shopping-11.js" :lines "40-51" src javascript -n 40
+
+#+begin_notes
+Here's what that looks like.
+
+On line 42 we *always* set the button's =disabled= property to either
+=true= or =false= depending on whether or not the trimmed value is the
+empty string.
+
+After that is the =if= statement to see if the user has pressed the
+=Enter= key.
+
+This code does exactly the same thing as the previous code, but it's a
+little but shorter and a little bit clearer.
+#+end_notes
+
+* Exercise: Refactoring with the =else= keyword           :exercise:noexport:
 
 #+INCLUDE: "shopping-7.js" :lines "40-53" src javascript -n 40
 
@@ -3050,150 +3343,6 @@ simpler and easier to read.
 
 And the simpler and easier to read it is the less chance there
 are any bugs.
-#+END_NOTES
-
-* Refactoring: Hoisting duplicate code in to a variable
-
-#+INCLUDE: "shopping-10.js" :lines "40-53" src javascript -n 40
-
-#+BEGIN_NOTES
-Here I've created a new constant variable called =trimmedValue=
-and set it to the trimmed copy of whatever's in the input widget.
-
-Then I use this constant in two places, once in the =if= statement,
-and once in the call to =createNewListItem=.
-
-Does this make sense to everyone?
-
-[Wait]
-
-OK, make this change to your code, check that it works, then
-add and commit.
-
-IMPORTANT: This doesn't actually work, because the else branch
-needs to always be taken.
-
-[Wait]
-
-Now, lets look at these =true= and =false= values inside the
-=if= block.
-#+END_NOTES
-
-* Refactoring: =false= and =true= inside the =if= block
-
-#+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC javascript
-if (expression) {
-  // Body
-}
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC javascript
-let x = 10;
-let y = x === 9;
-y;                  // false
-y = x < 20;
-y;                  // true
-#+END_SRC
-#+REVEAL_HTML: </div>
-
-- Expression must evaluate to either =true= or =false=
-
-#+BEGIN_NOTES
-Remember the structure of an =if= block.
-
-In particular, the code inside the parentheses immediately
-after the =if= keyword is an expression that must evaluate
-to either a true or false value.
-
-We can take the result of an expression and assign it to
-a variable.
-#+END_NOTES
-
-** Refactoring: =false= and =true= inside the =if= block
-
-#+BEGIN_SRC javascript
-const isEmpty = inputBox.value.trim() === '';
-#+END_SRC
-
-#+BEGIN_NOTES
-This means we could write something like this. If the trimmed
-value is the empty string then =isEmpty= will be true.
-
-And if the trimmedValue is not empty then =isEmpty= will be
-false.
-
-Does that make sense?
-
-[Wait]
-#+END_NOTES
-
-
-** Refactoring: =false= and =true= inside the =if= block
-
-#+BEGIN_SRC javascript
-const isEmpty = inputBox.value.trim() === '';
-#+END_SRC
-
-#+BEGIN_SRC javascript
-addItemButton.disabled = inputBox.value.trim() === '';
-#+END_SRC
-
-#+BEGIN_NOTES
-But this is also exactly how we want the value for the
-=disabled= property to be calculated.
-
-So there's no need to create a new variable, we can set
-the value directly.
-#+END_NOTES
-
-** Refactoring: =false= and =true= inside the =if= block
-
-#+INCLUDE: "shopping-11.js" :lines "40-53" src javascript -n 40
-
-#+BEGIN_NOTES
-This is what that looks like.
-
-This is not obviously better than just using the literal
-=true= and =false= values, right?
-
-Our code is now longer on line 44 and 50, and it's also
-duplicated.
-
-Wasn't I just talking about hoisting duplicated code in to
-a variable so that the value can be re-used?
-
-Yes I was.
-
-The reason for this step is that it lets us see that this bit of code
-in both branches of the =if / else= block is identical. Check, lines
-44 and 50 are the same.
-
-Since they're the same, they don't need to be inside the =if / else=
-block at all.
-
-And if we remove line 50 to outside the =else= block then we don't
-need the =else= either.
-
-Before I show you the resulting code, does that make sense?
-
-[Wait]
-#+END_NOTES
-
-** Refactoring: =false= and =true= inside the =if= block
-
-#+INCLUDE: "shopping-12.js" :lines "40-52" src javascript -n 40
-
-#+BEGIN_NOTES
-On line 50 I've set the =disabled= property on the =addItemButton=.
-
-This allows me to remove that code from inside the =if= block, and
-completely remove the =else= block.
-
-This code does exactly the same thing as the previous code, but it's
-a little but shorter and a little bit clearer.
 #+END_NOTES
 
 * Refactoring: Nesting
@@ -3956,11 +4105,11 @@ items.forEach(function(el) {
 
 *** Solution: Enable the button when items are added
 
-#+INCLUDE: "shopping-15.js" :lines "37-50" src javascript
+#+INCLUDE: "shopping-15.js" :lines "37-46" src javascript
 
 *** Solution: Enable the button when items are added
 
-#+INCLUDE: "shopping-15.js" :lines "51-68" src javascript
+#+INCLUDE: "shopping-15.js" :lines "47-63" src javascript
 
 *** Exercise: Disable the button when the page is loaded
 
@@ -3968,7 +4117,7 @@ items.forEach(function(el) {
 
 *** Solution: Disable the button when the page is loaded
 
-#+INCLUDE: "shopping-15.js" :lines "77-83" src javascript
+#+INCLUDE: "shopping-15.js" :lines "73-76" src javascript
 
 *** Conditionally disable the button when clicking delete item
 
@@ -4533,17 +4682,39 @@ digraph G {
 
 ** Solution: Extract the value of the quantity widget
 
-#+INCLUDE: "shopping-19.js" :lines "45-46" src javascript
-
-#+INCLUDE: "shopping-19.js" :lines "51-60" src javascript
+#+INCLUDE: "shopping-19.js" :lines "45-50" src javascript
 
 #+BEGIN_NOTES
 Here's the code that finds the quantity widget.
-
-In the click listener I pass the trimmed value to =createNewListItem=. I don't bother saving the result in to a variable, since I don't need to test the value.
-
-I've made the same change in the =keyup= handler as well.
 #+END_NOTES
+
+** Solution: Extract the value of the quantity widget
+
+#+INCLUDE: "shopping-19.js" :lines "51-66" src javascript -n
+
+#+begin_notes
+In the click listener I pass the trimmed value to
+=createNewListItem=. I don't bother saving the result in to a
+variable, since I don't need to test the value -- it's OK to want to
+add an item to the list without it having a quantity.
+
+Notice that I also set the focus back to the quantity widget when the
+item has been added.
+
+This is because in my UI the quantity box comes first, so it makes
+sense if the focus goes to it after an item has been added. If you've
+put the quantity widget after the input widget in your UI then it
+makes sense for the focus to go to the item widget instead.
+#+end_notes
+
+** Solution: Extract the value of the quantity widget
+
+#+INCLUDE: "shopping-19.js" :lines "67-86" src javascript -n
+
+#+begin_notes
+I've made the same change in the =keyup= handler as well.
+#+end_notes
+
 ** Solution: Pass param to =createNewListItem=
 
 #+INCLUDE: "shopping-19.js" :lines "1-9" src javascript

@@ -38,13 +38,17 @@ document.addEventListener('DOMContentLoaded', function(event) {
   });
 
   document.querySelector('input').addEventListener('keyup', function(event) {
-    if (inputBox.value.trim() !== '') {
+    const trimmedValue = inputBox.value.trim();
+    
+    if (trimmedValue !== '') {
       addItemButton.disabled = false;
       if (event.key === 'Enter') {
         shoppingList.appendChild(createNewListItem(inputBox.value.trim()));
         inputBox.value = '';
       }
-    } else {
+    }
+
+    if (trimmedValue === '') {
       addItemButton.disabled = true;
     }
   });

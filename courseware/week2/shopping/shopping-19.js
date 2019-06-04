@@ -79,7 +79,6 @@ function domContentLoaded() {
     shoppingList.appendChild(createNewListItem(trimmedValue,
         quantityBox.value.trim()));
     inputBox.value = '';
-    addItemButton.disabled = true;
     clearListButton.disabled = false;
     quantityBox.value = '';
     quantityBox.focus();

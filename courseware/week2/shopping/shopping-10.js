@@ -41,13 +41,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
     const trimmedValue = inputBox.value.trim();
 
     if (trimmedValue !== '') {
-      addItemButton.disabled = false;
+      addItemButton.disabled = trimmedValue === '';
       if (event.key === 'Enter') {
         shoppingList.appendChild(createNewListItem(trimmedValue));
         inputBox.value = '';
       }
-    } else {
-      addItemButton.disabled = true;
+    }
+
+    if (trimmedValue === '') {
+      addItemButton.disabled = trimmedValue === '';
     }
   });
 
