@@ -140,7 +140,7 @@ with a sensible commit message.
 
 * TODO Input boxes
 
-- MDN documentation: [[[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text][mdn html input type=text]]]
+- MDN documentation: [[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text][mdn html input type=text]]
 - Questions:
   - What element name and attributes should we use?
   - What property contains the typed in value?
@@ -347,7 +347,7 @@ to change the =class= attribute value that we did earlier.
 
 * TODO Buttons                                                     :exercise:
 
-- MDN documentation: [[[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button][mdn html button]]]
+- MDN documentation: [[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button][mdn html button]]
 - Questions:
    - What element name and attributes should we use?
    - Can we make buttons look pretty?
@@ -1059,7 +1059,7 @@ the same.
    :TOPICS:   dom-remove
    :END:
 
- - [[[https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove][MDN remove element]]] / [[[https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove][MDN delete element]]]
+ - [[https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove][MDN remove element]] / [[https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove][MDN delete element]]
 
 #+BEGIN_NOTES
 Now that we know we can detect the click and run an event listener we
@@ -2519,7 +2519,7 @@ So we'll have to fix that.
 
 ** Dealing with whitespace                                         :exercise:
 
-- [[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String][MDN string]]]
+- [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String][MDN string]]
 - Review the available string methods
 - Are there any that deal with whitespace?
 
@@ -2586,7 +2586,7 @@ Everyone OK with this so far?
 
 * Disabling the button                                             :exercise:
 
-- [[[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button][MDN button disable]]]
+- [[https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button][MDN button disable]]
 
 #+BEGIN_NOTES
 With this change in place pressing the Enter key or clicking the
