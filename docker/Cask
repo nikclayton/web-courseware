@@ -1,0 +1,28 @@
+(source org)
+(source melpa)
+(source gnu)
+
+(development
+  (depends-on "use-package")
+  ;; poco-org-export
+  (depends-on "org-plus-contrib" "9.2.4")
+  (depends-on "ob-html-chrome")
+  (depends-on "graphviz-dot-mode")
+  (depends-on "org-re-reveal")
+  (depends-on "zenburn-theme")
+  (depends-on "htmlize")
+  (depends-on "f")
+
+  ;; poco-org-edit
+  (depends-on "org-bullets")
+  (depends-on "org-variable-pitch")
+  (depends-on "s")
+  (depends-on "sqlup-mode")
+  (depends-on "sql-indent")
+  (depends-on "company")
+  (depends-on "company-quickhelp")
+
+  )
+
+
+; org

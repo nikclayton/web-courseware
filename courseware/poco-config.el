@@ -17,5 +17,12 @@
   "c:/program files (x86)/google/chrome/application/chrome.exe"
   "Full path, including file, to the Chrome executable.")
 
+;; These settings are for when running in the Docker environment,
+;; do not change them.
+(when (file-exists-p "/.dockerenv")
+  (setq poco/repo-root "/repo")
+  (setq poco/export-root "/root/export")
+  (setq poco/chrome-path "/usr/bin/chromium-browser"))
+
 (provide 'poco-config)
 ;;; poco-config.el ends here
