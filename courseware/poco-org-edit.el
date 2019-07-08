@@ -25,6 +25,7 @@
 
 (add-hook 'org-mode-hook #'poco/enable-visual-line-mode)
 
+(setq org-adapt-indentation nil)
 (setq org-support-shift-select t)
 (setq css-indent-offset 2)
 (setq graphviz-dot-indent-width 2)
