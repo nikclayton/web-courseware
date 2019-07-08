@@ -372,15 +372,15 @@ Each problem is a list that describes the problem, entries in..."
 
 (defun poco/presentation-targets ()
   "Return a list of all .org files in the courseware/ tree."
-  (f-files (f-join poco/repo-root "courseware")
-	   (lambda (file)
-	     (and (equal (f-ext file) "org")
-		  (not (string-prefix-p "." (f-filename file)))))
-	   t))
+  ;; 7s for this vs. 31s for f-files
+  (directory-files-recursively (f-join poco/repo-root "courseware")
+			     "^[^\\.].*\\.org$"))
 
 (setq org-refile-targets
       (quote ((nil :maxlevel . 9)
 	      (poco/presentation-targets :maxlevel . 9))))
+
+(setq org-refile-use-cache t)
 
 ;; Better completion for "#+" at the start of a line.
 ;;
