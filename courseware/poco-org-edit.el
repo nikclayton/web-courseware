@@ -361,8 +361,6 @@ Each problem is a list that describes the problem, entries in..."
 ;; a table with the problems.
 
 
-
-
 ;; Refiling headings
 
 ;; Org stuff for PoCo
