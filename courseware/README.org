@@ -48,7 +48,7 @@ This will prepare the image, downloading and installing software in to the image
 
 You only need to do this step once.
 
-You can verify that the container built correctly by launching a shell in the contaner by running
+You can verify that the container built correctly by launching a shell in the container by running
 
 #+begin_src shell
 docker run -it powercoders sh
@@ -146,7 +146,7 @@ to the repository that you checked out.
  % path\to\emacs.exe -Q --batch \
    courseware\week1\day1.org \
    -L $REPO\courseware \
-   -l poco-org-export
+   -l poco-org-export \
    -f org-re-reveal-export-to-html
  #+END_SRC
 
@@ -563,7 +563,7 @@ as lecture notes.
 #+BEGIN_SRC
 % emacs -Q --batch \
   path/to/file.org \
-  -L /path/to/courseware
+  -L /path/to/courseware \
   -l poco-org-export \
   -f org-re-reveal-export-to-html
 #+END_SRC
