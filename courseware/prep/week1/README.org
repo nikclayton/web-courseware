@@ -1,0 +1,1130 @@
+#+TITLE: Powercoders Prep, Week 1
+#+SETUPFILE: "../../include/settings.org"
+#+PROPERTY: header-args:html-chrome :flags --window-size=320,240 --force-device-scale-factor=2 :cache yes
+
+* Goal for this week
+
+- Install software for the course
+- Become comfortable with the command line
+- Create necessary online accounts
+
+#+begin_notes
+Welcome to the course. In this week we're going to make sure that everyone has installed the software that we will be using on the course and is comfortable with using it.
+#+end_notes
+
+* IMPORTANT
+
+#+begin_center
+Follow the instructions!
+#+end_center
+
+#+begin_notes
+It is is very important that you follow these instructions exactly.
+
+Computers are very stupid things, and they do not understand what you want to do, they only understand what you have told them to do.
+
+So if you do not follow the instructions for one exercise correctly you will probably find that a later exercise does not work properly, requiring more time and effort to fix.
+#+end_notes
+
+* Assumptions
+
+- You have access to a computer and a place to work
+- You have approx. 30 hours free this week
+- You have regular Internet access
+- You have your =powercoders.org= account
+
+#+begin_notes
+Before we go any further, this material is written assuming that you have access to a computer and a place that you can work, you have 30 hours of free time this week to work on these tasks, and that you have Internet access.
+
+An account at =powercoders.org= should also have been created for you. It is *very* important that you use this account for everything you do on the Powercoders course.
+
+If any of these things are not true then *stop* and immediately contact Andrina to let her know, so that we can make alternative arrangements.
+#+end_notes
+
+* Exercises
+
+- Look out for sections marked "Exercise"
+- You *must* do the tasks in these sections to proceed
+- Failure to complete these exercises may have you removed from the course
+
+#+begin_notes
+There are critical exercises throughout this document. You must complete these in order to proceed -- they ensure that you have done the necessary work.
+
+Having difficulty with an exercise is not a problem -- reach out to us for help.
+
+However, failing to complete the exercises may result in you being removed from the course.
+#+end_notes
+
+* Take notes
+
+- Take your own notes!
+- Hand-write them if possible
+  - [[https://www.scientificamerican.com/article/a-learning-secret-don-t-take-notes-with-a-laptop/][Scientific American article]]
+
+#+begin_notes
+Take your own notes on all of this material.
+
+These slides and notes are supposed to be helpful, but you will learn and retain more information if you take your own notes.
+
+You may be tempted to only type those notes. Research suggests that people who hand-write notes get a better understanding of the material and apply it more effectively in the future.
+#+end_notes
+
+* Installing and configuring software
+
+- Chrome
+- Bitwarden
+- Slack
+- Git
+- Visual Studio Code
+- GitHub
+
+#+begin_notes
+We're going to install and/or configure these pieces of software.
+
+I suggest you allow at least two hours for each of these, and plan to do each application in a single session -- it's easier to go through everything to do with one application in one go.
+
+You do not need to install all the applications in one session.
+#+end_notes
+
+** Chrome, the web browser
+
+- You need a web browser
+- This course uses Chrome
+- Download and install from https://www.google.com/chrome
+
+#+begin_notes
+You will be making heavy use of a web browser in this course.
+
+There are many browsers to use, including Firefox, Chrome, Safari, Edge, and more.
+
+If you're already using Chrome you can skip this step and move on to the next section.
+
+However, if you're not using Chrome you should dowload and install it, and then set it as your default browser.
+
+Although all browsers generally show web pages in the same way, they have differences in the tools that they provide to web developers to help find problems and test things. This course is written assuming that you are using the Chrome developer tools, and not the ones provided by Firefox or any of the other browsers.
+#+end_notes
+
+** Bitwarden and the problem with passwords
+
+- E-mail addresses and passwords occasionally leak
+
+#+begin_notes
+The most common way to create an account or sign up with an online service is to use your e-mail address and password.
+
+Unfortunately, not all of these online services have good security, and it's very common for these services to be broken in to, and for the attackers to steal lists of e-mail addresses and -- sometimes -- passwords.
+
+This is a problem if you use the same password on more than one site -- if the attackers manage to break in to one site that you use they then try the password on lots of other sites to see if it works.
+#+end_notes
+
+*** Check your e-mail address
+
+- https://www.haveibeenpwned.com/
+
+#+begin_notes
+You can check to see if your own e-mail address has been involved in an attack like this by going to the site https://www.haveibeenpwned.com (that's not a typo) and typing in your e-mail address (*important*: Your regular e-mail address, *not* your password, and not your =powercoders.org= address).
+
+At the time of writing it shows that my e-mail address has been involved in eight different attacks, involving companies like Adobe and LinkedIn.
+
+*Eight!* *Different!* *Attacks!*
+
+As you can imagine, this is a problem.
+#+end_notes
+
+*** Short passwords can be decrypted easily
+
+- 8 characters, roughly 4 hours
+- 9 characters, roughly 4 days
+- 10 characters, roughly 3 months
+- 11 characters, roughly 10 years
+- 12 characters, roughly 200 years
+
+#+begin_notes
+Now sometimes the attacker doesn't get your actual password, they get a version of your password that has been scrambled, or *encrypted*. In theory this is useless to them, because it's not your real password.
+
+The problem is that as computers get faster and faster it becomes possible to *decrypt* the encrypted copy of your password.
+
+Right now, in 2019, if your password is 8 characters long it takes about 4 hours to decrypt the encrypted version on a fast computer.
+
+As your password gets longer it takes more time to decrypt. But! Computers are getting faster all the time, so in 2020 it will take less time, in 2021 it will be even faster, and so on.
+
+A password that is easy to decrypt is a *weak* password, one that is difficult to decrypt is a *strong* password.
+#+end_notes
+
+*** We should only use long passwords
+
+- At least 16 characters or more
+- This is difficult to remember
+- Tempting to use the same password on lots of sites
+- Never re-use a password on another site
+
+#+begin_notes
+So it's much better if we make sure that we always use a long password.
+
+Right now I recommend at least 16 characters (letters, numbers, and other symbols) for your password.
+
+But this is a problem -- how are you supposed to remember all of these without writing them down (which is another bad idea).
+#+end_notes
+
+*** Solution: Use a password manager
+
+- Password manager generates *strong* passwords for you
+- Encrypts them using a *master password*
+- Makes it easy to enter them in to web sites and other applications
+
+#+begin_notes
+To solve this problem we use a *password manager*.
+
+We create an account in our password manager and we use a long, strong *master password* for that account.
+
+The password manager can then *generate* and *save* strong passwords for us for the accounts we create on websites and in other applications.
+
+We only have to remember the master password.
+
+It's a bit like having a safe where you've got pieces of paper with your passwords written on -- you only have to remember the combination to the safe in order to find out all your other passwords.
+#+end_notes
+
+*** Why is this important for this course?
+
+- Going to create accounts on online services
+- Should follow password best practices
+- Some services won't let you reuse passwords
+
+#+begin_notes
+In this course we're going to be creating new accounts on a variety of online services, and these services will need you to create a password.
+
+I want you to be following best practices as early as possible.
+
+In addition, some services will not let you reuse passwords. For example, later you will be creating an account on =github.com=. When you try and sign up for an account with an e-mail address and a password GitHub checks to see if that e-mail address/password pair has ever been involved in a data breach, and if it has it refuses to let you use that password.
+#+end_notes
+
+*** Bitwarden
+
+- A completely free password manager
+- Works in the browser and on phones
+- Generates strong passwords
+- Saves them securely (in what it calls the *vault*)
+- Can automatically fill passwords in online forms
+
+#+begin_notes
+You're going to install and configure a completely free password manager called Bitwarden.
+
+Bitwarden manages the process of creating and saving strong passwords.
+#+end_notes
+
+*** Exercise: Creating a Bitwarden account                         :exercise:
+
+- Open https://bitwarden.com/
+- Click "Create Account" (top right)
+
+#+begin_notes
+We start by creating a Bitwarden account. To do that go to https://bitwarden.com/ and click the "Create Account" link on the page.
+#+end_notes
+
+**** Initial entry
+
+[[file:vault.bitwarden.com_.png]]
+
+#+begin_notes
+You will see a screen like this. Enter your =powercoders.org= e-mail address and your name.
+
+When you've done that, move to the next slide / note for instructions on how to choose a good master password
+#+end_notes
+
+**** Properties of a good master password
+
+- Long
+- Difficult to guess
+- Easy to remember
+
+#+begin_notes
+The master password is critical, as it is going to be used to safeguard *all* of your passwords. This means it should be long, difficult to guess, and easy to remember.
+
+This *does* *not* mean it should be a collection of random letters, numbers, and symbols. That's difficult to guess, but very hard to remember, and makes it more likely that you will want to write it down somewhere.
+#+end_notes
+
+**** Choosing a good master password
+
+- Choose 4 or 5 random, common words
+  - "correct horse battery staple"
+- Or a phrase it's easy for you to remember
+  - "i will learn to write code"
+
+#+begin_notes
+You can choose 4 or 5 common words together with a visualisation for remembering them.
+
+Or maybe a phrase that's easy for you to remember, like here.
+
+*Obviously*, *do* *not* use either of these as your master password.
+
+Once you have chosen the master password, *write* *it* *down*.
+
+This is normally bad advice. But for the next few days (until you have practiced remembering the password) it's a good idea write it down somewhere only you have access to -- maybe as a file on your phone, or as a note associated with a contact. You will delete this in a few days.
+
+*Important:* Your master password *is* case-sensitive -- that means that if you used a mix of upper and lower case letters in your master password you must enter them like that every time.
+#+end_notes
+
+**** Remember your master password
+
+- If you forget you master password all Bitwarden data is *lost*
+
+#+begin_notes
+With most websites that you sign up for, if you forget your password there's normally some way of recovering it. For example, maybe you click a "Reset my password" link and the site sends you an e-mail or a message to your phone allowing you to change the password that you have forgotten.
+
+Bitwarden (and other password managers) *is* *not* *like* *this*. If you forget your master password then all of the data saved in Bitwarden is *gone*. There is -- deliberately -- no way for the Bitwarden organisation to recover your data.
+
+So be very careful about making sure that you remember your Bitwarden master password.
+#+end_notes
+
+**** Finish creating the account
+
+file:vault.bitwarden.com_.png
+
+#+begin_notes
+Finish the account creation process. Enter the master password you decided on -- you will need to enter it twice -- and optionally enter in a hint to yourself about what the password is.
+
+For example, if you saved the password as a note attached to a contact on your phone you might enter the name of the contact.
+
+Click the "Submit" button to finish creating the account.
+#+end_notes
+
+*** Signing in to your account
+
+file:vault-login.bitwarden.com_.png
+
+#+begin_notes
+When the account is created, which might take a few seconds, you should be asked to login to Bitwarden. It should be pre-filled with your e-mail address, so enter the master password you just created to go to your password vault.
+#+end_notes
+
+*** Verify your e-mail address
+
+- Find the "Verify email" box, send the e-mail
+- Wait for the e-mail to arrive
+- Follow the verification process
+
+#+begin_notes
+To enable all the features of Bitwarden your e-mail address must be verified.
+
+To do that find the part of the page (probably at the top right) that says it will send a verification e-mail to your Powercoders address, and follow those instructions.
+
+When the e-mail arrives follow its instructions to verify your account.
+
+When that's done
+#+end_notes
+
+*** Install the browser extension
+
+- Go to https://bitwarden.com/
+- Find the "browser extensions" part of the page
+- Click the extension for the browser you are using
+- Install it
+
+#+begin_notes
+Browser extensions are small applications that run inside your browser. They normally appear as an icon to the right of the address bar.
+
+Bitwarden provides a browser extension that can:
+
+1. Generate and save new passwords for you
+2. Automatically insert your generated password in to the form
+#+end_notes
+
+*** Using the browser extension
+
+#+BEGIN_EXPORT html
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/dBPfr7Jiddw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+#+END_EXPORT
+
+#+begin_notes
+This YouTube video from Bitwarden shows how to use the extension to manage your passwords, including creating new passwords for sites, saving passwords, and automatically filling passwords in to login forms.
+
+Watch this video to see Bitwarden in action.
+#+end_notes
+
+*** Optional: Install the mobile app
+
+- Go to https://bitwarden.com
+- Find the "Mobile" part of the page
+- Click the link to install the Android or iOS application
+
+*** Bitwarden recap
+
+- Use a strong, different password on every site
+- Use Bitwarden to automatically create these for you
+- Don't ever forget the master password
+
+** Slack
+
+- *Our main communication tool*
+- Like WhatsApp, but multiple =#channels= around topics
+
+#+begin_notes
+Slack is the main electronic communication tool that we use. It's a chat system where messages can be sent to different channels (written with a =#= mark) for different topics.
+#+end_notes
+
+*** Exercise: Creating a Slack account
+
+- Open https://powercoders.slack.com/signup/
+- Enter your e-mail address
+- Wait for the e-mail to arrive
+- Follow the instructions in the e-mail
+
+#+begin_notes
+Slack is a web application, running in a web browser, it's not a separate application that you need to download.
+
+Before you can use it you need to create a Slack account and sign up.
+
+To do that, follow these instructions. Slack will send an e-mail to your =powercoders.org= address with further instructions which you will need to follow.
+
+*Important:* Slack will ask you to create a password. Use *Bitwarden* to create a new, secure password, and save it to your Bitwarden vault.
+#+end_notes
+
+*** Optional: Install the Slack mobile application
+
+- Android: https://slack.com/intl/en-ch/downloads/android
+- iOS: https://slack.com/intl/en-ch/downloads/ios
+
+#+begin_notes
+Slack has applications for Android and iOS (iPhone, etc) devices. You may (and this is optional) want to install these applications on to your phone.
+
+This can be useful if -- for example -- you are commuting to the course and have missed a train, or there is a delayed connection. It makes it easy to let everyone else know that you will be delayed.
+#+end_notes
+
+*** Using Slack
+
+**** Exercise: Read the documentation
+
+- https://get.slack.help/
+- Getting Started
+  - Intro To Slack
+- Using Slack
+  - Work in Channels
+  - Send Messages
+- Your Profile & Preferences
+  - Manage your profile
+  - Set your preferences
+  - Adjust your notifications
+
+#+begin_notes
+Slack's documentation is (generally) a series of short, unconnected articles, rather than a single thing you can read through and fully understand.
+
+I recommend that you read some of the content in the Slack Help center at https://get.slack.help/.
+
+You do not need to read all of it, but you should review the "Intro to Slack" in the "Getting Started" section.
+
+Then read the "Work in Channels" and "Send Messages" articles in "Using Slack".
+
+You may also want to read some of the "Your Profile & Preferences" section to become familiar with how you can customise Slack.
+
+You do *not* need to fully understand all of this information immediately. The goal is to have read through it at least once so that you have a general idea of what Slack can do, and so that in the future you can go back to this material with a specific question or questions and understand it better.
+
+#+end_notes
+
+**** Powercoders course channels
+
+- =#zrh= - The channel for everyone involved in this class
+  - Announcements from teachers, coaches, mentors
+  - Questions from you
+  - Success stories, achievements, news
+- =#ch-resources=
+  - Interesting articles, job offers, courses
+- =#ch-random=
+  - Everything else
+- =@[username]=: Personal messages
+
+#+begin_notes
+We have multiple channels that you can use in the Powercoders workspace.
+
+Use =#zrh= for messages that should go to everyone in the class. The only people in this channel are people directly connected with the class.
+
+The =#ch-resources= channel has people from the wider community -- former teachers, alumni, and so on. This channel is a useful source of articles, possible job offers, information about additional courses and opportunities.
+
+The =#ch-random= channel is used for everything else.
+#+end_notes
+
+**** Rules for Slack
+
+#+REVEAL_HTML: <div class="leftcol">
+- Use the appropriate channel
+  - If you're not sure, =#ch-random=
+- Use =@[username]= in a message in a channel notifies them
+- Using =@channel= in a message notifies everyone in the channel
+  - Only use these if you *really* need everyone to see it
+- Use threads
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+[[file:slack-thread.png]]
+#+REVEAL_HTML: </div>
+
+*** Exercise: Prove you are connected to Slack                     :exercise:
+
+- Post a message to the =#zrh= channel introducing yourself
+
+*** Slack recap
+
+- https://powercoders.slack.com
+- Use the right channel for your message
+
+** Version control and Git
+
+- You're going to be working on a long project
+- You might make mistakes
+- You might want to experiment
+- How do we do that safely?
+
+#+begin_notes
+In this course you're going to be using a version control system.
+
+The projects that you're working on will run for many weeks. And you might want to experiment, or try things out that don't work and then go back to a version of the files that you know work.
+
+We need a way to be able to do that sort of thing safely.
+#+end_notes
+
+*** Version control: By copies
+
+#+REVEAL_HTML: <div class="leftcol">
+- This is one way, but it doesn't really scale.
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+[[file:vcs-copies.png]]
+#+REVEAL_HTML: </div>
+
+#+begin_notes
+This is one approach, and you're probably familiar with it -- as you're working on a file you save multiple copies of that file, each one with increasingly desperate sounding names as you discover problems that you need to fix.
+
+This approach does not scale -- it doesn't work when things get bigger. That might be the number of people working on it, or the size of the project increasing, or the amount of time it's taking.
+
+A better way to do this is by using a version control system, or VCS.
+#+end_notes
+
+*** Version Control Systems (VCS): Common features
+
+- Lets us take a collection of files and save their current contents
+- Saving is called "committing" the changes
+  - When we commit the changes we can provide a message that explains why
+- Then we can make changes to the files and:
+  - See what's changed (diff)
+  - Easily undo the changes (or some of them)
+  - Or commit these as new versions of the files
+- Over time this builds up a timeline of changes to the files
+
+#+begin_notes
+There are many different version control systems that you can use. They all share some common features.
+
+Generally they let you take the current copy of a file, or files, and save a copy of that (with the same name) somewhere safe so you can retrieve that version in the future.
+
+When we save like this we say we are *committing* the change, or *making a commit*.
+
+Each time we commit a change we can write a message that explains why we made the change that we did -- this becomes the *commit log*.
+
+Because the VCS has all the versions that we have saved it can also show us the things that changed between each version. Generally they show the lines that you added, the lines you deleted, and the lines that you modified.
+
+The VCS lets us easily *undo* or *revert* a change. Imagine you made a commit and then a few hours later you discover that you made a mistake. Our VCS lets us easily *roll-back* to the previous version of the file so that you can fix the problem.
+#+end_notes
+
+*** VCS: Git                                                       :software:
+
+- There are many different version control systems
+- We're going to use one called Git
+- Because it's:
+  - Very popular in industry and open source
+  - Has lots of powerful features
+  - Lots of people write about it
+  - Has concepts shared by other tools
+- Important: "Easy to learn" is not one of its features
+- Sorry!
+
+#+begin_notes
+The VCS we're going to use in this course is called *Git*. It's very widely used, and it's very likely that the companies you will intern with will use it.
+
+Even if they don't use Git the experience you get using a VCS will be useful when you use whatever VCS the company uses.
+
+Unfortunately, Git is not very easy to use -- it's not very intuitive, and the documentation that comes with it can be confusing. However, there are a lot of good tutorials that have been written online about it, which helps, and this course will (initially) walk you through the actual commands that you need to use.
+#+end_notes
+
+*** Exercise: Installing Git                                       :exercise:
+
+- Download and install from https://git-scm.org/
+
+#+begin_notes
+For the moment you're just going to install Git -- you don't need to do anything else with it right now.
+
+To do that you can download Git from https://git-scm.org/ (SCM stands for "Source Code Management", another term for version control).
+#+end_notes
+
+*** Exercise: Review Git videos
+
+- 2 videos to watch
+- No activities for you to do
+
+#+begin_notes
+The following section has 2 different videos about Git for you to view.
+
+There are no specific activities for you to do at this point. Just watch the videos and pay attention to some of the concepts that are introduced.
+
+At this point some of what the videos cover might not make sense to you yet. That's fine, I just want you to get exposed to some of these ideas now.
+#+end_notes
+
+**** Git Basics #1
+
+#+BEGIN_EXPORT html
+<iframe src="https://player.vimeo.com/video/41027679" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+#+END_EXPORT
+
+**** Git Basics #2
+
+#+begin_export html
+<iframe src="https://player.vimeo.com/video/41381741" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+#+end_export
+
+#+begin_notes
+Remember -- you do not need to follow any of the instructions in this video. Just try and make sure you understand the concepts that are being presented.
+#+end_notes
+
+*** Git recap
+
+- Git is a version control system
+- Makes it easier to manage multiple versions of our files
+- Not always easy to learn
+
+** Visual Studio Code
+
+- Programmer's Editor
+- Lots of features to make programming easier
+
+#+begin_notes
+Visual Studio Code is a *programmer's editor*. Sometimes you will hear these referred to as an *Integrated Development Environment* or *IDE* too.
+
+If you were writing a letter, or your CV, you would use a word processor. A word processor has lots of features to help you write documents like this. For example, you can change the font, center text on the page, draw diagrams, add colours, and so on.
+
+A programmer's editor is like a word processor for programmers. But instead of helping you write a letter, or a CV, it contains features that help you write programs. It can sometimes spot mistakes that you've made and show them to you. Or automatically type certain things so that you don't need to. Or work with tools like Git or your browser to save time.
+
+*Important:* If you have prior programming experience you may be familiar with other IDEs and prefer to use them (Eclipse, IntelliJ, etc). Don't. The instructions in this course assume everyone is using VSCode. In addition, you may get an internship with a company that has their own preferred IDE and do not allow you to install your own software -- becoming comfortable working with different tools is an important skill to develop.
+#+end_notes
+
+*** Download
+
+- Download from https://code.visualstudio.com/
+- Download the *stable* version
+- Run the setup program
+
+#+begin_notes
+Download and run the setup program to complete the initial installation.
+
+Accept the defaults for the questions that it asks you during installation.
+#+end_notes
+
+*** Run Visual Studio Code
+
+[[file:vscode-first-launch.png]]
+
+#+begin_notes
+When you first run VS Code you should see a screen similar to this one.
+
+There's a prompt at the bottom right asking if you want to opt-in to sending usage data to Microsoft.
+
+It's up to you as to whether you want to do this or not.
+#+end_notes
+
+*** Tour of the UI
+
+- https://code.visualstudio.com/docs/getstarted/userinterface
+
+#+begin_notes
+The VSCode documentation includes a page that explains the main parts of the user interface.
+
+You should read this now. Some of the information here will probably make sense from the beginning. Other parts might be mysterious until you have more experience writing code.
+
+Don't worry about that. Right now the goal is to get a high level overview of what the different parts of the screen do so that you can become comfortable using VSCode.
+#+end_notes
+
+*** Choose a colour theme                                          :exercise:
+
+- https://code.visualstudio.com/docs/getstarted/themes
+- Follow the "Selecting the Color Theme" instructions
+- Ignore the other sections in that document
+
+#+begin_notes
+VSCode is very customisable, and one of the things you can change is the colour scheme.
+
+We'll change the colour scheme now so you can see how VSCode's customisation system works.
+
+Follow the first set of instructions at that link to see the different colour schemes and choose a new one if you prefer different colours.
+
+It's OK if you want to stay with the default, but do check to see the colour themes that are available.
+
+*Important:* *DO NOT* attempt to follow the instructions on that page to customise the colour scheme. Unfortunately that process involves editing a configuration file, and if you get it wrong you risk misconfiguring VSCode which will be time consuming to fix. There'll be time for those sorts of customisations later once you have more experience.
+#+end_notes
+
+*** Open settings                                                  :exercise:
+
+file:vscode-settings.png
+
+#+begin_notes
+We're going to change some of VSCode's settings to fit the expectations of this course and to make thing easier for you.
+
+To open VSCode's settings you can either:
+
+1. Click the "cog wheel" icon towards the bottom left of the screen. This will open a menu. Choose "Settings" from the menu.
+
+2. Choose File > Preferences > Settings
+
+Either approach should show you something very similar to this screenshot.
+
+Notice how the settings have been opened in a "tab", a bit like a web page in a browser.
+
+Below the settings tab bar is a "Search settings" box where you can type in the name of the setting you want to change. You can also use the menu on the left hand side of the page (that starts "Commonly Used") to find settings -- generally, once you know what to look for searching is a lot faster.
+#+end_notes
+
+*** Changing the tab size                                          :exercise:
+
+file:vscode-tab-size.png
+
+#+begin_notes
+The first thing to change is the TAB size. This is the number of characters that are inserted in to the file when you press the TAB key. There are different conventions for this, on this course we use a TAB size of 2.
+
+To find the setting in VSCode, click in the search bar and type =tab size=. The settings should change and you should see something very similar to this screenshot, with the "Editor: Tab Size" setting appearing first. It probably has the default value of 4.
+
+Change this to =2=.
+
+You do not need to explicitly save this change -- VSCode makes it as soon as you type.
+#+end_notes
+
+*** Enable auto-formatting
+
+file:vscode-format.png
+
+#+begin_notes
+In much the same way that there are strong conventions for how a letter or a CV should be formatted, there are very strong conventions about how programme code should be formatted.
+
+You don't have to do this, but it makes it much easier to read and understand your code.
+
+As a programmer's editor VSCode can automatically format code for you. This can be a significant time saver, so we'll turn that option on.
+
+Still in the settings search for "format", and you should see these settings.
+
+Look for the settings "Format On Paste", "Format On Save", and "Format On Type". These are three checkboxes that control when VSCode will try and do things for you.
+
+I recommend checking all three of them.
+#+end_notes
+
+*** Close settings
+
+- Click the 🞭 next to the "Settings" tab
+
+*** Install a formatting extension
+
+- Extensions add extra capabilities to VSCode
+- "Prettier" extends VSCode's formatting capabilities
+
+#+begin_notes
+It is possible to increase the features provided by VSCode by installing "extensions".
+
+There are 1000s of different extensions available for VSCode. We're going to install one that extends the code formatting capabilities that it has.
+#+end_notes
+
+*** Open the extensions list
+
+file:vscode-extensions.png
+
+#+begin_notes
+To do this open the extension list. There are three different ways of doing this.
+
+1. Click the "cog wheel" icon towards the bottom left of the screen. This will open a menu. Choose "Extensions" from the menu.
+
+2. Choose File > Preferences > Extensions
+
+3. Click the icon on the far left that looks like a square inside a square.
+
+The screen should look like this screenshot. On the left is a list of some of the extensions that are available, with a search bar at the top of that list.
+#+end_notes
+
+*** Install Prettier
+
+file:vscode-extensions-prettier.png
+
+#+begin_notes
+In the search bar towards the top left of the app (just below where it says "Extensions: Marketplace") search for "prettier".
+
+You should see results similar to this. Click the "Prettier - Code formatter" result. It's probably at the top of the list, but if it's not then search down the list until you find it.
+
+In the screenshot it's version 1.9.0 -- but the time you read this newer versions may have been released.
+
+To install the extension click the green "Install" buton on the right.
+
+This will take a few moments for the extension to be downloaded and installed.
+#+end_notes
+
+*** Close the extensions section
+
+- Click the 🞭 next to the "Extension: Prettier - Code formatter" tab
+- Click the top icon on the column of icons on the left
+  - The one that looks like two pieces of paper
+
+
+*** Create a new file
+
+file:vscode-new-file.png
+
+#+begin_notes
+We'll create a new file to see how this works. Choose File > New File and you should see a screen like this.
+
+The new file has been created in its own tab. It doesn't have a name yet so the name appears as =Untitled-1= in the tab.
+#+end_notes
+
+*** Type in the following exactly as shown
+
+#+begin_example
+<html>
+<head>
+<title>This is a title</title>
+</head>
+<body>
+<h1>This is a heading</h1>
+</body>
+</html>
+#+end_example
+
+#+begin_notes
+Type in the HTML code in this slide exactly as shown. That means do not add any extra spaces, and ensure that you have put in the =<=, =/= and =>= *exactly* as they are written here.
+
+*Do not* copy and paste this - type it out by hand. It's good practice for copying information from tutorials.
+
+Don't worry if you don't know what all this means yet -- that's going to be next week.
+
+When you have done this move on to the next slide.
+#+end_notes
+
+*** Check your work
+
+file:vscode-plain-text.png
+
+#+begin_notes
+If you've done this properly you should see something very similar to this screenshot.
+
+At this point VSCode can not do anything special to help you, because it does not know what type of file this is, so it doesn't know what would be useful.
+
+We'll change that now.
+
+At the bottom right of the VSCode window (in the purple bar) you should see it says "Plain Text". This means that VSCode doesn't know anything about the language that this file is written in.
+
+To change that click "Plain Text". A menu should appear that says "Select Language Mode", with a list of different programming languages, and a search bar.
+
+Type "html" and press RETURN to select the HTML language.
+#+end_notes
+
+*** HTML in VSCode
+
+file:vscode-html.png
+
+#+begin_notes
+Now we're starting to see something different. First, at the bottom right it should now say "HTML" instead of "Plain Text". If it doesn't, click there again and make sure you select "HTML" from the menu that appears.
+
+The characters that you type when you write HTML have different meanings, and VSCode has coloured those characters accordingly. Your colours may look different if you changed the colour theme, and that's OK. The important thing is that you can see how the colours are helping you.
+
+In this file there are three different types of characters.
+
+There's the angle brackets (=<= and =>=) and the forward slash (=/=). They've been given one colour (dark grey in the screenshot).
+
+Then there's the text inside those brackets. These are *element names* (you don't have to remember that right now, there's much more on that next week). In the screenshot they've been coloured blue.
+
+Finally there's the text inside the elements, or *content*. In the screenshot this has been coloured white.
+
+*Important*: If you've used a word processor you will be familiar with the idea that you can change the colour of the text that you're typing in.
+
+*This is not what is happening here* -- VSCode is changing the colour *automatically* based on the *meaning* of the text. You can't select some of this text and say "Make it red" in the way you can in a word processor.
+
+Notice how these colours make it easier to see what part of the document is what.
+
+However, there's one more thing we can do make it easier to see the document's structure, and that's to format the document.
+#+end_notes
+
+*** Configuring the default formatter
+
+- We installed Prettier earlier
+- Now we tell VSCode to use it
+
+#+begin_notes
+In the earlier step we installed the "Prettier" extension for formatting code.
+
+However, VSCode has its own default formatter, and we need to configure VSCode to use Prettier instead of its default.
+#+end_notes
+
+**** Open the context menu
+
+file:vscode-context-menu.png
+
+#+begin_notes
+If you right-click somewhere on the Untitled-1 document VSCode will show the *context menu*, as in this screenshot.
+
+Notice the "Format Document With..." entry about halfway down the menu. Click that.
+#+end_notes
+
+**** Change the default formatter
+
+file:vscode-select-formatter.png
+
+#+begin_notes
+The top of the window show show a list of the formatters that are installed, and it should look like this. As you can see there are two, "Prettier" and "HTML Language Features". That second one is the default.
+
+We want to change the default to "Prettier".
+
+To do that click "Configure Default Formatter...".
+#+end_notes
+
+**** Set "Prettier" as the default formatter
+
+file:vscode-select-formatter-prettier.png
+
+#+begin_notes
+From the menu that appears choose "Prettier".
+#+end_notes
+
+*** Format the document
+
+| Windows         | OS X          |
+|-----------------+---------------|
+| Shift + Alt + F | Shift + ⌥ + F |
+
+#+begin_notes
+To format the document you can either use the context menu again (right-click the text and choose "Format Document") or you can use the appropriate keyboard shortcut for your system.
+#+end_notes
+
+**** The formatted document
+
+file:vscode-formatted.png
+
+#+begin_notes
+This is what the formatted result should look like.
+
+If it doesn't it's probably because you didn't set Prettier as the default formatter. Go back over those steps in the last few slides and double check that you did them correctly.
+
+Lets look at the formatted result, as the formatting has made a number of changes to the file for you.
+
+First, our document is made up of two main sections, called the =head= and the =body=. Our original text did not separate these sections, it was just one line after another. The formatted text now has *a blank line between the sections* to make it easier to see where one section ends and another section starts.
+
+Second, an HTML document has a structure where one part of the document is contained inside another part. For example, the =title= is inside the =head=, which is inside the =html=.
+
+Similarly, the =h1= is inside the =body= which is inside the =html=.
+
+Prettier has *indented parts of the text to show that relationship*. Everything that is inside the =html= has been indented by two spaces. Then everything inside the =head= has been indented by an extra two spaces, and the same thing has happened to the =h1= inside the =body=.
+
+Thirdly, we do this we want parts of the document to line up vertically. To help make this easier VSCode has inserted grey vertical lines that show how the =<head>= and =</head>= text should line up, the =<body>= and =</body>= text should line up, and the =<html>= and =</html>= text should line up.
+#+end_notes
+
+**** Formatting can show errors
+
+file:vscode-formatted-error.png
+
+#+begin_notes
+Using the formatting can also show errors. In this example, on line 3 I used a backward slash instead of a forward slash towards the end of the line.
+
+Notice how the colours make this error obvious. The =<= is shown in red, and the =\title>= part is in white instead of the blue and grey that it should be. This is how I can tell where the error is.
+
+Make the same error in your document and verify that the you see the same effect.
+
+Then fix the error, and try making some others -- maybe delete another character, or spell =title= with an extra =t= like =tittle=. Some of these errors VSCode will show, others it can't.
+
+When you're ready to move on make sure you've fixed all the errors you deliberately made.
+#+end_notes
+
+*** Typing in to an HTML document from scratch
+
+- Create a new document (File > New File)
+- Change the type from "Plain Text" to "HTML"
+
+#+begin_notes
+Lets see what happens now if VSCode knows that the document is HTML before we start typing.
+
+To do this create a new document (VSCode will call it "Untitled-2") and before you type anything in to the document change the type from "Plain Text" to "HTML" in exactly the same way that you did before.
+#+end_notes
+
+*** Type exactly as follows
+
+- =<=
+- =ht=
+- =TAB=
+- =>=
+- =RETURN=
+- =<=
+- =he=
+- =TAB=
+- =>=
+- =RETURN=
+
+#+begin_notes
+Type these characters in one by one. Where it says =TAB= press the TAB key, and where it says =RETURN= press the RETURN key.
+
+Because VSCode knows that this is an HTML document it can now start helping you type.
+
+When you typed =<= a menu of possible element names popped up.
+
+As you typed =ht= the list of entries in this menu became shorter until it was just =html=. Pressing =TAB= told VSCode that =html= is what you wanted, so it entered that in to the document for you.
+
+When you pressed the =RETURN= key VSCode moved the cursor to the next line, as normal. But it *also* automatically moved the cursor in by two spaces so that the formatting is correct.
+
+A similar thing happened with =<head>=. By typing =<he= and pressing =TAB= you selected =head= from the menu, and VSCode did the rest.
+
+And again, typing =>= and pressing =RETURN= moved the cursor to the next line and indented by two spaces.
+#+end_notes
+
+*** Continue typing exactly as follows
+
+- =<tit= then =TAB= then =>=
+- Woah!
+
+#+begin_notes
+The next element to enter is =title=. As before you can start typing this and press the =TAB= key to complete it. Then type the =>=.
+
+Look at what's happened. VSCode has *automatically* entered the necessary =</title>= for us.
+#+end_notes
+
+*** Continue typing exactly as follows
+
+- =This is a title=
+- Press the =END= key to go to the end of the line
+- Press =RETURN=
+- Press =Shift= + =TAB=
+- Type =</=
+- Press =RETURN=
+
+#+begin_notes
+Lets see a little more of how VSCode can help.
+
+From the previous slide the cursor should be in between the =><= pair of =<title></title>= so you can start typing the text immediately.
+
+When you press the =END= key followed by =RETURN= you move the cursor to the end of the line and then insert a new line. This new line is also indented inside =<head>=.
+
+However, we're going to want to go back a level. You could do this by pressing the =BACKSPACE= key twice, but if you pres =Shift= + =TAB= you'll go back one indentation level -- 2 spaces for us.
+
+When you type =</= VSCode knows that the most recent open element (don't worry about the terms, we'll cover that next week) is =head=, so it automatically closes that element for you and puts the cursor at the end.
+#+end_notes
+
+*** Continue typing
+
+#+begin_example
+  <body>
+    <h1>This is a heading</h1>
+  </body>
+</html>
+#+end_example
+
+#+begin_notes
+Type in the rest of the text above. However, do this character by character and pay careful attention to what help VSCode is giving you. You won't need to type in all the characters, and when VSCode shows you a suggestion remember that can press the =TAB= key to accept the suggestion.
+#+end_notes
+
+*** Other things VSCode helps with
+
+- Move the cursor around the document
+- Watch what happens
+
+#+begin_notes
+VSCode also shows us extra information when we move the cursor around the document. Two things that are particularly useful are:
+
+First, a lot characters come in pairs, like =<= and =>=. It's often very useful to know where the other end of the pair is. So if you put the cursor immediately before or after a =<= and =>= character VSCode will highlight the other character in the pair.
+
+This can be helpful for finding errors -- if you've missed one of these characters by accident then VSCode will highlight the wrong character.
+
+Second, the elements themselves, like =title= and =body= also come in pairs. When the cursor is in one of these then its pair is highlighted too. So if you have the cursor in one of them and you don't see the other one being highlighted then that means that you have made a typo somewhere, and should carefully check the document to see what you've done.
+#+end_notes
+
+*** Find the keys
+
+#+REVEAL_HTML: <div class="leftcol">
+- ="= (double quote)
+- ='= (single quote)
+- =<= (less than, left angle)
+- =>= (greater than, right angle)
+- =!= (exclamation, bang)
+- =-= (minus, dash)
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="rightcol">
+- =#= (hash)
+- ={= (left curly)
+- =}= (right curly)
+- =/= (forward slash)
+- =\= (backward slash)
+- =_= (underscore)
+- =;= (semi-colon)
+#+REVEAL_HTML: </div>
+
+#+begin_notes
+Over the coming weeks you're going to be typing some characters that you might not be familiar with. Take a moment now, and try and find all of these characters on your keyboard.
+
+Practice typing them in to VSCode.
+#+end_notes
+
+*** VSCode recap
+
+- VSCode is a programmer's editor
+- There are many configuration options and extensions
+- It can help make writing code easier, with less typing
+- It can help show us where we've made mistakes
+
+** Install extensions for HTML and CSS                             :noexport:
+
+- Path Intellisense, https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense
+- Intellisense for CSS class names
+- Prettier
+
+** Install extensions for Javascript                          :noexport:
+
+- Debugger for Chrome
+- GitHub Pull Requests (?)
+- Live Server
+- Zenburn
+- npm
+
+- Jest extension, no, because of https://github.com/jest-community/vscode-jest/issues/426
+
+
+** Install extensions for APIs                                     :noexport:
+
+- REST Client, https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+
+
+
+* The command line / shell
+
+- We'll be using the command line in this course
+- Another way to tell the computer what to do
+- Also called the:
+   - shell
+   - terminal
+   - command window
+   - command prompt
+   - command line interface (CLI)
+
+| Windows            | OS X                           |
+|--------------------+--------------------------------|
+| \faWin, type =cmd= | =⌘= + =Space=, type =terminal= |
+
+#+begin_notes
+Using the command line is an important skill to develop and many of the tools that are introduced later in the course will be run using the command line instead of the graphical interface.
+#+end_notes
+
+** Tutorials
+
+- Windows: [[https://www.youtube.com/playlist?list=PL6gx4Cwl9DGDV6SnbINlVUd0o2xT4JbMu][1 hour playlist of tutorial videos]]
+- OS X: [[https://openclassrooms.com/en/courses/4614926-learn-the-command-line-in-terminal][Learn the command line]]
+
+- Both: [[https://tutorial.djangogirls.org/en/intro_to_command_line/][Introduction to the CLI]]
+
+#+begin_notes
+The separate Windows and OS X video tutorials both have exercises for you to carry out as part of the tutorial.
+
+The "Introduction to the CLI" tutorial is text only. It also has exercises, and it's up to you whether you prefer videos or predominently written tutorials.
+#+end_notes
+
+** Command line cheatsheet
+
+| Action                   | Windows         | OS X            |
+|--------------------------+-----------------+-----------------|
+| Print working directory  | =cd=            | =pwd=           |
+| List directory contents  | =dir=           | =ls=            |
+| Change to a subdirectory | =cd= /=dir=/    | =cd= /=dir=/    |
+| Go up a directory        | =cd ..=         | =cd ..=         |
+| Create a directory       | =mkdir= /=dir=/ | =mkdir= /=dir=/ |
+| Delete a directory       | =rmdir= /=dir=/ | =rmdir= /=dir=/ |
