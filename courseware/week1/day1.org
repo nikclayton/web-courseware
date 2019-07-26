@@ -110,7 +110,7 @@ OK?
 - Laptops have all necessary software installed
 - Slack accounts created
 
-** Slack
+** Slack                                                           :migrated:
 
 - *Our main communication tool*
 - Like WhatsApp, but multiple channels around =#topics=
@@ -152,7 +152,7 @@ OK?
 Make sure everyone can open Atom and navigate around it.
 #+END_NOTES
 
-** Find the keys
+** Find the keys                                                   :migrated:
 
  #+REVEAL_HTML: <div class="leftcol">
  - ="= (double quote)

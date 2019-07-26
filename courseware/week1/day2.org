@@ -67,7 +67,7 @@ spreadsheet, editor, and so on.
  #+END_NOTES
 
 
-* Shell command line
+* Shell command line                                               :migrated:
 
 - Also called the:
    - terminal
@@ -439,13 +439,14 @@ Try these, just to get a sense of what the error messages are.
 [This is a good spot for a break]
 #+END_NOTES
 
-* Version control: Why
+
+* Version control: Why                                             :migrated:
 - You're going to be working on a long project
 - You might make mistakes
 - You might want to experiment
 - How do we do that safely?
 
-* Version control: By copies
+* Version control: By copies                                       :migrated:
 
 #+REVEAL_HTML: <div class="leftcol">
 - This is one way, but it doesn't really scale.
@@ -455,7 +456,7 @@ Try these, just to get a sense of what the error messages are.
 [[file:vcs-copies.png]]
 #+REVEAL_HTML: </div>
 
-* Version Control Systems (VCS): Common features
+* Version Control Systems (VCS): Common features                   :migrated:
 - Lets us take a collection of files and save their current contents
 - Saving is called "committing" the changes
   - When we commit the changes we can provide a message that explains why
@@ -465,7 +466,7 @@ Try these, just to get a sense of what the error messages are.
   - Or commit these as new versions of the files
 - Over time this builds up a timeline of changes to the files
 
-* This is incredibly useful when:
+* This is incredibly useful when:                                  :migrated:
 - Working on complex projects
 - Working with lots of people
 
