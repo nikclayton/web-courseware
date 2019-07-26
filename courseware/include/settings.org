@@ -5,7 +5,7 @@
 #+REVEAL_PLUGINS: (classList zoom notes history)
 #+REVEAL_EXTRA_CSS: ../powercoders-coursework.css
 #+REVEAL_EXTRA_CSS: ../../powercoders-coursework.css
-#+REVEAL_SLIDE_HEADER: Powercoders, Basel 2018/19
+#+REVEAL_SLIDE_HEADER: Powercoders
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../html-export.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../../html-export.css" />
 #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
