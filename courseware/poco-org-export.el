@@ -100,6 +100,27 @@ the file is present."
 	    #'poco/org-babel-current-result-hash)
 
 
+;;; Downcase special block class names
+
+;; #+BEGIN_NOTES is converted to <div class="NOTES">...</div>
+;; #+begin_notes is converted to <div class="notes">...</div>
+;;
+;; CSS class names are case sensitive, so this is a bit of a pain. Add
+;; some advice when exporting special blocks to lowercase the block's
+;; type irrespective of how it is written in the source document.
+(defun poco/downcase-special-block (ohsb special-block contents info)
+  "Call OHSB with SPECIAL-BLOCK :type downcased, CONTENTS and INFO unchanged."
+  (let ((special-block-copy (org-element-copy special-block)))
+    (org-element-put-property
+     special-block-copy
+     :type
+     (downcase (org-element-property :type special-block)))
+    (funcall ohsb special-block-copy contents info)))
+
+(advice-add #'org-html-special-block :around
+            #'poco/downcase-special-block)
+
+
 ;;; Look and feel of exported content.
 ;; Use Zenburn theme so that the colours of the exported HTML and
 ;; other SRC blocks are as expected.

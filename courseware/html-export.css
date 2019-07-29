@@ -17,7 +17,7 @@ body:not(.preso) div.outline-2, body:not(.preso) div.outline-3, body:not(.preso)
   border-top: 1px solid #ccc;
 }
 
-div.NOTES {
+div.notes {
   border: 1px solid #ccc;
   box-shadow: 3px 3px 3px #bbb;
   padding: 8pt;
@@ -26,7 +26,7 @@ div.NOTES {
   background-color: #eee;
 }
 
-div.NOTES:before {
+div.notes:before {
   background-color: #ddd;
   position: relative;
   top: -20px;
