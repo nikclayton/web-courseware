@@ -1517,12 +1517,6 @@ Read the content of this page, and find out how to:
 Add an example to your scratch file.
 #+end_notes
 
-** MDN Exercise, =dl=
-
-- Open https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-- Find an open the page for the =img= element
-- Read the content
-
 ** MDN Exercise, other elements
 
 - Open https://developer.mozilla.org/en-US/docs/Web/HTML/Element
