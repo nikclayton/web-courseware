@@ -1,5 +1,5 @@
 #+TITLE: The shell and version control
-#+SETUPFILE: "../include/settings.org"
+#+SETUPFILE: "../../include/settings.org"
 
 * Today's topics
 
@@ -83,7 +83,7 @@ correct screenshot?
 
 ** Anatomy of the command line
 
-#+BEGIN_SRC dot :file windows-cmdline.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file windows-cmdline.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
   graph G {
     node [shape=none fontname="Courier" fontsize="48"];
     subgraph cmd {
@@ -115,7 +115,7 @@ correct screenshot?
 
 -----
 
-#+BEGIN_SRC dot :file osx-cmdline.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file osx-cmdline.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
   graph G {
     node [shape=none fontname="Courier" fontsize="48"];
     subgraph cmd {
@@ -458,7 +458,7 @@ They are called the =index= and the =repository=.
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file git-workflow.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file git-workflow.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
 digraph G {
   edge [fontsize=24];
   node [fontsize=24 fontname="Lato"];
@@ -875,7 +875,7 @@ made.
 
 * Git workflow with diff
 
-#+BEGIN_SRC dot :file git-workflow-with-diff.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file git-workflow-with-diff.svg :cmdline -Tsvg -Gstylesheet=../../graphviz.css
   digraph G {
     edge [fontsize=24];
     node [fontsize=24 fontname="Lato"];

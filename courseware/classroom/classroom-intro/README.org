@@ -1,0 +1,164 @@
+#+Title: The first day
+#+SETUPFILE: "../../include/settings.org"
+#+PROPERTY: header-args:html-chrome :flags --window-size=320,240 --force-device-scale-factor=2 :cache yes
+
+* Internal notes                                                   :noexport:
+
+#+BEGIN_NOTES
+This is a special week -- no guest trainers so that I can get them up to
+speed and spend more time with them to see who struggles, get a better feel
+for the class, etc.
+
+#+BEGIN_SRC python
+python -m http.server 8080
+#+END_SRC
+#+END_NOTES
+
+* Welcome                                                          :noexport:
+
+- Introductions
+- Course agreement and expectations
+- Contracts
+- -> SBB to get GA (after lunch)
+
+#+BEGIN_NOTES
+From Sunita's message:
+
+- we introduce ourselves as a team and explain who is the contact
+  person for what
+- the class introduces themselves, saying their name and something
+  about this name, so we can remember their names (I can lead this)
+- Hussam says a few things about Hosts/ Orga/ things they have read in
+  the Email
+- Sunita explains the contracts and has them signed
+- after lunch Hussam and I go to SBB with the students who need a GA
+  from us.
+#+END_NOTES
+
+* About asking questions
+
+#+BEGIN_QUOTE
+"All teaching is the process of lying, and then replacing the lies
+ with successively better approximations of the truth."
+#+END_QUOTE
+
+#+BEGIN_NOTES
+This course is only going to work if you all ask questions.
+
+I mean, it's possible that I've managed to design the perfect course,
+and everything is explained in enough detail at exactly the right time
+for you to understand everything.
+
+But that's pretty unlikely. So, when you have questions, ask them.
+
+This isn't a competition as to who can understand things the fastest,
+I'm not grading you on your work, or judging you based on the questions
+that you're asking.
+
+So if you have a question, ask. And if the explanation still isn't
+clear, ask again.
+
+Also -- there's varying levels of experience across all of you. If
+you hear someone ask a question and you think you have another way
+of explaining something that you think might be easier to understand,
+that's fantastic, so do feel free to help with explanations.
+
+This should all be very collaborative -- as I say, it's not a
+competition.
+
+One other thing -- I know, habitually, that I tend to speak quite
+quickly. I'm doing my best to slow down and be really clear, but I
+know that sometimes I will fail at that. When I do, and you need me
+to slow down, tell me.
+
+OK?
+#+END_NOTES
+
+* Goals for today
+
+- Introductions
+- Logistics and setup
+- Playing with HTML
+- Making mistakes and fixing them
+- Reading documentation
+
+* Logistics
+
+- Wifi (=PowerCoder= / =ImPhilo18=)
+- Bathrooms
+- Schedule and breaks
+  - 9am - midday: Teaching, w/ 10 minute breaks
+  - midday - 1.30pm: Lunch
+  - 1.30pm - 5pm: Teaching, w/ 10 minute breaks
+
+* On levels of experience
+
+#+BEGIN_NOTES
+We have very different levels of experience in this group.
+
+Some of you already have some years experience with some of these
+technologies, and for some of you it's going to be the first time
+you've seen it.
+
+For those of you that already know some of this material you might
+find the first couple of weeks very easy, and be tempted to stop
+paying attention.
+
+Don't.
+
+First, I might cover some things that you've never seen before, or
+do it in a way that helps explain other things that we're going to
+learn.
+
+Second, this is a valuable opportunity to practice what you do know.
+Programming is difficult -- the more practice you get at the easier
+things so they become second nature, the more it frees up your brain
+to focus on the more difficult things, until they become easier.
+
+Third, if you find yourself completing some of the exercises earlier
+than others, this is an opportunity to help them out if they need it.
+If someone in the class has a question during the exercises and I
+and the other trainers are busy, do try and help them out. Explaining
+something to someone else is the best way to make sure that you
+understand it.
+
+There's one other thing I wanted to address before we get started.
+
+You're all here because -- in the technical sessions -- you
+demonstrated you could:
+
+- read and understand new material
+- accurately follow instructions
+- learn new things
+- break problems down in to smaller parts
+- solve those parts to solve the bigger problem
+
+Those are all core traits required for any programmer, and I am
+completely convinced that you can succeed at this course.
+
+As we go through this, each one of you will almost certainly find
+yourself getting to a point where you don't understand something and
+it feels like you never will.
+
+For some of you it might be in 6 weeks time. Or 3 weeks time. Or even
+by the end of today. You will find youself worrying that you don't
+belong on the course, that the material is too difficult, that other
+people are doing this much better than you are.
+
+This is completely normal. It's called "Imposter Syndrome".
+
+So I need you to remember that you absolutely belong here, and that
+you are definitely able to learn and understand all the material
+we're going to cover.
+
+That said, not everyone learns at the same pace, or benefits from the
+same examples. So if you do feel like you haven't understood something,
+or are feeling confused, let me know. We'll schedule some 1:1 sessions
+to go through the material again, or find different ways of explaining
+it, or try additional exercises until it makes sense.
+
+OK?
+
+[Wait]
+#+END_NOTES
+
