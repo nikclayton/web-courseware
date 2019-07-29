@@ -1,15 +1,6 @@
 #+TITLE: The shell and version control
 #+SETUPFILE: "../include/settings.org"
 
-* Brief recap of previous day
-
-- HTML files
-- Elements
-  - Block-level and inline
-  - Empty elements
-- Attributes
-- Nesting and structure
-
 * Today's topics
 
 - The command line
@@ -23,7 +14,7 @@ By the end of today everyone will:
 
 #+END_NOTES
 
-* Terminology review
+* The shell (recap)
 
 - =Machine= is the physical computer and hardware (disks, keyboard, etc)
 - Runs an =Operating System=, which manages access to everything
@@ -66,31 +57,7 @@ And you also use the shell to start other programs, like a web browser,
 spreadsheet, editor, and so on.
  #+END_NOTES
 
-
-* Shell command line                                               :migrated:
-
-- Also called the:
-   - terminal
-   - command window
-   - command prompt
-   - command line interface (CLI)
-
-| Windows            | OS X                           |
-|--------------------+--------------------------------|
-| \faWin, type =cmd= | =⌘= + =Space=, type =terminal= |
-
-#+BEGIN_NOTES
-Earlier I mentioned that you'll be doing a lot of work from the
-command line, so lets make sure that everyone is comfortable with
-it.
-
-The first thing to do is actually start a text shell. To do that,
-on Windows press the Windows key, and type "cmd" and press RETURN.
-
-On OS X, type  =⌘= + =Space=, and type =terminal= and press RETURN.
-#+END_NOTES
-
-* Shell screenshots
+** Shell screenshots
 
 #+REVEAL_HTML: <div class="leftcol">
 #+BEGIN_CENTER
@@ -114,7 +81,7 @@ correct screenshot?
 #+END_NOTES
 
 
-* Anatomy of the command line
+** Anatomy of the command line
 
 #+BEGIN_SRC dot :file windows-cmdline.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
   graph G {
@@ -227,8 +194,8 @@ laptop?
 
 #+END_NOTES
 
-* Useful commands
-** Which directory am I in?
+** Useful commands
+*** Which directory am I in?
 
 | Windows | OS X  |
 |---------+-------|
@@ -258,7 +225,7 @@ laptop?
  Did that work for everyone?
  #+END_NOTES
 
-** What files and directories are in this directory?
+*** What files and directories are in this directory?
 
 | Windows | OS X |
 |---------+------|
@@ -274,7 +241,7 @@ laptop?
 
  #+END_NOTES
 
-** Changing directories                                            :exercise:
+*** Changing directories                                           :exercise:
 
 | Action                  | Windows           | OS X              |
 |-------------------------+-------------------+-------------------|
@@ -307,7 +274,7 @@ the filesystem.
 
 [Demo]
 #+END_NOTES
-** Mental model of the directory tree
+*** Mental model of the directory tree
 
 [[file:tree-filesystem.png]]
 
@@ -333,7 +300,7 @@ And when you move up a directory using =cd ..= visualise yourself moving
 up instead of down.
 
 #+END_NOTES
-** Creating (making) directories                                   :exercise:
+*** Creating (making) directories                                  :exercise:
 
 | Windows              | OS X                 |
 |----------------------+----------------------|
@@ -354,7 +321,7 @@ Use the =cd= command to get back to your home directory.
 Then create a directory using =mkdir=, and call it =test=.
  #+END_NOTES
 
-** Deleting directories                                            :exercise:
+*** Deleting directories                                           :exercise:
 
 | Windows              | OS X                 |
 |----------------------+----------------------|
@@ -368,7 +335,7 @@ Then create a directory using =mkdir=, and call it =test=.
 [Demo]
 #+END_NOTES
 
-* Safe and unsafe characters
+** Safe and unsafe characters
 
 - Safe
   - =a-z= =0-9= =-= =_= =.=
@@ -398,7 +365,7 @@ Don't use anything else. In particular, using quotes, brackets, or
 spaces will rapidly cause things to get confusing.
 #+END_NOTES
 
-* What can go wrong?                                               :exercise:
+** What can go wrong?                                              :exercise:
 
 - Mis-spell a command: =aaaaaaaa= ('a' x 8)
 - =cd= in to a directory that does not exist
@@ -418,13 +385,13 @@ Try these, just to get a sense of what the error messages are.
 [Demo]
 #+END_NOTES
 
-* Cursor keys and =Tab=
+** Cursor keys and =Tab=
 
 - =↑= and =↓= - Up and down through command history
 - =←= and =→= - Left and right through the command line
 - =Tab= - completes on filenames and directories
 
-* Shell cheatsheet
+** Shell cheatsheet
 
 | Action                   | Windows         | OS X            |
 |--------------------------+-----------------+-----------------|
@@ -439,47 +406,7 @@ Try these, just to get a sense of what the error messages are.
 [This is a good spot for a break]
 #+END_NOTES
 
-
-* Version control: Why                                             :migrated:
-- You're going to be working on a long project
-- You might make mistakes
-- You might want to experiment
-- How do we do that safely?
-
-* Version control: By copies                                       :migrated:
-
-#+REVEAL_HTML: <div class="leftcol">
-- This is one way, but it doesn't really scale.
-#+REVEAL_HTML: </div>
-
-#+REVEAL_HTML: <div class="rightcol">
-[[file:vcs-copies.png]]
-#+REVEAL_HTML: </div>
-
-* Version Control Systems (VCS): Common features                   :migrated:
-- Lets us take a collection of files and save their current contents
-- Saving is called "committing" the changes
-  - When we commit the changes we can provide a message that explains why
-- Then we can make changes to the files and:
-  - See what's changed (diff)
-  - Easily undo the changes (or some of them)
-  - Or commit these as new versions of the files
-- Over time this builds up a timeline of changes to the files
-
-* This is incredibly useful when:                                  :migrated:
-- Working on complex projects
-- Working with lots of people
-
-* VCS: Git                                                         :software:
-- There are many different version control systems
-- We're going to use one called Git
-- Because it's:
-  - Very popular in industry and open source
-  - Has lots of powerful features
-  - Lots of people write about it
-  - Has concepts shared by other tools
-- Important: "Easy to learn" is not one of its features
-- Sorry!
+* Version control: Git configuration
 
 ** =git config=
 
@@ -614,10 +541,6 @@ as they are not inside one another.
 #+BEGIN_SRC sh
 % git status
 #+END_SRC
-
-#+BEGIN_NOTES
-
-#+END_NOTES
 
 ** =git status= output
 
@@ -1579,9 +1502,7 @@ TODO(nik): Explain more about the typical structure of a command
 
 * Exercises
 
-- Extend portfolio
-  - Add a link to your GitHub page
-- Extend cheatsheets with more information
+- Extend cheatsheets with information about Git
 
 * Double check repository
 
