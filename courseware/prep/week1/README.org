@@ -76,7 +76,6 @@ You may be tempted to only type those notes. Research suggests that people who h
 - Slack
 - Git
 - Visual Studio Code
-- GitHub
 
 #+begin_notes
 We're going to install and/or configure these pieces of software.
