@@ -169,39 +169,39 @@ the file is present."
 ;; See https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
 (require 'ox-publish)
 (setq org-publish-project-alist
-      `(("bsl-slides-reveal"
+      `(("poco-slides-reveal"
 	 :base-directory ,poco/repo-root
 	 :base-extension "org"
 	 :publishing-directory ,(f-join poco/export-root "slides")
 	 :recursive t
 	 :publishing-function org-re-reveal-publish-to-reveal)
-	("bsl-slides-static"
+	("poco-slides-static"
 	 :base-directory ,poco/repo-root
 	 :base-extension "css\\|png\\|svg"
 	 :publishing-directory ,(f-join poco/export-root "slides")
 	 :recursive t
 	 :publishing-function org-publish-attachment)
-	("bsl-notes-html"
+	("poco-notes-html"
 	 :base-directory ,poco/repo-root
 	 :base-extension "org"
 	 :publishing-directory ,(f-join poco/export-root "notes")
 	 :recursive t
 	 :publishing-function org-html-publish-to-html)
-	("bsl-notes-static"
+	("poco-notes-static"
 	 :base-directory ,poco/repo-root
 	 :base-extension "css\\|png\\|svg"
 	 :publishing-directory ,(f-join poco/export-root "notes")
 	 :recursive t
 	 :publishing-function org-publish-attachment)
-	("bsl-org"
+	("poco-org"
 	 :base-directory ,poco/repo-root
 	 :base-extension "org"
 	 :publishing-directory ,(f-join poco/export-root "org")
 	 :recursive t
 	 :publishing-function org-org-publish-to-org)
-	("bsl-slides" :components ("bsl-slides-reveal" "bsl-slides-static"))
-	("bsl-notes" :components ("bsl-notes-html" "bsl-notes-static"))
-	("bsl-all" :components ("bsl-slides" "bsl-notes" "bsl-org"))))
+	("poco-slides" :components ("poco-slides-reveal" "poco-slides-static"))
+	("poco-notes" :components ("poco-notes-html" "poco-notes-static"))
+	("poco-all" :components ("poco-slides" "poco-notes" "poco-org"))))
 
 
 
