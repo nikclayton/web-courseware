@@ -528,11 +528,21 @@ as they are not inside one another.
  - Open a shell (or use an existing one)
  - Navigate to the =poco= directory
  - Make sure you're in the correct directory with =pwd=
+ - Double check with your neighbour
  - Run =git init=
 
  #+BEGIN_SRC sh
  % git init
  #+END_SRC
+
+ #+begin_notes
+ It is very important that you type these commands correctly and that you run them in the correct directory. If you don't it can cause a lot of confusion and mistakes that are difficult to fix.
+
+Before you run each of these commands double check with your neighbour that:
+
+1. You are in the right directory (use =cd= to change directory if necessary)
+2. You have typed the command exactly as it is shown on the slide
+ #+end_notes
 
 * =git status= exercise
 - What's the state of the repository?
