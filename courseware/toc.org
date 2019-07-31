@@ -1,0 +1,31 @@
+#+Title: Table of Contents
+#+SETUPFILE: "../include/settings.org"
+#+PROPERTY: header-args:html-chrome :flags --window-size=320,240 --force-device-scale-factor=2 :cache yes
+
+* Course structure
+
+Students should work through this material in the following order
+
+* Preparation weeks
+
+This work can be done outside the classroom.
+
+- [[file:prep/week1/README.html][Week 1, getting familiar with tools]]
+
+  Setting up some initial tools and getting to know VSCode.
+
+- [[prep/week2/README.html][Week 2, initial HTML]]
+
+  Introduces HTML and researching material on the Mozilla Developer Network.
+
+* The course
+
+This work should be done in the classroom.
+
+- [[file:classroom/classroom-intro/README.html][Introduction to the classroom]]
+
+  Initial material for day 1 in the classroom. You should update this to reference logistical information for your course.
+
+- [[file:classroom/shell-and-git/README.html][Shell and Git]]
+
+  Recap the shell material from week 1. First steps with Git, including creating a GitHub account, configuring Git locally, and introductory Git workflow.
