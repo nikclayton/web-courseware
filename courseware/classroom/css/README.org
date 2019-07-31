@@ -227,6 +227,20 @@ Our selector is now more *specific*, saying that it only matches
 #+RESULTS:
 [[file:styling-all-elements-of-particular-class.png]]
 
+** CSS Diner
+
+- https://flukeout.github.io
+- Use CSS selectors to select items
+- Around level 9 introduces new selectors to learn
+- Do all 32 levels
+- Search for [mdn css selectors] for more documentation
+
+#+begin_notes
+CSS Diner is a game that helps you learn the different CSS selectors.
+
+[Demo the UI, show how to solve the first two levels]
+#+end_notes
+
 * TODO The =id= attribute
 
 #+REVEAL_HTML: <div class="leftcol">
