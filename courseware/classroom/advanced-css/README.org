@@ -1009,10 +1009,6 @@ div.border-box {
   - Does not break across lines
 - =display= property selects them
 
-#+BEGIN_NOTES
-
-#+END_NOTES
-
 ** =display=: Setup
 
 - Create =scratch/display= directory
@@ -1659,16 +1655,6 @@ The end result should look like this.
 
 #+INCLUDE: "samples/3column/3column-4.css" :lines "29-36" src css
 
-#+BEGIN_NOTES
-This should be pretty straightforward by now.
-
-We position the secondary contetn div absolutely, and 1em from the left
-of its containing element. We also give it a fixed width of 15ems,
-and the same minimum height that the main content div has as well.
-
-[Wait]
-#+END_NOTES
-
 ** 3-column exercises: Overview                                    :exercise:
 
 - Use columns in your portofolio and recipes
@@ -2225,8 +2211,6 @@ more than about 80 characters (roughly 8 to 10 English words) then
 it's time to add a breakpoint with a new stylesheet that adjusts
 sizing, padding, margins, and layout to keep the information legibile.
 #+END_NOTES
-
-
 
 * Exercises                                               :exercise:
 
