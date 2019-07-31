@@ -1,24 +1,5 @@
-#+TITLE: Powercoders Basel Coursework, Week 2, Day 1
-#+SETUPFILE: "../include/settings.org"
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../html-export.css" />
-
-
-* AsciiToSVG test                                                  :noexport:
-
-#+BEGIN_SRC asciitosvg
- .-------------------------.
- |                         |
- | .---.-. .-----. .-----. |
- | | .-. | +-->  | |  <--+ |
- | | '-' | |  <--+ +-->  | |
- | '---'-' '-----' '-----' |
- |  ascii     2      svg   |
- |                         |
- '-------------------------'
-#+END_SRC
-
-#+RESULTS:
-[[file:ascii-to-svg-test.svg]]
+#+TITLE: Introduction to Javascript
+#+SETUPFILE: "../../../include/settings.org"
 
 * TODO Recap of last week
 
@@ -125,11 +106,11 @@ And here's what the solution will look like to the user.
 
 * JS Problem 1: Initial HTML setup
 
-#+INCLUDE: "change_para_class/index-1.html" src html
+#+INCLUDE: "samples/change_para_class/index-1.html" src html
 
 * JS Problem 1: Initial CSS setup
 
-#+INCLUDE: "change_para_class/style.css" src css
+#+INCLUDE: "samples/change_para_class/style.css" src css
 
 * TODO JS Problem 1: Decompose the problem
 
@@ -1767,11 +1748,11 @@ inside a single element.
 
 ** Solution: Putting it all together (HTML)
 
-#+INCLUDE: "change_para_class/solution-1.html" :lines "11-16" src html
+#+INCLUDE: "samples/change_para_class/solution-1.html" :lines "11-16" src html
 
 ** Solution: Putting it all together (Javascript)
 
-#+INCLUDE: "change_para_class/solution-1.html" :lines "21-39" src javascript
+#+INCLUDE: "samples/change_para_class/solution-1.html" :lines "21-39" src javascript
 
 ** Add and commit!
 
@@ -1924,11 +1905,11 @@ last small change you made, or review it to see what went wrong.
 
 ** TODO Move the Javascript code to =setClass.js=, and check
 
-#+INCLUDE: "change_para_class/set-class-1.js" src javascript
+#+INCLUDE: "samples/change_para_class/set-class-1.js" src javascript
 
 ** TODO Delete the old =script= elements
 
-#+INCLUDE: "change_para_class/refactor-1.html" src html
+#+INCLUDE: "samples/change_para_class/refactor-1.html" src html
 
 ** TODO Recap
 
@@ -1943,7 +1924,7 @@ last small change you made, or review it to see what went wrong.
 #+END_NOTES
 * TODO Refactoring: Repeated code
 
-#+INCLUDE: "change_para_class/set-class-1.js" src javascript
+#+INCLUDE: "samples/change_para_class/set-class-1.js" src javascript
 
 #+BEGIN_NOTES
 If we look at this code we see that these three functions are
@@ -1985,7 +1966,7 @@ pieces.
 
 ** Solution: Take the class name as a parameter
 
-#+INCLUDE: "change_para_class/set-class-2-1.js" :lines "16-20" src javascript
+#+INCLUDE: "samples/change_para_class/set-class-2-1.js" :lines "16-20" src javascript
 
 #+BEGIN_NOTES
 Did everyone do OK with this?
@@ -1999,7 +1980,7 @@ anywhere yet.
 
 ** Replace one function call with a call to =setClass=
 
-#+INCLUDE: "change_para_class/refactor-2-1.html" :lines "11-16" src html
+#+INCLUDE: "samples/change_para_class/refactor-2-1.html" :lines "11-16" src html
 
 #+BEGIN_NOTES
 To use the function we replace the code in the =onclick= attribute that calls
@@ -2016,7 +1997,7 @@ Double check that.
 
 ** TODO Solution: Replace all function calls
 
-#+INCLUDE: "change_para_class/refactor-2-2.html" :lines "11-16" src html
+#+INCLUDE: "samples/change_para_class/refactor-2-2.html" :lines "11-16" src html
 
 #+BEGIN_NOTES
 Check it still works.
@@ -2024,7 +2005,7 @@ Check it still works.
 
 ** TODO Delete the obsolete functions
 
-#+INCLUDE: "change_para_class/set-class-2-2.js" src javascript
+#+INCLUDE: "samples/change_para_class/set-class-2-2.js" src javascript
 
 #+BEGIN_NOTES
 Now that you've verified that the new code works correctly you can delete the
@@ -2481,11 +2462,11 @@ it could be simplified?
 
 ** Removing the =event= parameter
 
-#+INCLUDE: "change_para_class/refactor-3-4.js" :lines "1-5" src javascript
+#+INCLUDE: "samples/change_para_class/refactor-3-4.js" :lines "1-5" src javascript
 
-#+INCLUDE: "change_para_class/refactor-4-1.js" :lines "1-5" src javascript
+#+INCLUDE: "samples/change_para_class/refactor-4-1.js" :lines "1-5" src javascript
 
-#+INCLUDE: "change_para_class/refactor-4-1.js" :lines "7-11" src javascript
+#+INCLUDE: "samples/change_para_class/refactor-4-1.js" :lines "7-11" src javascript
 
 #+BEGIN_NOTES
 When we first wrote =setClass= (first box) it was an event listener.
@@ -2512,7 +2493,7 @@ the change.
 
 ** Method and property chaining
 
-#+INCLUDE: "change_para_class/refactor-4-1.js" :lines "1-5" src javascript
+#+INCLUDE: "samples/change_para_class/refactor-4-1.js" :lines "1-5" src javascript
 
 #+BEGIN_NOTES
 We can simplify this code even more using a technique called *method
@@ -2535,9 +2516,9 @@ variable we can use the result directly.
 
 ** Method and property chaining
 
-#+INCLUDE: "change_para_class/refactor-4-1.js" :lines "1-5" src javascript
+#+INCLUDE: "samples/change_para_class/refactor-4-1.js" :lines "1-5" src javascript
 
-#+INCLUDE: "change_para_class/refactor-4-2.js" :lines "1-4" src javascript
+#+INCLUDE: "samples/change_para_class/refactor-4-2.js" :lines "1-4" src javascript
 
 #+BEGIN_NOTES
 I realise that's not the easiest thing to understand, so here's what it
@@ -2557,7 +2538,7 @@ Make this change and commit.
 
 ** Method and property chaining
 
-#+INCLUDE: "change_para_class/refactor-4-2.js" :lines "5-18" src javascript
+#+INCLUDE: "samples/change_para_class/refactor-4-2.js" :lines "5-18" src javascript
 
 #+BEGIN_NOTES
 And we can do the same thing when we're adding the event listeners.
@@ -2639,7 +2620,7 @@ HTML pages are also trees.
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file tree.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file tree.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   A -> B;
   A -> C;
@@ -2667,7 +2648,7 @@ D is a child of C. D and C are *both* descendants of A.
 
 ** TODO File and directories as trees
 
-#+BEGIN_SRC dot :file tree-filesystem.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file tree-filesystem.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   //graph [splines="ortho"];
   node [shape="folder"];
@@ -2745,7 +2726,7 @@ that the root node.
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file html-tree1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file html-tree1.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   html
@@ -2766,7 +2747,7 @@ digraph G {
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file html-tree-2.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file html-tree-2.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   html -> head
@@ -2787,7 +2768,7 @@ digraph G {
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file html-tree-3.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file html-tree-3.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   html -> head
@@ -2809,7 +2790,7 @@ digraph G {
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file html-tree-4.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file html-tree-4.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   html -> head
@@ -2833,7 +2814,7 @@ digraph G {
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file html-tree-5.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file html-tree-5.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   html -> head
@@ -2859,7 +2840,7 @@ digraph G {
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file html-tree-6.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file html-tree-6.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   html -> head
@@ -2886,7 +2867,7 @@ digraph G {
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file html-tree-7.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file html-tree-7.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   html -> head
@@ -2915,7 +2896,7 @@ digraph G {
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file html-tree-8.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file html-tree-8.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   html -> head
@@ -2946,7 +2927,7 @@ digraph G {
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file html-tree-9.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file html-tree-9.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   html -> head
@@ -3039,7 +3020,7 @@ OK?
 
 ** Solution: Draw the tree for a sample page
 
-#+BEGIN_SRC dot :file tree-sample.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file tree-sample.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
   digraph G {
     node [shape="hexagon"];
 
@@ -3118,7 +3099,7 @@ complex than this example -- and draw the tree for that page.
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+BEGIN_SRC dot :file dom-add-para-1.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file dom-add-para-1.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   body -> h1;
@@ -3144,7 +3125,7 @@ How do we go about adding a new paragraph to this page?
 
 ** First, create a new =p= node.
 
-#+BEGIN_SRC dot :file dom-add-para-2.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file dom-add-para-2.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   body -> h1;
@@ -3173,7 +3154,7 @@ You can see it here at the top right of the graph.
 
 ** Then, give it some content
 
-#+BEGIN_SRC dot :file dom-add-para-3.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file dom-add-para-3.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   body -> h1;
@@ -3209,7 +3190,7 @@ say that we are *appending* it to the list of child nodes of the =body=.
 
 ** Append it to the body
 
-#+BEGIN_SRC dot :file dom-add-para-4.svg :cmdline -Tsvg -Gstylesheet=../graphviz.css
+#+BEGIN_SRC dot :file dom-add-para-4.svg :cmdline -Tsvg -Gstylesheet=../../../graphviz.css
 digraph G {
   node [shape="hexagon"];
   body -> h1;
@@ -3257,7 +3238,7 @@ representation that we're familar with then we get this result.
 
 ** HTML
 
-#+INCLUDE: "dom-append.html" src html
+#+INCLUDE: "samples/dom-append.html" src html
 
 #+BEGIN_NOTES
 Here's the HTML we're going to use.
