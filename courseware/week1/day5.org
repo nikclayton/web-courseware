@@ -1717,6 +1717,19 @@ Again, up to you. This is your chance to experiment.
   - Use MDN
 - Can you find a way to include that in your layout?
 
+* Grid and Flex layouts
+
+- Two additional (newer) layout systems
+- Grid: [[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout][MDN CSS Grid Layout]]
+- Flex: [[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox][MDN CSS Flexbox]]
+- Experiment creating 3-column layout with both of use
+
+#+begin_notes
+Static, relative, and absolute positioning can sometimes be difficult to understand and predict, so two new systems were developed later, called *grid* and *flex* (or *flexbox*).
+
+Both of them make achieving some types of layouts much simpler. MDN has excellent documentation and tutorials for both of them, so read through that documentation and try recreating that 3-column layout twice, once with grid, and once with flex.
+#+end_notes
+
 * TODO Problems with these layouts
 
 - Try resizing the page to be very narrow
@@ -2214,13 +2227,10 @@ sizing, padding, margins, and layout to keep the information legibile.
 #+END_NOTES
 
 
-* Games
-
-- CSS Selectors: http://flukeout.github.io/
 
 * Exercises                                               :exercise:
 
-- Improve cheatsheets, recipes, and portfolio
+- Improve cheatsheets and recipes
 - Use media queries / mobile first design
 - Inspiration:
   - [[https://mediaqueri.es/]]
@@ -2230,6 +2240,3 @@ sizing, padding, margins, and layout to keep the information legibile.
 - Change element presentation
 - Adjust padding, margin, borders
 
-#+BEGIN_NOTES
-Adjust your stylesheets
-#+END_NOTES
