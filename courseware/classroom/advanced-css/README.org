@@ -1,5 +1,5 @@
-#+TITLE: More CSS
-#+SETUPFILE: "../include/settings.org"
+#+TITLE: Advanced CSS
+#+SETUPFILE: "../../include/settings.org"
 
 #+BEGIN_NOTES
 Experiment with no practice time in the morning, give the material,
@@ -49,7 +49,7 @@ and read and understand the documentation.
   :REQUIREMENTS: css-intro
   :END:
 
-[[file:box-model.png]]
+[[file:samples/box-model.png]]
 
 #+BEGIN_NOTES
 So far we've been styling content on the page without paying much
@@ -95,7 +95,7 @@ Based on material from [[https://developer.mozilla.org/en-US/docs/Learn/CSS/Intr
 - Create =scratch/box-model/style.css=
 - Create =scratch/box-model/box-model.html=
 
-#+INCLUDE: "day5/box-model.html" src html
+#+INCLUDE: "samples/box-model.html" src html
 
 #+BEGIN_NOTES
 Like yesterday we start with a basic HTML file and an empty
@@ -104,12 +104,12 @@ CSS file.
 
 ** Add some HTML content
 
-#+iNCLUDE: "day5/box-model-2.html" :lines "8-19" src html
+#+iNCLUDE: "samples/box-model-2.html" :lines "8-19" src html
 
 ** Add some HTML content
 
 #+NAME: box-model-2
-#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/box-model-2.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "samples/box-model-2.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS[e264ba4fa1d180136d5b1f773c76f3e1431eed89]: box-model-2
@@ -120,12 +120,12 @@ CSS file.
 ** Box model: Showing borders
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/style-3.css" src css
+#+INCLUDE: "samples/style-3.css" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+NAME: box-model-3
-#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/box-model-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "samples/box-model-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS[2a8d7516d0cf6ef5b3c49ca55f5a067b5db588e9]: box-model-3
@@ -159,7 +159,7 @@ Does everyone see something like this?
 
 #+REVEAL_HTML: <div class="rightcol">
 #+ATTR_HTML: :width 50% :height 50%
-[[file:box-model.png]]
+[[file:samples/box-model.png]]
 
 - =p= elements have top / bottom margins
 - So does =ul= and =body=
@@ -228,12 +228,12 @@ see what happens if we disable the margins.
 ** Box Model: Margins
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/style-4.css" src css
+#+INCLUDE: "samples/style-4.css" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+NAME: box-model-4
-#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/box-model-4.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "samples/box-model-4.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS: box-model-4
@@ -250,12 +250,12 @@ though.
 
 ** Box model: Padding
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/style-5.css" src css
+#+INCLUDE: "samples/style-5.css" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+NAME: box-model-5
-#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/box-model-5.html")) :flags --window-size=320,400 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "samples/box-model-5.html")) :flags --window-size=320,400 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS: box-model-5
@@ -306,12 +306,12 @@ Is everyone OK with this?
 
 ** Box model: Margins
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/style-6.css" src css
+#+INCLUDE: "samples/style-6.css" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+NAME: box-model-6
-#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/box-model-6.html")) :flags --window-size=380,400 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "samples/box-model-6.html")) :flags --window-size=380,400 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS: box-model-6
@@ -1022,16 +1022,16 @@ div.border-box {
 ** =display= examples
 
 #+NAME: display
-#+INCLUDE: "day5/display.html" src html
+#+INCLUDE: "samples/display.html" src html
 
 ** =display= examples
 
-#+INCLUDE: "day5/display.css" src css
+#+INCLUDE: "samples/display.css" src css
 
 ** =display= examples
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/display.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "samples/display.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS[44c2847f952843c82775d810194c7296215b8a72]:
@@ -1056,12 +1056,12 @@ div.border-box {
 
 ** =breadcrumb.html=
 
- #+INCLUDE: "day5/display-2.html" src html
+ #+INCLUDE: "samples/display-2.html" src html
 
 *** Result
 
 #+REVEAL_HTML: <div class="leftcol">
-#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "day5/display-2.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :cache no :url (shell-quote-argument (expand-file-name "samples/display-2.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS:
@@ -1070,7 +1070,7 @@ div.border-box {
 ** =breadcrumb.css=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/display-3.css" :lines "6-9" src css
+#+INCLUDE: "samples/display-3.css" :lines "6-9" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -1083,7 +1083,7 @@ div.border-box {
 ** =breadcrumb.css=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/display-3.css" :lines "6-13" src css
+#+INCLUDE: "samples/display-3.css" :lines "6-13" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -1094,7 +1094,7 @@ div.border-box {
 ** =breadcrumb.css=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/display-3.css" :lines "6-17" src css
+#+INCLUDE: "samples/display-3.css" :lines "6-17" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -1105,7 +1105,7 @@ div.border-box {
 ** =breadcrumb.css=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/display-3.css" src css
+#+INCLUDE: "samples/display-3.css" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -1117,7 +1117,7 @@ div.border-box {
 
 #+REVEAL_HTML: <div class="leftcol">
 #+NAME: display-3
-#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/display-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "samples/display-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS[3dff6790850a0396f3c7e5ffbef1fe04abca0789]: display-3
@@ -1148,11 +1148,11 @@ this positioning happens.
 - Create =scratch/position/style.css=
 - Create =scratch/position/position.html=
 
-#+INCLUDE: "day5/position-1.html" src html
+#+INCLUDE: "samples/position-1.html" src html
 
 ** Add some HTML content
 
-#+INCLUDE: "day5/position-2.html" :lines "8-19" src html
+#+INCLUDE: "samples/position-2.html" :lines "8-19" src html
 
 #+BEGIN_NOTES
 There's nothing special here so far. All we've done is created a
@@ -1169,7 +1169,7 @@ Make these changes, double check everything looks good.
 ** Add some HTML content
 
 #+NAME: position-2
-#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-2.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "samples/position-2.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS[fce87eb4489f4368b6c594d8f6c433433e63a36c]: position-2
@@ -1185,12 +1185,12 @@ Everyone OK?
 ** =position: static;=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/position-3.css" src css
+#+INCLUDE: "samples/position-3.css" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+NAME: position-3
-#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "samples/position-3.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS[c4175d82fcd23d2c95032e05f168153165aabc5b]: position-3
@@ -1228,7 +1228,7 @@ edge of the page. We're going to come back to that shortly...
 
 ** =position: relative;=
 
-#+INCLUDE: "day5/position-4.css" src css
+#+INCLUDE: "samples/position-4.css" src css
 
 #+BEGIN_NOTES
 Lets set a relative position on one of the paragraphs. To make it
@@ -1244,7 +1244,7 @@ What do you see?
 ** =position: relative;=
 
 #+NAME: position-4
-#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-4.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "samples/position-4.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS[7dc7ae7d3895dc41f674e94f9f541e19e331bda4]: position-4
@@ -1273,7 +1273,7 @@ element.
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+INCLUDE: "day5/position-5.css" src css
+#+INCLUDE: "samples/position-5.css" src css
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
@@ -1294,12 +1294,12 @@ Make this change to the styelesheet, and see what happens.
 ** =position: relative;=
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/position-5.css" src css
+#+INCLUDE: "samples/position-5.css" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+NAME: position-5
-#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-5.html")) :flags --window-size=320,320 --force-device-scale-factor=2 --hide-scrollbars :exports results
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "samples/position-5.html")) :flags --window-size=320,320 --force-device-scale-factor=2 --hide-scrollbars :exports results
 #+END_SRC
 
 #+RESULTS[70dd0989d36928a9414cfa25a676ec4a73a0a46d]: position-5
@@ -1323,7 +1323,7 @@ element's border. Our paragraph is now partly in and partly outside.
    :HTML_CONTAINER_CLASS: no-heading
    :END:
 
-#+INCLUDE: "day5/position-6.css" src css
+#+INCLUDE: "samples/position-6.css" src css
 
 #+BEGIN_NOTES
 Let's give the third paragraph an absolute position.
@@ -1336,7 +1336,7 @@ Make this change to the CSS, and reload the page.
 ** =position: absolute;=
 
 #+NAME: position-6
-#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-6.html")) :flags --hide-scrollbars --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "samples/position-6.html")) :flags --hide-scrollbars --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS[7dc7ae7d3895dc41f674e94f9f541e19e331bda4]: position-6
@@ -1375,7 +1375,7 @@ to the =body= border.
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-#+INCLUDE: "day5/position-7.css" src css
+#+INCLUDE: "samples/position-7.css" src css
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
@@ -1404,12 +1404,12 @@ Add these =top= and =left= properties and see what happens.
    :END:
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/position-7.css" src css
+#+INCLUDE: "samples/position-7.css" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+NAME: position-7
-#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-7.html")) :flags --window-size=320,320 --force-device-scale-factor=2 --hide-scrollbars :exports results
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "samples/position-7.html")) :flags --window-size=320,320 --force-device-scale-factor=2 --hide-scrollbars :exports results
 #+END_SRC
 
 #+RESULTS[8cd233f6bb29faf39ee0614c25dbf3267915e964]: position-7
@@ -1438,12 +1438,12 @@ the parent elements *does* have a non-static position.
    :END:
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/position-8.css" src css
+#+INCLUDE: "samples/position-8.css" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
 #+NAME: position-8
-#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "day5/position-8.html")) :flags --window-size=320,320 --force-device-scale-factor=2 --hide-scrollbars :exports results
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "samples/position-8.html")) :flags --window-size=320,320 --force-device-scale-factor=2 --hide-scrollbars :exports results
 #+END_SRC
 
 #+RESULTS[6059ed0e54b2fb4a1ffa5498e8464512aa080bfd]: position-8
@@ -1465,7 +1465,7 @@ element starts, it's based on where the =body= starts. Because the
 
 * 3-column layout
 
-[[file:day5/3column/goal.png]]
+[[file:samples/3column/goal.png]]
 #+BEGIN_NOTES
 We're going to build a typical 3 column layout for a page using
 CSS.
@@ -1490,7 +1490,7 @@ main content div.
 - Create =scratch/3column/style.css=
 - Create =scratch/3column/index.html=
 
-#+INCLUDE: "day5/3column/3column.html" src html
+#+INCLUDE: "samples/3column/3column.html" src html
 
 #+BEGIN_NOTES
 This is our initial HTML, very similar to what we've seen before.
@@ -1507,7 +1507,7 @@ Do this, and let me know when you're finished.
 ** 3-column: Initial HTML
 
 #+NAME: 3column-initial
-#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "samples/3column/3column.html")) :flags --window-size=320,320 --force-device-scale-factor=2 :exports results
 #+END_SRC
 
 #+RESULTS[8604f09c1f98cc1dd4f5b9eb6dcdaf84969245e4]: 3column-initial
@@ -1521,7 +1521,7 @@ We'll add styles bit by bit to end up with the layout I showed earlier.
 
 ** 3-column: =body=, =div=, =#header= styles
 
-#+INCLUDE: "day5/3column/3column-1.css" src css
+#+INCLUDE: "samples/3column/3column-1.css" src css
 
 #+BEGIN_NOTES
 We start with some general styles for the body and the divs.
@@ -1541,7 +1541,7 @@ The top header also gets a 1em margin all the way around.
 ** 3-column: =body=, =div=, =#header= styles
 
 #+NAME: 3column-1
-#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-1.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "samples/3column/3column-1.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
 #+END_SRC
 
 #+RESULTS[8604f09c1f98cc1dd4f5b9eb6dcdaf84969245e4]: 3column-1
@@ -1551,7 +1551,7 @@ The top header also gets a 1em margin all the way around.
 
 ** 3-column: =#content= styles
 
-#+INCLUDE: "day5/3column/3column-2.css" :lines "15-21" src css
+#+INCLUDE: "samples/3column/3column-2.css" :lines "15-21" src css
 
 #+BEGIN_NOTES
 There are are a few things here that we haven't seen before.
@@ -1596,7 +1596,7 @@ of the left and right columns and margins and padding.
 ** 3-column: =#content= styles
 
 #+NAME: 3column-2
-#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-2.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "samples/3column/3column-2.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
 #+END_SRC
 
 #+RESULTS[5e5acb4d09cf94bf05fa2946f8b9de61aa1b3373]: 3column-2
@@ -1609,7 +1609,7 @@ to take shape.
 
 ** 3-column: =#secondary= styles
 
-#+INCLUDE: "day5/3column/3column-3.css" :lines "22-28" src css
+#+INCLUDE: "samples/3column/3column-3.css" :lines "22-28" src css
 
 #+BEGIN_NOTES
 This should be pretty straightforward by now.
@@ -1624,7 +1624,7 @@ and the same minimum height that the main content div has as well.
 ** 3-column: =#secondary= styles
 
 #+NAME: 3column-3
-#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-3.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "samples/3column/3column-3.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
 #+END_SRC
 
 #+RESULTS[5e5acb4d09cf94bf05fa2946f8b9de61aa1b3373]: 3column-3
@@ -1639,7 +1639,7 @@ Did everyone get something that looks like this?
 ** 3-column: =#tertiary= styles                                    :exercise:
 
 #+NAME: 3column-4
-#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-4.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "samples/3column/3column-4.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
 #+END_SRC
 
 #+RESULTS[4d0b6b60af6ac4af44f4a143c6c671e2f2470be4]: 3column-4
@@ -1657,7 +1657,7 @@ The end result should look like this.
 
 ** 3-column: =#tertiary= styles
 
-#+INCLUDE: "day5/3column/3column-4.css" :lines "29-36" src css
+#+INCLUDE: "samples/3column/3column-4.css" :lines "29-36" src css
 
 #+BEGIN_NOTES
 This should be pretty straightforward by now.
@@ -1677,7 +1677,7 @@ and the same minimum height that the main content div has as well.
 ** 3-column exercises: Portfolio example                           :exercise:
 
 #+NAME: 3column-portfolio
-#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-portfolio.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "samples/3column/3column-portfolio.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
 #+END_SRC
 
 #+RESULTS[2fc0cf404491b0c11c71043d0a2f64e1c60d5d6e]: 3column-portfolio
@@ -1696,7 +1696,7 @@ until you have something that you're happy with.
 ** 3-column exercises: Recipe example
 
 #+NAME: 3column-recipe
-#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "day5/3column/3column-recipe.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
+#+BEGIN_SRC html-chrome :cache yes :url (shell-quote-argument (expand-file-name "samples/3column/3column-recipe.html")) :flags --window-size=866,600 --force-device-scale-factor=1.5 :exports results
 #+END_SRC
 
 #+RESULTS[5743a7671946c6797ab89bd6b6733bc17b9d5b02]: 3column-recipe
@@ -1792,7 +1792,7 @@ Some examples will probably make this clearer.
 ** Breadcrumb navigation
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "day5/display-3.css" src css
+#+INCLUDE: "samples/display-3.css" src css
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
@@ -1821,7 +1821,7 @@ traditional list.
 ** Media query, end result
 
 #+BEGIN_CENTER
-[[file:day5/display-4.html][Breadcrumb with media query]]
+[[file:samples/display-4.html][Breadcrumb with media query]]
 #+END_CENTER
 
 #+BEGIN_NOTES
@@ -1874,7 +1874,7 @@ So, now we know the end result, lets look in to how this works.
    :HTML_CONTAINER_CLASS: no-heading
    :END:
 
-[[file:viewport.png]]
+[[file:samples/viewport.png]]
 
 #+BEGIN_NOTES
 When a web page is loaded the browser has to figure out the size
@@ -1929,7 +1929,7 @@ than it is, and use the real screen size.
 
 ** The =viewport= =meta= element
 
-#+INCLUDE: "day5/display-4.html" :lines "6-7" src html
+#+INCLUDE: "samples/display-4.html" :lines "6-7" src html
 
 - Belongs in the document's =head=
 
@@ -2078,7 +2078,7 @@ doesn't work.
    :HTML_CONTAINER_CLASS: no-heading
    :END:
 
-#+INCLUDE: "day5/display-4.css" :lines "1-5" src css
+#+INCLUDE: "samples/display-4.css" :lines "1-5" src css
 
 #+BEGIN_NOTES
 This is the start of the CSS. It's identical to the previous
@@ -2091,7 +2091,7 @@ what the width of the viewport is.
    :HTML_CONTAINER_CLASS: no-heading
    :END:
 
-#+INCLUDE: "day5/display-4.css" :lines "6-19" src css
+#+INCLUDE: "samples/display-4.css" :lines "6-19" src css
 
 #+BEGIN_NOTES
 These are the same CSS rules from earlier, but we only want them to
@@ -2104,7 +2104,7 @@ they're wrapped in a media query that tests this.
    :HTML_CONTAINER_CLASS: no-heading
    :END:
 
-#+INCLUDE: "day5/display-4.css" :lines "20-44" src css
+#+INCLUDE: "samples/display-4.css" :lines "20-44" src css
 
 #+BEGIN_NOTES
 These are new CSS rules.
