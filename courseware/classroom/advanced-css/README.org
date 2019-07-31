@@ -173,14 +173,14 @@ shows the box model components.
 
 Lets pick this page apart.
 
-First, remmeber how the first element in our page is always =html=.
+First, remember how the first element in our page is always =html=.
 Well, that element is matched by the =*= in our CSS selector, so
 it gets a border, that's this one here.
 
 [Indicate it]
 
 Our next element is the =body= element, which also has a border,
-whic is here.
+which is here.
 
 [Indicate it]
 
@@ -739,7 +739,7 @@ sides of the element's box, or you can use the shorthand version.
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
-There are various predfined styles that you can use for borders, they
+There are various predefined styles that you can use for borders, they
 don't have to be solid lines.
 #+END_NOTES
 
@@ -1286,7 +1286,7 @@ In the example on the right this will push the top of the element
 *down* by 20 pixels, and will move the left edge of the element *in to
 the page* by 10 pixels.
 
-Make this change to the styelesheet, and see what happens.
+Make this change to the stylesheet, and see what happens.
 
 [Wait]
 #+END_NOTES
@@ -1614,7 +1614,7 @@ to take shape.
 #+BEGIN_NOTES
 This should be pretty straightforward by now.
 
-We position the secondary contetn div absolutely, and 1em from the left
+We position the secondary content div absolutely, and 1em from the left
 of its containing element. We also give it a fixed width of 15ems,
 and the same minimum height that the main content div has as well.
 
@@ -1722,7 +1722,7 @@ Again, up to you. This is your chance to experiment.
 - Two additional (newer) layout systems
 - Grid: [[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout][MDN CSS Grid Layout]]
 - Flex: [[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox][MDN CSS Flexbox]]
-- Experiment creating 3-column layout with both of use
+- Experiment creating 3-column layout with both of these
 
 #+begin_notes
 Static, relative, and absolute positioning can sometimes be difficult to understand and predict, so two new systems were developed later, called *grid* and *flex* (or *flexbox*).
@@ -1836,7 +1836,7 @@ Watch what happens when I resize the page.
 So when the page gets narrower than a certain width the presentation
 of the list changes.
 
-- It appears on mulitple lines.
+- It appears on multiple lines.
 - Indentation is used to show the hierarchy
 - There's a different arrow
 
@@ -2209,11 +2209,11 @@ Now that you know all this you might be asking -- what's the best
 way to do things? Should I design for a large screen first, and then
 build stylesheets that remove content as the screen gets smaller?
 
-Or should I design for smaller screen first, and then shown content
+Or should I design for smaller screen first, and then show content
 as screens get larger?
 
-In general, designing is much easier if you start with the smaller
-size first, and get that working. Then start adding additional
+In general, designing is *much easier if you start with the smaller
+size first*, and get that working. Then start adding additional
 stylesheets with different media queries as the size (or something
 else) changes.
 
