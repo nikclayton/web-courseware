@@ -1177,7 +1177,7 @@ Then we'll experiment with leaving comments.
 - Choose the free, public plan
 
 #+BEGIN_NOTES
-[Walk through this with one person, eveyrone else follow along]
+[Walk through this with one person, everyone else follow along. Use Bitwarden to generate the password (GitHub checks for e-mail/password pairs that have been used in breaches and rejects them). Note that GitHub has spam control on the account creation form so you may see some issues if there are too many signups from a single IP address. I turned a few phones in to hotspots to get around this.]
 #+END_NOTES
 
 ** Create a repository at GitHub
