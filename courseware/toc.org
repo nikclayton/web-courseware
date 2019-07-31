@@ -14,13 +14,13 @@ This work can be done outside the classroom.
 
   Setting up some initial tools and getting to know VSCode.
 
-- [[prep/week2/README.html][Week 2, initial HTML]]
+- [[file:prep/week2/README.html][Week 2, initial HTML]]
 
   Introduces HTML and researching material on the Mozilla Developer Network.
 
 * The course
 
-This work should be done in the classroom.
+This work should be done in the classroom, and is intended to be done in the following order.
 
 - [[file:classroom/classroom-intro/README.html][Introduction to the classroom]]
 
@@ -29,3 +29,21 @@ This work should be done in the classroom.
 - [[file:classroom/shell-and-git/README.html][Shell and Git]]
 
   Recap the shell material from week 1. First steps with Git, including creating a GitHub account, configuring Git locally, and introductory Git workflow.
+
+- [[file:classroom/css/README.html][CSS]]
+
+  Initial CSS material.
+
+- [[file:classroom/advanced-css/README.html][Advanced CSS]]
+
+  Advanced CSS material
+
+- [[file:classroom/javascript/introduction/README.html][Introductory Javascript / DOM]]
+
+  Up to here is approximately 4 weeks worth of material depending on how quickly the students move through it.
+
+- [[file:classroom/javascript/shopping/README.html][Javascript Shopping List exercise]]
+
+  This is several weeks worth of project and exercises where we will
+  build a frontend application from the ground up, applying the material
+  that has been covered in the previous weeks.
