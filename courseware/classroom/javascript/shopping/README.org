@@ -1,5 +1,5 @@
-#+Title: Powercoders Basel Coursework, DOM Shopping List Exercise
-#+SETUPFILE: "../../include/settings.org"
+#+Title: DOM Shopping List Exercise
+#+SETUPFILE: "../../../include/settings.org"
 
 * TODO Building a shopping list
 
@@ -44,7 +44,7 @@ get the core functionality working properly first.
 * TODO Goal
 
 #+BEGIN_CENTER
-[[file:initial-wireframe.png]]
+[[file:samples/initial-wireframe.png]]
 #+END_CENTER
 
 #+BEGIN_NOTES
@@ -120,7 +120,7 @@ Make sure this HTML file links to two empty files, =style.css= and
 
 * TODO Set up HTML
 
-#+INCLUDE: "shopping-1.html" src html
+#+INCLUDE: "samples/shopping-1.html" src html
 
 #+BEGIN_NOTES
 Put this text in your HTML file, and make sure it works.
@@ -267,7 +267,7 @@ then their tools will be able do a better job.
 ** Add =label= and =input= elements
 
 #+REVEAL_HTML: <div class="leftcol">
-#+INCLUDE: "shopping-2.html" :lines "12-18" src html -n 11
+#+INCLUDE: "samples/shopping-2.html" :lines "12-18" src html -n 11
 
 - Edit =index.html=
 - Add these elements to the page
@@ -452,7 +452,7 @@ Once you've done that and it's showing up, add and commit.
 *** Solution: Add a =button= element
 
   #+REVEAL_HTML: <div class="leftcol">
-  #+INCLUDE: "shopping-3.html" :lines "11-19" src html -n 11
+  #+INCLUDE: "samples/shopping-3.html" :lines "11-19" src html -n 11
   #+REVEAL_HTML: </div>
 
   #+REVEAL_HTML: <div class="rightcol">
@@ -1990,7 +1990,7 @@ had loaded as well.
 
 * A quick refactoring
 
-#+INCLUDE: "shopping-3.js" :lines "26-43" src javascript
+#+INCLUDE: "samples/shopping-3.js" :lines "26-43" src javascript
 
 #+BEGIN_NOTES
 This is my code at this point (just for the event listeners, this
@@ -2367,11 +2367,11 @@ We have effectively hidden the =bar= function from everything except the =foo= f
 
 ** Code before refactoring
 
-#+INCLUDE: "shopping-3.js" :lines "26-43" src javascript
+#+INCLUDE: "samples/shopping-3.js" :lines "26-43" src javascript
 
 ** Refactored: variables at higher scopes
 
-#+INCLUDE: "shopping-4.js" :lines "26-43" src javascript -n
+#+INCLUDE: "samples/shopping-4.js" :lines "26-43" src javascript -n
 
 #+BEGIN_NOTES
 This is the refactored code.
@@ -2433,7 +2433,7 @@ How should we solve it?
 
 * Using =if= to require input                                      :exercise:
 
-#+INCLUDE: "shopping-4.js" :lines "26-47" src javascript -n
+#+INCLUDE: "samples/shopping-4.js" :lines "26-47" src javascript -n
 
 #+BEGIN_NOTES
 Here's our code again.
@@ -2473,7 +2473,7 @@ If you haven't already done that, do that, and make sure it works.
 
 ** Solution: Using =if= to require input
 
-#+INCLUDE: "shopping-5.js" :lines "26-47" src javascript -n
+#+INCLUDE: "samples/shopping-5.js" :lines "26-47" src javascript -n
 
 #+BEGIN_NOTES
 Here's the new code, with the additional =if= statements starting
@@ -2563,7 +2563,7 @@ added to the list any more.
 
 ** Solution: Using =if= and =trim= to require input
 
-#+INCLUDE: "shopping-6.js" :lines "26-47" src javascript -n
+#+INCLUDE: "samples/shopping-6.js" :lines "26-47" src javascript -n
 
 #+BEGIN_NOTES
 Here's what I came up with.
@@ -2637,7 +2637,7 @@ again.
 
 ** Where should we put this code?
 
-#+INCLUDE: "shopping-6.js" :lines "26-47" src javascript -n
+#+INCLUDE: "samples/shopping-6.js" :lines "26-47" src javascript -n
 
 #+BEGIN_NOTES
 Now that we know how to disable the button, we need to think about
@@ -2676,7 +2676,7 @@ And you'll need a variable for the button.
 
 ** Solution: Disabling the button, variables
 
-#+INCLUDE: "shopping-7.js" :lines "26-29" src javascript -n 26
+#+INCLUDE: "samples/shopping-7.js" :lines "26-29" src javascript -n 26
 
 #+BEGIN_NOTES
 I've had to split the code over three slides to show it all.
@@ -2691,7 +2691,7 @@ Make sense?
 
 ** Solution: Disabling the button, input widget
 
-#+INCLUDE: "shopping-7.js" :lines "39-52" src javascript -n 40
+#+INCLUDE: "samples/shopping-7.js" :lines "39-52" src javascript -n 40
 
 #+BEGIN_NOTES
 Jumping ahead to my line 40, and the =keyup= listener for the input
@@ -2715,7 +2715,7 @@ don't worry.
 
 ** Solution: Disabling the button, button widget
 
-#+INCLUDE: "shopping-7.js" :lines "30-38" src javascript -n 31
+#+INCLUDE: "samples/shopping-7.js" :lines "30-38" src javascript -n 31
 
 #+BEGIN_NOTES
 Finally, and jumping back up the code, I've been a bit sneaky.
@@ -2833,11 +2833,11 @@ the first place.
 
 *** Replacing =let= with =const=
 
-#+INCLUDE: "shopping-8.js" :lines "7-28" src javascript
+#+INCLUDE: "samples/shopping-8.js" :lines "7-28" src javascript
 
 *** Replacing =let= with =const=
 
-#+INCLUDE: "shopping-8.js" :lines "29-32" src javascript
+#+INCLUDE: "samples/shopping-8.js" :lines "29-32" src javascript
 
 * Refactoring: =else=                                              :noexport:
 
@@ -2975,7 +2975,7 @@ Try this.
 
 * Exercise: Keeping our code DRY
 
-#+INCLUDE: "shopping-8.js" :lines "42-55" src javascript -n 42
+#+INCLUDE: "samples/shopping-8.js" :lines "42-55" src javascript -n 42
 
 - Don't Repeat Yourself (DRY)
 
@@ -3007,7 +3007,7 @@ two glaring red flags here which we'll go in to more detail shortly.
 
 ** Exercise: Put duplicated code in to a variable
 
-#+INCLUDE: "shopping-8.js" :lines "42-55" src javascript -n 42
+#+INCLUDE: "samples/shopping-8.js" :lines "42-55" src javascript -n 42
 
 - Create a variable called =trimmedValue=
 - It's value should be the result of calling =.trim()=
@@ -3015,7 +3015,7 @@ two glaring red flags here which we'll go in to more detail shortly.
 
 ** Solution: Hoisting duplicate code in to a variable
 
- #+INCLUDE: "shopping-9.js" :lines "40-55" src javascript -n 40
+ #+INCLUDE: "samples/shopping-9.js" :lines "40-55" src javascript -n 40
 
  #+BEGIN_NOTES
  Here I've created a new constant variable called =trimmedValue= and
@@ -3038,7 +3038,7 @@ two glaring red flags here which we'll go in to more detail shortly.
 
 ** Refactoring: =false= and =true= inside the =if= block
 
- #+INCLUDE: "shopping-9.js" :lines "40-55" src javascript -n 40
+ #+INCLUDE: "samples/shopping-9.js" :lines "40-55" src javascript -n 40
 
  - Assigning =true= or =false= inside an =if= block is a big red flag
  - Especially if there are paired =if= statements
@@ -3212,7 +3212,7 @@ variable, so we can use =trimmedValue= directly when assigning to the
 
 ** Refactoring: =false= and =true= inside the =if= block
 
-#+INCLUDE: "shopping-9.js" :lines "40-55" src javascript -n 40
+#+INCLUDE: "samples/shopping-9.js" :lines "40-55" src javascript -n 40
 
 #+BEGIN_SRC javascript
 addItemButton.disabled = trimmedValue === '';
@@ -3226,7 +3226,7 @@ use the new assignment.
 
 ** Refactoring: =false= and =true= inside the =if= block
 
-#+INCLUDE: "shopping-10.js" :lines "40-55" src javascript -n 40
+#+INCLUDE: "samples/shopping-10.js" :lines "40-55" src javascript -n 40
 
 #+begin_notes
 Here's what that looks like.
@@ -3250,7 +3250,7 @@ delete it too.
 
 ** Refactoring: =false= and =true= inside the =if= block
 
-#+INCLUDE: "shopping-11.js" :lines "40-51" src javascript -n 40
+#+INCLUDE: "samples/shopping-11.js" :lines "40-51" src javascript -n 40
 
 #+begin_notes
 Here's what that looks like.
@@ -3268,7 +3268,7 @@ little but shorter and a little bit clearer.
 
 * Exercise: Refactoring with the =else= keyword           :exercise:noexport:
 
-#+INCLUDE: "shopping-7.js" :lines "40-53" src javascript -n 40
+#+INCLUDE: "samples/shopping-7.js" :lines "40-53" src javascript -n 40
 
 #+BEGIN_NOTES
 So, lets refactor this bit of code here.
@@ -3283,7 +3283,7 @@ Do that, and make sure that program still works as expected.
 
 ** Solution: Refactoring with the =else= keyword
 
-#+INCLUDE: "shopping-9.js" :lines "40-51" src javascript -n
+#+INCLUDE: "samples/shopping-9.js" :lines "40-51" src javascript -n
 
 #+BEGIN_NOTES
 Here's the solution. How did everyone get on with it?
@@ -3347,7 +3347,7 @@ are any bugs.
 
 * Refactoring: Nesting
 
-#+INCLUDE: "shopping-12.js" :lines "40-52" src javascript -n 40
+#+INCLUDE: "samples/shopping-12.js" :lines "40-52" src javascript -n 40
 
 #+BEGIN_NOTES
 This is our current code. It's definitely better, but I still don't
@@ -3465,7 +3465,7 @@ case.
 
 ** Solution: Returning early from a function
 
-#+INCLUDE: "shopping-13.js" :lines "44-60" src javascript -n 40
+#+INCLUDE: "samples/shopping-13.js" :lines "44-60" src javascript -n 40
 
 #+BEGIN_NOTES
 Here's what our function looks like using =if= statements and
@@ -3504,7 +3504,7 @@ handler, test it, add and commit.
 
 ** Solution: Returning early from a function
 
-#+INCLUDE: "shopping-13.js" :lines "35-43" src javascript -n 31
+#+INCLUDE: "samples/shopping-13.js" :lines "35-43" src javascript -n 31
 
 #+BEGIN_NOTES
 And we can make a very similar change to the click handler for
@@ -3544,11 +3544,11 @@ handler, test it, add and commit.
   :HTML_CONTAINER_CLASS: smaller
   :END:
 
-#+INCLUDE: "shopping-7.js" :lines "26-54" src javascript
+#+INCLUDE: "samples/shopping-7.js" :lines "26-54" src javascript
 
 #+REVEAL: split
 
-#+INCLUDE: "shopping-13.js" :lines "31-66" src javascript
+#+INCLUDE: "samples/shopping-13.js" :lines "31-66" src javascript
 
 * Refactoring: Recap
 
@@ -4082,7 +4082,7 @@ items.forEach(function(el) {
 
 *** Solution: Add a button
 
-#+INCLUDE: "shopping-15.html" :lines "14-21" src html
+#+INCLUDE: "samples/shopping-15.html" :lines "14-21" src html
 
 *** Exercise: Click listener to delete the listitems
 
@@ -4094,9 +4094,9 @@ items.forEach(function(el) {
 
 *** Solution: Click listener to delete the listitems
 
-#+INCLUDE: "shopping-15.js" :lines "32-37" src javascript
+#+INCLUDE: "samples/shopping-15.js" :lines "32-37" src javascript
 
-#+INCLUDE: "shopping-15.js" :lines "69-77" src javascript
+#+INCLUDE: "samples/shopping-15.js" :lines "69-77" src javascript
 
 *** Exercise: Enable the button when items are added
 
@@ -4105,11 +4105,11 @@ items.forEach(function(el) {
 
 *** Solution: Enable the button when items are added
 
-#+INCLUDE: "shopping-15.js" :lines "37-46" src javascript
+#+INCLUDE: "samples/shopping-15.js" :lines "37-46" src javascript
 
 *** Solution: Enable the button when items are added
 
-#+INCLUDE: "shopping-15.js" :lines "47-63" src javascript
+#+INCLUDE: "samples/shopping-15.js" :lines "47-63" src javascript
 
 *** Exercise: Disable the button when the page is loaded
 
@@ -4117,7 +4117,7 @@ items.forEach(function(el) {
 
 *** Solution: Disable the button when the page is loaded
 
-#+INCLUDE: "shopping-15.js" :lines "73-76" src javascript
+#+INCLUDE: "samples/shopping-15.js" :lines "73-76" src javascript
 
 *** Conditionally disable the button when clicking delete item
 
@@ -4178,7 +4178,7 @@ deleteButton.addEventListener('click', function(event) {
 
 *** Refactor: Remove the variables
 
-#+INCLUDE: "shopping-15.js" :lines "19-25" src javascript
+#+INCLUDE: "samples/shopping-15.js" :lines "19-25" src javascript
 
 * More loops
 ** =for= loops
@@ -4682,7 +4682,7 @@ digraph G {
 
 ** Solution: Extract the value of the quantity widget
 
-#+INCLUDE: "shopping-19.js" :lines "45-50" src javascript
+#+INCLUDE: "samples/shopping-19.js" :lines "45-50" src javascript
 
 #+BEGIN_NOTES
 Here's the code that finds the quantity widget.
@@ -4690,7 +4690,7 @@ Here's the code that finds the quantity widget.
 
 ** Solution: Extract the value of the quantity widget
 
-#+INCLUDE: "shopping-19.js" :lines "51-66" src javascript -n
+#+INCLUDE: "samples/shopping-19.js" :lines "51-66" src javascript -n
 
 #+begin_notes
 In the click listener I pass the trimmed value to
@@ -4709,7 +4709,7 @@ makes sense for the focus to go to the item widget instead.
 
 ** Solution: Extract the value of the quantity widget
 
-#+INCLUDE: "shopping-19.js" :lines "67-86" src javascript -n
+#+INCLUDE: "samples/shopping-19.js" :lines "67-86" src javascript -n
 
 #+begin_notes
 I've made the same change in the =keyup= handler as well.
@@ -4717,7 +4717,7 @@ I've made the same change in the =keyup= handler as well.
 
 ** Solution: Pass param to =createNewListItem=
 
-#+INCLUDE: "shopping-19.js" :lines "1-9" src javascript
+#+INCLUDE: "samples/shopping-19.js" :lines "1-9" src javascript
 
 #+BEGIN_NOTES
 We change =createNewListItem= so that it takes a second parameter,
@@ -4729,7 +4729,7 @@ change the JSDoc for the function as well.
 
 ** Solution: Add quantity to list item
 
-#+INCLUDE: "shopping-19.js" :lines "26-36" src javascript
+#+INCLUDE: "samples/shopping-19.js" :lines "26-36" src javascript
 
 #+BEGIN_NOTES
 This is later in the code.
@@ -4781,7 +4781,7 @@ This we know how to fix, it's just a case of putting the right code in the right
 
 *** HTML
 
-#+INCLUDE: "shopping-19.html" :lines "17-19" src html
+#+INCLUDE: "samples/shopping-19.html" :lines "17-19" src html
 
 *** Focus
 
@@ -4854,7 +4854,7 @@ We call this =onKeyup= -- it's a convention that if you have a function that's a
 Since this handles the =keyup= event we call it =onKeyup= (note the lowerCamelCase name).
 #+END_NOTES
 
-** Solution 3p: Event bubbling
+** Solution 3p: Event bubbling                                :noexport:
 
 - What if we added more =input= elements?
   - We'd have to duplicate this code again
@@ -5581,7 +5581,7 @@ shoppingList.appendChild(createNewListItem(item));
 
 *** Solution: Modify =createNewListItem= to receive the object
 
-#+INCLUDE: "shopping-20.js" :lines "1-8" src javascript
+#+INCLUDE: "samples/shopping-20.js" :lines "1-8" src javascript
 
 #+BEGIN_NOTES
 There are two changes here.
@@ -5613,9 +5613,9 @@ Now it's passed in as one object. So update the code to get the information from
 
 *** Solution: Modify =createNewListItem= to use the object
 
-#+iNCLUDE: "shopping-20.js" :lines "10-12" src javascript
+#+INCLUDE: "samples/shopping-20.js" :lines "10-12" src javascript
 
-#+INCLUDE: "shopping-20.js" :lines "27-33" src javascript
+#+INCLUDE: "samples/shopping-20.js" :lines "27-33" src javascript
 
 #+BEGIN_NOTES
 Here are the two places that I had to update in my code.
@@ -5837,7 +5837,7 @@ You know you've got something that works when you can reload the page in the bro
 #+END_NOTES
 ** Solution: Writing a constructor for a shopping list item
 
-#+INCLUDE: "shopping-21.js" :lines "39-50" src javascript
+#+INCLUDE: "samples/shopping-21.js" :lines "39-50" src javascript
 
 #+BEGIN_NOTES
 Here's the solution.
@@ -5874,7 +5874,7 @@ Make this change to your code, and check that everything still works.
 
 ** Solution: Using a constructor in our code
 
-#+INCLUDE: "shopping-21.js" :lines "62-72" src javascript -n 62
+#+INCLUDE: "samples/shopping-21.js" :lines "62-72" src javascript -n 62
 
 #+BEGIN_NOTES
 There are two places in the code where a =ShoppingListItem= object is created. Here's the first, it's the =click= listener when the user clicks the add-item button.
@@ -5887,7 +5887,7 @@ Now =item= is initialised by calling the =ShoppingListItem= constructor. Remembe
 
 ** Solution: Using a constructor in our code
 
-#+INCLUDE: "shopping-21.js" :lines "79-94" src javascript -n 79
+#+INCLUDE: "samples/shopping-21.js" :lines "79-94" src javascript -n 79
 
 #+BEGIN_NOTES
 And here's the second place, in the =keyup= event listener.
@@ -5919,7 +5919,7 @@ As we've done before, you read this inside-out to understand what's going on.
 
 ** Solution: Change the JSDoc
 
-#+INCLUDE: "shopping-21.js" :lines "1-8" src javascript
+#+INCLUDE: "samples/shopping-21.js" :lines "1-8" src javascript
 
 #+BEGIN_NOTES
 This is a simple change to the JSDoc for the =@param= entry.
@@ -6277,7 +6277,7 @@ And then everywhere that calls the code will need to be updated as well.
 
 **** Solution: Update the start of =createNewListItem=
 
-#+INCLUDE: "shopping-22.js" :lines "13-19" src javascript
+#+INCLUDE: "samples/shopping-22.js" :lines "13-19" src javascript
 
 #+BEGIN_NOTES
 Here's the re-written code.
@@ -6299,9 +6299,9 @@ This means we can remove the =item= parameter from the JSDoc as well.
 
 **** Solution: Update the body of =toListItem=
 
-#+INCLUDE: "shopping-22.js" :lines "21-23" src javascript
+#+INCLUDE: "samples/shopping-22.js" :lines "21-23" src javascript
 
-#+INCLUDE: "shopping-22.js" :lines "38-44" src javascript
+#+INCLUDE: "samples/shopping-22.js" :lines "38-44" src javascript
 
 **** Exercise: Update the places the call the code                 :exercise:
 
@@ -6310,7 +6310,7 @@ This means we can remove the =item= parameter from the JSDoc as well.
 
 **** Solution: Update the places that call the code
 
-#+INCLUDE: "shopping-22.js" :lines "62-78" src javascript
+#+INCLUDE: "samples/shopping-22.js" :lines "62-78" src javascript
 
 #+BEGIN_NOTES
 This is the first place, in the =click= handler.
@@ -6318,7 +6318,7 @@ This is the first place, in the =click= handler.
 
 **** Solution: Update the places that call the code
 
-#+INCLUDE: "shopping-22.js" :lines "79-100" src javascript
+#+INCLUDE: "samples/shopping-22.js" :lines "79-100" src javascript
 
 #+BEGIN_NOTES
 And this is the second, in the =keyup= handler
@@ -6550,7 +6550,7 @@ class Person {
   - Everything else in here
 - Update the HTML
 
-#+INCLUDE: "shopping-multiple/shopping.html" :lines "27-29" src html
+#+INCLUDE: "samples/shopping-multiple/shopping.html" :lines "27-29" src html
 
 ** Problem
 
@@ -6669,31 +6669,31 @@ It's not going to do anything useful yet, but it is going to show the structure,
 - Creates the model
 - =src/js/controller.js=
 
-#+INCLUDE: "shopping-mvc/skeleton/src/js/controller.js" src javascript
+#+INCLUDE: "samples/shopping-mvc/skeleton/src/js/controller.js" src javascript
 
 *** Model
 
 - Creates the =items_= array, saves the view.
 - =src/js/model.js=
 
-#+INCLUDE: "shopping-mvc/skeleton/src/js/model.js" src javascript
+#+INCLUDE: "samples/shopping-mvc/skeleton/src/js/model.js" src javascript
 
 *** View
 
 - Save the controller in to a property
 - =src/js/view.js=
 
-#+INCLUDE: "shopping-mvc/skeleton/src/js/view.js" src javascript
+#+INCLUDE: "samples/shopping-mvc/skeleton/src/js/view.js" src javascript
 
 *** Initialise the application
 
 - =src/js/ui.js=
 
-#+INCLUDE: "shopping-mvc/skeleton/src/js/ui.js" src javascript
+#+INCLUDE: "samples/shopping-mvc/skeleton/src/js/ui.js" src javascript
 
 #+REVEAL: split
 
-#+INCLUDE: "shopping-mvc/skeleton/src/html/index.html" :lines "27-32" src html
+#+INCLUDE: "samples/shopping-mvc/skeleton/src/html/index.html" :lines "27-32" src html
 
 *** Control flow
 
@@ -6740,11 +6740,11 @@ It's not going to do anything useful yet, but it is going to show the structure,
 
 *** Solution: =View.update(items)=
 
-#+INCLUDE: "shopping-mvc/dummy-data/src/js/view.js" :lines "8-15" src javascript
+#+INCLUDE: "samples/shopping-mvc/dummy-data/src/js/view.js" :lines "8-15" src javascript
 
 #+REVEAL: split
 
-#+INCLUDE: "shopping-mvc/dummy-data/src/js/view.js" :lines "16-32" src javascript
+#+INCLUDE: "samples/shopping-mvc/dummy-data/src/js/view.js" :lines "16-32" src javascript
 *** Exercise: Create some dummy data
 
 - Find the code that creates the =items_= array
@@ -6755,9 +6755,9 @@ It's not going to do anything useful yet, but it is going to show the structure,
 
 *** Solution: Create some dummy data
 
-#+INCLUDE: "shopping-class-3.js" :lines "26-27" src javascript
+#+INCLUDE: "samples/shopping-class-3.js" :lines "26-27" src javascript
 
-#+INCLUDE: "shopping-class-4.js" :lines "38-43" src javascript
+#+INCLUDE: "samples/shopping-class-4.js" :lines "38-43" src javascript
 
 *** Tell the view to update
 
@@ -7367,7 +7367,7 @@ This is an example of what we call syntactic s
 
 *** Solution: =Model= needs to call View's =update=
 
-#+INCLUDE: "shopping-mvc/dummy-data/src/js/model.js" :lines "8-21" src javascript
+#+INCLUDE: "samples/shopping-mvc/dummy-data/src/js/model.js" :lines "8-21" src javascript
 
 *** Recap: Updating the display
 
@@ -7394,23 +7394,23 @@ This is an example of what we call syntactic s
 
 *** =View=
 
-#+INCLUDE: "shopping-mvc/add-item-button/src/js/view.js" :lines "8-26" src javascript
+#+INCLUDE: "samples/shopping-mvc/add-item-button/src/js/view.js" :lines "8-26" src javascript
 
 #+REVEAL: split
 
-#+INCLUDE: "shopping-mvc/add-item-button/src/js/view.js" :lines "27-36" src javascript
+#+INCLUDE: "samples/shopping-mvc/add-item-button/src/js/view.js" :lines "27-36" src javascript
 
 #+REVEAL: split
 
-#+INCLUDE: "shopping-mvc/add-item-button/src/js/view.js" :lines "42-57" src javascript
+#+INCLUDE: "samples/shopping-mvc/add-item-button/src/js/view.js" :lines "42-57" src javascript
 
 *** =Controller=
 
-#+INCLUDE: "shopping-mvc/add-item-button/src/js/controller.js" :lines "13-23" src javascript
+#+INCLUDE: "samples/shopping-mvc/add-item-button/src/js/controller.js" :lines "13-23" src javascript
 
 *** =Model=
 
-#+INCLUDE: "shopping-mvc/add-item-button/src/js/model.js" :lines "18-27" src javascript
+#+INCLUDE: "samples/shopping-mvc/add-item-button/src/js/model.js" :lines "18-27" src javascript
 
 - Don't forget to remove the dummy data!
 
@@ -7443,15 +7443,15 @@ This is an example of what we call syntactic s
 - When adding items, find the delete button...
   - ... add a click listener that calls the controller
 
-#+INCLUDE: "shopping-mvc/delete-item-button/src/js/view.js" :lines "41-56" src javascript
+#+INCLUDE: "samples/shopping-mvc/delete-item-button/src/js/view.js" :lines "41-56" src javascript
 
 *** =Controller=
 
-#+INCLUDE: "shopping-mvc/delete-item-button/src/js/controller.js" :lines "21-29" src javascript
+#+INCLUDE: "samples/shopping-mvc/delete-item-button/src/js/controller.js" :lines "21-29" src javascript
 
 *** =Model=
 
-#+INCLUDE: "shopping-mvc/delete-item-button/src/js/model.js" :lines "35-44" src javascript
+#+INCLUDE: "samples/shopping-mvc/delete-item-button/src/js/model.js" :lines "35-44" src javascript
 
 ** Clearing the list
 
@@ -7469,19 +7469,19 @@ This is an example of what we call syntactic s
 
 - In the =constructor=
 
-#+INCLUDE: "shopping-mvc/clear-list-button/src/js/view.js" :lines "28-33" src javascript
+#+INCLUDE: "samples/shopping-mvc/clear-list-button/src/js/view.js" :lines "28-33" src javascript
 
 - In =update=
 
-#+INCLUDE: "shopping-mvc/clear-list-button/src/js/view.js" :lines "61-65" src javascript
+#+INCLUDE: "samples/shopping-mvc/clear-list-button/src/js/view.js" :lines "61-65" src javascript
 
 *** =Controller=
 
-#+INCLUDE: "shopping-mvc/clear-list-button/src/js/controller.js" :lines "30-36" src javascript
+#+INCLUDE: "samples/shopping-mvc/clear-list-button/src/js/controller.js" :lines "30-36" src javascript
 
 *** =Model=
 
-#+INCLUDE: "shopping-mvc/clear-list-button/src/js/model.js" :lines "45-52" src javascript
+#+INCLUDE: "samples/shopping-mvc/clear-list-button/src/js/model.js" :lines "45-52" src javascript
 
 ** The =Enter= key
 
@@ -7498,15 +7498,15 @@ This is an example of what we call syntactic s
 
 *** =View=
 
-#+INCLUDE: "shopping-mvc/keyup/src/js/view.js" :lines "31-35" src javascript
+#+INCLUDE: "samples/shopping-mvc/keyup/src/js/view.js" :lines "31-35" src javascript
 
 #+REVEAL: split
 
-#+INCLUDE: "shopping-mvc/keyup/src/js/view.js" :lines "44-66" src javascript
+#+INCLUDE: "samples/shopping-mvc/keyup/src/js/view.js" :lines "44-66" src javascript
 
 #+REVEAL: split
 
-#+INCLUDE: "shopping-mvc/keyup/src/js/view.js" :lines "86-91" src javascript
+#+INCLUDE: "samples/shopping-mvc/keyup/src/js/view.js" :lines "86-91" src javascript
 
 ** Stats and benefits
 
