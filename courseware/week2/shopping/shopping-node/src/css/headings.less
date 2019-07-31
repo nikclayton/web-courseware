@@ -1,3 +1,10 @@
+@heading-color: #ff0000;
+@heading-color-hover: darken(@heading-color, 20%);
+
 h1 {
-  color: red;
+  color: @heading-color;
+}
+
+h1:hover {
+  color: @heading-color-hover
 }
