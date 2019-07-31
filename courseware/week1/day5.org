@@ -2240,3 +2240,20 @@ sizing, padding, margins, and layout to keep the information legibile.
 - Change element presentation
 - Adjust padding, margin, borders
 
+* Read tutorials
+
+- https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML
+- https://developer.mozilla.org/en-US/docs/Learn/CSS
+- Ask questions, if you have them
+
+#+begin_notes
+The articles linked to from the main part of
+https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML
+should now make sense to you all.  They introduce some more HTML than
+we've covered in the course, but in an accessible way.
+
+The equivalent pages for CSS are linked to from
+https://developer.mozilla.org/en-US/docs/Learn/CSS. If you read those
+you'll find out about a handful of CSS features we've not covered yet
+either. Being able to learn these things from the documentation is an important skill.
+#+end_notes
