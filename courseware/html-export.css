@@ -17,6 +17,10 @@ body:not(.preso) div.outline-2, body:not(.preso) div.outline-3, body:not(.preso)
   border-top: 1px solid #ccc;
 }
 
+body:not(.preso) table {
+  min-width: 80%;
+}
+
 div.notes {
   border: 1px solid #ccc;
   box-shadow: 3px 3px 3px #bbb;
