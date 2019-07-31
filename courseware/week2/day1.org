@@ -201,7 +201,7 @@ Lets get on and do some programming!
 - Chrome Developer Tools includes a REPL
   - Read, Evaluate, Print, Loop
   - Called the "Console"
-- We can type in Javascript in the console (read)
+- Type Javascript in the console (read)
 - It evaluates it (evaluate)
 - It displays the result (print)
 - And then it goes back so we can type some more (loop)
@@ -236,7 +236,7 @@ the example, and make sure you end it with a semi-colon, then press
 RETURN.
 #+END_NOTES
 
-* TODO Expression results
+** TODO Expression results
 
 #+BEGIN_SRC javascript -n
 > 1 + 1;
@@ -256,7 +256,26 @@ Then the prompt has been displayed, waiting for you to type something
 else.
 #+END_NOTES
 
-* TODO More expressions
+** Values
+
+#+BEGIN_SRC javascript -n
+> 1 + 1;
+< 2
+>
+#+END_SRC
+
+- Expressions *always* return a value
+- "One plus one returns two"
+
+#+begin_notes
+When we write a Javascript expression we *always* get back a value.
+
+Values are the information that our program operates on. Almost all programs consist of taking in values from somewhere, manipulating those values in some way, and storing or displaying the resulting values somewhere else.
+
+This expression evaluates one plus one, and returns the value two.
+#+end_notes
+
+** TODO More expressions
 
 #+BEGIN_SRC javascript
 2 * 2;
@@ -284,7 +303,7 @@ be careful not to mix them up -- starting with a single quote
 and ending with a double quote for example.
 #+END_NOTES
 
-* TODO What happened?
+** TODO What happened?
 
 #+BEGIN_SRC javascript -n
 > 2 * 2;
@@ -334,25 +353,168 @@ This should tell you something interesting -- numbers and strings are
 different things in Javascript.
 #+END_NOTES
 
-* TODO Variables
+* Value types
 
+- Values *always* have a *type*
+- *Type* is "What sort of thing is this?"
+- Types we've seen so far:
+  - Numbers (=1=, =2=, =3=, =3.14159...=, =4=, ...)
+  - Strings (='hello'=, ='world'=, ...)
+- A value can only have one type
+
+#+begin_notes
+In Javascript a value *always* has a *type*. The type tells us what sort -- or type -- of thing it is.
+
+So far we've seen two different types that Javascript knows about.
+
+There are numbers, like 1, 2, 3, etc.
+
+And there are strings of characters.
+
+As we go on we're going to discover more types.
+#+end_notes
+
+** Some number operators
+
+| Operator | Operation           | Example | Result |
+|----------+---------------------+---------+--------|
+| =+=      | Addition            | =2 + 2= | =4=    |
+| =-=      | Subtraction         | =2 - 2= | =0=    |
+| =/=      | Division            | =3 / 2= | =1.5=  |
+| =*=      | Multiplication      | =5 * 2= | =10=   |
+| =%=      | Remainder / modulus | =9 % 2= | =1=    |
+|          |                     | =8 % 2= | =0=    |
+| =**=     | Exponention (x^y)   | =2**3=  | =8=    |
+
+#+begin_notes
+Javascript uses some fairly standard symbols for different operations on numbers.
+
+The forward slash is how we do division, and the asterisk, or star, is what we use for multiplication.
+
+We get the remainder of a division using the percent operator. I've put two examples here to show how that works. If we take 9 and divide it by 2 we get 4, with 1 remainder -- 4 times 2 is 8, then add 1 for 9.
+
+But if we take 8 and divide it by 2 we get 4 with no remainder.
+
+This is an easy way to check and see if a number is even or odd.
+
+To perform exponention, or raising one number to the power of another number we use two asterisks next to each other. 
+#+end_notes
+
+** How to write strings
+
+#+begin_src javascript
+'this is a string'  // single quotes (style guide)
+"this is a string"  // double quotes (generally avoid)
+#+end_src
+
+- The quotes are *not* part of the string
+- Use single quotes (mostly), double quotes (rarely)
+
+#+begin_src javascript
+'What's up'         // this is an error
+#+end_src
+
+#+begin_src javascript
+'What\'s up?'                 // backslash to "escape" the quote
+"What's up?"                  // legit use of double quotes
+"They said \"What's up?\"."   // more quote escaping
+'They said "What\'s up?".'    // ... or use single quotes
+#+end_src
+
+- Type these strings in to the console to check
+
+#+begin_notes
+When we write strings in the console, or in code, we have to tell Javascript that it's a string.
+
+The way that we do that is by placing a quote character at the beginning and end of the string. This is required.
+
+If you miss off one or both of them you will have an error.
+
+The quotes are *not* part of the string. Each one of these strings in the first example starts with the letter =t= and ends with the letter =g=.
+
+Javascript supports using three different types of quotes for string -- single quote, double quotes, and back quotes. So which should we use?
+
+Javascript doesn't see any difference between single quotes and double quotes. When we're programming it's a good idea to be consistent and pick a style and stick to it. For this course the style I'm using is single quotes almost everywhere.
+
+There's an exception -- what if we want to use a quote mark inside our string?
+
+We can't just include it, as I've done on the "this is an error code" -- when Javascript looks at this it sees a string with the value =what=, and then the =s up' ...= on the rest of the line, and doesn't know what to do with it. Notice how the colours are wrong too, that's something your editor will do to show you there are problems.
+
+We can fix this in two ways.
+
+The first way is to *escape* the quote inside the string. We do that by putting a backslash character immediately before it. This tells Javascript that the single quote should be treated as a regular character, and not as a character that ends the string.
+
+The second way is to use double quotes instead.
+
+And if you need to use double quotes inside a double-quoted string you can use the backslash to escape the quote as well.
+#+end_notes
+
+** Concatenating strings with =+=
+
+#+begin_src javascript
+'this' + 'is' + 'a' + 'string';     // 'thisisastring'
+#+end_src
+
+#+begin_src javascript
+'this ' + 'is ' + 'a ' + 'string';  // 'this is a string'
+#+end_src
+
+#+begin_notes
+As we've already seen, we can join strings together using the =+= operator as well.
+
+The other operators -- subtract, multiply, divide, etc, do not work on strings.
+#+end_notes
+
+** What happens if you =+= numbers and strings?
+
+#+begin_src javascript
+1 + 'hello';    // What happens?
+#+end_src
+
+#+begin_notes
+Since we can use the plus sign with both numbers and strings you might be wondering what happens if we try and add a number to a string? Like in this example here.
+
+Try this out in the console and see what happens.
+#+end_notes
+
+** What happens if you =+= numbers and strings?
+
+#+begin_src javascript
+1 + 'hello';    // '1hello'
+#+end_src
+
+#+begin_src javascript
+'1' + 'hello';  // '1hello'
+#+end_src
+
+#+begin_notes
+What's happened here is that Javascript has tried to be helpful.
+
+Adding a number to a string doesn't make sense, so Javascript has first converted the number to a string, and then, because the value on the left of the plus and the value on the right of the plus are both strings it has concatenated them together.
+#+end_notes
+
+** What happens if you =+= numbers and strings?
+
+#+begin_src javascript
+'1' + '1';     // '11', not 2
+#+end_src
+
+#+begin_notes
+This can be a subtle source of problems. In this example here, even though both strings just contain numbers, because they're strings Javascript has concatenated them instead of adding them together.
+#+end_notes
+
+* TODO Variables
 - Variables allow us to give names to values
 
 #+BEGIN_SRC javascript -n
   let x;           // Declare a variable called 'x'
   x = 4;           // Set x's value to 4
   x;               // Evaluate the expression 'x'
-  let y = x + 2;   // <-- What does this do?
-  y;               // <-- What does this show?
-  x = 5;           // Change x's value to 5
-  let z = x * y;   // <-- What does this do?
-  z;               // <-- What does this show?
-  y;               // <-- What does this show?
+  2 + x;           // Evaluate the expression '2 + x'
 #+END_SRC
 
 #+BEGIN_NOTES
-A variable is a way of taking the *value* of an expression and
-giving it a *name* that we can use later.
+A variable is a way of taking a *value* and giving it a *name* that we can use later.
 
 You can think of it as being a bit like a box. You can put something
 in the box -- the value -- and get it out again later. And you can
@@ -371,6 +533,71 @@ the box. To do that we use the single equals sign, as we have here.
 You can read this as "x becomes 4" or "x is assigned the value 4", or
 "4 is put in the box labelled x".
 
+We can use variable names in expressions. The simplest expression with
+a variable is one that contains just the variable name, as we have done
+on line 3 here.
+#+END_NOTES
+
+** Variables, values, and types
+
+#+BEGIN_SRC javascript -n
+  let x;           // Declare a variable called 'x'
+  x = 4;           // Set x's value to 4
+  x;               // Evaluate the expression 'x'
+#+END_SRC
+
+- =x= is the variable
+- =x= contains the value =4=
+- The type of the value is =Number=
+- The variable does not have a type, the value does
+
+** What happens if we don't give variables a value?
+
+#+begin_src javascript
+let y;             // Declare a variable called 'y;
+y;                 // Evaluate the expression 'y;
+#+end_src
+
+- What does this display?
+
+** The =undefined= value and type
+
+#+begin_src javascript
+let y;             // Declare a variable called 'y'
+y;                 // Displays 'undefined'
+#+end_src
+
+- Types
+  - Numbers
+  - Strings
+  - =undefined=
+
+- Important: *not* ='undefined'=
+
+** The =undefined= value and type
+
+| *value*     | *type*      |
+|-------------+-------------|
+| =4=         | Number      |
+| ='hello'=   | String      |
+| =undefined= | =undefined= |
+
+
+** TODO Variables in expressions
+
+#+BEGIN_SRC javascript -n
+  let x;           // Declare a variable called 'x'
+  x = 4;           // Set x's value to 4
+  x;               // Evaluate the expression 'x'
+  let y = x + 2;   // <-- What does this do?
+  y;               // <-- What does this show?
+  x = 5;           // Change x's value to 5
+  let z = x * y;   // <-- What does this do?
+  z;               // <-- What does this show?
+  y;               // <-- What does this show?
+#+END_SRC
+
+#+BEGIN_NOTES
 We can use variable names in expressions. The simplest expression with
 a variable is one that contains just the variable name, as we have done
 on line 3 here.
@@ -424,19 +651,29 @@ is *not* saved in the variable.
 < undefined
 #+END_SRC
 
+- Functions allow us to *reuse* code
+- =alert= is the *name* of the function
+- Function name followed by =(...)= means we are *calling* the function
+- ='hello, world'= is the function's only *parameter*
+  - Sometimes also called an =argument=
+- Someone else wrote the =alert= function for us
+
 #+BEGIN_NOTES
 What we're doing here is called *calling a function*.  We know it's a
-function because of the round braces, or *parentheses*.
+function because of the round braces, or *parentheses* immediately after the function name.
 
 TODO: Does this look like anything else we've seen [Wait: hope they
 say the calc() function in CSS]
 
 A function is a way of taking a chunk of code and giving it a name so
 that we can re-use it, and call it from other places. Javascript provides
-a lot of functions, and you can write your own. We'll be doing that later.
+some functions for us ready to use, =alert= is one of those.
 
-We say that this function takes one argument. The argument is the string
-of characters that should be used as the message in the alert.
+It's also possible to to write your own functions, and we'll be doing that later.
+
+Some functions need extra information in order to operate. For example, the =alert= function needs to know the message that we want to display.  If a function needs this extra information we put it inside the parentheses. Here we have a =string=, ='hello, world'=, that the alert function will use.
+
+We call this extra information -- if it's there -- the function's *parameters*. Sometimes we use the word *argument* as well -- they mean roughly the same thing.
 
 When you pressed ENTER you should have seen a dialog box pop up with
 the message.  After you closed the dialog box the REPL finishes and shows
@@ -452,6 +689,239 @@ I know this is weird, and it's a lot to take in. We'll be doing more
 exercises to strengthen this knowledge.
 
 #+END_NOTES
+
+** Writing to the console with =console.log=
+
+#+begin_src javascript
+console.log('hello, class');
+#+end_src
+
+#+begin_notes
+We can also write to the console using the =console.log= function.
+
+This is one of those lies that I'll explain in more detail later. =console.log= is not a function, it's something else.
+
+But at the moment, it looks like a function, walks like a function, and quacks like a function, so we're going to treat it as though it's a function.
+
+Try this out in your console.
+#+end_notes
+
+** Declaring / defining a function                                 :exercise:
+
+#+BEGIN_SRC javascript
+  let greet = function() {
+    console.log('hello');   // <-- function body
+  };
+#+END_SRC
+
+#+BEGIN_NOTES
+When we write a function we say that we are *defining* it. You'll
+also hear people talking about *declaring* a function. They mean
+the same thing.
+
+A function definition, like this example here, consists of:
+
+- The name of the variable
+- The *keyword* =function=
+- A list of any function parameters, surrounded by parentheses. In this example there are no parameters, but we still need to include the parentheses
+- The Javascript statements that define the function, surrounded by curly brackets. We call this the function *body*
+
+Notice how there are *not* semicolons after the opening and closing
+curly brackets. This is one of the exceptions to the rule that each
+Javascript line should end with a semicolon.
+
+Type this in to the REPL, and let me know when you've done that.
+#+END_NOTES
+
+** Declaring / defining a function
+
+#+BEGIN_SRC javascript
+  function greet() {
+    console.log('hello');
+  }
+#+END_SRC
+
+#+BEGIN_NOTES
+Defining functions is so common that there's a shorthand for it that doesn't need the =let= keyword
+
+These two examples are identical -- we've created a name, called =greet=, and said that =greet= is a function.
+
+See how the =let= keyword is missing, and the name of the function comes after the =function= keyword.
+
+This way is more common.
+#+END_NOTES
+
+** Calling functions
+
+#+BEGIN_SRC javascript
+  > greet();
+  < "hello"
+#+END_SRC
+
+#+BEGIN_NOTES
+To *call* a function you write its name, followed by any parameters it
+takes, surrounded by parentheses.
+
+If the function doesn't take any parameters (like this one) you must
+still include the parentheses. As normal, we end with a semicolon.
+
+What you've just seen here is the *flow of control* changing. Ordinarily
+the REPL runs things as you type them, one after the other.
+
+In this case you've caused the flow to change, and code that you
+wrote *earlier* has been called.
+
+Remember this, it's going to come up a lot.
+#+END_NOTES
+
+** Functions with parameters                                       :exercise:
+
+#+BEGIN_SRC javascript
+  let double = function(num) {
+    return num * 2;
+  };
+#+END_SRC
+
+#+BEGIN_SRC javascript
+> double(10);
+< 20
+#+END_SRC
+
+#+BEGIN_NOTES
+Here's an example of a function that does take a parameter. As before we
+have the =function= keyword followed by the function name. In parentheses
+is the name of the parameter, which I've called =num=.
+
+Inside the function body you can treat the parameter as though it was a
+variable. In this case we take the value, multiply it by 2, and return
+it back to the caller.
+
+Try this, and make sure you see the same result.
+#+END_NOTES
+
+*** Functions with parameters
+
+#+BEGIN_SRC javascript
+  greet = function(name) {
+    return 'hello, ' + name;
+  }
+#+END_SRC
+
+#+BEGIN_SRC javascript
+  > greet('Nik');
+  < "hello, Nik"
+#+END_SRC
+
+#+BEGIN_SRC javascript
+  > greet();
+  < // What does this show?
+#+END_SRC
+
+** TODO Functions return values
+
+- Calling a function *always* returns a value
+  - A number, a string, =undefined= etc
+- We can save that value in a variable, like any other value
+
+#+begin_src javascript
+let x = alert('hello, world');   // returns undefined
+x;                               // undefined
+#+end_src
+
+** TODO Functions change the flow of control
+
+* TODO Evaluating expressions in Javascript
+
+Anywhere we have code that needs a value (3, 'hello', etc) we can replace that value with either
+
+1. A variable that *contains* the value we need
+2. A function that *returns* the value we need
+
+#+begin_notes
+TODO(nik):
+
+Talk about the E bit of the REPL, the "evaluate" part. Explain that we've been providing expressions, and Javascript evaluates them.
+
+In order to read and understand what the code will do you need to understand how the evaluation works.
+#+end_notes
+
+** TODO Javascript expression evaluation
+
+   #+begin_src javascript
+   3 + 3 + 3
+   #+end_src
+
+   #+begin_src javascript
+   let x = 3;
+   3 + x + 3;
+   #+end_src
+
+   #+begin_src javascript
+   let x = 3;
+   let y = 4;
+   let z = 2;
+   x + y * z;
+   #+end_src
+
+   #+begin_notes
+   TODO(nik): Expand this with more examples, and do each evaluation it step by step.
+
+Show more complicated examples that include function calls in the middle of expressions
+   #+end_notes
+
+
+* TODO Initial Javascript exercises                                :noexport:
+
+#+begin_notes
+This needs to be updated with the instructions for downloading and trying the exercises.
+
+#+end_notes
+
+** Install Node
+
+** Make a copy of the repository
+
+#+begin_notes
+clone https://github.com/nikclayton/edabit-javascript-challenges
+#+end_notes
+
+** Load it in to VS Code
+
+** Tour of each exercise
+
+*** README
+
+*** Tests
+
+*** Code skeleton
+
+*** Run the tests, they fail
+
+*** Write some code
+
+*** Re-run the tests
+
+*** When they pass, submit
+
+*** Move on to the next exercise
+
+
+#+begin_notes
+
+#+end_notes
+
+** Exercises to do:
+
+- [[https://github.com/nikclayton/edabit-javascript-challenges/tree/master/very-easy/return-the-sum-of-two-numbers][very-easy/return-the-sum-of-two-numbers]]
+- [[https://github.com/nikclayton/edabit-javascript-challenges/tree/master/very-easy/area-of-a-triangle][very-easy/area-of-a-triangle]]
+- [[https://github.com/nikclayton/edabit-javascript-challenges/tree/master/very-easy/return-the-next-number-from-the-integer-passed][very-easy/return-the-next-number-from-the-integer-passed]]
+- [[https://github.com/nikclayton/edabit-javascript-challenges/tree/master/very-easy/return-the-remainder-from-two-numbers][very-easy/return-the-remainder-from-two-numbers]]
+- [[https://github.com/nikclayton/edabit-javascript-challenges/tree/master/very-easy/is-the-number-less-than-or-equal-to-zero][very-easy/is-the-number-less-than-or-equal-to-zero]]
+- [[https://github.com/nikclayton/edabit-javascript-challenges/tree/master/very-easy/the-farm-problem][very-easy/the-farm-problem]]
+
+#+begin_notes
+Initial set of exercises that involve functions, returning values, and simple math.
+#+end_notes
 
 * TODO Inspecting the DOM
 
@@ -974,120 +1444,6 @@ does.
 You've already used one function, =alert()=. And you've used object
 methods, like =getElementById()=, which are very similar.
 #+END_NOTES
-
-** Declaring / defining a function                                 :exercise:
-
-#+BEGIN_SRC javascript
-  let greet = function() {
-    return 'hello';
-  };
-#+END_SRC
-
-#+BEGIN_NOTES
-When we write a function we say that we are *defining* it. You'll
-also hear people talking about *declaring* a function. They mean
-the same thing.
-
-A function definition, like this example here, consists of:
-
-- The name of the variable
-- The *keyword* =function=
-- A list of any function parameters, surrouned by parentheses. In this
-  example there are no parameters
-- The Javascript statements that define the function, surrounded by
-  curly brackets. We call this the function *body*
-
-Notice how there are *not* semicolons after the opening and closing
-curly brackets. This is one of the exceptions to the rule that each
-Javascript line should end with a semicolon.
-
-Functions can *return* a value to the code that calls it by using the
-special =return= keyword.
-
-Type this in to the REPL, and let me know when you've done that.
-#+END_NOTES
-
-** Declaring / defining a function
-
-#+BEGIN_SRC javascript
-  function greet() {
-    return 'hello';
-  }
-#+END_SRC
-
-#+BEGIN_NOTES
-Defining functions is so common that there's a shorthand for it that doesn't need the =let= keyword
-
-These two examples are identical.
-
-This way is more common.
-#+END_NOTES
-
-** Calling functions
-
-#+BEGIN_SRC javascript
-  > greet();
-  < "hello"
-#+END_SRC
-
-#+BEGIN_NOTES
-To *call* a function you write its name, followed by any parameters it
-takes, surrounded by parentheses.
-
-If the function doesn't take any parameters (like this one) you must
-still include the parentheses. As normal, we end with a semicolon.
-
-What you've just seen here is the *flow of control* changing. Ordinarily
-the REPL runs things as you type them, one after the other.
-
-In this case you've caused the flow to change, and code that you
-wrote *earlier* has been called.
-
-Remember this, it's going to come up a lot.
-#+END_NOTES
-
-** Functions with parameters                                       :exercise:
-
-#+BEGIN_SRC javascript
-  let double = function(num) {
-    return num * 2;
-  };
-#+END_SRC
-
-#+BEGIN_SRC javascript
-> double(10);
-< 20
-#+END_SRC
-
-#+BEGIN_NOTES
-Here's an example of a function that does take a parameter. As before we
-have the =function= keyword followed by the function name. In parentheses
-is the name of the parameter, which I've called =num=.
-
-Inside the function body you can treat the parameter as though it was a
-variable. In this case we take the value, multiply it by 2, and return
-it back to the caller.
-
-Try this, and make sure you see the same result.
-#+END_NOTES
-
-*** Functions with parameters
-
-#+BEGIN_SRC javascript
-  greet = function(name) {
-    return 'hello, ' + name;
-  }
-#+END_SRC
-
-#+BEGIN_SRC javascript
-  > greet('Nik');
-  < "hello, Nik"
-#+END_SRC
-
-#+BEGIN_SRC javascript
-  > greet();
-  < // What does this show?
-#+END_SRC
 
 * Including Javascript in the HTML
 
@@ -1691,7 +2047,7 @@ Verify, and then commit your changes.
 Fewew lines of code means fewer bugs.
 #+END_NOTES
 
-* TODO IDEs
+* TODO IDEs                                                        :noexport:
 ** TODO Some web development problems
 
 - Too many files
