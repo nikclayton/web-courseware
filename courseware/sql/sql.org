@@ -284,6 +284,27 @@ I'm going to use this format from now on in the slides to make them easier to re
 This is also a very common way to write queries in online documentation, so you'll probably see this a lot.
 #+END_NOTES
 
+* Query pipeline
+
+#+RESULTS:
+[[file:query-pipeline-1.svg]]
+
+#+BEGIN_NOTES
+We can think of our data as moving through a number of stages as our query is executed.
+
+Unfortunately, these stages don't occur in the same order as we write them in the query.
+
+The first stage consists of gathering all the data. This is the =FROM= clause in the query.
+
+In this diagram this is the first table. The =track= table is represented here as a number of different columns. The arrows show how the data flows.
+
+The second stage (so far) is the =SELECT= clause in the query. This receives the data from the =FROM= clause, and chooses the columns that are allowed through.
+
+The result of the =SELECT= clause is -- generally -- a narrower table.
+
+In this example we can see that that's true -- the table from the =FROM= clause has more than 4 columns. However, the table coming out of the =SELECT= clause has only two columns.
+#+END_NOTES
+
 * Filtering data
 
 - SQL is about finding the specific information you want
