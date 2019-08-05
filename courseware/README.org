@@ -183,34 +183,7 @@ There are two additional significant changes to the previous material.
 
 * Material to date
 
-The files:
-
-- =week1/day1.org=
-- =week1/day2.org=
-- =week1/day3.org=
-- =week1/day4.org=
-- =week1/day5.org=
-
-and
-
-- =week2/day1.org=
-
-contain approximately 4 weeks worth of material. I had originally
-expected the progress to match the week/day filenames, but I was
-over-optimistic in estimating how rapidly we would progress through
-the content.
-
-This is fine, as we're roughly on par with the pace of previous
-courses.
-
-The contents of =week2/shopping= are several weeks worth of project
-and exercises where we will build frontend application from the
-ground up, applying the material that has been covered in the previous
-weeks.
-
-The material for the second half of the course will be written during
-December '18 / January 19, and will be based on the requirements of
-the companies offering internships.
+See toc.org
 
 * Technical instructions for authors / editors
 
