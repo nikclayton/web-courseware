@@ -3319,7 +3319,7 @@ elBody.appendChild(elP);
 [[file:dom-add-para-4.svg]]
 
 
-* Exercises: Changing the DOM tree
+* Exercises: Changing the DOM tree                                 :exercise:
 
 ** Adding a paragraph
 
@@ -3334,6 +3334,28 @@ elBody.appendChild(elP);
   listitems to the bottom of the page.
   - The second listitem should contain emphasised and non-emphasised text
 
+** Hiding and showing ingredients
+
+- Very common to have parts of the page appear or disappear
+ - E.g., menus, e-mail compose boxes, dialog boxes, etc
+- In your recipes, change the "ingredients" section
+ - Default: It's shown, with a "-" next to it
+ - Click the "-"
+  - The ingredients are hidden
+  - The "-" is hidden and replaced with a "+"
+ - Click the "+"
+  - The ingredients are shown
+  - "The "+" is hidden and replaced with a "-"
+
+#+begin_notes
+Show this in action by loading =hide_show_ingredients/index.html=
+
+Break the problem down:
+ - Update the HTML with a "-"
+ - Detect the click on the "-", make sure it works
+ - Hide the ingredients list (ask them how, hint the CSS =display= property)
+ - Hide the "-", show the "+"
+#+end_notes
 
 * Race conditions (async)                                          :noexport:
 
