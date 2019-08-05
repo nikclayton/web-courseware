@@ -52,6 +52,10 @@ This work should be done in the classroom, and is intended to be done in the fol
 
   Introduction to tools used in the JS Ecosystem -- Node and NPM, JS and CSS minimisers, Grunt for task automation, watching files for changes, etc.
 
+- [[file:classroom/javascript/react/README.html][Javascript React]]
+
+  Introduction to React, building the shopping list using React. Also includes material on OO inheritance.
+
 - [[file:classroom/sql/README.html][SQL]]
 
-  Introduction to SQL.
+  Introduction to SQL. This can be moved to other parts of the course or dropped, it's used if any of the internships require an intro to SQL.

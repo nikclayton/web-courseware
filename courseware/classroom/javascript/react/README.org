@@ -1,5 +1,5 @@
 #+TITLE: React
-#+SETUPFILE: "../include/settings.org"
+#+SETUPFILE: "../../../include/settings.org"
 
 
 * Building the shopping list with React
