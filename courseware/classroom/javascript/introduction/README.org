@@ -3327,6 +3327,10 @@ elBody.appendChild(elP);
 - Clicking the text should add a new a paragraph to the bottom
   of the page
 
+#+begin_notes
+The solution to this is in =samples/add-para=.
+#+end_notes
+
 ** Adding lists
 
 - Change the previous page
