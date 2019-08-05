@@ -1,5 +1,5 @@
 #+Title: Javascript Ecosystem
-#+SETUPFILE: "../include/settings.org"
+#+SETUPFILE: "../../../include/settings.org"
 
 #+BEGIN_NOTES
 So far we've been writing Javascript without relying on anyone else's
