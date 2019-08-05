@@ -3334,6 +3334,10 @@ elBody.appendChild(elP);
   listitems to the bottom of the page.
   - The second listitem should contain emphasised and non-emphasised text
 
+#+begin_notes
+The solution to this, with comments for the teacher, is in =samples/add-list=.
+#+end_notes
+
 ** Hiding and showing ingredients
 
 - Very common to have parts of the page appear or disappear
