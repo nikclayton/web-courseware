@@ -1707,13 +1707,44 @@ Again, up to you. This is your chance to experiment.
 
 - Two additional (newer) layout systems
 - Grid: [[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout][MDN CSS Grid Layout]]
+  - https://csssgridgarden.com
 - Flex: [[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox][MDN CSS Flexbox]]
+  - https://flexboxfroggy.com
 - Experiment creating 3-column layout with both of these
 
 #+begin_notes
 Static, relative, and absolute positioning can sometimes be difficult to understand and predict, so two new systems were developed later, called *grid* and *flex* (or *flexbox*).
 
-Both of them make achieving some types of layouts much simpler. MDN has excellent documentation and tutorials for both of them, so read through that documentation and try recreating that 3-column layout twice, once with grid, and once with flex.
+Both of them make achieving some types of layouts much simpler. MDN has excellent documentation and tutorials for both of them.
+
+Read more about it at https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout -- start with that page, and then read the articles linked to from the left of the page under "Guides" ("Basic concepts of grid layout", etc).
+
+Try the =grid= game at http://cssgridgarden.com/ to practice.
+
+Try the Flexbox Froggy game at https://flexboxfroggy.com/.
+
+If you think you can simplify any of your page stylesheets, or make layouts easier by using CSS grid or flexbox then try updating the stylesheet to use it, and experiment.
+#+end_notes
+
+* More practice
+
+** Practice implementing layouts
+
+- https://003.powercoders.org/files/exercise_7_webdesign_1.jpg
+- https://003.powercoders.org/files/exercise_7_webdesign_2.jpg
+
+#+begin_notes
+See if you can write the HTML and CSS for these.
+
+The text is "dummy" text called "lorem ipsum". You can generate this text using a site like https://loremipsum.io/ and copy/paste it in to your page.
+#+end_notes
+
+** Read MDN articles
+
+- https://developer.mozilla.org/en-US/docs/Learn/CSS
+
+#+begin_notes
+You should be able to read and understand all of the MDN CSS material at https://developer.mozilla.org/en-US/docs/Learn/CSS. There are some things that we haven't covered in the class yet (and I won't expect you to know them, I'll teach them when we need them) but it's good practice to read and understand these guides now.
 #+end_notes
 
 * TODO Problems with these layouts
