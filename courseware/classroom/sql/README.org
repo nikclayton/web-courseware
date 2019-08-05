@@ -1,5 +1,5 @@
 #+TITLE: Databases and SQL
-#+SETUPFILE: "../include/settings.org"
+#+SETUPFILE: "../../include/settings.org"
 #+PROPERTY: header-args:sql-mode :product sqlite
 #+PROPERTY: header-args:sql-mode+ :results verbatim
 #+PROPERTY: header-args:sql-mode+ :exports both

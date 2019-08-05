@@ -47,3 +47,11 @@ This work should be done in the classroom, and is intended to be done in the fol
   This is several weeks worth of project and exercises where we will
   build a frontend application from the ground up, applying the material
   that has been covered in the previous weeks.
+
+- [[file:classroom/javascript/ecosystem/README.html][Javascript Ecosystem]]
+
+  Introduction to tools used in the JS Ecosystem -- Node and NPM, JS and CSS minimisers, Grunt for task automation, watching files for changes, etc.
+
+- [[file:classroom/sql/README.html][SQL]]
+
+  Introduction to SQL.
