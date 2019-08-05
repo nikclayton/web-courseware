@@ -56,7 +56,7 @@ class ShoppingListItem {
   }
 }
 
-function domContentLoaded() {
+function setupUI() {
   const quantityBox = document.getElementById('quantity');
   const inputBox = document.getElementById('item');
   const shoppingList = document.querySelector('ul');
@@ -114,10 +114,4 @@ function domContentLoaded() {
   clearListButton.disabled = true;
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function (event) {
-    domContentLoaded();
-  });
-} else {
-  domContentLoaded();
-}
+setupUI();
