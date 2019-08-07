@@ -328,7 +328,6 @@ This is a:
 Computer scientists love trees. You'll be seeing stuff like this a lot.
  #+END_NOTES
 
-
 * Introduction to the web
 
 - Web page
@@ -1584,6 +1583,8 @@ This is a chance to put together the elements we've already seen. You can use re
 Different sections of the recipe should be wrapped in =div= elements, and you can use =span= to indicate special things in the text.
 
 Some of what you're writing will be lists of things, so think about what the best type of list element is to use.
+
+(see =samples/recipe.* for an example)
 #+END_NOTES
 
 ** Portfolio                                                  :noexport:
