@@ -493,7 +493,7 @@ through the rest of the course.
 #+REVEAL_HTML: </div>
 
 #+REVEAL_HTML: <div class="rightcol">
-[[file:whats-in-a-color-palette-03.png]]
+[[file:samples/whats-in-a-color-palette-03.png]]
 #+REVEAL_HTML: </div>
 
 #+BEGIN_NOTES
