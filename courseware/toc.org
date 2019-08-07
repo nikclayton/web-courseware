@@ -10,11 +10,11 @@ Students should work through this material in the following order
 
 This work can be done outside the classroom.
 
-- [[file:prep/week1/README.html][Week 1, getting familiar with tools]]
+- *Week 1, getting familiar with tools* [[[file:../../slides/courseware/prep/week1/README.html][slides]]] [[[file:../../notes/courseware/prep/week1/README.html][notes]]]
 
   Setting up some initial tools and getting to know VSCode.
 
-- [[file:prep/week2/README.html][Week 2, initial HTML]]
+- *Week 2, initial HTML* [[[file:../../slides/courseware/prep/week2/README.html][slides]]] [[[file:../../notes/courseware/prep/week2/README.html][notes]]]
 
   Introduces HTML and researching material on the Mozilla Developer Network.
 
@@ -22,40 +22,40 @@ This work can be done outside the classroom.
 
 This work should be done in the classroom, and is intended to be done in the following order.
 
-- [[file:classroom/classroom-intro/README.html][Introduction to the classroom]]
+- *Introduction to the classroom* [[[file:../../slides/courseware/classroom/classroom-intro/README.html][slides]]] [[[file:../../notes/courseware/classroom/classroom-intro/README.html][notes]]]
 
   Initial material for day 1 in the classroom. You should update this to reference logistical information for your course.
 
-- [[file:classroom/shell-and-git/README.html][Shell and Git]]
+- *Shell and Git* [[[file:../../slides/courseware/classroom/shell-and-git/README.html][slides]]] [[[file:../../notes/courseware/classroom/shell-and-git/README.html][notes]]]
 
   Recap the shell material from week 1. First steps with Git, including creating a GitHub account, configuring Git locally, and introductory Git workflow.
 
-- [[file:classroom/css/README.html][CSS]]
+- *CSS* [[[file:../../slides/courseware/classroom/css/README.html][slides]]] [[[file:../../notes/courseware/classroom/css/README.html][notes]]]
 
   Initial CSS material.
 
-- [[file:classroom/advanced-css/README.html][Advanced CSS]]
+- *Advanced CSS* [[[file:../../slides/courseware/classroom/advanced-css/README.html][slides]]] [[[file:../../notes/courseware/classroom/advanced-css/README.html][notes]]]
 
   Advanced CSS material
 
-- [[file:classroom/javascript/introduction/README.html][Introductory Javascript / DOM]]
+- *Introductory Javascript / DOM* [[[file:../../slides/courseware/classroom/javascript/introduction/README.html][slides]]] [[[file:../../notes/courseware/classroom/javascript/introduction/README.html][notes]]]
 
   Up to here is approximately 4 weeks worth of material depending on how quickly the students move through it.
 
-- [[file:classroom/javascript/shopping/README.html][Javascript Shopping List exercise]]
+- *Javascript Shopping List exercise* [[[file:../../slides/courseware/classroom/javascript/shopping/README.html][slides]]] [[[file:../../notes/courseware/classroom/javascript/shopping/README.html][notes]]]
 
   This is several weeks worth of project and exercises where we will
   build a frontend application from the ground up, applying the material
   that has been covered in the previous weeks.
 
-- [[file:classroom/javascript/ecosystem/README.html][Javascript Ecosystem]]
+- *Javascript Ecosystem* [[[file:../../slides/courseware/classroom/javascript/ecosystem/README.html][slides]]] [[[file:../../notes/courseware/classroom/javascript/ecosystem/README.html][notes]]]
 
   Introduction to tools used in the JS Ecosystem -- Node and NPM, JS and CSS minimisers, Grunt for task automation, watching files for changes, etc.
 
-- [[file:classroom/javascript/react/README.html][Javascript React]]
+- *Javascript React* [[[file:../../slides/courseware/classroom/javascript/react/README.html][slides]]] [[[file:../../notes/courseware/classroom/javascript/react/README.html][notes]]]
 
   Introduction to React, building the shopping list using React. Also includes material on OO inheritance.
 
-- [[file:classroom/sql/README.html][SQL]]
+- *SQL* [[[file:../../slides/courseware/classroom/sql/README.html][slides]]] [[[file:../../notes/courseware/classroom/sql/README.html][notes]]]
 
   Introduction to SQL. This can be moved to other parts of the course or dropped, it's used if any of the internships require an intro to SQL.
